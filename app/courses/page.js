@@ -164,7 +164,7 @@ const courses = [
   },
   {
     id: 12,
-    icon: "📱",
+    icon: "📲",
     title: "Social Media Management",
     level: "Beginner",
     duration: "8 Weeks",
@@ -259,45 +259,49 @@ export default function Courses() {
     setSending(false)
   }
 
-  function handlePrint(course) {
-    const printWindow = window.open("", "_blank")
-    printWindow.document.write(`
-      <html>
-        <head>
-          <title>${course.title} — CHRISCO Digital Academy</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 40px; color: #1a1a2e; }
-            h1 { color: #581c87; font-size: 28px; margin-bottom: 5px; }
-            h2 { color: #581c87; font-size: 18px; margin-top: 30px; }
-            .badge { background: #fbbf24; color: #1a1a2e; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 13px; margin-right: 8px; }
-            .item { padding: 8px 0; border-bottom: 1px solid #e9d5ff; font-size: 15px; }
-            .footer { margin-top: 40px; font-size: 13px; color: #888; }
-            .logo { font-size: 22px; font-weight: bold; color: #581c87; margin-bottom: 20px; }
-          </style>
-        </head>
-        <body>
-          <div class="logo">CHRISCO Digital Academy</div>
-          <h1>${course.icon} ${course.title}</h1>
-          <p>${course.desc}</p>
-          <div>
-            <span class="badge">${course.level}</span>
-            <span class="badge">⏱ ${course.duration}</span>
-            <span class="badge">⭐ ${course.rating}</span>
-            <span class="badge">👥 ${course.students} Students</span>
-          </div>
-          <h2>📋 Course Syllabus</h2>
-          ${course.syllabus.map((item, i) => `<div class="item">${i + 1}. ${item}</div>`).join("")}
-          <h2>🎯 Who Is This For?</h2>
-          <p>${course.for}</p>
-          <div class="footer">
-            Founded by Wambete Benjamin • CHRISCO Youth Aflame<br/>
-            📧 shambetz@gmail.com • 📞 +254112272061 • 📍 Nairobi, Kenya
-          </div>
-        </body>
-      </html>
-    `)
-    printWindow.document.close()
-    printWindow.print()
+  function handleDownload(course) {
+    if (course.download) {
+      window.open(course.download, "_blank")
+    } else {
+      const printWindow = window.open("", "_blank")
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>${course.title} — CHRISCO Digital Academy</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 40px; color: #1a1a2e; }
+              h1 { color: #581c87; font-size: 28px; margin-bottom: 5px; }
+              h2 { color: #581c87; font-size: 18px; margin-top: 30px; }
+              .badge { background: #fbbf24; color: #1a1a2e; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 13px; margin-right: 8px; }
+              .item { padding: 8px 0; border-bottom: 1px solid #e9d5ff; font-size: 15px; }
+              .footer { margin-top: 40px; font-size: 13px; color: #888; }
+              .logo { font-size: 22px; font-weight: bold; color: #581c87; margin-bottom: 20px; }
+            </style>
+          </head>
+          <body>
+            <div class="logo">CHRISCO Digital Academy</div>
+            <h1>${course.icon} ${course.title}</h1>
+            <p>${course.desc}</p>
+            <div>
+              <span class="badge">${course.level}</span>
+              <span class="badge">⏱ ${course.duration}</span>
+              <span class="badge">⭐ ${course.rating}</span>
+              <span class="badge">👥 ${course.students} Students</span>
+            </div>
+            <h2>📋 Course Syllabus</h2>
+            ${course.syllabus.map((item, i) => `<div class="item">${i + 1}. ${item}</div>`).join("")}
+            <h2>🎯 Who Is This For?</h2>
+            <p>${course.for}</p>
+            <div class="footer">
+              Founded by Wambete Benjamin • CHRISCO Youth Aflame<br/>
+              📧 shambetz@gmail.com • 📞 +254112272061 • 📍 Nairobi, Kenya
+            </div>
+          </body>
+        </html>
+      `)
+      printWindow.document.close()
+      printWindow.print()
+    }
   }
 
   return (
@@ -386,9 +390,9 @@ export default function Courses() {
                     View Course
                   </button>
                   <button
-                    onClick={() => handlePrint(course)}
+                    onClick={() => handleDownload(course)}
                     className="bg-yellow-400 text-purple-950 font-bold px-3 py-2 rounded-xl hover:bg-yellow-300 transition text-sm"
-                    title="Download / Print"
+                    title="Download Course Outline"
                   >
                     📥
                   </button>
@@ -438,7 +442,7 @@ export default function Courses() {
                   Enroll Now 🚀
                 </button>
                 <button
-                  onClick={() => handlePrint(selected)}
+                  onClick={() => handleDownload(selected)}
                   className="bg-yellow-400 text-purple-950 font-black px-6 py-3 rounded-xl hover:bg-yellow-300 transition"
                 >
                   📥 Download
