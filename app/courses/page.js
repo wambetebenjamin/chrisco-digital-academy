@@ -2,6 +2,7 @@
 import { useState } from "react"
 import Navbar from "../Navbar"
 import emailjs from "@emailjs/browser"
+import { Youtube, Code, Shirt, Ghost, Briefcase, BarChart2, PenTool, Mail, DollarSign, Smartphone, Brain } from "lucide-react"
 
 const SERVICE_ID = "service_m86zbad"
 const TEMPLATE_ID = "template_i5wg4c8"
@@ -10,7 +11,7 @@ const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
 const courses = [
   {
     id: 1,
-    icon: "▶️",
+    icon: Youtube,
     title: "YouTube Automation",
     level: "Beginner",
     duration: "8 Weeks",
@@ -24,7 +25,7 @@ const courses = [
   },
   {
     id: 2,
-    icon: "🐍",
+    icon: Code,
     title: "Python Programming",
     level: "Beginner",
     duration: "8 Weeks",
@@ -38,7 +39,7 @@ const courses = [
   },
   {
     id: 3,
-    icon: "👕",
+    icon: Shirt,
     title: "Print on Demand",
     level: "Beginner",
     duration: "8 Weeks",
@@ -52,7 +53,7 @@ const courses = [
   },
   {
     id: 4,
-    icon: "👻",
+    icon: Ghost,
     title: "Ghostwriting",
     level: "Intermediate",
     duration: "8 Weeks",
@@ -66,7 +67,7 @@ const courses = [
   },
   {
     id: 5,
-    icon: "💼",
+    icon: Briefcase,
     title: "Freelancing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -80,7 +81,7 @@ const courses = [
   },
   {
     id: 6,
-    icon: "📊",
+    icon: BarChart2,
     title: "Digital Marketing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -94,7 +95,7 @@ const courses = [
   },
   {
     id: 7,
-    icon: "✍️",
+    icon: PenTool,
     title: "Copywriting",
     level: "Beginner",
     duration: "8 Weeks",
@@ -108,7 +109,7 @@ const courses = [
   },
   {
     id: 8,
-    icon: "📧",
+    icon: Mail,
     title: "Email Marketing",
     level: "Intermediate",
     duration: "8 Weeks",
@@ -122,7 +123,7 @@ const courses = [
   },
   {
     id: 9,
-    icon: "💸",
+    icon: DollarSign,
     title: "Affiliate Marketing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -136,7 +137,7 @@ const courses = [
   },
   {
     id: 10,
-    icon: "📱",
+    icon: Smartphone,
     title: "Social Media Marketing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -150,7 +151,7 @@ const courses = [
   },
   {
     id: 11,
-    icon: "🧠",
+    icon: Brain,
     title: "SWE & LLM Mastery",
     level: "Intermediate",
     duration: "8 Weeks",
@@ -210,7 +211,7 @@ export default function Courses() {
           </head>
           <body>
             <div class="logo">CHRISCO Digital Academy</div>
-            <h1>${course.icon} ${course.title}</h1>
+            <h1>${course.title}</h1>
             <p>${course.desc}</p>
             <div>
               <span class="badge">${course.level}</span>
@@ -233,6 +234,12 @@ export default function Courses() {
       printWindow.print()
     }
   }
+
+  const CourseIcon = ({ icon: Icon, size = 56 }) => (
+    <div className="flex justify-center mb-2">
+      <Icon size={size} color="white" strokeWidth={1.5} />
+    </div>
+  )
 
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
@@ -300,8 +307,8 @@ export default function Courses() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {courses.map((course) => (
             <div key={course.id} className="card border border-purple-100 rounded-2xl overflow-hidden shadow-md bg-white">
-              <div className={`bg-gradient-to-r ${course.color} p-6 text-white text-center`}>
-                <div className="text-6xl mb-2">{course.icon}</div>
+              <div className={`bg-gradient-to-r ${course.color} p-8 text-white text-center`}>
+                <CourseIcon icon={course.icon} size={56} />
                 <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">{course.level}</span>
               </div>
               <div className="p-6">
@@ -338,8 +345,8 @@ export default function Courses() {
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className={`bg-gradient-to-r ${selected.color} p-6 rounded-xl text-white text-center mb-6`}>
-              <div className="text-6xl mb-2">{selected.icon}</div>
-              <h2 className="text-2xl font-extrabold">{selected.title}</h2>
+              <CourseIcon icon={selected.icon} size={56} />
+              <h2 className="text-2xl font-extrabold mt-2">{selected.title}</h2>
               <div className="flex justify-center gap-2 mt-3 flex-wrap">
                 <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">{selected.level}</span>
                 <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">⏱ {selected.duration}</span>
@@ -437,8 +444,8 @@ export default function Courses() {
 
       <footer className="bg-purple-950 text-purple-300 text-center py-8 text-sm">
         <p className="text-yellow-400 font-bold text-lg mb-1">CHRISCO Digital Academy</p>
-        <p>Under CHRISCO Youth Aflame • Founded by CHRISCO</p>
-        <p className="mt-2">📧 chriscoyouthaflame2025@gmail.com • 📞 +254112272061 • 📍 Nairobi, Kenya</p>
+        <p>Under CHRISCO Youth Aflame • Founded by Wambete Benjamin</p>
+        <p className="mt-2">📧 shambetz@gmail.com • 📞 +254112272061 • 📍 Nairobi, Kenya</p>
         <p className="mt-4 text-purple-600">© 2026 All Rights Reserved</p>
       </footer>
     </main>
