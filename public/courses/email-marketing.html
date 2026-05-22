@@ -1,296 +1,1147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHRISCO Digital Academy • Email Marketing</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
-        
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f8f4ff;
-            color: #1f2937;
-            line-height: 1.7;
-        }
-        .header {
-            background: linear-gradient(135deg, #581c87 0%, #7e22ce 100%);
-            color: white;
-            padding: 4rem 1rem 3rem;
-            text-align: center;
-            position: relative;
-        }
-        .logo {
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 0;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -2px;
-        }
-        .container {
-            max-width: 1100px;
-            margin: -2rem auto 2rem;
-            padding: 2.5rem;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(88, 28, 135, 0.15);
-        }
-        h1 { font-size: 2.8rem; text-align: center; color: #581c87; margin: 0 0 1rem; }
-        h2 { color: #581c87; border-bottom: 4px solid #f59e0b; padding-bottom: 12px; }
-        h3 { color: #7e22ce; margin-top: 2rem; }
-        .gold { color: #f59e0b; font-weight: 600; }
-        .section {
-            margin: 2.8rem 0;
-            padding: 2rem;
-            background: #f8f4ff;
-            border-radius: 12px;
-            border-left: 6px solid #581c87;
-        }
-        .week {
-            background: white;
-            border: 2px solid #581c87;
-            border-radius: 12px;
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        .progress-bar {
-            height: 10px;
-            background: #e5d5ff;
-            border-radius: 9999px;
-            margin: 1rem 0;
-            overflow: hidden;
-        }
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #581c87, #f59e0b);
-            width: 0%;
-            transition: width 1s ease;
-        }
-        ul { padding-left: 1.4rem; }
-        li { margin: 0.65rem 0; }
-        .task {
-            background: #fefce8;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 5px solid #f59e0b;
-            margin: 1rem 0;
-        }
-        .resource {
-            display: inline-block;
-            background: #581c87;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            margin: 5px 8px 5px 0;
-        }
-        .btn {
-            display: inline-block;
-            background: #f59e0b;
-            color: #581c87;
-            padding: 14px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin: 15px 8px 15px 0;
-        }
-        .footer {
-            background: #581c87;
-            color: white;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-        }
-        @media print {
-            body { background: white; }
-            .container { box-shadow: none; margin: 0; max-width: 100%; }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Email Marketing From Scratch — The Complete Beginner's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --purple: #3b0764;
+    --purple-mid: #6b21a8;
+    --purple-light: #a855f7;
+    --gold: #f59e0b;
+    --gold-light: #fcd34d;
+    --dark: #0a0015;
+    --white: #ffffff;
+    --gray: #f3f0ff;
+    --text: #1a0533;
+    --muted: #6b7280;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); line-height: 1.7; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+  @keyframes comet { 0% { transform: translate(0,0) rotate(45deg); opacity:1; } 100% { transform: translate(400px,400px) rotate(45deg); opacity:0; } }
+  @keyframes glow { 0%, 100% { box-shadow: 0 0 20px rgba(245,158,11,0.3); } 50% { box-shadow: 0 0 40px rgba(245,158,11,0.7); } }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+  .comet { position: absolute; width: 2px; height: 70px; background: linear-gradient(to bottom, var(--gold), transparent); border-radius: 50%; animation: comet linear infinite; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #0a0015 0%, #1a0035 40%, #2d0057 70%, #3b0764 100%); color: var(--white); padding: 70px 40px; text-align: center; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 50%, rgba(168,85,247,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(245,158,11,0.08) 0%, transparent 50%); }
+  .logo { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; display: inline-block; border: 1px solid rgba(245,158,11,0.3); padding: 8px 20px; border-radius: 50px; animation: glow 3s ease-in-out infinite; }
+  .header-icon { font-size: 5rem; margin-bottom: 20px; display: block; animation: float 3s ease-in-out infinite; position: relative; z-index: 1; }
+  .header h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; position: relative; z-index: 1; }
+  .header h1 span { background: linear-gradient(90deg, var(--gold), var(--gold-light), #ff9900, var(--gold)); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
+  .header p { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 650px; margin: 0 auto 30px; position: relative; z-index: 1; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; position: relative; z-index: 1; }
+  .badge { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.35); color: var(--gold-light); padding: 6px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; }
+  .float-circle { position: absolute; border-radius: 50%; animation: float 4s ease-in-out infinite; }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .section-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--purple-light); margin-bottom: 12px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--purple); margin-bottom: 20px; }
+
+  /* INTRO */
+  .what-is { padding: 60px 0; animation: fadeUp 0.8s ease forwards; }
+  .what-is p { color: #4b5563; font-size: 1.05rem; margin-bottom: 16px; }
+
+  /* HIGHLIGHT */
+  .highlight-box { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); border-radius: 20px; padding: 30px; margin: 30px 0; color: var(--white); }
+  .highlight-box h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--gold); margin-bottom: 12px; }
+  .highlight-box p { color: rgba(255,255,255,0.85); margin-bottom: 0; }
+
+  /* OVERVIEW GRID */
+  .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin: 40px 0; }
+  .overview-card { background: var(--gray); border-radius: 16px; padding: 20px; text-align: center; border: 1px solid rgba(107,33,168,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+  .overview-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(59,7,100,0.12); }
+  .overview-card .icon { font-size: 2rem; margin-bottom: 10px; }
+  .overview-card .label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .overview-card .value { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--purple); margin-top: 4px; }
+
+  /* ROADMAP */
+  .roadmap { background: linear-gradient(135deg, var(--dark) 0%, #1a0035 100%); padding: 60px 40px; }
+  .roadmap .section-label { color: var(--gold-light); }
+  .roadmap .section-title { color: var(--white); }
+  .roadmap-steps { margin-top: 40px; position: relative; }
+  .roadmap-steps::before { content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), transparent); }
+  .roadmap-step { display: flex; gap: 24px; margin-bottom: 32px; position: relative; }
+  .step-dot { width: 50px; height: 50px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--purple); font-size: 16px; flex-shrink: 0; animation: pulse 2s ease-in-out infinite; z-index: 1; }
+  .step-content { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px 24px; flex: 1; }
+  .step-content h4 { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--gold); margin-bottom: 8px; font-size: 1rem; }
+  .step-content p { color: rgba(255,255,255,0.75); font-size: 14px; margin-bottom: 10px; }
+  .step-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .step-tag { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: var(--gold-light); padding: 3px 10px; border-radius: 50px; font-size: 11px; font-weight: 600; }
+
+  /* CHAPTERS */
+  .syllabus { padding: 60px 0; }
+  .week-card { border: 1px solid rgba(107,33,168,0.15); border-radius: 20px; margin-bottom: 28px; overflow: hidden; transition: box-shadow 0.3s; }
+  .week-card:hover { box-shadow: 0 8px 30px rgba(59,7,100,0.1); }
+  .week-header { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); padding: 20px 28px; display: flex; align-items: center; gap: 16px; }
+  .week-number { background: var(--gold); color: var(--purple); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; padding: 6px 14px; border-radius: 50px; white-space: nowrap; }
+  .week-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--white); }
+  .week-body { padding: 28px; background: var(--white); }
+  .week-body .intro-text { color: #4b5563; font-size: 1rem; margin-bottom: 22px; line-height: 1.8; }
+
+  /* TOPIC LIST */
+  .topic-list { list-style: none; }
+  .topic-list li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray); font-size: 14px; color: #374151; }
+  .topic-list li:last-child { border-bottom: none; }
+  .topic-list li::before { content: '→'; color: var(--purple-light); font-weight: 700; flex-shrink: 0; }
+  .topic-tag { display: inline-block; background: var(--gray); color: var(--purple-mid); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-left: auto; white-space: nowrap; }
+
+  /* ANALOGY */
+  .analogy { background: linear-gradient(135deg, #fff8e7, #fff3cd); border: 1px solid rgba(245,158,11,0.3); border-left: 4px solid var(--gold); border-radius: 12px; padding: 18px 22px; margin: 20px 0; font-size: 14px; color: #4b3800; }
+  .analogy strong { display: block; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+
+  /* CALLOUTS */
+  .callout { border-radius: 14px; padding: 18px 22px; margin: 20px 0; display: flex; gap: 14px; font-size: 14px; }
+  .callout-purple { background: rgba(107,33,168,0.07); border: 1px solid rgba(107,33,168,0.2); }
+  .callout-gold   { background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.25); }
+  .callout-green  { background: rgba(22,163,74,0.07);  border: 1px solid rgba(22,163,74,0.25); }
+  .callout-red    { background: rgba(239,68,68,0.07);  border: 1px solid rgba(239,68,68,0.25); }
+  .callout .ci { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { color: var(--purple); display: block; margin-bottom: 4px; font-size: 14px; font-weight: 700; }
+  .callout-body p { color: var(--muted); font-size: 13px; margin: 0; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 14px; border: 1px solid rgba(107,33,168,0.1); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gray); color: var(--purple-mid); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 16px; text-align: left; }
+  td { padding: 11px 16px; border-top: 1px solid rgba(107,33,168,0.07); color: #374151; vertical-align: top; }
+  tr:hover td { background: rgba(107,33,168,0.02); }
+
+  /* CHECKLIST */
+  .checklist-section { background: var(--gray); border-radius: 20px; padding: 28px; margin: 24px 0; }
+  .checklist-section h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--purple); margin-bottom: 16px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(107,33,168,0.08); font-size: 14px; color: #374151; }
+  .check-item:last-child { border-bottom: none; }
+  .check-box { width: 18px; height: 18px; border: 2px solid rgba(107,33,168,0.3); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+
+  /* CHAPTER DIVIDER */
+  .chapter-divider { display: flex; align-items: center; gap: 16px; margin: 36px 0 20px; }
+  .chapter-divider .cd-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(107,33,168,0.2), transparent); }
+  .chapter-divider .cd-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--purple-light); white-space: nowrap; }
+
+  /* STAT ROW */
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin: 24px 0; }
+  .stat-card { background: var(--gray); border: 1px solid rgba(107,33,168,0.1); border-radius: 14px; padding: 20px; text-align: center; }
+  .stat-card .s-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--purple); line-height: 1; }
+  .stat-card .s-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* EMAIL TYPE CARDS */
+  .email-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+  .email-card { background: var(--gray); border: 1px solid rgba(107,33,168,0.1); border-radius: 16px; padding: 22px; transition: all 0.3s; }
+  .email-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(59,7,100,0.1); border-color: var(--gold); }
+  .email-card .e-icon { font-size: 2rem; margin-bottom: 10px; }
+  .email-card .e-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--purple); margin-bottom: 6px; }
+  .email-card .e-desc { font-size: 13px; color: var(--muted); }
+
+  /* PLATFORM CARDS */
+  .platform-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+  .platform-card { background: var(--white); border: 1px solid rgba(107,33,168,0.15); border-radius: 16px; padding: 22px; transition: all 0.3s; }
+  .platform-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(59,7,100,0.1); border-color: var(--gold); }
+  .platform-card .p-icon { font-size: 2rem; margin-bottom: 10px; }
+  .platform-card .p-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--purple); margin-bottom: 4px; }
+  .platform-card .p-desc { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .platform-card .p-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .p-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: rgba(107,33,168,0.1); color: var(--purple-mid); }
+
+  /* RESOURCES */
+  .resources { background: var(--gray); padding: 60px 40px; }
+  .resources .section-label { color: var(--purple-light); }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 30px; }
+  .resource-card { background: var(--white); border-radius: 16px; padding: 24px; border: 1px solid rgba(107,33,168,0.1); transition: all 0.3s; }
+  .resource-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(59,7,100,0.12); border-color: var(--gold); }
+  .resource-card .r-icon { font-size: 2rem; margin-bottom: 12px; }
+  .resource-card .r-type { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--purple-light); margin-bottom: 6px; }
+  .resource-card h4 { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--purple); margin-bottom: 8px; font-size: 1rem; }
+  .resource-card p { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .resource-card a { display: inline-block; background: var(--purple); color: var(--white); font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 50px; text-decoration: none; transition: background 0.3s; }
+  .resource-card a:hover { background: var(--purple-mid); }
+  .free-badge { display: inline-block; background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+  .paid-badge { display: inline-block; background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* TOOLS */
+  .tools { padding: 60px 0; }
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top: 30px; }
+  .tool-card { background: var(--gray); border-radius: 14px; padding: 20px; text-align: center; border: 1px solid rgba(107,33,168,0.1); transition: all 0.3s; }
+  .tool-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(59,7,100,0.12); border-color: var(--gold); }
+  .tool-card .tool-icon { font-size: 2rem; margin-bottom: 8px; }
+  .tool-card .tool-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--purple); }
+  .tool-card .tool-desc { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* OUTCOMES */
+  .outcomes { background: linear-gradient(135deg, var(--purple) 0%, var(--purple-mid) 100%); padding: 60px 40px; }
+  .outcomes .section-label { color: var(--gold-light); }
+  .outcomes .section-title { color: var(--white); }
+  .outcomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 30px; }
+  .outcome-item { display: flex; align-items: flex-start; gap: 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; }
+  .outcome-item .check { background: var(--gold); color: var(--purple); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+  .outcome-item p { color: rgba(255,255,255,0.85); font-size: 14px; }
+
+  /* PROJECT */
+  .project { background: linear-gradient(135deg, var(--dark) 0%, var(--purple) 60%, var(--purple-mid) 100%); padding: 60px 40px; text-align: center; position: relative; overflow: hidden; }
+  .project .section-label { color: var(--gold-light); }
+  .project .section-title { color: var(--white); }
+  .project > .container > p { color: rgba(255,255,255,0.7); max-width: 600px; margin: 16px auto 0; }
+  .project-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(245,158,11,0.3); border-radius: 20px; padding: 36px 40px; margin-top: 36px; max-width: 680px; margin-left: auto; margin-right: auto; text-align: left; }
+  .project-box h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--gold); margin-bottom: 18px; text-align: center; }
+  .project-box ul { list-style: none; }
+  .project-box ul li { display: flex; gap: 10px; padding: 10px 0; color: rgba(255,255,255,0.8); font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .project-box ul li:last-child { border-bottom: none; }
+  .project-box ul li::before { content: '✦'; color: var(--gold); flex-shrink: 0; }
+
+  /* CTA */
+  .cta { padding: 60px 40px; text-align: center; background: var(--white); }
+  .cta .section-title { color: var(--purple); }
+  .cta p { color: var(--muted); margin: 16px auto 30px; max-width: 520px; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); color: var(--white); font-family: 'Syne', sans-serif; font-weight: 700; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-size: 15px; transition: all 0.3s; box-shadow: 0 8px 25px rgba(59,7,100,0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(59,7,100,0.4); }
+  .btn-secondary { background: var(--gold); color: var(--purple); font-family: 'Syne', sans-serif; font-weight: 700; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-size: 15px; transition: all 0.3s; }
+  .btn-secondary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* CAREERS */
+  .careers { padding: 60px 0; }
+  .careers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 20px; margin-top: 30px; }
+  .career-card { background: var(--white); border: 2px solid rgba(107,33,168,0.12); border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; }
+  .career-card:hover { border-color: var(--gold); box-shadow: 0 8px 25px rgba(245,158,11,0.15); transform: translateY(-4px); }
+  .career-card .c-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .career-card h4 { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--purple); margin-bottom: 8px; font-size: 0.95rem; }
+  .career-card p { font-size: 12px; color: var(--muted); }
+
+  /* FOOTER */
+  footer { background: var(--purple); color: rgba(255,255,255,0.6); text-align: center; padding: 40px 24px; font-size: 13px; }
+  footer .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: 8px; }
+  footer .footer-contact { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+
+  @media print { .cta { display: none; } .week-card { break-inside: avoid; } body { font-size: 13px; } }
+  @media (max-width: 600px) {
+    .header, .outcomes, .resources, .project, .cta { padding: 40px 20px; }
+    .week-header, .week-body { padding: 16px 20px; }
+    .roadmap-steps::before { display: none; }
+    .roadmap { padding: 40px 20px; }
+    .resources { padding: 40px 20px; }
+  }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1 class="logo">CHRISCO DIGITAL ACADEMY</h1>
-        <p style="margin: 12px 0 0; font-size: 1.4rem; opacity: 0.95;">Empowering African Youth with Real Digital Skills</p>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="header">
+  <div class="float-circle" style="width:300px;height:300px;background:rgba(168,85,247,0.05);top:-80px;left:-80px;"></div>
+  <div class="float-circle" style="width:200px;height:200px;background:rgba(245,158,11,0.04);bottom:-40px;right:60px;animation-delay:1.5s;"></div>
+  <div class="comet" style="top:10%;left:5%;animation-duration:4s;"></div>
+  <div class="comet" style="top:35%;left:65%;animation-duration:5.5s;animation-delay:2s;opacity:0.5;"></div>
+
+  <div class="logo">📧 Complete Beginner's Guide</div>
+  <span class="header-icon">✉️</span>
+  <h1>Email Marketing<br/><span>From Absolute Zero</span></h1>
+  <p>Everything you need to understand how email marketing works — from what a list actually is, to writing emails people open, to turning subscribers into real income — explained simply, honestly, and from scratch.</p>
+  <div class="badges">
+    <span class="badge">📋 What It Is</span>
+    <span class="badge">🏗️ Building Your List</span>
+    <span class="badge">✍️ Writing Emails</span>
+    <span class="badge">⚙️ Automation</span>
+    <span class="badge">📊 Metrics</span>
+    <span class="badge">🛠️ Tools & Platforms</span>
+    <span class="badge">📜 Laws & Compliance</span>
+    <span class="badge">💸 Monetisation</span>
+  </div>
+</div>
+
+
+<!-- ══════════ INTRO ══════════ -->
+<div class="what-is">
+  <div class="container">
+    <div class="section-label">👋 Before We Begin</div>
+    <div class="section-title">Why Email Is the Most Underrated Thing on the Internet</div>
+
+    <p>Social media gets all the glory. TikTok goes viral. Instagram gets the likes. YouTube gets the subscribers. But quietly, behind the scenes, email has been the highest-converting, most reliable, and most profitable marketing channel for over 30 years — and it still is today.</p>
+
+    <p>Unlike social media where an algorithm decides who sees your content, email lands <strong>directly in someone's inbox.</strong> They chose to be there. They gave you their address voluntarily. That's not a follower — that's a relationship. And relationships convert into income far more reliably than followers ever will.</p>
+
+    <div class="highlight-box">
+      <h3>💡 The One-Sentence Explanation</h3>
+      <p>Email marketing means building a list of people who <strong>chose to hear from you</strong>, sending them <strong>valuable, relevant messages</strong> on a regular basis, and over time, turning that trust into <strong>sales, clicks, and income</strong> — without depending on any algorithm or platform to deliver it for you.</p>
     </div>
 
-    <div class="container">
-        <h1>Email Marketing</h1>
-        <p style="text-align:center; font-size:1.3rem; color:#581c87; margin-bottom:2rem;">
-            <strong>8-Week Complete Course • Build Your Most Valuable Asset — Your Email List</strong>
-        </p>
-
-        <!-- Progress Overview -->
-        <div class="section" style="text-align:center;">
-            <h3>Course Progress</h3>
-            <div class="progress-bar"><div class="progress" style="width:12.5%"></div></div>
-            <p><strong>Week 1 of 8 • Start Today</strong></p>
-        </div>
-
-        <div class="section">
-            <h2>Course Description</h2>
-            <p>Learn how to build, grow, and monetize an email list — one of the most powerful and profitable digital assets. This practical course teaches you how to attract subscribers, write emails that people actually open and buy from, set up automated sequences, and turn your list into a consistent source of income. Perfect for freelancers, business owners, and content creators in Africa.</p>
-        </div>
-
-        <div class="section">
-            <h2>Who This Course Is For</h2>
-            <ul>
-                <li>Youth who want to build a direct line to their audience</li>
-                <li>Business owners and freelancers who want to sell more</li>
-                <li>Content creators and bloggers</li>
-                <li>Anyone who wants to earn through email without relying on social media algorithms</li>
-                <li>Complete beginners — no prior experience needed</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Learning Outcomes</h2>
-            <ul>
-                <li>Build and grow a targeted email list from scratch</li>
-                <li>Write high-converting emails and subject lines</li>
-                <li>Create automated email sequences (welcome, nurture, sales)</li>
-                <li>Segment your audience for better results</li>
-                <li>Comply with email marketing laws</li>
-                <li>Monetize your list through offers and promotions</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Tools You Will Need</h2>
-            <ul>
-                <li><strong>Free Tier:</strong> Mailchimp, Brevo (Sendinblue), ConvertKit, or MailerLite</li>
-                <li><strong>Free:</strong> Canva (for visuals), ChatGPT (for writing help)</li>
-                <li>Google Forms or landing page tool</li>
-                <li>Internet connection</li>
-            </ul>
-        </div>
-
-        <h2 style="text-align:center; margin:3rem 0 1.5rem;">📅 Detailed 8-Week Syllabus</h2>
-
-        <!-- Week 1 -->
-        <div class="week">
-            <h3>Week 1: Introduction to Email Marketing</h3>
-            <div class="progress-bar"><div class="progress" style="width:100%"></div></div>
-            <ul>
-                <li>Why email marketing still works in 2026</li>
-                <li>The power of owning your audience (vs social media)</li>
-                <li>Overview of email marketing platforms</li>
-                <li>Setting realistic goals for your list</li>
-            </ul>
-            <div class="task">
-                <strong>Weekly Task:</strong> Choose your email platform and create your account
-            </div>
-        </div>
-
-        <!-- Week 2 -->
-        <div class="week">
-            <h3>Week 2: Building Your Email List</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Creating irresistible lead magnets (freebies)</li>
-                <li>Setting up opt-in forms and landing pages</li>
-                <li>Where to promote your signup (social, WhatsApp, website)</li>
-                <li>Growing your list ethically and fast</li>
-            </ul>
-            <div class="task">
-                <strong>Weekly Task:</strong> Create your first lead magnet and signup form
-            </div>
-        </div>
-
-        <!-- Week 3 -->
-        <div class="week">
-            <h3>Week 3: Writing Emails That Get Opened</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Subject line formulas that boost open rates</li>
-                <li>Writing engaging email body content</li>
-                <li>Personalization and storytelling in emails</li>
-                <li>Best practices for mobile-friendly emails</li>
-            </ul>
-        </div>
-
-        <!-- Week 4 -->
-        <div class="week">
-            <h3>Week 4: Email Sequences & Automation</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Creating welcome sequences</li>
-                <li>Nurture sequences that build trust</li>
-                <li>Sales sequences that convert</li>
-                <li>Setting up automation workflows</li>
-            </ul>
-        </div>
-
-        <!-- Week 5 -->
-        <div class="week">
-            <h3>Week 5: Segmentation & Personalization</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Why segmentation matters</li>
-                <li>Segmenting your list by behavior and interests</li>
-                <li>Advanced personalization techniques</li>
-                <li>Improving deliverability</li>
-            </ul>
-        </div>
-
-        <!-- Week 6 -->
-        <div class="week">
-            <h3>Week 6: Compliance, Deliverability & Best Practices</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Email laws (GDPR, CAN-SPAM, Kenya Data Protection Act)</li>
-                <li>How to stay compliant and avoid spam folders</li>
-                <li>Double opt-in vs single opt-in</li>
-                <li>Cleaning your list regularly</li>
-            </ul>
-        </div>
-
-        <!-- Week 7 -->
-        <div class="week">
-            <h3>Week 7: Monetizing Your Email List</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Promoting your own products and services</li>
-                <li>Affiliate marketing via email</li>
-                <li>Launching digital products through email</li>
-                <li>Measuring ROI from email campaigns</li>
-            </ul>
-        </div>
-
-        <!-- Week 8 -->
-        <div class="week">
-            <h3>Week 8: Scaling & Advanced Email Strategies</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Advanced automation and broadcast strategies</li>
-                <li>A/B testing emails</li>
-                <li>Case studies of successful email marketers</li>
-                <li>Creating your long-term email marketing plan</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Final Project (Must Complete)</h2>
-            <p>Build a complete email marketing system: Create a lead magnet, set up your signup form, grow your list to at least 100 subscribers, and launch one automated sequence (welcome or sales). Present your results and open/click rates.</p>
-            <a href="#" class="btn">Begin Week 1 Now →</a>
-        </div>
-
-        <div class="section" style="text-align:center;">
-            <h3>Ready to Own Your Audience?</h3>
-            <p style="font-size:1.2rem;">Your email list is one of the highest-ROI assets you can build. Many businesses earn the majority of their revenue directly from email.</p>
-        </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="s-num">$42</div>
+        <div class="s-label">Average return for every $1 spent on email marketing</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num">4B+</div>
+        <div class="s-label">People use email daily — more than any social platform</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num">21%</div>
+        <div class="s-label">Average email open rate across industries</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num">6×</div>
+        <div class="s-label">Higher transaction rates from email vs social media</div>
+      </div>
     </div>
 
-    <div class="footer">
-        <p><strong>CHRISCO Digital Academy</strong><br>
-        Founder: CHRISCO<br>
-        Email: <a href="mailto:shambetz@gmail.com" style="color:#f59e0b;">chriscoyouthafame2025@gmail.com</a><br>
-        Phone: +254 112 272 061<br>
-        Nairobi, Kenya • © 2026</p>
+    <div class="callout callout-gold">
+      <div class="ci">💛</div>
+      <div class="callout-body">
+        <strong>Who This Guide Is For</strong>
+        <p>Whether you're a student curious about digital marketing, someone building a side hustle, a content creator wanting to monetise, a small business owner, or someone who simply wants to understand how email marketing actually works — this guide starts from zero and takes you all the way to confident.</p>
+      </div>
     </div>
-</body>
+
+    <div class="overview-grid">
+      <div class="overview-card"><div class="icon">📋</div><div class="label">Chapter 1</div><div class="value">The Basics</div></div>
+      <div class="overview-card"><div class="icon">🏗️</div><div class="label">Chapter 2</div><div class="value">Building a List</div></div>
+      <div class="overview-card"><div class="icon">✍️</div><div class="label">Chapter 3</div><div class="value">Writing Emails</div></div>
+      <div class="overview-card"><div class="icon">⚙️</div><div class="label">Chapter 4</div><div class="value">Automation</div></div>
+      <div class="overview-card"><div class="icon">📊</div><div class="label">Chapter 5</div><div class="value">Metrics</div></div>
+      <div class="overview-card"><div class="icon">🛠️</div><div class="label">Chapter 6</div><div class="value">Tools</div></div>
+      <div class="overview-card"><div class="icon">📜</div><div class="label">Chapter 7</div><div class="value">Laws & Ethics</div></div>
+      <div class="overview-card"><div class="icon">💸</div><div class="label">Chapter 8</div><div class="value">Monetisation</div></div>
+      <div class="overview-card"><div class="icon">🔄</div><div class="label">Chapter 9</div><div class="value">Scaling</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ ROADMAP ══════════ -->
+<div class="roadmap">
+  <div class="container">
+    <div class="section-label">🗺️ Your Learning Journey</div>
+    <div class="section-title">Nine Chapters, One Complete Playbook</div>
+    <div class="roadmap-steps">
+
+      <div class="roadmap-step">
+        <div class="step-dot">1</div>
+        <div class="step-content">
+          <h4>How Email Marketing Actually Works</h4>
+          <p>Understand the full picture — what a list is, who the players are, the different types of emails, and why email consistently outperforms every other marketing channel.</p>
+          <div class="step-tags"><span class="step-tag">The basics</span><span class="step-tag">Email types</span><span class="step-tag">Why it works</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">2</div>
+        <div class="step-content">
+          <h4>Building Your Email List — The Right Way</h4>
+          <p>A list isn't built by buying contacts. It's grown by earning trust. We cover lead magnets, opt-in forms, landing pages, and the ethical strategies that attract people who actually want to hear from you.</p>
+          <div class="step-tags"><span class="step-tag">Lead magnets</span><span class="step-tag">Opt-in forms</span><span class="step-tag">Landing pages</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">3</div>
+        <div class="step-content">
+          <h4>Writing Emails People Actually Open and Read</h4>
+          <p>Subject lines, preview text, email body structure, the right length, storytelling, calls to action — how to write emails that feel like they're from a person, not a corporation.</p>
+          <div class="step-tags"><span class="step-tag">Subject lines</span><span class="step-tag">Copywriting</span><span class="step-tag">CTAs</span><span class="step-tag">Storytelling</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">4</div>
+        <div class="step-content">
+          <h4>Automation — Emails That Send Themselves</h4>
+          <p>Set up sequences that run automatically: welcome series, nurture sequences, abandoned cart emails, re-engagement campaigns. Work once, earn forever.</p>
+          <div class="step-tags"><span class="step-tag">Welcome series</span><span class="step-tag">Sequences</span><span class="step-tag">Triggers</span><span class="step-tag">Flows</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">5</div>
+        <div class="step-content">
+          <h4>Metrics — Understanding What the Numbers Mean</h4>
+          <p>Open rates, click rates, unsubscribes, bounce rates, conversions — what each number tells you about your list's health, and what to do when the numbers aren't what you hoped.</p>
+          <div class="step-tags"><span class="step-tag">Open rate</span><span class="step-tag">CTR</span><span class="step-tag">Deliverability</span><span class="step-tag">A/B testing</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">6</div>
+        <div class="step-content">
+          <h4>Tools & Platforms — Choosing the Right One</h4>
+          <p>MailerLite, ConvertKit, Mailchimp, ActiveCampaign, Klaviyo, Beehiiv — what makes each different, which one suits your stage, and what features actually matter for beginners.</p>
+          <div class="step-tags"><span class="step-tag">MailerLite</span><span class="step-tag">ConvertKit</span><span class="step-tag">Mailchimp</span><span class="step-tag">Beehiiv</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">7</div>
+        <div class="step-content">
+          <h4>Laws, Compliance & Ethics — The Rules You Must Know</h4>
+          <p>GDPR, CAN-SPAM, CASL — the laws that govern email marketing globally. Why spam is illegal, what consent actually means, and how to protect yourself and your subscribers.</p>
+          <div class="step-tags"><span class="step-tag">GDPR</span><span class="step-tag">CAN-SPAM</span><span class="step-tag">Consent</span><span class="step-tag">Unsubscribe</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">8</div>
+        <div class="step-content">
+          <h4>Monetisation — Turning a List into Real Income</h4>
+          <p>Affiliate marketing via email, selling digital products, paid newsletters, sponsored emails, and how to promote without destroying the trust you spent months building.</p>
+          <div class="step-tags"><span class="step-tag">Affiliate emails</span><span class="step-tag">Digital products</span><span class="step-tag">Paid newsletters</span><span class="step-tag">Sponsorships</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">9</div>
+        <div class="step-content">
+          <h4>Scaling — From Hobbyist List to Serious Asset</h4>
+          <p>Segmentation, tagging, advanced personalisation, growing to thousands of subscribers, and building an email list that becomes one of the most valuable things you own.</p>
+          <div class="step-tags"><span class="step-tag">Segmentation</span><span class="step-tag">Tagging</span><span class="step-tag">Personalisation</span><span class="step-tag">List growth</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ CHAPTERS ══════════ -->
+<div class="syllabus">
+  <div class="container">
+    <div class="section-label">📖 The Chapters</div>
+    <div class="section-title">Let's Actually Learn This</div>
+
+
+    <!-- ── CH 1: THE BASICS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 1</div>
+        <div class="week-title">📋 How Email Marketing Actually Works</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Let's start at the very beginning — not with tools or tactics, but with understanding. Email marketing is one of those things that sounds simple but has a lot going on underneath. Once you see the full picture, every tactic and tool you encounter will make immediate sense.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The three players</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>The Sender (You)</strong> — The business, creator, or individual building a relationship with an audience through email. You own the list, create the content, and make the offers. <span class="topic-tag">Player 1</span></li>
+          <li><strong>The Subscriber</strong> — A person who voluntarily gave you their email address and agreed to receive messages from you. They are not a number — they are a person with a problem you can help solve. <span class="topic-tag">Player 2</span></li>
+          <li><strong>The Email Service Provider (ESP)</strong> — The software that handles everything technically: storing your subscriber list, sending emails, tracking opens and clicks, and managing unsubscribes. MailerLite, Mailchimp, ConvertKit are all ESPs. <span class="topic-tag">Player 3</span></li>
+        </ul>
+
+        <div class="analogy">
+          <strong>🧠 Real-Life Analogy</strong>
+          Imagine you run a neighbourhood bakery. You keep a notebook of regular customers who asked to be notified when something special comes out of the oven. You call them personally. They pick up because they know you. They buy because they trust you. That notebook is your email list. The phone call is your email. Social media is the signboard outside — it might attract strangers, but the notebook is where your real relationships live.
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The main types of emails</div><div class="cd-line"></div></div>
+
+        <div class="email-grid">
+          <div class="email-card">
+            <div class="e-icon">👋</div>
+            <div class="e-name">Welcome Email</div>
+            <div class="e-desc">Sent immediately when someone subscribes. The most-opened email you'll ever send. Sets the tone for the entire relationship.</div>
+          </div>
+          <div class="email-card">
+            <div class="e-icon">📰</div>
+            <div class="e-name">Newsletter</div>
+            <div class="e-desc">Regular updates sent on a schedule — weekly, bi-weekly, monthly. Builds habit and keeps you top of mind without selling every time.</div>
+          </div>
+          <div class="email-card">
+            <div class="e-icon">📚</div>
+            <div class="e-name">Nurture / Educational</div>
+            <div class="e-desc">A series of emails that teaches your subscriber something valuable over time. Builds trust before you ever make an offer.</div>
+          </div>
+          <div class="email-card">
+            <div class="e-icon">🛒</div>
+            <div class="e-name">Promotional</div>
+            <div class="e-desc">Emails that make an offer — a product, a course, a sale, an affiliate recommendation. These earn money, but only work when trust exists first.</div>
+          </div>
+          <div class="email-card">
+            <div class="e-icon">⚙️</div>
+            <div class="e-name">Transactional</div>
+            <div class="e-desc">Order confirmations, password resets, purchase receipts. Triggered automatically by an action the subscriber took. High open rates — people always read these.</div>
+          </div>
+          <div class="email-card">
+            <div class="e-icon">😴</div>
+            <div class="e-name">Re-engagement</div>
+            <div class="e-desc">Sent to subscribers who've stopped opening your emails. "We miss you" campaigns. Either reawakens the relationship or helps you clean your list — both valuable outcomes.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="ci">✅</div>
+          <div class="callout-body">
+            <strong>Email vs Social Media — The Critical Difference</strong>
+            <p>When you post on Instagram, typically only 3–6% of your followers see it (due to the algorithm). When you send an email, it arrives in every subscriber's inbox. The average open rate across industries is 21% — and that's people who actively chose to open it. Email's deliverability and intentionality make it incomparably more powerful than any social platform for building real relationships.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 1 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Email marketing involves three players: you (sender), your subscriber, and an email service provider (ESP)</div>
+          <div class="check-item"><div class="check-box"></div>A subscriber is someone who voluntarily gave you their email — they're a relationship, not a statistic</div>
+          <div class="check-item"><div class="check-box"></div>There are six main email types — welcome, newsletter, nurture, promotional, transactional, and re-engagement</div>
+          <div class="check-item"><div class="check-box"></div>Email delivers to every inbox without an algorithm gatekeeping who sees your message</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 2: BUILDING A LIST ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 2</div>
+        <div class="week-title">🏗️ Building Your Email List — The Right Way</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Your email list is only as good as the people on it. A list of 500 people who genuinely want to hear from you will outperform a list of 50,000 people who barely remember signing up. That's why how you build your list matters just as much as how big it gets. Let's talk about building it the right way — through value, honesty, and real incentive.</p>
+
+        <div class="analogy">
+          <strong>🧠 Real-Life Analogy</strong>
+          Nobody gives you their personal phone number for nothing. But if you said: "I'm hosting a free masterclass next week on how to double your salary — give me your number and I'll send you the details," most people would. A lead magnet works the same way — you offer something genuinely valuable, and in exchange, someone trusts you with their email address.
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">What is a lead magnet?</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">A lead magnet is a free resource you offer in exchange for someone's email address. The key word is <em>genuinely valuable</em>. Not a vague promise. Not a PDF full of things people could Google in two minutes. Something specific, immediately useful, and directly relevant to what your audience cares about.</p>
+
+        <ul class="topic-list">
+          <li><strong>Checklist</strong> — A simple, actionable list people can use right away. "10-Point Checklist Before You Send Any Email Campaign." Quick to create, high perceived value. <span class="topic-tag">Easiest to Create</span></li>
+          <li><strong>Free Guide / Ebook</strong> — A short PDF (5–20 pages) that goes deeper on one specific topic. Works well in education, finance, health, and business niches. <span class="topic-tag">High Value</span></li>
+          <li><strong>Template</strong> — A ready-made document people can fill in themselves: email templates, budget spreadsheets, social media calendars. Saves people time — extremely high perceived value. <span class="topic-tag">Very High Conversion</span></li>
+          <li><strong>Mini Course</strong> — A sequence of 3–5 emails that teaches something step by step. Delivered automatically over a week. Builds trust before they've even finished the freebie. <span class="topic-tag">Trust Builder</span></li>
+          <li><strong>Free Tool / Calculator</strong> — An interactive tool: savings calculator, calorie tracker, SEO score tool. High effort to build but extremely sticky and shareable. <span class="topic-tag">Advanced</span></li>
+          <li><strong>Discount / Early Access</strong> — For e-commerce or product-based businesses: "Join our list and get 15% off your first order." Simple, effective, high conversion for the right audience. <span class="topic-tag">E-commerce</span></li>
+          <li><strong>Webinar or Free Workshop</strong> — Register with your email to attend a live or recorded session. High perceived value, builds personal connection even before the email relationship begins. <span class="topic-tag">High Engagement</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Where to put your opt-in form</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Landing page</strong> — A dedicated page with one single purpose: getting the visitor to sign up. No navigation, no distractions. Just the offer, the benefit, and the form. Highest conversion rate of any placement. <span class="topic-tag">Best Placement</span></li>
+          <li><strong>Website header / homepage</strong> — Above the fold so visitors see it immediately. Even a simple "Join 2,000 readers — get weekly tips on X" with an email field works consistently. <span class="topic-tag">High Visibility</span></li>
+          <li><strong>Blog post inline forms</strong> — Placed within the content, after a relevant section. Contextual placements convert better than sidebar forms because the reader is engaged with the topic. <span class="topic-tag">Contextual</span></li>
+          <li><strong>Exit-intent popup</strong> — Appears when the reader moves their cursor toward closing the tab. Done tastefully with a compelling offer, these capture people who would otherwise leave forever. <span class="topic-tag">Last Chance</span></li>
+          <li><strong>Social media bio link</strong> — Link your landing page from Instagram bio, TikTok bio, Twitter/X profile. Drive followers to become subscribers — the audience you own. <span class="topic-tag">Social to Email</span></li>
+          <li><strong>Content upgrades</strong> — A bonus resource specific to a single blog post. "Enjoyed this? Download the free checklist that goes with it." Highly relevant = very high conversion. <span class="topic-tag">Advanced</span></li>
+        </ul>
+
+        <div class="callout callout-red">
+          <div class="ci">🚫</div>
+          <div class="callout-body">
+            <strong>Never Buy an Email List</strong>
+            <p>This seems like a shortcut but it's a dead end. Bought lists contain people who never asked to hear from you. They will mark you as spam, destroying your sender reputation, which means future emails won't even reach inboxes. Email service providers also prohibit it in their terms. The only lists worth having are lists you built with permission, one subscriber at a time.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 2 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>A lead magnet is a free, genuinely valuable resource that convinces people to share their email address</div>
+          <div class="check-item"><div class="check-box"></div>The best lead magnets are specific, immediately usable, and directly relevant to your audience's needs</div>
+          <div class="check-item"><div class="check-box"></div>Landing pages, inline forms, exit popups, and social bio links are the main places to collect subscribers</div>
+          <div class="check-item"><div class="check-box"></div>Never buy a list — only build through genuine permission, one subscriber at a time</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 3: WRITING EMAILS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 3</div>
+        <div class="week-title">✍️ Writing Emails People Actually Open and Read</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">An email nobody opens is an email that didn't exist. And an email that gets opened but not read is almost as bad. Writing good emails is a learnable skill — it's not about being a gifted writer, it's about understanding what your reader needs in the moment they see your message and giving them a reason to keep going.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The subject line — the single most important sentence you'll write</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">Your subject line is the door to your email. If nobody opens the door, nothing inside matters. The average person receives over 120 emails a day. Your subject line has about two seconds and 40–50 characters to earn a click in a crowded inbox.</p>
+
+        <ul class="topic-list">
+          <li><strong>Curiosity gaps</strong> — Hint at something without revealing it fully. "The email mistake costing you 40% of your opens" makes you want to know what the mistake is. <span class="topic-tag">Technique</span></li>
+          <li><strong>Specificity</strong> — "5 subject line formulas with real open rates" beats "some tips on subject lines." Specific numbers and outcomes feel more credible and more useful. <span class="topic-tag">Technique</span></li>
+          <li><strong>Personalisation</strong> — Using the subscriber's first name in the subject line can lift open rates by 10–15%. "Sarah, this is for you" feels different to "this is for you." <span class="topic-tag">Technique</span></li>
+          <li><strong>Urgency (used sparingly)</strong> — "Last chance: closes tonight" works — when it's true. Fake urgency trains readers to ignore it. Only use time pressure when it genuinely exists. <span class="topic-tag">Use With Care</span></li>
+          <li><strong>The preview text</strong> — The short grey text visible in the inbox beneath the subject line. Most people ignore it — which means most emails waste a second chance to earn the open. Write preview text that extends and completes your subject line. <span class="topic-tag">Often Forgotten</span></li>
+          <li><strong>Avoid spam trigger words</strong> — Words like "FREE!!!", "ACT NOW", "WINNER", "GUARANTEED" trigger spam filters. Write like a human, not like a billboard. <span class="topic-tag">Deliverability</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Writing the email body</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Write like a person, not a brand</strong> — The emails people open most aren't from faceless corporations. They're from people. Use "I" and "you." Share a brief personal story. Be warm and direct. <span class="topic-tag">Golden Rule</span></li>
+          <li><strong>One email = one idea</strong> — Don't try to cover five topics in a single email. Pick one point, make it well, then move to the call to action. Readers who get confused do nothing. <span class="topic-tag">Focus</span></li>
+          <li><strong>Short paragraphs</strong> — One to three sentences per paragraph maximum. White space makes emails readable. Long blocks of text feel like homework. <span class="topic-tag">Formatting</span></li>
+          <li><strong>The story hook</strong> — Open with a very brief story or observation that connects to the main point. Stories make people feel something. Feeling leads to clicking. <span class="topic-tag">Copywriting</span></li>
+          <li><strong>One clear call to action (CTA)</strong> — Every email should have one thing you want the reader to do. Click this link. Reply to this email. Download this file. One action per email, stated clearly and at least twice (early and at the end). <span class="topic-tag">Conversion</span></li>
+          <li><strong>The PS line</strong> — Many people scroll directly to the bottom of an email before deciding whether to read it. A "PS:" at the end is one of the most-read parts of any email. Use it to restate your CTA or share a key insight. <span class="topic-tag">Conversion Hack</span></li>
+        </ul>
+
+        <div class="analogy">
+          <strong>🧠 Real-Life Analogy — The One Email = One Idea Rule</strong>
+          Imagine a friend texts you: "Hey, can you recommend a good restaurant? Also, did you see the match? Also, I need help moving furniture Saturday. Also, have you read that book I mentioned?" You'd feel overwhelmed and probably only respond to one of those. Emails work the same way. Give your reader one clear thing to think about and one clear thing to do. They'll do it.
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">How long should an email be?</div><div class="cd-line"></div></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Email Type</th><th>Ideal Length</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Welcome email</strong></td><td>150–300 words</td><td>First impression — warm, clear, brief. Don't overwhelm on day one.</td></tr>
+              <tr><td><strong>Newsletter</strong></td><td>300–600 words</td><td>Enough to deliver real value; short enough to respect their time.</td></tr>
+              <tr><td><strong>Nurture / Educational</strong></td><td>200–500 words</td><td>One lesson, explained well. End with a tease of the next email.</td></tr>
+              <tr><td><strong>Promotional</strong></td><td>150–400 words</td><td>Lead with the benefit, not the product. Be direct and give them one link.</td></tr>
+              <tr><td><strong>Re-engagement</strong></td><td>100–200 words</td><td>Short and honest. "We miss you. Here's something that might bring you back."</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 3 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>The subject line is the most important part of any email — it determines whether anything else gets read</div>
+          <div class="check-item"><div class="check-box"></div>Write like a real person: "I" and "you," short paragraphs, a story hook, and one clear CTA</div>
+          <div class="check-item"><div class="check-box"></div>One email = one idea — don't pack multiple topics into a single message</div>
+          <div class="check-item"><div class="check-box"></div>The PS line is one of the most-read parts of any email — always use it to reinforce your CTA</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 4: AUTOMATION ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 4</div>
+        <div class="week-title">⚙️ Automation — Emails That Send Themselves</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Here's where email marketing gets genuinely exciting. Imagine spending a few hours setting up a series of ten emails — and then those ten emails automatically go to every new subscriber, building trust and making offers, while you sleep. That's email automation. It's the closest thing to genuine passive income that actually exists online.</p>
+
+        <div class="analogy">
+          <strong>🧠 Real-Life Analogy</strong>
+          Think of automation as hiring a very patient, very consistent sales assistant who never gets tired, never takes a day off, and always says exactly the right thing at exactly the right time — because you wrote the script once, and they follow it perfectly for every single new customer, forever.
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The essential automated sequences every sender needs</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Welcome Sequence (most important)</strong> — Triggered the moment someone subscribes. A series of 3–7 emails sent over 1–2 weeks. Deliver the lead magnet, introduce yourself and your story, share your best content, set expectations, and make your first offer. This sequence works around the clock — every new subscriber goes through it. <span class="topic-tag">Build First</span></li>
+          <li><strong>Nurture Sequence</strong> — A longer series of educational emails that builds expertise and trust over weeks. Each email teaches one concept and leads naturally to the next. By the end, subscribers understand your area deeply — and trust you to recommend solutions. <span class="topic-tag">Trust Builder</span></li>
+          <li><strong>Sales / Launch Sequence</strong> — A series sent when you're promoting something. Opens with a story or problem, builds desire across 3–5 emails, overcomes objections, creates urgency, and closes with a final reminder. The entire sequence has one goal: one purchase decision. <span class="topic-tag">Revenue Driver</span></li>
+          <li><strong>Abandoned Cart Email</strong> — For e-commerce: automatically sent when someone adds a product to their cart but doesn't buy. The first email reminds them. The second offers help. The third might offer a small incentive. These recover 5–15% of abandoned carts on average. <span class="topic-tag">E-commerce Essential</span></li>
+          <li><strong>Re-engagement Sequence</strong> — Triggered when a subscriber hasn't opened an email in 60–90 days. 2–3 emails: one honest "we miss you," one "here's our best content," one final "should we remove you?" Keeps your list clean and deliverability healthy. <span class="topic-tag">List Hygiene</span></li>
+          <li><strong>Post-purchase Sequence</strong> — Sent after someone buys. Thank them genuinely. Deliver value that helps them use what they bought. Then, after they've had a positive experience, introduce them to something complementary. <span class="topic-tag">Customer Retention</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">How triggers and conditions work</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Trigger</strong> — The event that starts a sequence. Subscribing to your list, buying a product, clicking a link, not opening for 30 days, filling out a form — any of these can be a trigger. <span class="topic-tag">How It Starts</span></li>
+          <li><strong>Delay</strong> — The gap between emails. "Send Email 2 three days after Email 1." You control the timing. Don't send five emails in one day — spread them to feel natural and respectful. <span class="topic-tag">Pacing</span></li>
+          <li><strong>Condition / Branch</strong> — "If the subscriber opened Email 3, send them Email 4A. If they didn't, send Email 4B." This branching logic lets you personalise the journey without manually managing anything. <span class="topic-tag">Advanced</span></li>
+          <li><strong>Tags</strong> — Labels you attach to subscribers based on their behaviour. "Clicked on affiliate marketing link" → tag as "interested in affiliate marketing" → send them more relevant content. Tags make your list intelligent. <span class="topic-tag">Segmentation</span></li>
+        </ul>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 4 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Automation means emails that send themselves, triggered by subscriber behaviour — set up once, run forever</div>
+          <div class="check-item"><div class="check-box"></div>The welcome sequence is the most important automation — every new subscriber goes through it automatically</div>
+          <div class="check-item"><div class="check-box"></div>Triggers, delays, conditions, and tags make your email system intelligent and personalised at scale</div>
+          <div class="check-item"><div class="check-box"></div>Sales sequences, re-engagement flows, and post-purchase emails each serve a specific purpose in the customer journey</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 5: METRICS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 5</div>
+        <div class="week-title">📊 Metrics — Understanding What the Numbers Tell You</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Numbers without context are just noise. Every email platform gives you a dashboard full of statistics — but most beginners either ignore them entirely or stare at them without knowing what to do. This chapter gives each metric a meaning, a benchmark, and an action you can take when the number isn't where you want it.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The key metrics and what they mean</div><div class="cd-line"></div></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Metric</th><th>What It Means</th><th>Industry Average</th><th>If It's Low, Check…</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Open Rate</strong></td><td>% of delivered emails that were opened</td><td>20–25%</td><td>Subject lines, sender name, send time, list health</td></tr>
+              <tr><td><strong>Click-Through Rate (CTR)</strong></td><td>% of opened emails where someone clicked a link</td><td>2–5%</td><td>CTA clarity, link relevance, email body engagement</td></tr>
+              <tr><td><strong>Click-to-Open Rate (CTOR)</strong></td><td>% of openers who also clicked — quality of the email body</td><td>10–20%</td><td>Relevance of content to what the subject promised</td></tr>
+              <tr><td><strong>Unsubscribe Rate</strong></td><td>% who unsubscribed after receiving an email</td><td>&lt;0.5%</td><td>Email frequency, content relevance, expectation mismatch</td></tr>
+              <tr><td><strong>Bounce Rate</strong></td><td>% of emails that couldn't be delivered</td><td>&lt;2%</td><td>Hard bounces = invalid addresses (remove them immediately)</td></tr>
+              <tr><td><strong>Spam Complaint Rate</strong></td><td>% who marked your email as spam</td><td>&lt;0.1%</td><td>List quality, consent issues, sending too frequently</td></tr>
+              <tr><td><strong>Conversion Rate</strong></td><td>% who completed the desired action (purchase, download, signup)</td><td>Varies by goal</td><td>Offer relevance, CTA strength, landing page quality</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">A/B testing — the art of improving with data</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">A/B testing means sending two slightly different versions of an email to two small portions of your list, seeing which performs better, and sending the winner to everyone else. It removes guesswork and replaces it with evidence. Always test one variable at a time.</p>
+
+        <ul class="topic-list">
+          <li><strong>Test subject lines first</strong> — They have the biggest impact on open rate. Version A: "How I went from 0 to 1,000 subscribers in 30 days." Version B: "The 3 things I did to build my list fast." Send to 20% each, then send the winner to the remaining 60%. <span class="topic-tag">Highest Impact</span></li>
+          <li><strong>Test send time</strong> — Tuesday 9am or Thursday 6pm? Your audience is unique. Test different times over several campaigns to find when your specific subscribers are most likely to open. <span class="topic-tag">Easy Test</span></li>
+          <li><strong>Test email length</strong> — Short and punchy vs longer and detailed. Some audiences love depth. Others want to get to the point in 100 words. Data tells you which yours prefers. <span class="topic-tag">Format Test</span></li>
+          <li><strong>Test CTA wording</strong> — "Click here" vs "Show me how" vs "Download the guide now." Even small word changes can shift click rates meaningfully. <span class="topic-tag">Conversion Test</span></li>
+        </ul>
+
+        <div class="callout callout-purple">
+          <div class="ci">💜</div>
+          <div class="callout-body">
+            <strong>Unsubscribes Are Not Failure</strong>
+            <p>Every time someone unsubscribes, it feels like rejection. But it isn't. It's your list self-cleaning. Someone who wasn't engaged, wasn't going to buy, and was dragging down your open rate has removed themselves. A smaller, more engaged list consistently outperforms a large, uninterested one. Welcome unsubscribes — they improve the quality of who remains.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 5 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Open rate, CTR, bounce rate, and unsubscribe rate each tell a specific story about list health and content quality</div>
+          <div class="check-item"><div class="check-box"></div>A/B testing means sending two variations, measuring results, and sending the winner to the rest of your list</div>
+          <div class="check-item"><div class="check-box"></div>Test subject lines first — they have the highest impact on the most important metric (open rate)</div>
+          <div class="check-item"><div class="check-box"></div>Unsubscribes are healthy — they keep your list clean and your deliverability strong</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 6: TOOLS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 6</div>
+        <div class="week-title">🛠️ Tools & Platforms — Choosing the Right Email Service Provider</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">The tool you use to send emails is called an Email Service Provider (ESP). There are dozens of them, each with different strengths, pricing models, and ideal users. The good news: the most important thing isn't which one you pick — it's that you start. Choose one that suits your current stage and move forward. You can always migrate later.</p>
+
+        <div class="platform-grid">
+          <div class="platform-card">
+            <div class="p-icon">📧</div>
+            <div class="p-name">MailerLite</div>
+            <div class="p-desc">Free up to 1,000 subscribers & 12,000 emails/month. Clean interface, excellent automation, landing pages included. Best overall free starting point for creators and small businesses.</div>
+            <div class="p-tags"><span class="p-tag">Free to 1k</span><span class="p-tag">Automation</span><span class="p-tag">Landing pages</span><span class="p-tag">Best for beginners</span></div>
+          </div>
+          <div class="platform-card">
+            <div class="p-icon">🌱</div>
+            <div class="p-name">ConvertKit (Kit)</div>
+            <div class="p-desc">Built specifically for content creators: bloggers, podcasters, YouTubers. Excellent tagging and segmentation. Free up to 1,000 subscribers. Visual automation builder is very intuitive.</div>
+            <div class="p-tags"><span class="p-tag">Creator focused</span><span class="p-tag">Tagging</span><span class="p-tag">Free to 1k</span><span class="p-tag">Visual automation</span></div>
+          </div>
+          <div class="platform-card">
+            <div class="p-icon">🐒</div>
+            <div class="p-name">Mailchimp</div>
+            <div class="p-desc">The most widely known ESP. Free up to 500 contacts. Good for simple newsletters. Can feel complex for beginners at the automation level. Strong integrations with other tools.</div>
+            <div class="p-tags"><span class="p-tag">Most well-known</span><span class="p-tag">Free to 500</span><span class="p-tag">Good integrations</span><span class="p-tag">Can be complex</span></div>
+          </div>
+          <div class="platform-card">
+            <div class="p-icon">🐝</div>
+            <div class="p-name">Beehiiv</div>
+            <div class="p-desc">The new favourite for newsletter creators. Built-in monetisation through ads and subscriptions. Free plan available. Extremely clean writing experience. Growing fast in the creator economy.</div>
+            <div class="p-tags"><span class="p-tag">Newsletter focused</span><span class="p-tag">Built-in monetisation</span><span class="p-tag">Free plan</span><span class="p-tag">Creator favourite</span></div>
+          </div>
+          <div class="platform-card">
+            <div class="p-icon">⚡</div>
+            <div class="p-name">ActiveCampaign</div>
+            <div class="p-desc">The most powerful automation tool available. Complex conditional logic, advanced CRM features, deep segmentation. Overkill for beginners — come here when your list and business have grown.</div>
+            <div class="p-tags"><span class="p-tag">Most powerful</span><span class="p-tag">Advanced automation</span><span class="p-tag">CRM built-in</span><span class="p-tag">For grown lists</span></div>
+          </div>
+          <div class="platform-card">
+            <div class="p-icon">🛍️</div>
+            <div class="p-name">Klaviyo</div>
+            <div class="p-desc">The industry standard for e-commerce email marketing. Deep Shopify integration, behavioural triggers, abandoned cart flows. If you sell physical products, this is the tool the big brands use.</div>
+            <div class="p-tags"><span class="p-tag">E-commerce specialist</span><span class="p-tag">Shopify native</span><span class="p-tag">Abandoned cart</span><span class="p-tag">Advanced</span></div>
+          </div>
+        </div>
+
+        <div class="callout callout-gold">
+          <div class="ci">🎯</div>
+          <div class="callout-body">
+            <strong>Which One Should You Start With?</strong>
+            <p>If you're a content creator, blogger, or building a personal brand → <strong>MailerLite or ConvertKit.</strong> Both are free to start, excellent for automation, and built for individuals. If you're building an e-commerce store → <strong>Klaviyo.</strong> If your primary goal is a paid newsletter → <strong>Beehiiv.</strong> When in doubt: start with MailerLite. It's the most beginner-friendly with the most features on the free plan.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 6 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>An ESP (Email Service Provider) manages your list, sends emails, and tracks performance</div>
+          <div class="check-item"><div class="check-box"></div>MailerLite and ConvertKit are the best free starting points for creators and individuals</div>
+          <div class="check-item"><div class="check-box"></div>Beehiiv is the top choice if your goal is a paid newsletter with built-in monetisation</div>
+          <div class="check-item"><div class="check-box"></div>Klaviyo and ActiveCampaign are advanced tools to grow into — don't start there</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 7: LAWS & ETHICS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 7</div>
+        <div class="week-title">📜 Laws, Compliance & Ethics — The Rules You Must Know</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">This is the chapter most beginners skip — and that's a mistake. Email marketing is regulated by law in most countries. Getting this wrong doesn't just hurt your deliverability — it can result in substantial fines. The good news is that the legal requirements and the ethical best practices are almost identical. Do the right thing, and you'll also be doing the legal thing.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The key laws you need to know</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>GDPR (General Data Protection Regulation)</strong> — European Union law that applies to anyone emailing EU residents, regardless of where you are based. Requires clear consent, a privacy policy, the ability to access and delete data, and an easy unsubscribe mechanism. <span class="topic-tag">EU — Global Impact</span></li>
+          <li><strong>CAN-SPAM Act</strong> — United States law governing commercial email. Requires: a clear sender identity, no deceptive subject lines, a physical mailing address, and an easy opt-out that is honoured within 10 days. <span class="topic-tag">USA</span></li>
+          <li><strong>CASL (Canada's Anti-Spam Legislation)</strong> — One of the strictest email laws globally. Requires explicit consent (not just implied) before sending commercial email to Canadians. <span class="topic-tag">Canada</span></li>
+          <li><strong>POPIA (South Africa)</strong> — South Africa's data protection law. Requires lawful processing of personal data, including email addresses collected for marketing. Consent must be specific and informed. <span class="topic-tag">South Africa</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">What these laws require in practice</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Consent before emailing</strong> — People must actively opt in to receive your emails. Pre-ticked boxes don't count under GDPR. Someone entering their email for a free download is sufficient if you're clear about what they're signing up for. <span class="topic-tag">Non-Negotiable</span></li>
+          <li><strong>Identify yourself clearly</strong> — Your emails must clearly state who is sending them. No anonymous or misleading sender names. <span class="topic-tag">Required</span></li>
+          <li><strong>Include an unsubscribe link in every email</strong> — Every marketing email must have a working unsubscribe link. Most ESPs handle this automatically, but always check. <span class="topic-tag">Required</span></li>
+          <li><strong>Honour unsubscribe requests immediately</strong> — The moment someone clicks unsubscribe, they should not receive another marketing email from you. ESPs handle this automatically — do not override it manually. <span class="topic-tag">Required</span></li>
+          <li><strong>Include a physical address</strong> — CAN-SPAM requires a mailing address in every email. A PO Box or virtual office address is acceptable. Many creators use their city and country as a minimum. <span class="topic-tag">Required (USA)</span></li>
+          <li><strong>Store consent records</strong> — Keep a record of when and how someone consented to your emails. If your ESP handles this, make sure you can export those records if needed. <span class="topic-tag">Legal Protection</span></li>
+        </ul>
+
+        <div class="callout callout-green">
+          <div class="ci">✅</div>
+          <div class="callout-body">
+            <strong>Ethics and Law Point the Same Direction</strong>
+            <p>Everything the law requires — consent, transparency, easy opt-out, honest communication — is also exactly what builds the best email marketing relationships. Following the rules isn't a burden. It's just building your list the right way: with people who actually want to hear from you, who trust you, and who open your emails because they chose to be there.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 7 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>GDPR, CAN-SPAM, and CASL govern email marketing in their respective regions — all require consent and easy unsubscribe</div>
+          <div class="check-item"><div class="check-box"></div>You must obtain clear, active consent before adding anyone to your marketing list</div>
+          <div class="check-item"><div class="check-box"></div>Every marketing email must include an unsubscribe link and your sender identity</div>
+          <div class="check-item"><div class="check-box"></div>Ethical email practices and legal requirements are almost identical — doing the right thing keeps you compliant</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 8: MONETISATION ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 8</div>
+        <div class="week-title">💸 Monetisation — Turning a List into Real Income</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">A well-built email list is one of the most monetisable assets an individual can own online. But monetisation only works when trust has been established first. You cannot send five promotional emails to a brand-new subscriber and expect results. Trust is built through value. Income follows trust. Understanding this sequence is everything.</p>
+
+        <div class="analogy">
+          <strong>🧠 Real-Life Analogy</strong>
+          Think of your email list like a bank account. Every valuable, helpful email you send is a deposit — you're building credit with your subscribers. Every promotional email is a withdrawal. If you withdraw before you've deposited enough, the account goes negative (people unsubscribe, ignore you, or mark you as spam). Make enough deposits first, and your withdrawals are welcomed — even anticipated.
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The main ways to monetise an email list</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Affiliate marketing via email</strong> — Recommend products or services you genuinely use and earn commissions when subscribers buy through your links. Works in any niche. High-converting because the audience already trusts you. Always disclose your affiliate relationship. <span class="topic-tag">Start Here</span></li>
+          <li><strong>Selling your own digital products</strong> — Ebooks, courses, templates, presets, swipe files — products you create once and sell repeatedly to your list. Higher margins than affiliate marketing because you keep 100% of the revenue. <span class="topic-tag">High Margin</span></li>
+          <li><strong>Paid newsletter subscriptions</strong> — Charge subscribers a monthly or annual fee for premium email content. Platforms like Beehiiv and Substack make this easy. Recurring, predictable income. Requires consistently exceptional content to justify the fee. <span class="topic-tag">Recurring Income</span></li>
+          <li><strong>Sponsored emails</strong> — Once your list reaches a meaningful size (usually 2,000–5,000+), brands will pay to be featured in your emails. A single sponsored mention in a well-engaged list can earn $100–$2,000+ per email depending on your audience. <span class="topic-tag">Scale Required</span></li>
+          <li><strong>Promoting services</strong> — If you offer consulting, coaching, freelancing, or any service, your email list is your warmest pool of potential clients. People who've been reading your emails for months trust your expertise before you've even spoken to them. <span class="topic-tag">Service Businesses</span></li>
+          <li><strong>Events and workshops</strong> — Sell tickets to live or online events directly to your list. Subscribers who trust you will buy experiences from you — webinars, masterclasses, retreats, community memberships. <span class="topic-tag">High Ticket</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">How to promote without damaging trust</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>The 80/20 rule</strong> — 80% of your emails should deliver pure value with no promotion. 20% can make an offer. This ratio keeps your list engaged and your promotional emails effective. <span class="topic-tag">Golden Rule</span></li>
+          <li><strong>Only promote things you believe in</strong> — Your subscribers trust your judgment. If you recommend something bad, you lose that trust permanently. Never promote for commission alone — promote for your audience's benefit first. <span class="topic-tag">Non-Negotiable</span></li>
+          <li><strong>Context before pitch</strong> — Don't open a promotional email with "BUY THIS." Open with a story, a problem, or a relevant insight. Then introduce the offer as the natural solution. People should feel helped, not sold to. <span class="topic-tag">Copywriting</span></li>
+          <li><strong>Let your list know what's coming</strong> — If you're launching something, tell your list a few emails in advance. "Next week I'm sharing something I've been working on." Anticipation makes the promotional email feel like news, not an interruption. <span class="topic-tag">Relationship</span></li>
+        </ul>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 8 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Trust must be built before money can be earned — value deposits come before promotional withdrawals</div>
+          <div class="check-item"><div class="check-box"></div>Affiliate marketing is the easiest starting point; your own digital products have the highest margins</div>
+          <div class="check-item"><div class="check-box"></div>The 80/20 rule: 80% value emails, 20% promotional — this ratio keeps your list engaged and responsive</div>
+          <div class="check-item"><div class="check-box"></div>Only promote products and services you genuinely believe in — your credibility is your most valuable asset</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 9: SCALING ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 9</div>
+        <div class="week-title">🔄 Scaling — From Small List to Serious Asset</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">There's a moment in every email marketer's journey when a small, engaged list stops feeling like a hobby and starts feeling like a real asset. You understand your audience. You know what makes them open, click, and buy. Now the question shifts from "how do I get this working?" to "how do I make this bigger and better?" That's what this chapter is about.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Advanced strategies for growing your list faster</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Referral programmes</strong> — Give existing subscribers a reason to recommend you to others. "Share this newsletter with a friend and both of you get my full template pack." SparkLoop and Beehiiv have built-in referral infrastructure. <span class="topic-tag">Organic Growth</span></li>
+          <li><strong>Content upgrades on high-traffic pages</strong> — Identify your most-visited blog posts or videos. Create a specific, highly relevant lead magnet for each one. Contextual relevance produces dramatically higher conversion rates than generic opt-ins. <span class="topic-tag">Conversion Optimisation</span></li>
+          <li><strong>Paid list growth (once you know your numbers)</strong> — Once you know how much a subscriber is worth to you (average revenue per subscriber), you can profitably run paid ads to your landing page. Spend $0.50 to acquire a subscriber worth $5 = growth on demand. <span class="topic-tag">Paid Growth</span></li>
+          <li><strong>Newsletter swaps / cross-promotions</strong> — Find newsletters in complementary niches. You promote them to your list, they promote you to theirs. Both lists grow without spending a penny. Requires similar list sizes and audience alignment. <span class="topic-tag">Partnership Growth</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Segmentation — treating different people differently</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">As your list grows, "everyone gets the same email" stops being optimal. Segmentation means dividing your list into groups and sending each group more relevant content. More relevant content = higher open rates, higher click rates, and higher conversions.</p>
+
+        <ul class="topic-list">
+          <li><strong>Segment by interest</strong> — If someone clicked on an affiliate marketing link, they're interested in affiliate marketing. Tag them. Send them more about it. Don't send them your unrelated fitness content. <span class="topic-tag">Behaviour Based</span></li>
+          <li><strong>Segment by purchase history</strong> — People who bought Product A are warm prospects for Product B. People who haven't bought anything yet need more nurturing. Send each group the right next message. <span class="topic-tag">Purchase Based</span></li>
+          <li><strong>Segment by engagement</strong> — Your most active openers are your warmest audience — treat them to exclusive early access. Your least engaged subscribers need a re-engagement campaign or should be removed. <span class="topic-tag">Engagement Based</span></li>
+          <li><strong>Segment by how they joined</strong> — Someone who joined via your finance checklist is different from someone who joined via your mindset webinar. Start each segment's journey with content relevant to why they joined. <span class="topic-tag">Source Based</span></li>
+        </ul>
+
+        <div class="callout callout-gold">
+          <div class="ci">🌱</div>
+          <div class="callout-body">
+            <strong>The Compounding Effect of a Good List</strong>
+            <p>An email list doesn't just grow linearly — it compounds. A well-treated 5,000-person list generates more revenue than a neglected 50,000-person list. Every email you send that delivers value increases the lifetime value of every subscriber. Every automation you add earns money while you sleep. Every great lead magnet brings in new subscribers every day. Build this seriously and consistently, and it becomes one of the most durable business assets you can own.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 9 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Referral programmes, content upgrades, and newsletter swaps grow your list without paid advertising</div>
+          <div class="check-item"><div class="check-box"></div>Segmentation means sending different people different content based on their behaviour, interests, and history</div>
+          <div class="check-item"><div class="check-box"></div>A well-treated 5,000-person list outperforms a neglected 50,000-person list every time</div>
+          <div class="check-item"><div class="check-box"></div>A good email list compounds in value over time — treat it seriously and it becomes a durable business asset</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════ TOOLS ══════════ -->
+<div class="tools">
+  <div class="container">
+    <div class="section-label">🧰 Your Email Marketing Toolkit</div>
+    <div class="section-title">Tools Every Email Marketer Should Know</div>
+    <p style="color:#4b5563;font-size:1rem;margin-bottom:8px;">Start with the free ones. Upgrade only when the tool pays for itself.</p>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-icon">📧</div><div class="tool-name">MailerLite</div><div class="tool-desc">Best free ESP for beginners</div></div>
+      <div class="tool-card"><div class="tool-icon">🌱</div><div class="tool-name">ConvertKit</div><div class="tool-desc">Best for content creators</div></div>
+      <div class="tool-card"><div class="tool-icon">🐝</div><div class="tool-name">Beehiiv</div><div class="tool-desc">Best for paid newsletters</div></div>
+      <div class="tool-card"><div class="tool-icon">🎨</div><div class="tool-name">Canva</div><div class="tool-desc">Design lead magnets & graphics</div></div>
+      <div class="tool-card"><div class="tool-icon">📄</div><div class="tool-name">Carrd</div><div class="tool-desc">Simple landing pages (free)</div></div>
+      <div class="tool-card"><div class="tool-icon">🤖</div><div class="tool-name">ChatGPT</div><div class="tool-desc">Draft emails & subject lines</div></div>
+      <div class="tool-card"><div class="tool-icon">🔗</div><div class="tool-name">SparkLoop</div><div class="tool-desc">Newsletter referral growth</div></div>
+      <div class="tool-card"><div class="tool-icon">📊</div><div class="tool-name">Google Analytics</div><div class="tool-desc">Track landing page traffic</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ RESOURCES ══════════ -->
+<div class="resources">
+  <div class="container">
+    <div class="section-label">🔗 Go Deeper</div>
+    <div class="section-title">Free Resources to Learn More</div>
+    <p style="color:var(--muted);font-size:0.95rem;">Everything here is free or has a generous free plan. No expensive courses needed to start.</p>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="r-icon">📧</div>
+        <div class="r-type">ESP — Best Free Start</div>
+        <h4>MailerLite <span class="free-badge">FREE</span></h4>
+        <p>Free up to 1,000 subscribers. Includes automation, landing pages, opt-in forms, and a drag-and-drop email editor. The most complete free plan available. Start here.</p>
+        <a href="https://www.mailerlite.com/" target="_blank">Start Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🌱</div>
+        <div class="r-type">ESP — Creator Focused</div>
+        <h4>ConvertKit (Kit) <span class="free-badge">FREE</span></h4>
+        <p>Built for creators. Free up to 1,000 subscribers. Visual automation builder, powerful tagging system, and a clean writing experience. Best for bloggers, podcasters, and YouTubers.</p>
+        <a href="https://convertkit.com/" target="_blank">Start Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🐝</div>
+        <div class="r-type">Newsletter Platform</div>
+        <h4>Beehiiv <span class="free-badge">FREE PLAN</span></h4>
+        <p>The fastest-growing newsletter platform. Built-in monetisation via ads and paid subscriptions. Clean editor, referral programmes, and a free plan to get started. Creator economy favourite.</p>
+        <a href="https://www.beehiiv.com/" target="_blank">Explore →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📄</div>
+        <div class="r-type">Landing Pages</div>
+        <h4>Carrd <span class="free-badge">FREE</span></h4>
+        <p>Build simple, beautiful landing pages for free. Perfect for your lead magnet page. The free plan allows one published site with a custom domain. Upgrade is only $19/year.</p>
+        <a href="https://carrd.co/" target="_blank">Build Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🎨</div>
+        <div class="r-type">Design</div>
+        <h4>Canva <span class="free-badge">FREE</span></h4>
+        <p>Design your lead magnet PDF, email header graphics, and opt-in form images. Pre-made templates for ebooks, checklists, and workbooks. No design experience needed.</p>
+        <a href="https://www.canva.com/" target="_blank">Design Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🤖</div>
+        <div class="r-type">AI Writing</div>
+        <h4>ChatGPT <span class="free-badge">FREE</span></h4>
+        <p>Use it to draft email sequences, brainstorm subject lines, write welcome emails, and create lead magnet content. Always edit and personalise — AI drafts, you refine and publish.</p>
+        <a href="https://chat.openai.com/" target="_blank">Try Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📈</div>
+        <div class="r-type">Learning</div>
+        <h4>Email Marketing by Mailchimp (Guide) <span class="free-badge">FREE</span></h4>
+        <p>Mailchimp's comprehensive free guide covers fundamentals of email marketing from list building to automation. Practical, well-written, and platform-agnostic in its advice.</p>
+        <a href="https://mailchimp.com/resources/email-marketing-field-guide/" target="_blank">Read Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🔗</div>
+        <div class="r-type">List Growth</div>
+        <h4>SparkLoop <span class="free-badge">FREE PLAN</span></h4>
+        <p>Referral programme software specifically built for newsletters and email lists. Your subscribers refer friends, earn rewards, and your list grows organically. Free plan available.</p>
+        <a href="https://sparklp.co/" target="_blank">Explore →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📜</div>
+        <div class="r-type">Compliance</div>
+        <h4>CAN-SPAM Act Overview (FTC) <span class="free-badge">FREE</span></h4>
+        <p>The official FTC guide to CAN-SPAM compliance. Plain-English explanation of what commercial email must include. Read this before sending your first campaign.</p>
+        <a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" target="_blank">Read Guide →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🧪</div>
+        <div class="r-type">Deliverability</div>
+        <h4>Mail Tester <span class="free-badge">FREE</span></h4>
+        <p>Send a test email to a special address and get a spam score and deliverability report. Identifies issues that could be sending your emails to spam folders before you send to your real list.</p>
+        <a href="https://www.mail-tester.com/" target="_blank">Test Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">✍️</div>
+        <div class="r-type">Copywriting</div>
+        <h4>Copyhackers Blog <span class="free-badge">FREE</span></h4>
+        <p>One of the best free resources for learning to write email copy that converts. Covers subject lines, email body structure, CTAs, and the psychology behind why people click.</p>
+        <a href="https://copyhackers.com/blog/" target="_blank">Read Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📊</div>
+        <div class="r-type">Benchmarks</div>
+        <h4>Mailchimp Email Benchmarks <span class="free-badge">FREE</span></h4>
+        <p>See average open rates, click rates, and unsubscribe rates by industry. Use this to benchmark your own performance and understand whether your numbers are healthy.</p>
+        <a href="https://mailchimp.com/resources/email-marketing-benchmarks/" target="_blank">View Data →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ OUTCOMES ══════════ -->
+<div class="outcomes">
+  <div class="container">
+    <div class="section-label">🏆 What Changes After Reading This</div>
+    <div class="section-title">You Now Understand What Most People Get Wrong About Email</div>
+    <div class="outcomes-grid">
+      <div class="outcome-item"><div class="check">✓</div><p>You understand how email marketing works end-to-end — the players, the types, and why it outperforms social media</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You know how to build a list the right way — through genuine lead magnets, proper consent, and value-first strategies</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You can write emails people actually open — using subject lines, storytelling, the one-email-one-idea rule, and strong CTAs</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You understand automation — welcome sequences, nurture flows, sales sequences, and how to set them up once and let them run</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You can read your email metrics and know what each number means, what's healthy, and what to improve</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You know the right ESP for your stage — and why MailerLite or ConvertKit is the best free place to start</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You understand the legal requirements — GDPR, CAN-SPAM, consent, and unsubscribe — and know how to stay compliant</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You know how to monetise a list through affiliate marketing, digital products, paid newsletters, and sponsorships</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You see the path to scaling — segmentation, referral growth, cross-promotions, and building a list that compounds in value</p></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ ACTION PLAN ══════════ -->
+<div class="project">
+  <div class="container">
+    <div class="section-label">🚀 Your Action Plan</div>
+    <div class="section-title">Reading Was Step One. Here's What To Do This Week.</div>
+    <p>The most powerful email list in the world starts with one subscriber. Here are your first eight actions — in the right order.</p>
+
+    <div class="project-box">
+      <h3>✦ Your First 8 Actions (In Order)</h3>
+      <ul>
+        <li>Decide what your email list will be about — your niche, your topic, the one problem you'll help people solve consistently</li>
+        <li>Create a free account on <a href="https://www.mailerlite.com" target="_blank" style="color:var(--gold-light);">MailerLite</a> or <a href="https://convertkit.com" target="_blank" style="color:var(--gold-light);">ConvertKit</a> — spend 30 minutes exploring the interface before building anything</li>
+        <li>Create your lead magnet — a checklist, short guide, or template that solves one specific problem your audience has. Use Canva to design it.</li>
+        <li>Build a simple landing page on Carrd or within your ESP — headline, benefit bullet points, opt-in form, done.</li>
+        <li>Write your welcome email — introduce yourself, deliver the lead magnet, set expectations for what future emails will contain, and ask one question to start the conversation</li>
+        <li>Share your landing page link everywhere you have an audience: social media bio, blog, YouTube description, WhatsApp status</li>
+        <li>When your first subscriber arrives (even if it's you testing it), send them your welcome email and note how it feels to receive it. Would you stay subscribed?</li>
+        <li>Commit to one email per week for the next four weeks — value first, no selling yet. Just show up. Just help. Just be consistent.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ WHERE THIS TAKES YOU ══════════ -->
+<div class="careers">
+  <div class="container">
+    <div class="section-label">🌍 Where These Skills Take You</div>
+    <div class="section-title">Doors That Open When You Master Email Marketing</div>
+    <div class="careers-grid">
+      <div class="career-card">
+        <div class="c-icon">📧</div>
+        <h4>Email Marketing Specialist</h4>
+        <p>One of the most in-demand digital marketing skills. Businesses of every size need people who can build, manage, and optimise email programmes.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">📰</div>
+        <h4>Newsletter Creator</h4>
+        <p>Build a paid or sponsored newsletter on any topic you're knowledgeable about. Hundreds of independent newsletter writers earn full-time income from their lists.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">💼</div>
+        <h4>Freelance Copywriter</h4>
+        <p>Write email sequences, welcome flows, and campaigns for businesses. Email copywriting is a high-paying freelance skill with consistent demand from brands worldwide.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">🛒</div>
+        <h4>E-commerce Email Strategist</h4>
+        <p>Set up and optimise email flows for online stores — abandoned cart, post-purchase, win-back campaigns. Measurable ROI makes this a valued and well-paid role.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">🚀</div>
+        <h4>Online Business Owner</h4>
+        <p>Build any online business — affiliate marketing, digital products, coaching, SaaS — and use your email list as the highest-converting channel for all of it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ CTA ══════════ -->
+<div class="cta">
+  <div class="section-label" style="color:var(--purple-light);">📧 Your List Starts With One Person</div>
+  <div class="section-title">The Inbox Is the Most Personal Space on the Internet.<br/>Earn Your Place In It.</div>
+  <p>An email list is one of the very few things you build online that you truly own. No algorithm. No platform risk. No follower count that disappears overnight. Build yours today — one subscriber at a time, with honesty, value, and patience.</p>
+  <div class="cta-buttons">
+    <a class="btn-primary" href="https://www.mailerlite.com/" target="_blank">Start on MailerLite</a>
+    <a class="btn-secondary" href="https://www.canva.com/" target="_blank">Create Your Lead Magnet</a>
+    <a class="btn-primary" href="https://carrd.co/" target="_blank">Build Your Landing Page</a>
+  </div>
+</div>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-logo">✉️ Email Marketing From Absolute Zero</div>
+  <p>List Building · Writing · Automation · Metrics · Tools · Laws · Monetisation · Scaling</p>
+  <div class="footer-contact">
+    <span>All resources free · No experience required · One subscriber at a time</span>
+  </div>
+  <p style="margin-top:16px;font-size:11px;opacity:0.5;">The inbox is the most personal space on the internet. Treat every subscriber like they gave you a gift — because they did.</p>
+</footer>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ff47165dfd451a3',t:'MTc3OTM3NTU0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

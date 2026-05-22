@@ -10,11 +10,16 @@ export default function Navbar() {
       <h1 className="text-xl font-bold text-yellow-400 tracking-wide">
         CHRISCO <span className="text-white">Digital Academy</span>
       </h1>
-      <ul className="hidden md:flex gap-8 text-sm font-semibold">
+      <ul className="hidden md:flex gap-8 text-sm font-semibold items-center">
         <li><Link href="/" className="hover:text-yellow-400 transition">Home</Link></li>
         <li><Link href="/about" className="hover:text-yellow-400 transition">About</Link></li>
         <li><Link href="/courses" className="hover:text-yellow-400 transition">Courses</Link></li>
         <li><Link href="/contact" className="hover:text-yellow-400 transition">Contact</Link></li>
+        <li>
+          <Link href="/sign-in" className="bg-yellow-400 text-purple-950 font-black px-5 py-2 rounded-full hover:bg-yellow-300 transition">
+            Login
+          </Link>
+        </li>
       </ul>
       <button className="md:hidden text-yellow-400 text-2xl" onClick={() => setOpen(!open)}>☰</button>
       {open && (
@@ -23,6 +28,7 @@ export default function Navbar() {
           <li><Link href="/about" onClick={() => setOpen(false)} className="hover:text-yellow-400">About</Link></li>
           <li><Link href="/courses" onClick={() => setOpen(false)} className="hover:text-yellow-400">Courses</Link></li>
           <li><Link href="/contact" onClick={() => setOpen(false)} className="hover:text-yellow-400">Contact</Link></li>
+          <li><Link href="/sign-in" onClick={() => setOpen(false)} className="bg-yellow-400 text-purple-950 font-black px-5 py-2 rounded-full">Login</Link></li>
         </ul>
       )}
     </nav>

@@ -1,294 +1,1190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHRISCO Digital Academy • Copywriting</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
-        
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f8f4ff;
-            color: #1f2937;
-            line-height: 1.7;
-        }
-        .header {
-            background: linear-gradient(135deg, #581c87 0%, #7e22ce 100%);
-            color: white;
-            padding: 4rem 1rem 3rem;
-            text-align: center;
-            position: relative;
-        }
-        .logo {
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 0;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -2px;
-        }
-        .container {
-            max-width: 1100px;
-            margin: -2rem auto 2rem;
-            padding: 2.5rem;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(88, 28, 135, 0.15);
-        }
-        h1 { font-size: 2.8rem; text-align: center; color: #581c87; margin: 0 0 1rem; }
-        h2 { color: #581c87; border-bottom: 4px solid #f59e0b; padding-bottom: 12px; }
-        h3 { color: #7e22ce; margin-top: 2rem; }
-        .gold { color: #f59e0b; font-weight: 600; }
-        .section {
-            margin: 2.8rem 0;
-            padding: 2rem;
-            background: #f8f4ff;
-            border-radius: 12px;
-            border-left: 6px solid #581c87;
-        }
-        .week {
-            background: white;
-            border: 2px solid #581c87;
-            border-radius: 12px;
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        .progress-bar {
-            height: 10px;
-            background: #e5d5ff;
-            border-radius: 9999px;
-            margin: 1rem 0;
-            overflow: hidden;
-        }
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #581c87, #f59e0b);
-            width: 0%;
-            transition: width 1s ease;
-        }
-        ul { padding-left: 1.4rem; }
-        li { margin: 0.65rem 0; }
-        .task {
-            background: #fefce8;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 5px solid #f59e0b;
-            margin: 1rem 0;
-        }
-        .resource {
-            display: inline-block;
-            background: #581c87;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            margin: 5px 8px 5px 0;
-        }
-        .btn {
-            display: inline-block;
-            background: #f59e0b;
-            color: #581c87;
-            padding: 14px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin: 15px 8px 15px 0;
-        }
-        .footer {
-            background: #581c87;
-            color: white;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-        }
-        @media print {
-            body { background: white; }
-            .container { box-shadow: none; margin: 0; max-width: 100%; }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Copywriting From Scratch — The Complete Beginner's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --purple: #3b0764;
+    --purple-mid: #6b21a8;
+    --purple-light: #a855f7;
+    --gold: #f59e0b;
+    --gold-light: #fcd34d;
+    --dark: #0a0015;
+    --white: #ffffff;
+    --gray: #f3f0ff;
+    --text: #1a0533;
+    --muted: #6b7280;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); line-height: 1.7; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+  @keyframes comet { 0% { transform: translate(0,0) rotate(45deg); opacity:1; } 100% { transform: translate(400px,400px) rotate(45deg); opacity:0; } }
+  @keyframes glow { 0%, 100% { box-shadow: 0 0 20px rgba(245,158,11,0.3); } 50% { box-shadow: 0 0 40px rgba(245,158,11,0.7); } }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+  .comet { position: absolute; width: 2px; height: 70px; background: linear-gradient(to bottom, var(--gold), transparent); border-radius: 50%; animation: comet linear infinite; }
+
+  /* ── HEADER ── */
+  .header { background: linear-gradient(135deg, #0a0015 0%, #1a0035 40%, #2d0057 70%, #3b0764 100%); color: var(--white); padding: 70px 40px; text-align: center; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(168,85,247,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(245,158,11,0.08) 0%, transparent 50%); }
+  .logo { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; display: inline-block; border: 1px solid rgba(245,158,11,0.3); padding: 8px 20px; border-radius: 50px; animation: glow 3s ease-in-out infinite; }
+  .header-icon { font-size: 5rem; margin-bottom: 20px; display: block; animation: float 3s ease-in-out infinite; position: relative; z-index: 1; }
+  .header h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; position: relative; z-index: 1; }
+  .header h1 span { background: linear-gradient(90deg, var(--gold), var(--gold-light), #ff9900, var(--gold)); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
+  .header p { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 650px; margin: 0 auto 30px; position: relative; z-index: 1; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; position: relative; z-index: 1; }
+  .badge { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.35); color: var(--gold-light); padding: 6px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; }
+  .float-circle { position: absolute; border-radius: 50%; animation: float 4s ease-in-out infinite; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .section-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--purple-light); margin-bottom: 12px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--purple); margin-bottom: 20px; }
+
+  /* ── INTRO ── */
+  .what-is { padding: 60px 0; animation: fadeUp 0.8s ease forwards; }
+  .what-is p { color: #4b5563; font-size: 1.05rem; margin-bottom: 16px; }
+  .highlight-box { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); border-radius: 20px; padding: 30px; margin: 30px 0; color: var(--white); }
+  .highlight-box h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--gold); margin-bottom: 12px; }
+  .highlight-box p { color: rgba(255,255,255,0.85); margin-bottom: 0; }
+
+  /* ── OVERVIEW ── */
+  .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin: 40px 0; }
+  .overview-card { background: var(--gray); border-radius: 16px; padding: 20px; text-align: center; border: 1px solid rgba(107,33,168,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+  .overview-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(59,7,100,0.12); }
+  .overview-card .icon { font-size: 2rem; margin-bottom: 10px; }
+  .overview-card .label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .overview-card .value { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--purple); margin-top: 4px; }
+
+  /* ── STAT ROW ── */
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin: 24px 0; }
+  .stat-card { background: var(--gray); border: 1px solid rgba(107,33,168,0.1); border-radius: 14px; padding: 20px; text-align: center; }
+  .stat-card .s-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--purple); line-height: 1; }
+  .stat-card .s-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* ── ROADMAP ── */
+  .roadmap { background: linear-gradient(135deg, var(--dark) 0%, #1a0035 100%); padding: 60px 40px; }
+  .roadmap .section-label { color: var(--gold-light); }
+  .roadmap .section-title { color: var(--white); }
+  .roadmap-steps { margin-top: 40px; position: relative; }
+  .roadmap-steps::before { content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), transparent); }
+  .roadmap-step { display: flex; gap: 24px; margin-bottom: 32px; position: relative; }
+  .step-dot { width: 50px; height: 50px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--purple); font-size: 16px; flex-shrink: 0; animation: pulse 2s ease-in-out infinite; z-index: 1; }
+  .step-content { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px 24px; flex: 1; }
+  .step-content h4 { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--gold); margin-bottom: 8px; font-size: 1rem; }
+  .step-content p { color: rgba(255,255,255,0.75); font-size: 14px; margin-bottom: 10px; }
+  .step-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .step-tag { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: var(--gold-light); padding: 3px 10px; border-radius: 50px; font-size: 11px; font-weight: 600; }
+
+  /* ── CHAPTERS ── */
+  .syllabus { padding: 60px 0; }
+  .week-card { border: 1px solid rgba(107,33,168,0.15); border-radius: 20px; margin-bottom: 28px; overflow: hidden; transition: box-shadow 0.3s; }
+  .week-card:hover { box-shadow: 0 8px 30px rgba(59,7,100,0.1); }
+  .week-header { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); padding: 20px 28px; display: flex; align-items: center; gap: 16px; }
+  .week-number { background: var(--gold); color: var(--purple); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; padding: 6px 14px; border-radius: 50px; white-space: nowrap; }
+  .week-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--white); }
+  .week-body { padding: 28px; background: var(--white); }
+  .week-body .intro-text { color: #4b5563; font-size: 1rem; margin-bottom: 22px; line-height: 1.8; }
+
+  /* ── TOPIC LIST ── */
+  .topic-list { list-style: none; }
+  .topic-list li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray); font-size: 14px; color: #374151; }
+  .topic-list li:last-child { border-bottom: none; }
+  .topic-list li::before { content: '→'; color: var(--purple-light); font-weight: 700; flex-shrink: 0; }
+  .topic-tag { display: inline-block; background: var(--gray); color: var(--purple-mid); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-left: auto; white-space: nowrap; }
+
+  /* ── ANALOGY ── */
+  .analogy { background: linear-gradient(135deg, #fff8e7, #fff3cd); border: 1px solid rgba(245,158,11,0.3); border-left: 4px solid var(--gold); border-radius: 12px; padding: 18px 22px; margin: 20px 0; font-size: 14px; color: #4b3800; }
+  .analogy strong { display: block; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+
+  /* ── CALLOUTS ── */
+  .callout { border-radius: 14px; padding: 18px 22px; margin: 20px 0; display: flex; gap: 14px; font-size: 14px; }
+  .callout-purple { background: rgba(107,33,168,0.07); border: 1px solid rgba(107,33,168,0.2); }
+  .callout-gold   { background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.25); }
+  .callout-green  { background: rgba(22,163,74,0.07);  border: 1px solid rgba(22,163,74,0.25); }
+  .callout-red    { background: rgba(239,68,68,0.07);  border: 1px solid rgba(239,68,68,0.25); }
+  .callout .ci { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { color: var(--purple); display: block; margin-bottom: 4px; font-size: 14px; font-weight: 700; }
+  .callout-body p { color: var(--muted); font-size: 13px; margin: 0; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 14px; border: 1px solid rgba(107,33,168,0.1); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gray); color: var(--purple-mid); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 16px; text-align: left; }
+  td { padding: 11px 16px; border-top: 1px solid rgba(107,33,168,0.07); color: #374151; vertical-align: top; }
+  tr:hover td { background: rgba(107,33,168,0.02); }
+
+  /* ── CHECKLIST ── */
+  .checklist-section { background: var(--gray); border-radius: 20px; padding: 28px; margin: 24px 0; }
+  .checklist-section h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--purple); margin-bottom: 16px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(107,33,168,0.08); font-size: 14px; color: #374151; }
+  .check-item:last-child { border-bottom: none; }
+  .check-box { width: 18px; height: 18px; border: 2px solid rgba(107,33,168,0.3); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+
+  /* ── CHAPTER DIVIDER ── */
+  .chapter-divider { display: flex; align-items: center; gap: 16px; margin: 36px 0 20px; }
+  .chapter-divider .cd-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(107,33,168,0.2), transparent); }
+  .chapter-divider .cd-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--purple-light); white-space: nowrap; }
+
+  /* ── FORMULA CARDS ── */
+  .formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+  .formula-card { background: var(--gray); border: 1px solid rgba(107,33,168,0.15); border-radius: 16px; padding: 22px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .formula-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+  .formula-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(59,7,100,0.1); border-color: var(--gold); }
+  .formula-card .f-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--purple); margin-bottom: 8px; }
+  .formula-card .f-letters { font-size: 0.85rem; font-weight: 700; color: var(--gold); letter-spacing: 2px; margin-bottom: 10px; font-family: 'Syne', sans-serif; }
+  .formula-card .f-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── COPY TYPE CARDS ── */
+  .copy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+  .copy-card { background: var(--white); border: 1px solid rgba(107,33,168,0.12); border-radius: 16px; padding: 20px; transition: all 0.3s; }
+  .copy-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(59,7,100,0.1); border-color: var(--gold); }
+  .copy-card .cc-icon { font-size: 2rem; margin-bottom: 10px; }
+  .copy-card .cc-name { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 800; color: var(--purple); margin-bottom: 5px; }
+  .copy-card .cc-pay { font-size: 11px; font-weight: 700; color: #16a34a; margin-bottom: 6px; }
+  .copy-card .cc-desc { font-size: 12px; color: var(--muted); }
+
+  /* ── BEFORE / AFTER ── */
+  .ba-block { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+  .ba-before, .ba-after { border-radius: 14px; padding: 20px; font-size: 14px; line-height: 1.7; }
+  .ba-before { background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); }
+  .ba-after  { background: rgba(22,163,74,0.06);  border: 1px solid rgba(22,163,74,0.2);  }
+  .ba-label { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+  .ba-before .ba-label { color: #dc2626; }
+  .ba-after  .ba-label { color: #16a34a; }
+  .ba-before p, .ba-after p { color: #374151; }
+  @media(max-width:600px){ .ba-block { grid-template-columns: 1fr; } }
+
+  /* ── RESOURCES ── */
+  .resources { background: var(--gray); padding: 60px 40px; }
+  .resources .section-label { color: var(--purple-light); }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 30px; }
+  .resource-card { background: var(--white); border-radius: 16px; padding: 24px; border: 1px solid rgba(107,33,168,0.1); transition: all 0.3s; }
+  .resource-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(59,7,100,0.12); border-color: var(--gold); }
+  .resource-card .r-icon { font-size: 2rem; margin-bottom: 12px; }
+  .resource-card .r-type { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--purple-light); margin-bottom: 6px; }
+  .resource-card h4 { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--purple); margin-bottom: 8px; font-size: 1rem; }
+  .resource-card p { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .resource-card a { display: inline-block; background: var(--purple); color: var(--white); font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 50px; text-decoration: none; transition: background 0.3s; }
+  .resource-card a:hover { background: var(--purple-mid); }
+  .free-badge { display: inline-block; background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+  .paid-badge { display: inline-block; background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* ── TOOLS ── */
+  .tools { padding: 60px 0; }
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top: 30px; }
+  .tool-card { background: var(--gray); border-radius: 14px; padding: 20px; text-align: center; border: 1px solid rgba(107,33,168,0.1); transition: all 0.3s; }
+  .tool-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(59,7,100,0.12); border-color: var(--gold); }
+  .tool-card .tool-icon { font-size: 2rem; margin-bottom: 8px; }
+  .tool-card .tool-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--purple); }
+  .tool-card .tool-desc { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* ── OUTCOMES ── */
+  .outcomes { background: linear-gradient(135deg, var(--purple) 0%, var(--purple-mid) 100%); padding: 60px 40px; }
+  .outcomes .section-label { color: var(--gold-light); }
+  .outcomes .section-title { color: var(--white); }
+  .outcomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 30px; }
+  .outcome-item { display: flex; align-items: flex-start; gap: 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; }
+  .outcome-item .check { background: var(--gold); color: var(--purple); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+  .outcome-item p { color: rgba(255,255,255,0.85); font-size: 14px; }
+
+  /* ── PROJECT ── */
+  .project { background: linear-gradient(135deg, var(--dark) 0%, var(--purple) 60%, var(--purple-mid) 100%); padding: 60px 40px; text-align: center; position: relative; overflow: hidden; }
+  .project .section-label { color: var(--gold-light); }
+  .project .section-title { color: var(--white); }
+  .project > .container > p { color: rgba(255,255,255,0.7); max-width: 600px; margin: 16px auto 0; }
+  .project-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(245,158,11,0.3); border-radius: 20px; padding: 36px 40px; margin-top: 36px; max-width: 680px; margin-left: auto; margin-right: auto; text-align: left; }
+  .project-box h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--gold); margin-bottom: 18px; text-align: center; }
+  .project-box ul { list-style: none; }
+  .project-box ul li { display: flex; gap: 10px; padding: 10px 0; color: rgba(255,255,255,0.8); font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .project-box ul li:last-child { border-bottom: none; }
+  .project-box ul li::before { content: '✦'; color: var(--gold); flex-shrink: 0; }
+
+  /* ── CTA ── */
+  .cta { padding: 60px 40px; text-align: center; background: var(--white); }
+  .cta .section-title { color: var(--purple); }
+  .cta p { color: var(--muted); margin: 16px auto 30px; max-width: 520px; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); color: var(--white); font-family: 'Syne', sans-serif; font-weight: 700; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-size: 15px; transition: all 0.3s; box-shadow: 0 8px 25px rgba(59,7,100,0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(59,7,100,0.4); }
+  .btn-secondary { background: var(--gold); color: var(--purple); font-family: 'Syne', sans-serif; font-weight: 700; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-size: 15px; transition: all 0.3s; }
+  .btn-secondary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ── CAREERS ── */
+  .careers { padding: 60px 0; }
+  .careers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 20px; margin-top: 30px; }
+  .career-card { background: var(--white); border: 2px solid rgba(107,33,168,0.12); border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; }
+  .career-card:hover { border-color: var(--gold); box-shadow: 0 8px 25px rgba(245,158,11,0.15); transform: translateY(-4px); }
+  .career-card .c-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .career-card h4 { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--purple); margin-bottom: 8px; font-size: 0.95rem; }
+  .career-card p { font-size: 12px; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--purple); color: rgba(255,255,255,0.6); text-align: center; padding: 40px 24px; font-size: 13px; }
+  footer .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: 8px; }
+  footer .footer-contact { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+
+  @media print { .cta { display: none; } .week-card { break-inside: avoid; } body { font-size: 13px; } }
+  @media (max-width: 600px) {
+    .header, .outcomes, .resources, .project, .cta { padding: 40px 20px; }
+    .week-header, .week-body { padding: 16px 20px; }
+    .roadmap-steps::before { display: none; }
+    .roadmap, .resources { padding: 40px 20px; }
+  }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1 class="logo">CHRISCO DIGITAL ACADEMY</h1>
-        <p style="margin: 12px 0 0; font-size: 1.4rem; opacity: 0.95;">Empowering African Youth with Real Digital Skills</p>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="header">
+  <div class="float-circle" style="width:300px;height:300px;background:rgba(168,85,247,0.05);top:-80px;left:-80px;"></div>
+  <div class="float-circle" style="width:200px;height:200px;background:rgba(245,158,11,0.04);bottom:-40px;right:60px;animation-delay:1.5s;"></div>
+  <div class="comet" style="top:10%;left:5%;animation-duration:4s;"></div>
+  <div class="comet" style="top:35%;left:65%;animation-duration:5.5s;animation-delay:2s;opacity:0.5;"></div>
+
+  <div class="logo">✍️ Complete Beginner's Guide</div>
+  <span class="header-icon">🖊️</span>
+  <h1>Copywriting<br/><span>From Absolute Zero</span></h1>
+  <p>Learn how to write words that make people think, feel, and act — from what copywriting really is, to the formulas professionals use, to how you can turn this skill into a real career or business asset. No experience needed.</p>
+  <div class="badges">
+    <span class="badge">📋 What It Is</span>
+    <span class="badge">🧠 Psychology</span>
+    <span class="badge">🔣 Formulas</span>
+    <span class="badge">🎯 Types of Copy</span>
+    <span class="badge">✍️ Writing Skills</span>
+    <span class="badge">📣 Ads & Sales Pages</span>
+    <span class="badge">📧 Email Copy</span>
+    <span class="badge">💸 Career & Income</span>
+  </div>
+</div>
+
+
+<!-- ══════════ INTRO ══════════ -->
+<div class="what-is">
+  <div class="container">
+    <div class="section-label">👋 Before We Begin</div>
+    <div class="section-title">The Most Valuable Writing Skill Nobody Teaches in School</div>
+
+    <p>Schools teach you how to write essays, stories, and reports. They almost never teach you how to write words that persuade, sell, or move people to take action. And yet — this is the skill that powers every advertisement you've ever clicked, every website that made you hit "buy," every email that made you feel like the sender really understood you.</p>
+
+    <p>That skill is copywriting. And unlike most forms of writing, it is <strong>completely learnable.</strong> It follows patterns, frameworks, and principles that you can study, practice, and apply — regardless of whether you think of yourself as a "good writer" today.</p>
+
+    <div class="highlight-box">
+      <h3>💡 Copywriting in One Sentence</h3>
+      <p>Copywriting is the art and science of <strong>writing words that make people take a specific action</strong> — click a link, buy a product, sign up for a list, pick up the phone, or change the way they think about something. It's not creative writing for its own sake. Every word has a job to do.</p>
     </div>
 
-    <div class="container">
-        <h1>Copywriting</h1>
-        <p style="text-align:center; font-size:1.3rem; color:#581c87; margin-bottom:2rem;">
-            <strong>8-Week Complete Course • Write Words That Sell</strong>
-        </p>
-
-        <!-- Progress Overview -->
-        <div class="section" style="text-align:center;">
-            <h3>Course Progress</h3>
-            <div class="progress-bar"><div class="progress" style="width:12.5%"></div></div>
-            <p><strong>Week 1 of 8 • Start Today</strong></p>
-        </div>
-
-        <div class="section">
-            <h2>Course Description</h2>
-            <p>Master the skill of persuasive writing that turns readers into buyers. This practical course teaches you how to write high-converting copy for sales pages, emails, social media, ads, product descriptions, and more. Learn proven frameworks used by top copywriters and how to use AI tools to write faster while keeping your unique voice. Perfect for freelancers, business owners, and anyone who wants to earn by writing.</p>
-        </div>
-
-        <div class="section">
-            <h2>Who This Course Is For</h2>
-            <ul>
-                <li>Youth who enjoy writing and want to turn it into income</li>
-                <li>Aspiring freelance copywriters</li>
-                <li>Business owners who want to write their own marketing copy</li>
-                <li>Content creators who want to improve their writing skills</li>
-                <li>Complete beginners — no prior copywriting experience needed</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Learning Outcomes</h2>
-            <ul>
-                <li>Write persuasive copy using proven frameworks (AIDA, PAS, etc.)</li>
-                <li>Create high-converting sales pages, emails, and ads</li>
-                <li>Use AI tools ethically to write faster</li>
-                <li>Build a professional copywriting portfolio</li>
-                <li>Land clients and charge premium rates as a freelancer</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Tools You Will Need</h2>
-            <ul>
-                <li><strong>Free:</strong> Google Docs, ChatGPT / Claude, Grammarly</li>
-                <li><strong>Recommended:</strong> Notion or Google Docs for portfolio</li>
-                <li>Internet + Word processor</li>
-            </ul>
-        </div>
-
-        <h2 style="text-align:center; margin:3rem 0 1.5rem;">📅 Detailed 8-Week Syllabus</h2>
-
-        <!-- Week 1 -->
-        <div class="week">
-            <h3>Week 1: Introduction to Copywriting</h3>
-            <div class="progress-bar"><div class="progress" style="width:100%"></div></div>
-            <ul>
-                <li>What is copywriting and why it matters</li>
-                <li>Difference between content writing and copywriting</li>
-                <li>The psychology of persuasion</li>
-                <li>Overview of different types of copy (sales, email, ads, social)</li>
-            </ul>
-            <div class="task">
-                <strong>Weekly Task:</strong> Analyze 5 sales pages or ads and note what makes them effective
-            </div>
-        </div>
-
-        <!-- Week 2 -->
-        <div class="week">
-            <h3>Week 2: Core Copywriting Frameworks</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>AIDA Formula (Attention, Interest, Desire, Action)</li>
-                <li>PAS Framework (Problem, Agitate, Solution)</li>
-                <li>Before-After-Bridge method</li>
-                <li>Writing powerful headlines and hooks</li>
-            </ul>
-            <div class="task">
-                <strong>Weekly Task:</strong> Rewrite 3 weak headlines into powerful ones
-            </div>
-        </div>
-
-        <!-- Week 3 -->
-        <div class="week">
-            <h3>Week 3: Writing Sales Pages & Landing Pages</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Structure of a high-converting sales page</li>
-                <li>Writing bullet points that sell</li>
-                <li>Creating irresistible offers</li>
-                <li>Call-to-Action (CTA) mastery</li>
-            </ul>
-        </div>
-
-        <!-- Week 4 -->
-        <div class="week">
-            <h3>Week 4: Email Copywriting</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Writing welcome sequences and sales emails</li>
-                <li>Subject lines that get opened</li>
-                <li>Storytelling in emails</li>
-                <li>Follow-up sequences that convert</li>
-            </ul>
-        </div>
-
-        <!-- Week 5 -->
-        <div class="week">
-            <h3>Week 5: Social Media & Ad Copy</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Writing scroll-stopping social media captions</li>
-                <li>Facebook & Instagram ad copy that converts</li>
-                <li>Short-form copy for Reels, TikTok & Stories</li>
-                <li>Creating urgency and scarcity</li>
-            </ul>
-        </div>
-
-        <!-- Week 6 -->
-        <div class="week">
-            <h3>Week 6: Product Descriptions & E-commerce Copy</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Writing benefit-driven product descriptions</li>
-                <li>SEO-friendly copy for online stores</li>
-                <li>Copy for Jumia, Shopify, and local e-commerce</li>
-                <li>Using sensory language</li>
-            </ul>
-        </div>
-
-        <!-- Week 7 -->
-        <div class="week">
-            <h3>Week 7: AI Tools for Copywriters</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Using ChatGPT and Claude effectively for copy</li>
-                <li>Prompt engineering for better results</li>
-                <li>Editing and humanizing AI-generated copy</li>
-                <li>Ethical use of AI in professional copywriting</li>
-            </ul>
-        </div>
-
-        <!-- Week 8 -->
-        <div class="week">
-            <h3>Week 8: Building a Copywriting Business</h3>
-            <div class="progress-bar"><div class="progress" style="width:0%"></div></div>
-            <ul>
-                <li>Creating a professional copywriting portfolio</li>
-                <li>Finding clients (Upwork, cold outreach, local businesses)</li>
-                <li>Pricing your services</li>
-                <li>Contracts, proposals & client management</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Final Project (Must Complete)</h2>
-            <p>Write a complete sales page (or 5-email sequence) for a real or fictional product/service. Include headline, subheadlines, bullets, story, offer, and strong CTA. Present it professionally in your portfolio.</p>
-            <a href="#" class="btn">Begin Week 1 Now →</a>
-        </div>
-
-        <div class="section" style="text-align:center;">
-            <h3>Ready to Write Words That Make Money?</h3>
-            <p style="font-size:1.2rem;">Good copywriters are always in demand. Many freelancers earn $500 – $3000+ per month writing persuasive copy.</p>
-        </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="s-num">$50K+</div>
+        <div class="s-label">Average annual salary for an in-house copywriter (entry level)</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num">$150+</div>
+        <div class="s-label">Per hour that top freelance copywriters charge</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num">500%</div>
+        <div class="s-label">ROI possible from a single well-written sales page vs a poorly written one</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num">∞</div>
+        <div class="s-label">Industries that need copywriters — every business that communicates needs copy</div>
+      </div>
     </div>
 
-    <div class="footer">
-        <p><strong>CHRISCO Digital Academy</strong><br>
-        Founder: CHRISCO <br>
-        Email: <a href="mailto:shambetz@gmail.com" style="color:#f59e0b;">chriscoyouthafame2025@gmail.com</a><br>
-        Phone: +254 112 272 061<br>
-        Nairobi, Kenya • © 2026</p>
+    <div class="callout callout-gold">
+      <div class="ci">💛</div>
+      <div class="callout-body">
+        <strong>Copywriting vs Content Writing — They're Not the Same</strong>
+        <p>Content writing informs, entertains, or educates — blog posts, articles, how-to guides. Copywriting persuades and converts — ads, sales pages, email subject lines, product descriptions, CTAs. Both are valuable. But copywriting is what directly drives sales, and it commands significantly higher pay. This guide focuses on copywriting.</p>
+      </div>
     </div>
-</body>
+
+    <div class="overview-grid">
+      <div class="overview-card"><div class="icon">📋</div><div class="label">Chapter 1</div><div class="value">What It Is</div></div>
+      <div class="overview-card"><div class="icon">🧠</div><div class="label">Chapter 2</div><div class="value">Psychology</div></div>
+      <div class="overview-card"><div class="icon">🔣</div><div class="label">Chapter 3</div><div class="value">Formulas</div></div>
+      <div class="overview-card"><div class="icon">🎯</div><div class="label">Chapter 4</div><div class="value">Types of Copy</div></div>
+      <div class="overview-card"><div class="icon">✍️</div><div class="label">Chapter 5</div><div class="value">Writing Skills</div></div>
+      <div class="overview-card"><div class="icon">📣</div><div class="label">Chapter 6</div><div class="value">Ads & Pages</div></div>
+      <div class="overview-card"><div class="icon">📧</div><div class="label">Chapter 7</div><div class="value">Email Copy</div></div>
+      <div class="overview-card"><div class="icon">🌐</div><div class="label">Chapter 8</div><div class="value">Web & Social</div></div>
+      <div class="overview-card"><div class="icon">💸</div><div class="label">Chapter 9</div><div class="value">Career & Income</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ ROADMAP ══════════ -->
+<div class="roadmap">
+  <div class="container">
+    <div class="section-label">🗺️ Your Journey</div>
+    <div class="section-title">Nine Chapters, One Complete Playbook</div>
+    <div class="roadmap-steps">
+
+      <div class="roadmap-step">
+        <div class="step-dot">1</div>
+        <div class="step-content">
+          <h4>What Copywriting Really Is — and What It Isn't</h4>
+          <p>Understand the difference between copy and content, the types of copy that exist in the world, and why this skill is called "the most valuable skill in business."</p>
+          <div class="step-tags"><span class="step-tag">Definition</span><span class="step-tag">Copy vs content</span><span class="step-tag">Where it lives</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">2</div>
+        <div class="step-content">
+          <h4>The Psychology Behind Why People Buy</h4>
+          <p>Copywriting is applied psychology. Understanding how people make decisions — emotionally first, logically second — is the foundation of everything that works in copy.</p>
+          <div class="step-tags"><span class="step-tag">Emotional vs logical</span><span class="step-tag">Desire & fear</span><span class="step-tag">Cognitive biases</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">3</div>
+        <div class="step-content">
+          <h4>Copywriting Formulas — The Templates Professionals Use</h4>
+          <p>AIDA, PAS, BAB, 4Ps, FAB — proven frameworks that structure persuasive copy. Understanding these means you never stare at a blank page again.</p>
+          <div class="step-tags"><span class="step-tag">AIDA</span><span class="step-tag">PAS</span><span class="step-tag">BAB</span><span class="step-tag">FAB</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">4</div>
+        <div class="step-content">
+          <h4>Types of Copywriting — Which Pays What and Why</h4>
+          <p>Direct response, brand copy, SEO copy, UX copy, social media copy — each is a different discipline with different skills, different clients, and different earning potential.</p>
+          <div class="step-tags"><span class="step-tag">Direct response</span><span class="step-tag">Brand copy</span><span class="step-tag">SEO copy</span><span class="step-tag">UX copy</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">5</div>
+        <div class="step-content">
+          <h4>The Core Writing Skills Every Copywriter Needs</h4>
+          <p>Research, finding the voice, writing headlines, editing ruthlessly, understanding your reader deeply — the craft skills that separate good copy from great copy.</p>
+          <div class="step-tags"><span class="step-tag">Research</span><span class="step-tag">Headlines</span><span class="step-tag">Voice & tone</span><span class="step-tag">Editing</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">6</div>
+        <div class="step-content">
+          <h4>Ads & Sales Pages — Copy That Directly Drives Revenue</h4>
+          <p>Facebook ads, Google ads, landing pages, and long-form sales pages — the formats where copywriting has the most direct, measurable impact on business results.</p>
+          <div class="step-tags"><span class="step-tag">Ad copy</span><span class="step-tag">Landing pages</span><span class="step-tag">Sales pages</span><span class="step-tag">CTAs</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">7</div>
+        <div class="step-content">
+          <h4>Email Copywriting — The Highest-Converting Format</h4>
+          <p>Subject lines, email body copy, sequences, and promotional emails — writing emails that feel personal, get opened, and convert without feeling pushy.</p>
+          <div class="step-tags"><span class="step-tag">Subject lines</span><span class="step-tag">Story emails</span><span class="step-tag">Promotions</span><span class="step-tag">Sequences</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">8</div>
+        <div class="step-content">
+          <h4>Web Copy & Social Media — Where Most Beginners Start</h4>
+          <p>Website home pages, About pages, product descriptions, Instagram captions, LinkedIn posts, and Twitter/X threads — copy that builds brands and moves audiences online.</p>
+          <div class="step-tags"><span class="step-tag">Website copy</span><span class="step-tag">Product descriptions</span><span class="step-tag">Social captions</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-dot">9</div>
+        <div class="step-content">
+          <h4>Career & Income — Turning This Skill into Real Money</h4>
+          <p>Freelancing, full-time roles, building a portfolio with no clients, pricing your work, finding your niche, and the realistic path from beginner to six-figure copywriter.</p>
+          <div class="step-tags"><span class="step-tag">Freelancing</span><span class="step-tag">Portfolio</span><span class="step-tag">Pricing</span><span class="step-tag">Niching down</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ CHAPTERS ══════════ -->
+<div class="syllabus">
+  <div class="container">
+    <div class="section-label">📖 The Chapters</div>
+    <div class="section-title">Let's Actually Learn This</div>
+
+
+    <!-- ── CH 1: WHAT IT IS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 1</div>
+        <div class="week-title">📋 What Copywriting Really Is — and What It Isn't</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Most people think copywriting means writing marketing fluff — cheesy slogans and pushy sales lines. That misunderstanding keeps a lot of talented people away from one of the most powerful and well-paid writing skills available. Let's clear it up completely from the start.</p>
+
+        <div class="analogy">
+          <strong>🧠 Real-Life Analogy</strong>
+          Imagine two people trying to convince you to try a new restaurant. The first puts up a billboard that says "GREAT FOOD. AMAZING ATMOSPHERE." The second calls you personally, says "I know you love spicy food — they do the best jerk chicken I've ever had, plus the music is exactly your kind of vibe. Book it for Friday?" The second person is doing what great copywriting does — speaking directly to one specific person's desires in a way that makes the decision feel obvious.
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Where copywriting actually lives</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Advertisements</strong> — Every Facebook ad, Google ad, billboard, TV commercial, and radio spot. The headline, the body, the call to action — all copywriting. <span class="topic-tag">Most Visible</span></li>
+          <li><strong>Sales pages and landing pages</strong> — The long (or short) pages that explain a product or offer and ask for a purchase or sign-up. Some of the highest-stakes copy that exists. <span class="topic-tag">High Impact</span></li>
+          <li><strong>Email marketing</strong> — Subject lines, email body copy, promotional sequences, newsletters with a conversion goal. A form of copy almost every business uses. <span class="topic-tag">Everywhere</span></li>
+          <li><strong>Website copy</strong> — The words on a homepage, About page, services page, or product page. Often the first impression a business makes — and the most under-invested copy in the world. <span class="topic-tag">Undervalued</span></li>
+          <li><strong>Product descriptions</strong> — Every item on Amazon, Etsy, or a Shopify store needs copy that makes the reader say "yes, that's exactly what I need." <span class="topic-tag">E-commerce</span></li>
+          <li><strong>Social media captions</strong> — Not all social posts, but the ones designed to drive engagement, click-throughs, or sales. Short-form copywriting is a growing discipline. <span class="topic-tag">Modern</span></li>
+          <li><strong>Video scripts</strong> — YouTube ads, explainer videos, sales videos, VSLs (Video Sales Letters). The words spoken in video are still copy — they just get read aloud. <span class="topic-tag">Growing</span></li>
+          <li><strong>Direct mail</strong> — Physical letters sent to homes. Still very much alive in financial services, insurance, and charity fundraising — and still very much in need of skilled writers. <span class="topic-tag">Traditional</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The key difference: copy vs content</div><div class="cd-line"></div></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Copy</th><th>Content</th></tr></thead>
+            <tbody>
+              <tr><td>Primary goal: <strong>conversion</strong> (action)</td><td>Primary goal: <strong>inform or entertain</strong></td></tr>
+              <tr><td>Measured by clicks, sales, sign-ups</td><td>Measured by views, shares, time on page</td></tr>
+              <tr><td>Examples: ads, sales pages, email CTAs</td><td>Examples: blog posts, podcasts, how-to videos</td></tr>
+              <tr><td>Always has one specific desired outcome</td><td>May have multiple or no direct outcome</td></tr>
+              <tr><td>Every word earns its place</td><td>More room for exploration and depth</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 1 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Copywriting is writing designed to make people take a specific action — not just to inform or entertain</div>
+          <div class="check-item"><div class="check-box"></div>Copy lives in ads, sales pages, emails, websites, product descriptions, social captions, and video scripts</div>
+          <div class="check-item"><div class="check-box"></div>Copy differs from content in its primary goal: conversion vs information</div>
+          <div class="check-item"><div class="check-box"></div>Every word in great copy has a purpose — nothing is decorative</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 2: PSYCHOLOGY ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 2</div>
+        <div class="week-title">🧠 The Psychology Behind Why People Buy</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Here's the single most important insight in all of copywriting: <strong>people make decisions emotionally, then justify them logically.</strong> Nobody buys a sports car because of its horsepower specs. They buy it because of how they imagine they'll feel driving it. The specs just help them justify the decision they've already made. Great copy speaks to the feeling first — and gives the logic second.</p>
+
+        <div class="analogy">
+          <strong>🧠 Real-Life Analogy</strong>
+          You've never bought a new phone because of a camera megapixel number. You bought it because you imagined how your photos would look, how impressed people would be, how seamless your life would feel. The megapixels were just the justification you gave your bank account. Copy that sells leads with the feeling, then supports it with the fact.
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The core emotional drivers behind almost every purchase</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Fear of loss</strong> — People are more motivated by avoiding pain than gaining pleasure. "Don't miss out" and "limited time" work because losing something hurts more than gaining the same thing feels good. Loss aversion is one of the strongest motivators in human psychology. <span class="topic-tag">Most Powerful</span></li>
+          <li><strong>Desire for status</strong> — People buy things that signal who they are (or want to be) to others. Luxury brands, exclusive memberships, professional certifications — all sold partly on identity and belonging. <span class="topic-tag">Identity</span></li>
+          <li><strong>Hope and aspiration</strong> — The idea that buying this product will make life better, easier, more beautiful, or more successful. "Imagine waking up and…" is one of the most powerful openings in copywriting. <span class="topic-tag">Aspiration</span></li>
+          <li><strong>Fear of judgment</strong> — People want to feel they're making smart decisions. Copy that validates their choice ("you're not alone in feeling this"), removes doubt ("30-day money-back guarantee"), and provides social proof works directly on this driver. <span class="topic-tag">Social</span></li>
+          <li><strong>Curiosity</strong> — The brain finds open loops unbearable. A question unanswered, a story unfinished, a secret unhinted — all create an itch that clicking, reading, or buying scratches. <span class="topic-tag">Attention</span></li>
+          <li><strong>Instant gratification</strong> — "Get results in 7 days." "Download instantly." People want outcomes fast. Copy that reduces perceived time-to-result consistently converts better. <span class="topic-tag">Speed</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Key cognitive biases every copywriter uses</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Social proof</strong> — We look at what others do to decide what we should do. Testimonials, star ratings, "Join 50,000 readers," and case studies all reduce the risk of being wrong by showing others chose the same thing. <span class="topic-tag">Bias</span></li>
+          <li><strong>Authority</strong> — We trust experts. "As seen in Forbes," doctor endorsements, years of experience — all increase credibility and reduce scepticism. <span class="topic-tag">Bias</span></li>
+          <li><strong>Scarcity</strong> — "Only 3 left in stock." Whether it's time or quantity, limited availability raises perceived value and urgency. Always be truthful — false scarcity destroys trust permanently. <span class="topic-tag">Bias</span></li>
+          <li><strong>Reciprocity</strong> — When someone gives us something valuable for free, we feel a natural impulse to give something back. Lead magnets, free trials, and helpful content prime the buyer before the ask. <span class="topic-tag">Bias</span></li>
+          <li><strong>The anchoring effect</strong> — The first number someone sees becomes the reference point. Show the original price before the discounted price. Present the expensive option first on a pricing page. The first figure anchors everything that follows. <span class="topic-tag">Pricing</span></li>
+          <li><strong>Specificity = credibility</strong> — "Clients earn an average of $3,247 in their first 60 days" is more believable than "clients earn thousands." Specific numbers feel like real data, not marketing fluff. <span class="topic-tag">Trust</span></li>
+        </ul>
+
+        <div class="callout callout-red">
+          <div class="ci">🚫</div>
+          <div class="callout-body">
+            <strong>Persuasion Is Not Manipulation</strong>
+            <p>Understanding psychology to help the right people make decisions they'll be glad they made — that's ethical copywriting. Using these techniques to trick people into buying things they don't need, that don't work, or with false claims — that's manipulation. The best copywriters match genuine products to people who genuinely need them. That's the only sustainable version of this skill.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 2 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>People decide emotionally and justify logically — copy must speak to feeling before fact</div>
+          <div class="check-item"><div class="check-box"></div>The six core emotional drivers: fear of loss, status, aspiration, fear of judgment, curiosity, and instant gratification</div>
+          <div class="check-item"><div class="check-box"></div>Cognitive biases like social proof, scarcity, authority, and anchoring are tools — used ethically they serve the reader</div>
+          <div class="check-item"><div class="check-box"></div>Ethical copywriting matches real products to people who genuinely need them — persuasion, not manipulation</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 3: FORMULAS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 3</div>
+        <div class="week-title">🔣 Copywriting Formulas — The Frameworks Professionals Use</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">One of the most reassuring things about copywriting is that it isn't invented fresh every time. Professionals use proven frameworks — structural templates that guide how copy is organised. These formulas work because they're built around how humans process information and make decisions. They're not shortcuts that produce generic copy — they're scaffolding that helps you build something solid.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The essential copywriting formulas</div><div class="cd-line"></div></div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="f-name">AIDA</div>
+            <div class="f-letters">Attention · Interest · Desire · Action</div>
+            <div class="f-desc">The oldest and most widely used formula. Grab attention, build interest with relevant information, create desire by connecting to emotions, then ask for the action. Works for ads, emails, sales pages, and almost everything else.</div>
+          </div>
+          <div class="formula-card">
+            <div class="f-name">PAS</div>
+            <div class="f-letters">Problem · Agitate · Solution</div>
+            <div class="f-desc">Name the problem your reader has. Make them feel the pain of that problem more sharply (agitate). Then present your product or service as the relief. Particularly powerful for direct response copy and email.</div>
+          </div>
+          <div class="formula-card">
+            <div class="f-name">BAB</div>
+            <div class="f-letters">Before · After · Bridge</div>
+            <div class="f-desc">Describe life before your solution (the struggle). Paint a vivid picture of life after (the transformation). Then bridge the gap — your product or service is how they get from one to the other.</div>
+          </div>
+          <div class="formula-card">
+            <div class="f-name">FAB</div>
+            <div class="f-letters">Features · Advantages · Benefits</div>
+            <div class="f-desc">Features are what a product has. Advantages are what those features do. Benefits are what the reader gains from them. Always sell the benefit, not the feature. People buy what it does for them, not what it is.</div>
+          </div>
+          <div class="formula-card">
+            <div class="f-name">4 Ps</div>
+            <div class="f-letters">Promise · Picture · Proof · Push</div>
+            <div class="f-desc">Open with a compelling promise. Paint a picture of the outcome. Provide proof it's real (testimonials, stats, case studies). Then push them to take action now. Works brilliantly for long-form sales pages.</div>
+          </div>
+          <div class="formula-card">
+            <div class="f-name">QUEST</div>
+            <div class="f-letters">Qualify · Understand · Educate · Stimulate · Transition</div>
+            <div class="f-desc">Qualify who the copy is for. Show you understand their situation. Educate them on the solution. Stimulate the desire. Transition them into the action. A nuanced formula ideal for longer, trust-based copy.</div>
+          </div>
+        </div>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Seeing the formulas in action — PAS example</div><div class="cd-line"></div></div>
+
+        <div class="ba-block">
+          <div class="ba-before">
+            <span class="ba-label">❌ No formula — flat and unpersuasive</span>
+            <p>We offer a budgeting app that helps you manage your money. It has features like expense tracking, savings goals, and monthly reports. Download it today from the App Store.</p>
+          </div>
+          <div class="ba-after">
+            <span class="ba-label">✅ PAS formula — speaks to the reader</span>
+            <p><strong>Problem:</strong> "Do you reach the end of the month wondering where your salary went?"<br/><strong>Agitate:</strong> "That low-grade money anxiety follows you everywhere — into the supermarket, at dinner with friends, every time your phone buzzes with a bank notification."<br/><strong>Solution:</strong> "Clarity gives you a complete picture of every pound you earn and spend — so for the first time, you're in control. Download free today."</p>
+          </div>
+        </div>
+
+        <div class="callout callout-purple">
+          <div class="ci">💜</div>
+          <div class="callout-body">
+            <strong>Don't Memorise Formulas — Understand Them</strong>
+            <p>The goal isn't to fill in template blanks robotically. It's to understand the logic behind each formula — why it works, what emotional journey it takes the reader on — so you can adapt it instinctively to any brief. Read great copy and try to identify which formula it's using. That's the fastest way to internalise them.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 3 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>AIDA, PAS, BAB, FAB, 4Ps, and QUEST are the essential frameworks professional copywriters use</div>
+          <div class="check-item"><div class="check-box"></div>PAS (Problem-Agitate-Solution) is the most widely applicable formula for beginners to master first</div>
+          <div class="check-item"><div class="check-box"></div>FAB reminds you to always sell the benefit, not the feature — what it does for the reader, not what it is</div>
+          <div class="check-item"><div class="check-box"></div>Formulas are scaffolding, not scripts — understand the logic so you can adapt them naturally</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 4: TYPES ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 4</div>
+        <div class="week-title">🎯 Types of Copywriting — Which Pays What and Why</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Copywriting isn't one thing. It's an umbrella term covering many different disciplines, each with its own techniques, formats, clients, and income potential. Understanding the landscape helps you decide where to focus your learning and what type of work to pursue when you're ready to get paid for it.</p>
+
+        <div class="copy-grid">
+          <div class="copy-card">
+            <div class="cc-icon">🎯</div>
+            <div class="cc-name">Direct Response Copywriting</div>
+            <div class="cc-pay">💰 Highest paying ($5k–$25k per project)</div>
+            <div class="cc-desc">Copy designed to produce an immediate, measurable response. Sales pages, VSLs, direct mail. Results are trackable — great writers are paid handsomely for what they produce.</div>
+          </div>
+          <div class="copy-card">
+            <div class="cc-icon">📧</div>
+            <div class="cc-name">Email Copywriting</div>
+            <div class="cc-pay">💰 High demand ($50–$200 per email)</div>
+            <div class="cc-desc">Subject lines, email sequences, promotional emails. Every business with a list needs email copy. Recurring work once you're inside a client's ecosystem.</div>
+          </div>
+          <div class="copy-card">
+            <div class="cc-icon">📣</div>
+            <div class="cc-name">Advertising Copy</div>
+            <div class="cc-pay">💰 Strong rates ($75–$200/hr agency side)</div>
+            <div class="cc-desc">Facebook ads, Google ads, display ads, social ads. Short, punchy, and tested constantly. Fast feedback loop means rapid skill development.</div>
+          </div>
+          <div class="copy-card">
+            <div class="cc-icon">🌐</div>
+            <div class="cc-name">Website Copywriting</div>
+            <div class="cc-pay">💰 Good rates ($1,500–$10k per site)</div>
+            <div class="cc-desc">Home pages, About pages, services pages. Every business needs this and most do it poorly. Huge demand from small and medium businesses starting online.</div>
+          </div>
+          <div class="copy-card">
+            <div class="cc-icon">🔍</div>
+            <div class="cc-name">SEO Copywriting</div>
+            <div class="cc-pay">💰 Steady work ($75–$150/hr)</div>
+            <div class="cc-desc">Writing that ranks on Google AND converts visitors. Blends keyword strategy with persuasive writing. High demand from content agencies and e-commerce brands.</div>
+          </div>
+          <div class="copy-card">
+            <div class="cc-icon">🖱️</div>
+            <div class="cc-name">UX Copywriting</div>
+            <div class="cc-pay">💰 Fast growing ($80k–$130k salary)</div>
+            <div class="cc-desc">Button text, onboarding flows, error messages, tooltips. The words inside apps and software. In-house role at tech companies, increasingly valued and well-paid.</div>
+          </div>
+          <div class="copy-card">
+            <div class="cc-icon">🛍️</div>
+            <div class="cc-name">E-commerce Copy</div>
+            <div class="cc-pay">💰 Volume work ($30–$100 per description)</div>
+            <div class="cc-desc">Product descriptions, category pages, promotional copy. High volume, consistent demand. Brands like Amazon need thousands of product pages written well.</div>
+          </div>
+          <div class="copy-card">
+            <div class="cc-icon">📱</div>
+            <div class="cc-name">Social Media Copy</div>
+            <div class="cc-pay">💰 Entry point ($500–$2,000/mo retainer)</div>
+            <div class="cc-desc">Instagram captions, LinkedIn posts, Twitter threads, TikTok scripts. Growing area, especially for brands. Great starting point for building a portfolio.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-gold">
+          <div class="ci">🎯</div>
+          <div class="callout-body">
+            <strong>Which Type Should You Start With?</strong>
+            <p>Start with <strong>social media copy and website copy</strong> — they're easy to get practice projects for, easy to show in a portfolio, and form the foundation for everything else. As you grow, specialise in <strong>email copywriting or direct response</strong> — these two pay the most and have the clearest link between your words and client revenue, making it easier to justify premium rates.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 4 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Copywriting covers many disciplines — direct response, email, ads, web, SEO, UX, e-commerce, and social</div>
+          <div class="check-item"><div class="check-box"></div>Direct response copywriting pays the most because results are directly measurable</div>
+          <div class="check-item"><div class="check-box"></div>UX copywriting is one of the fastest-growing in-house disciplines at tech companies</div>
+          <div class="check-item"><div class="check-box"></div>Start with social and web copy to build a portfolio, then specialise in email or direct response for higher rates</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 5: WRITING SKILLS ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 5</div>
+        <div class="week-title">✍️ The Core Writing Skills Every Copywriter Needs</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Formulas give you structure. Psychology gives you direction. But the actual craft of writing — how you find the right words, build the right rhythm, and say something in a way that lands — that's a skill developed through practice, study, and intentional feedback. Here are the most important writing skills to develop.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Research — the secret weapon of great copywriters</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">The best copy doesn't come from the copywriter's imagination. It comes from the customer's mouth. Before writing a single word, the best copywriters spend hours — sometimes days — researching the audience: what they're afraid of, what they want, how they talk about their problem in their own words.</p>
+
+        <ul class="topic-list">
+          <li><strong>Amazon reviews</strong> — Read 3-star reviews of competing products. People say exactly what they wish was different. That language is your copy, untouched. <span class="topic-tag">Research Method</span></li>
+          <li><strong>Reddit and Quora</strong> — Search your niche. Read how real people describe their problems and aspirations in their own unfiltered words. Mine this for voice-of-customer language. <span class="topic-tag">Research Method</span></li>
+          <li><strong>Customer interviews</strong> — If you have access to real customers, even a 15-minute conversation reveals more than hours of desk research. Ask: "What was happening in your life when you started looking for this solution?" <span class="topic-tag">Research Method</span></li>
+          <li><strong>Testimonials and reviews</strong> — What do happy customers say? The phrases they use to describe the transformation are the most powerful copy you can write — because it's already their language. <span class="topic-tag">Research Method</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Writing headlines that stop people in their tracks</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">David Ogilvy, one of the greatest copywriters in history, said: "On average, five times as many people read the headline as read the body copy. When you have written your headline, you have spent eighty cents out of your dollar." The headline is not the introduction — it is the ad within the ad.</p>
+
+        <ul class="topic-list">
+          <li><strong>The "How to" headline</strong> — Simple, clear, and delivers a promise. "How to Write a Subject Line That Gets Opened Every Time." Never fails when the outcome is something the reader genuinely wants. <span class="topic-tag">Formula</span></li>
+          <li><strong>The curiosity headline</strong> — Creates an open loop. "The One Email Mistake Killing Your Open Rates." Works because readers need to close the loop — they have to find out what the mistake is. <span class="topic-tag">Formula</span></li>
+          <li><strong>The numbered list headline</strong> — "7 Ways to Write Copy That Converts." Numbers are specific and set expectations. Readers know what they're getting — and they feel in control of the commitment. <span class="topic-tag">Formula</span></li>
+          <li><strong>The direct benefit headline</strong> — States the outcome flatly and confidently. "Double Your Email Open Rate in 30 Days." Works for audiences who already know they have the problem and want the solution. <span class="topic-tag">Formula</span></li>
+          <li><strong>The question headline</strong> — "Are You Making These Copywriting Mistakes?" Speaks directly to the reader. Works when the question is something they'd genuinely ask themselves. <span class="topic-tag">Formula</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Editing — where good copy becomes great copy</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Write first, edit second</strong> — Never edit while writing. Get everything out, even if it's rough and messy. Editing while writing kills momentum and produces over-polished mediocrity. Write hot, edit cold. <span class="topic-tag">Process</span></li>
+          <li><strong>Read it aloud</strong> — If you stumble reading it aloud, your reader will stumble reading it silently. Reading aloud reveals rhythm problems, sentences that are too long, and words that don't flow naturally. <span class="topic-tag">Technique</span></li>
+          <li><strong>The "so what?" test</strong> — After every sentence, ask "so what?" If you can't immediately answer why that sentence matters to the reader, cut it or rewrite it. <span class="topic-tag">Technique</span></li>
+          <li><strong>Kill adverbs and weak qualifiers</strong> — "Very," "really," "quite," "basically," "somewhat." These words dilute impact. "He ran quickly" is weaker than "he sprinted." Be specific and direct. <span class="topic-tag">Language</span></li>
+          <li><strong>The half-time edit</strong> — Cut your first draft in half. Then see if it's better. It almost always is. Brevity is power. Every extra word costs a fraction of the reader's attention. <span class="topic-tag">Discipline</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Finding and matching voice and tone</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Voice vs tone</strong> — Voice is the consistent personality of a brand (always confident, warm, and direct). Tone shifts with context (warm but more serious in a complaint response than in a product launch email). One brand has one voice, many tones. <span class="topic-tag">Core Concept</span></li>
+          <li><strong>Match the reader's register</strong> — A 16-year-old gaming community wants different language than a 50-year-old investment banker. Read where your audience hangs out and write the way they talk to each other, not the way you talk at them. <span class="topic-tag">Key Skill</span></li>
+          <li><strong>Short sentences create energy</strong> — Long sentences slow the reader down. They require more processing. More cognitive load. Short sentences land harder. They're easier to absorb. They drive momentum. Use both — vary them intentionally. <span class="topic-tag">Rhythm</span></li>
+        </ul>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 5 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>The best copy comes from customer research, not imagination — Amazon reviews and Reddit are gold mines</div>
+          <div class="check-item"><div class="check-box"></div>Headlines earn 80% of the impact — mastering five headline formulas covers most situations</div>
+          <div class="check-item"><div class="check-box"></div>Write first, edit second — and always read your copy aloud before publishing</div>
+          <div class="check-item"><div class="check-box"></div>Voice is consistent; tone shifts with context — always match the register of your specific audience</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 6: ADS & SALES PAGES ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 6</div>
+        <div class="week-title">📣 Ads & Sales Pages — Copy That Directly Drives Revenue</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">This is where copywriting becomes most directly measurable. An ad either clicks or it doesn't. A sales page either converts or it doesn't. The feedback is fast and unambiguous — which is why this is also where you develop skill the quickest, and why the best practitioners in this area are among the highest-paid writers on the planet.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Writing ad copy — short, sharp, and scroll-stopping</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>The hook is everything</strong> — In social ads, you have 0.5–2 seconds before the scroll continues. The opening line or visual must stop the motion. Ask a question, make a bold claim, show something unexpected, or call out your specific audience directly. <span class="topic-tag">Most Critical</span></li>
+          <li><strong>Speak to one person</strong> — The best ad copy doesn't feel like advertising — it feels like a message to one specific person who has a specific problem. "Struggling to get your first freelance client?" is more powerful than "Freelancers — improve your business." <span class="topic-tag">Specificity</span></li>
+          <li><strong>Lead with pain or desire, not product</strong> — Nobody cares about your product. They care about their problem or their aspiration. Lead with that. Introduce the product as the natural solution or vehicle. <span class="topic-tag">Structure</span></li>
+          <li><strong>One ad = one idea = one CTA</strong> — Don't try to communicate multiple messages in a single ad. One hook, one problem, one solution, one action. Anything more splits the reader's attention and drops conversion. <span class="topic-tag">Focus</span></li>
+          <li><strong>Social proof in the copy itself</strong> — "Over 12,000 students have already…" or "Rated 4.9 stars by 3,000+ customers" — even brief social proof embedded in ad copy dramatically lifts click-through rates. <span class="topic-tag">Trust</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Writing sales pages — the long game</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">A sales page is a long-form piece of copy with one purpose: to convince the reader to buy, book, or sign up. Long-form works because it answers every objection, builds desire over time, and leaves the reader feeling that not buying would be a mistake. The length isn't the point — the completeness is.</p>
+
+        <ul class="topic-list">
+          <li><strong>The headline and sub-headline</strong> — The most important copy on the page. Must communicate the transformation, who it's for, and why it's different — in as few words as possible. Spend 30% of your writing time here. <span class="topic-tag">Top Priority</span></li>
+          <li><strong>The lead section</strong> — Opens with a story, a bold claim, or a problem statement that immediately makes the ideal reader feel seen and understood. Sets the emotional tone for everything that follows. <span class="topic-tag">Emotional Foundation</span></li>
+          <li><strong>Features → Benefits → Proof</strong> — For every feature of the product, explain the advantage it provides, the benefit the reader gains, and the proof it works. Never list features alone. <span class="topic-tag">Core Structure</span></li>
+          <li><strong>Handling objections</strong> — Every reader has reasons not to buy. Good sales copy anticipates and answers every major objection before the reader has to ask. "But what if I'm not technical?" "What if it doesn't work for me?" Answer them directly. <span class="topic-tag">Conversion Tool</span></li>
+          <li><strong>The guarantee</strong> — A strong risk reversal ("30-day money-back guarantee, no questions asked") removes the biggest barrier to purchase: fear of being wrong. Make the guarantee prominent and specific. <span class="topic-tag">Trust</span></li>
+          <li><strong>Urgency and scarcity (honest only)</strong> — Give a real reason to act now rather than "I'll think about it." Closing a cart, a genuine price increase, limited availability. Fake urgency is immediately spotted and destroys trust. <span class="topic-tag">Conversion</span></li>
+          <li><strong>The call to action</strong> — Clear, specific, repeated at least twice (after the lead and at the end). Make the button text describe the outcome, not the action: "Start My Free Trial" beats "Submit." "Get Instant Access" beats "Buy Now." <span class="topic-tag">Conversion</span></li>
+        </ul>
+
+        <div class="ba-block">
+          <div class="ba-before">
+            <span class="ba-label">❌ Weak CTA button text</span>
+            <p>"Submit"<br/>"Buy Now"<br/>"Click Here"<br/>"Register"</p>
+          </div>
+          <div class="ba-after">
+            <span class="ba-label">✅ Strong benefit-focused CTA text</span>
+            <p>"Start My Free 14-Day Trial"<br/>"Yes — Show Me How It Works"<br/>"Get Instant Access Now"<br/>"Claim My Spot"</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 6 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Ad copy must stop the scroll in 0.5–2 seconds — the hook is the entire ad in terms of impact</div>
+          <div class="check-item"><div class="check-box"></div>Lead with the reader's pain or desire, not the product — introduce the product as the solution</div>
+          <div class="check-item"><div class="check-box"></div>Sales pages answer every objection, build desire progressively, and reduce fear of being wrong</div>
+          <div class="check-item"><div class="check-box"></div>CTA button text should describe the outcome the reader gets, not the action they're taking</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 7: EMAIL COPY ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 7</div>
+        <div class="week-title">📧 Email Copywriting — The Highest-Converting Format</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Email copywriting sits at the intersection of relationship and persuasion. The best email copy doesn't feel like marketing — it feels like getting a message from someone who genuinely understands you and has something you actually needed to hear today. That's the standard to aim for. Not clever, not loud. Personal, relevant, and human.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The subject line — 47 characters to earn the open</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Keep it short and clear</strong> — Most email clients display 40–60 characters. On mobile it's even less. Get the value or the intrigue across quickly. Don't be clever at the expense of being clear. <span class="topic-tag">Length</span></li>
+          <li><strong>Use the reader's language</strong> — Write the way your reader talks. If your audience says "side hustle," use "side hustle," not "supplementary income stream." Match their vocabulary exactly. <span class="topic-tag">Voice</span></li>
+          <li><strong>Test curiosity vs clarity</strong> — Curiosity subject lines open loops ("The mistake I almost made"). Clarity subject lines state value directly ("Your free template is inside"). Test both. Neither always wins. <span class="topic-tag">A/B Test This</span></li>
+          <li><strong>Avoid ALL CAPS and excessive punctuation!!!</strong> — These trigger spam filters and feel desperate. Calm confidence converts better than exclamation marks. <span class="topic-tag">Deliverability</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">The story email — the most powerful format in email marketing</div><div class="cd-line"></div></div>
+
+        <p class="intro-text">Story is the oldest persuasion technology in human history. A story email opens with a brief personal anecdote or observation, connects it to a relevant truth for the reader, then leads naturally to a call to action. It doesn't feel like marketing — it feels like a conversation. Which is exactly why it works.</p>
+
+        <ul class="topic-list">
+          <li><strong>Open with a scene, not a statement</strong> — "It was 2am, and I was staring at my laptop, about to close a browser tab that would change everything…" pulls the reader in immediately. A statement ("Today I want to talk about procrastination") doesn't. <span class="topic-tag">Technique</span></li>
+          <li><strong>Make the story relatable, not impressive</strong> — Readers connect with vulnerability and struggle, not achievements. The story of the moment before the breakthrough is more compelling than the breakthrough itself. <span class="topic-tag">Technique</span></li>
+          <li><strong>Bridge to the reader's situation</strong> — After the story, connect it explicitly to what your reader is experiencing. "If you've ever felt like…" or "You might recognise this feeling." Make them the protagonist of your story. <span class="topic-tag">Connection</span></li>
+          <li><strong>One CTA, placed naturally</strong> — The action should feel like the logical next step in the narrative. "If that sounds like you, this is what helped me" with a link feels completely different from "CLICK HERE TO BUY." <span class="topic-tag">Conversion</span></li>
+        </ul>
+
+        <div class="ba-block">
+          <div class="ba-before">
+            <span class="ba-label">❌ Corporate, distant email opening</span>
+            <p>"Hi [First Name], we are excited to share our latest product update with you. This month we have introduced several new features designed to improve your experience with our platform. Please see below for details."</p>
+          </div>
+          <div class="ba-after">
+            <span class="ba-label">✅ Personal, story-led email opening</span>
+            <p>"Last Tuesday I completely forgot about a call I'd booked three weeks ago. Just... went straight out of my head. The client was forgiving. The embarrassment wasn't. That moment is exactly why I started using the new reminder system I'm sharing with you today."</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 7 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Email copy must feel like a message from one person to one person — not a broadcast to thousands</div>
+          <div class="check-item"><div class="check-box"></div>Subject lines should be short, use the reader's own language, and tested for curiosity vs clarity</div>
+          <div class="check-item"><div class="check-box"></div>Story emails open with a scene, connect to the reader's experience, and lead naturally to a single CTA</div>
+          <div class="check-item"><div class="check-box"></div>The best promotional email never feels promotional — the offer is the natural conclusion of a human story</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 8: WEB & SOCIAL ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 8</div>
+        <div class="week-title">🌐 Web Copy & Social Media — Where Most Beginners Start</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">For most beginners, their first copywriting work is either for their own channels or for small businesses with websites and social profiles. These formats are accessible, portfolio-buildable, and directly applicable to real briefs. Mastering them gives you a foundation for everything more specialised.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Website copy — the most undervalued business asset</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>The homepage — above the fold</strong> — The headline, sub-headline, and CTA visible before any scrolling must immediately answer: "What is this? Who is it for? Why should I care?" If these three questions aren't answered in 5 seconds, most visitors leave. <span class="topic-tag">Most Critical</span></li>
+          <li><strong>Write for skimmers first, readers second</strong> — Most people don't read web pages — they scan. Bold key phrases, short paragraphs, clear subheadings, and a logical visual hierarchy let skimmers get the essence before deciding to read. <span class="topic-tag">UX Rule</span></li>
+          <li><strong>The About page is not about you</strong> — Counterintuitively, the most effective About pages focus on the reader and the transformation the company creates — not the founder's biography. "Here's how we can change your life" beats "here's our history." <span class="topic-tag">Counter-intuitive</span></li>
+          <li><strong>Every page needs one CTA</strong> — What do you want the visitor to do on this page? Contact you? Book a call? Buy? Download? One action per page, made obvious, repeated at least twice. <span class="topic-tag">Conversion</span></li>
+          <li><strong>Use "you" not "we"</strong> — Most business websites are written entirely from the company's perspective ("We are passionate about…"). The most effective copy flips this: "You deserve…" "Your business will…" The reader should be the subject of every sentence where possible. <span class="topic-tag">Voice Shift</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Social media copy — short-form persuasion</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Instagram captions</strong> — Open with a hook before the "more" cut-off (first 125 characters on most devices). Use line breaks generously for readability. End with a question or CTA that invites a response. The caption extends the emotion of the visual. <span class="topic-tag">Platform</span></li>
+          <li><strong>LinkedIn posts</strong> — Hook on line one (only line visible before "see more"). Share a genuine insight, story, or contrarian observation. The best LinkedIn posts feel like a confessional — honest, specific, and professional but human. <span class="topic-tag">Platform</span></li>
+          <li><strong>Twitter / X threads</strong> — Tweet 1 is the hook — it must be compelling enough to make them click "show this thread." Each subsequent tweet delivers one clear point. The last tweet wraps up and directs to action. <span class="topic-tag">Platform</span></li>
+          <li><strong>TikTok / Reel scripts</strong> — First 1–2 seconds are everything — the visual and the first spoken or on-screen words. Pattern interrupt: show something surprising, ask something provocative, or start mid-story. Copy here is almost indistinguishable from scriptwriting. <span class="topic-tag">Platform</span></li>
+        </ul>
+
+        <div class="ba-block">
+          <div class="ba-before">
+            <span class="ba-label">❌ Generic, company-first homepage headline</span>
+            <p>"Welcome to Apex Marketing Solutions. We are a full-service digital marketing agency dedicated to helping businesses grow their online presence through strategic and data-driven campaigns."</p>
+          </div>
+          <div class="ba-after">
+            <span class="ba-label">✅ Reader-first, benefit-driven homepage headline</span>
+            <p>"More customers. Less guesswork."<br/><em>Sub-headline:</em> "We run the ads, write the copy, and track every result — so you can focus on the work you actually started your business to do."</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 8 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>Homepage copy must answer "what is this, who is it for, why should I care?" in five seconds</div>
+          <div class="check-item"><div class="check-box"></div>Web copy should use "you" far more than "we" — the reader is always the subject</div>
+          <div class="check-item"><div class="check-box"></div>Social media copy lives or dies by the first line — every platform has a "more" cut-off that makes the hook non-negotiable</div>
+          <div class="check-item"><div class="check-box"></div>Write for skimmers first: bold key phrases, short paragraphs, clear sub-headings, and one CTA per page</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── CH 9: CAREER & INCOME ── -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-number">CHAPTER 9</div>
+        <div class="week-title">💸 Career & Income — Turning This Skill into Real Money</div>
+      </div>
+      <div class="week-body">
+        <p class="intro-text">Copywriting is one of the very few skills that can generate significant income with no degree, no formal certification, and no previous experience — as long as you can demonstrate that your words produce results. The path from beginner to paid professional is more accessible than most people believe, but it does require a clear strategy and genuine commitment to practice.</p>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Building your portfolio with no clients yet</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Write spec work</strong> — Pick a real brand you admire and rewrite their homepage, one ad, or one email sequence. Show the before and after. This demonstrates skill without needing a paying client. <span class="topic-tag">Portfolio Strategy</span></li>
+          <li><strong>Write for local businesses for free (briefly)</strong> — Offer to rewrite a local restaurant's menu description, a salon's Instagram captions, or a startup's homepage. One piece of real client work beats ten spec pieces. <span class="topic-tag">Portfolio Strategy</span></li>
+          <li><strong>Start your own copy project</strong> — Write a newsletter, a blog with conversion-focused posts, or a social media account in your niche. This shows you can write consistently and understand an audience — exactly what clients want to see. <span class="topic-tag">Portfolio Strategy</span></li>
+          <li><strong>Document your thinking</strong> — Add annotations to your portfolio pieces explaining why you made each choice. "I opened with the reader's pain rather than the product because…" Clients hire thinking, not just words. <span class="topic-tag">Portfolio Tip</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Finding clients and getting paid</div><div class="cd-line"></div></div>
+
+        <ul class="topic-list">
+          <li><strong>Start on freelance platforms</strong> — Upwork, Fiverr, and PeoplePerHour have demand for copywriters at every level. Rates are lower initially, but reviews build quickly and lead to direct referrals. Use these as a launchpad, not a destination. <span class="topic-tag">Getting Started</span></li>
+          <li><strong>LinkedIn outreach</strong> — Connect with marketing managers, CMOs, and business owners in your target niche. Share valuable content consistently. Direct, non-pushy outreach ("I noticed your homepage could convert better — would you like to see how?") opens conversations. <span class="topic-tag">Outreach</span></li>
+          <li><strong>Niche down to charge more</strong> — "I'm a copywriter" attracts low-paid generalist work. "I write email sequences for SaaS companies that reduce churn" attracts a specific client willing to pay for specific expertise. The more specific your niche, the less competition and the higher your rates. <span class="topic-tag">Pricing Strategy</span></li>
+          <li><strong>Charge for value, not time</strong> — A sales page that generates $200,000 in revenue for a client is worth far more than the 20 hours it took you to write. Price based on the value the copy creates, not the hours you spent. This is how the highest-paid copywriters operate. <span class="topic-tag">Pricing Strategy</span></li>
+          <li><strong>Retainer relationships</strong> — The most stable copywriting income comes from clients who pay a monthly retainer for ongoing work: email sequences, ad copy, social captions. Pursue these over one-off projects as soon as you have the relationship to propose them. <span class="topic-tag">Income Stability</span></li>
+        </ul>
+
+        <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">Realistic income progression</div><div class="cd-line"></div></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Stage</th><th>Timeline</th><th>What You're Doing</th><th>Realistic Monthly Income</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Learning</strong></td><td>Months 1–3</td><td>Studying, writing spec work, building portfolio. No paid work yet.</td><td>$0 — investment phase</td></tr>
+              <tr><td><strong>First clients</strong></td><td>Months 3–6</td><td>First paid projects via Upwork or local outreach. Building reviews and confidence.</td><td>$300 – $1,500/month</td></tr>
+              <tr><td><strong>Gaining traction</strong></td><td>Months 6–12</td><td>Consistent work, first retainer clients, beginning to specialise in a niche.</td><td>$1,500 – $4,000/month</td></tr>
+              <tr><td><strong>Established</strong></td><td>Year 1–2</td><td>Clear niche, referrals driving enquiries, raising rates with each new client.</td><td>$4,000 – $10,000/month</td></tr>
+              <tr><td><strong>Expert level</strong></td><td>Year 2+</td><td>Direct response specialist or senior in-house. Selective client base, premium positioning.</td><td>$10,000 – $30,000+/month</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="ci">🌱</div>
+          <div class="callout-body">
+            <strong>The Practice Habit That Separates Good from Great</strong>
+            <p>The most consistent advice from elite copywriters is this: every day, handwrite (not type — handwrite) a piece of great copy by a legendary copywriter. Gary Halbert letters, David Ogilvy ads, Eugene Schwartz headlines. When you write by hand, you internalise rhythm, structure, and word choice at a muscular level. 15 minutes a day for six months will rewire how you write completely.</p>
+          </div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>✅ Chapter 9 — What You Now Understand</h3>
+          <div class="check-item"><div class="check-box"></div>You can build a portfolio with no clients using spec work, local business rewrites, and your own projects</div>
+          <div class="check-item"><div class="check-box"></div>Niching down lets you charge more — specific expertise commands premium rates over generalist skills</div>
+          <div class="check-item"><div class="check-box"></div>Charge for the value your copy creates, not the hours it takes — this is how top copywriters price</div>
+          <div class="check-item"><div class="check-box"></div>Handwriting great copy daily is the single most powerful practice habit for developing writing instinct</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════ TOOLS ══════════ -->
+<div class="tools">
+  <div class="container">
+    <div class="section-label">🧰 The Copywriter's Toolkit</div>
+    <div class="section-title">Tools Every Copywriter Should Know</div>
+    <p style="color:#4b5563;font-size:1rem;margin-bottom:8px;">Great copy doesn't require great tools — but the right tools make research, editing, and delivery much faster.</p>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-icon">🤖</div><div class="tool-name">ChatGPT</div><div class="tool-desc">Draft, brainstorm, research hooks</div></div>
+      <div class="tool-card"><div class="tool-icon">📝</div><div class="tool-name">Grammarly</div><div class="tool-desc">Grammar and clarity edits</div></div>
+      <div class="tool-card"><div class="tool-icon">📖</div><div class="tool-name">Hemingway App</div><div class="tool-desc">Readability and simplicity check</div></div>
+      <div class="tool-card"><div class="tool-icon">🔍</div><div class="tool-name">Google Docs</div><div class="tool-desc">Write, share, collaborate</div></div>
+      <div class="tool-card"><div class="tool-icon">📣</div><div class="tool-name">CoSchedule Headline</div><div class="tool-desc">Score your headlines free</div></div>
+      <div class="tool-card"><div class="tool-icon">🗂️</div><div class="tool-name">Notion</div><div class="tool-desc">Organise swipe file and research</div></div>
+      <div class="tool-card"><div class="tool-icon">🌐</div><div class="tool-name">AnswerThePublic</div><div class="tool-desc">Find how readers phrase problems</div></div>
+      <div class="tool-card"><div class="tool-icon">📊</div><div class="tool-name">Hotjar</div><div class="tool-desc">See where readers drop off on pages</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ RESOURCES ══════════ -->
+<div class="resources">
+  <div class="container">
+    <div class="section-label">🔗 Go Deeper</div>
+    <div class="section-title">The Books, Sites & Tools Every Copywriter Studies</div>
+    <p style="color:var(--muted);font-size:0.95rem;">The free resources here are genuinely world-class. Start with the books — they're the fastest return on investment in this craft.</p>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="r-icon">📚</div>
+        <div class="r-type">Essential Book</div>
+        <h4>The Boron Letters — Gary Halbert <span class="free-badge">FREE ONLINE</span></h4>
+        <p>Written by one of the greatest copywriters ever, from jail to his son. Brutally honest, deeply practical, and unlike any other marketing book. Available free at thegaryhalbertletter.com. Start here.</p>
+        <a href="http://www.thegaryhalbertletter.com/Boron/BoronIndex.htm" target="_blank">Read Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📚</div>
+        <div class="r-type">Essential Book</div>
+        <h4>Ogilvy on Advertising <span class="paid-badge">PAID</span></h4>
+        <p>David Ogilvy's timeless collection of principles from the father of modern advertising. Every page contains a lesson that still applies today. One of the most-recommended books by working copywriters.</p>
+        <a href="https://www.amazon.com/Ogilvy-Advertising-David/dp/039472903X" target="_blank">Get the Book →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📖</div>
+        <div class="r-type">Free Learning</div>
+        <h4>Copyhackers Blog <span class="free-badge">FREE</span></h4>
+        <p>The most practical, research-backed free resource for learning copywriting online. Deep dives into subject lines, landing pages, SaaS copy, and more. Written by practitioners, not theorists.</p>
+        <a href="https://copyhackers.com/blog/" target="_blank">Read Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📝</div>
+        <div class="r-type">Editing Tool</div>
+        <h4>Hemingway App <span class="free-badge">FREE</span></h4>
+        <p>Paste your copy in and get a readability grade with specific suggestions: sentences that are too long, passive voice, adverbs to cut. Invaluable for training yourself to write simply and clearly.</p>
+        <a href="https://hemingwayapp.com/" target="_blank">Try Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📣</div>
+        <div class="r-type">Headline Tool</div>
+        <h4>CoSchedule Headline Analyser <span class="free-badge">FREE</span></h4>
+        <p>Score your headlines for emotional impact, word balance, length, and structure. Not perfect, but excellent for training your intuition about what makes a headline strong or weak.</p>
+        <a href="https://coschedule.com/headline-analyzer" target="_blank">Analyse Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🔍</div>
+        <div class="r-type">Research Tool</div>
+        <h4>AnswerThePublic <span class="free-badge">FREE TIER</span></h4>
+        <p>Type any topic and see every question, comparison, and phrase real people search online. A goldmine for discovering how your audience phrases their problems — the language your copy should use.</p>
+        <a href="https://answerthepublic.com/" target="_blank">Research Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🗂️</div>
+        <div class="r-type">Swipe File</div>
+        <h4>Swiped.co <span class="free-badge">FREE</span></h4>
+        <p>A curated library of real-world copy examples — ads, emails, sales pages — with annotations explaining why they work. Build your swipe file by studying these. Copy what works conceptually (not literally).</p>
+        <a href="https://swiped.co/" target="_blank">Browse Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🎓</div>
+        <div class="r-type">Free Course</div>
+        <h4>AWAI Free Copywriting Resources <span class="free-badge">FREE</span></h4>
+        <p>American Writers & Artists Institute offer free introductory resources on copywriting craft, freelancing, and niche selection. A good supplement to reading the classics.</p>
+        <a href="https://www.awai.com/copywriting/" target="_blank">Explore Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">💼</div>
+        <div class="r-type">Freelance Platform</div>
+        <h4>Upwork <span class="free-badge">FREE TO JOIN</span></h4>
+        <p>The largest freelance platform for finding copywriting clients. Start here for your first paid projects. Build reviews fast, then transition to direct client relationships where rates are higher.</p>
+        <a href="https://www.upwork.com/" target="_blank">Join Free →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📱</div>
+        <div class="r-type">Portfolio Builder</div>
+        <h4>Authory / Contently <span class="free-badge">FREE TIER</span></h4>
+        <p>Build a clean, professional portfolio to show clients. Authory automatically pulls in published work. Contently has a large brand marketplace where clients discover and hire copywriters directly.</p>
+        <a href="https://authory.com/" target="_blank">Build Portfolio →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📚</div>
+        <div class="r-type">Classic Book</div>
+        <h4>Hey Whipple, Squeeze This <span class="paid-badge">PAID</span></h4>
+        <p>Luke Sullivan's essential guide to advertising copywriting — funny, practical, and full of real examples from iconic campaigns. One of the most-read books in advertising agencies globally.</p>
+        <a href="https://www.amazon.com/Hey-Whipple-Squeeze-This-Advertising/dp/1119164001" target="_blank">Get the Book →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🤖</div>
+        <div class="r-type">AI Writing</div>
+        <h4>ChatGPT <span class="free-badge">FREE</span></h4>
+        <p>Use as a brainstorming partner and first-draft generator. Prompt it with: "Write 10 subject line variations for a [product] email targeting [audience] using a curiosity hook." Always edit heavily.</p>
+        <a href="https://chat.openai.com/" target="_blank">Try Free →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ OUTCOMES ══════════ -->
+<div class="outcomes">
+  <div class="container">
+    <div class="section-label">🏆 What Changes After Reading This</div>
+    <div class="section-title">You'll Never Read an Ad the Same Way Again</div>
+    <div class="outcomes-grid">
+      <div class="outcome-item"><div class="check">✓</div><p>You understand what copywriting actually is — and why it's fundamentally different from content writing</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You know why people buy — emotionally first, logically second — and how to write to both layers in the right order</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You can apply AIDA, PAS, BAB, FAB, and the 4Ps to structure any piece of persuasive writing</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You understand the different types of copywriting — which pays most and where to start building your skills</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You know how to research an audience using Amazon reviews, Reddit, and customer language before writing a word</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You can write headlines using five proven formulas that stop readers and earn their continued attention</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You understand the anatomy of an ad, a sales page, an email, and a website — and what makes each one convert</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You have a realistic path from beginner to paid copywriter — portfolio strategy, pricing, and income progression</p></div>
+      <div class="outcome-item"><div class="check">✓</div><p>You'll now instinctively analyse every ad, email, and website you encounter — noticing what works and why</p></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ ACTION PLAN ══════════ -->
+<div class="project">
+  <div class="container">
+    <div class="section-label">🚀 Your Action Plan</div>
+    <div class="section-title">Reading Was Step One. Here's Your First Week.</div>
+    <p>Copywriting is only learned by doing. Here are eight concrete actions — in the right order — to take you from reading to practising immediately.</p>
+
+    <div class="project-box">
+      <h3>✦ Your First 8 Actions (Do Them In Order)</h3>
+      <ul>
+        <li>Start your swipe file today — a Google Doc or Notion page where you save any copy that makes you stop, click, or feel something. Add at least 5 pieces this week.</li>
+        <li>Go to Amazon and find a product in a niche you're interested in. Read 20+ reviews — especially 3-star ones. Write down the exact phrases customers use to describe their frustrations and desires. That's your research.</li>
+        <li>Rewrite the homepage headline of a brand you love (or find one with weak copy) using the reader-first approach. Show the before and after. This is your first portfolio piece.</li>
+        <li>Write one piece of copy using the PAS formula — Problem, Agitate, Solution — for any product or service. Keep it to 150 words. Then read it aloud. Edit until you wouldn't stumble reading it.</li>
+        <li>Find a piece of great copy from a legendary copywriter (search "Gary Halbert letters" or "Ogilvy ads") and handwrite it — not type, handwrite. One page. Feel the rhythm in your hand.</li>
+        <li>Write five headline variations for one product using five different formulas (How to, Curiosity, Numbered, Direct Benefit, Question). Compare them — which would you click?</li>
+        <li>Sign up on <a href="https://www.upwork.com" target="_blank" style="color:var(--gold-light);">Upwork</a> and spend 30 minutes reading what copywriting clients are actually asking for. Note the briefs, the budgets, and the niches. This is your market research.</li>
+        <li>Commit to one piece of copy practice every day this week. It can be a subject line, a caption, a headline, or a 100-word ad. Consistency over the next 30 days will develop your instinct faster than any course.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ CAREERS ══════════ -->
+<div class="careers">
+  <div class="container">
+    <div class="section-label">🌍 Where Copywriting Takes You</div>
+    <div class="section-title">The Roles and Paths That Open Up</div>
+    <div class="careers-grid">
+      <div class="career-card">
+        <div class="c-icon">✍️</div>
+        <h4>Freelance Copywriter</h4>
+        <p>Work with multiple clients across any niche, set your own rates, and build a business around words. One of the most location-independent careers available.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">🏢</div>
+        <h4>In-House Copywriter</h4>
+        <p>Full-time role at a brand, agency, or startup. Stable salary, team environment, and deep expertise in one company's voice and audience.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">📣</div>
+        <h4>Direct Response Specialist</h4>
+        <p>The highest-paid copywriting speciality. Write sales pages, VSLs, and email sequences with measurable results. Top earners charge $5k–$25k per project.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">🖱️</div>
+        <h4>UX Copywriter</h4>
+        <p>Write the words inside apps and software products. Growing fast as tech companies realise that every word a user reads is a conversion opportunity.</p>
+      </div>
+      <div class="career-card">
+        <div class="c-icon">🚀</div>
+        <h4>Brand / Content Strategist</h4>
+        <p>Combine copywriting with strategy — defining the voice, messaging, and content direction for brands. A senior evolution of the copywriter's career path.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ CTA ══════════ -->
+<div class="cta">
+  <div class="section-label" style="color:var(--purple-light);">✍️ Your Words Have Power</div>
+  <div class="section-title">The Difference Between Words That Get Ignored<br/>and Words That Change Minds Is Learnable.</div>
+  <p>You don't need talent. You need the right frameworks, daily practice, and the patience to let the skill compound. Every great copywriter was once someone who'd never written an ad in their life. Start today.</p>
+  <div class="cta-buttons">
+    <a class="btn-primary" href="http://www.thegaryhalbertletter.com/Boron/BoronIndex.htm" target="_blank">Read The Boron Letters</a>
+    <a class="btn-secondary" href="https://hemingwayapp.com/" target="_blank">Test Your Copy</a>
+    <a class="btn-primary" href="https://swiped.co/" target="_blank">Build Your Swipe File</a>
+  </div>
+</div>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-logo">🖊️ Copywriting From Absolute Zero</div>
+  <p>Psychology · Formulas · Types · Writing Skills · Ads & Pages · Email · Web & Social · Career</p>
+  <div class="footer-contact">
+    <span>No degree required · No experience needed · Start with a blank page and a reader in mind</span>
+  </div>
+  <p style="margin-top:16px;font-size:11px;opacity:0.5;">"The most powerful person in the world is the storyteller." — Steve Jobs. Learn to write words that move people, and you will never lack for opportunity.</p>
+</footer>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ff48809cd3a8a43',t:'MTc3OTM3NjQ3Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

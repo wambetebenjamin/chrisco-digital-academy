@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Marketing — Complete Course</title>
+    <style>
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --primary-dark: #4C1D95;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --bg: #F8F9FC;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --border: #E5E7EB;
+            --gradient: linear-gradient(135deg, #6C3CE1 0%, #8B5CF6 50%, #A78BFA 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ── Hero ───────────────────────────────── */
+        .hero {
+            background: var(--gradient);
+            color: #fff;
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 12px; position: relative; }
+        .hero p  { font-size: 1.15rem; opacity: .9; max-width: 600px; margin: 0 auto; position: relative; }
+        .hero .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #1F2937;
+            font-weight: 700;
+            font-size: .85rem;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        /* ── Nav / TOC ──────────────────────────── */
+        .toc {
+            max-width: 900px;
+            margin: -30px auto 40px;
+            background: var(--card);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.08);
+            position: relative;
+            z-index: 2;
+        }
+        .toc h2 { font-size: 1.3rem; margin-bottom: 16px; color: var(--primary-dark); }
+        .toc ol { padding-left: 20px; }
+        .toc li { margin-bottom: 6px; }
+        .toc a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color .2s;
+        }
+        .toc a:hover { color: var(--accent); text-decoration: underline; }
+
+        /* ── Container ──────────────────────────── */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+        /* ── Module Card ────────────────────────── */
+        .module {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 40px 36px;
+            margin-bottom: 36px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.05);
+            border-left: 5px solid var(--primary);
+        }
+        .module:nth-child(even) { border-left-color: var(--accent); }
+        .module h2 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+        .module h3 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin: 28px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .module h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            flex-shrink: 0;
+        }
+        .module h4 {
+            font-size: 1rem;
+            margin: 18px 0 8px;
+            color: var(--text);
+        }
+        .module p, .module li { font-size: .98rem; color: var(--text-light); }
+        .module ul, .module ol { padding-left: 22px; margin-bottom: 10px; }
+        .module li { margin-bottom: 4px; }
+
+        .context-box {
+            background: #EDE9FE;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-left: 4px solid var(--primary-light);
+        }
+        .context-box p { color: var(--primary-dark); font-size: .95rem; }
+        .context-box strong { color: var(--primary); }
+
+        .task-box {
+            background: #ECFDF5;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-left: 4px solid var(--success);
+        }
+        .task-box p { color: #065F46; font-size: .95rem; }
+        .task-box strong { color: var(--success); }
+
+        .tip-box {
+            background: #FFFBEB;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-left: 4px solid var(--accent);
+        }
+        .tip-box p { color: #92400E; font-size: .95rem; }
+        .tip-box strong { color: var(--accent); }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .92rem;
+            background: #F3F0FF;
+            padding: 6px 14px;
+            border-radius: 8px;
+            margin: 4px 6px 4px 0;
+            transition: background .2s;
+        }
+        .resource-link:hover { background: #E0D7FC; }
+        .resource-link.yt { background: #FEE2E2; color: #DC2626; }
+        .resource-link.yt:hover { background: #FECACA; }
+        .resource-link.web { background: #DBEAFE; color: #2563EB; }
+        .resource-link.web:hover { background: #BFDBFE; }
+        .resource-link.tool { background: #D1FAE5; color: #059669; }
+        .resource-link.tool:hover { background: #A7F3D0; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: .92rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th { background: #F9FAFB; color: var(--primary-dark); font-weight: 700; }
+        tr:hover td { background: #F9FAFB; }
+
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .progress-step {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+            padding: 10px 6px;
+            border-radius: 8px;
+            background: #F3F4F6;
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        .progress-step.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        code {
+            background: #F3F4F6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: .88em;
+            color: #D946EF;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--text-light);
+            font-size: .85rem;
+            border-top: 1px solid var(--border);
+            background: var(--card);
+        }
+
+        @media (max-width: 640px) {
+            .module { padding: 24px 18px; }
+            .toc { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════ -->
+<header class="hero">
+    <div class="badge">📚 12-MODULE COURSE</div>
+    <h1>Social Media Marketing</h1>
+    <p>From strategy to execution — master every major platform, grow real audiences, and drive measurable results.</p>
+</header>
+
+<!-- ════════════════════════════════════════════════
+     TABLE OF CONTENTS
+     ════════════════════════════════════════════════ -->
+<nav class="toc">
+    <h2>📋 Course Outline</h2>
+    <ol>
+        <li><a href="#m1">Module 1 — Foundations of Social Media Marketing</a></li>
+        <li><a href="#m2">Module 2 — Choosing the Right Platforms</a></li>
+        <li><a href="#m3">Module 3 — Building Your Brand Voice &amp; Identity</a></li>
+        <li><a href="#m4">Module 4 — Content Strategy &amp; Planning</a></li>
+        <li><a href="#m5">Module 5 — Creating Engaging Visual Content</a></li>
+        <li><a href="#m6">Module 6 — Copywriting for Social Media</a></li>
+        <li><a href="#m7">Module 7 — Community Management &amp; Engagement</a></li>
+        <li><a href="#m8">Module 8 — Social Media Analytics &amp; Reporting</a></li>
+        <li><a href="#m9">Module 9 — Paid Social Advertising</a></li>
+        <li><a href="#m10">Module 10 — Influencer Marketing</a></li>
+        <li><a href="#m11">Module 11 — Advanced Growth Tactics</a></li>
+        <li><a href="#m12">Module 12 — Capstone Project &amp; Next Steps</a></li>
+    </ol>
+</nav>
+
+<div class="container">
+
+<!-- ════════════════════════════════════════════════
+     MODULE 1
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m1">
+    <h2>Module 1 — Foundations of Social Media Marketing</h2>
+    <p><em>Estimated time: 45 min &nbsp;|&nbsp; Difficulty: Beginner</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Social media marketing (SMM) is the practice of using social media platforms to connect with your audience, build your brand, increase sales, and drive website traffic. With over <strong>4.9 billion active social media users</strong> worldwide (2024), SMM is no longer optional — it's essential for every business.</p>
+    </div>
+
+    <h3>What You'll Learn</h3>
+    <ul>
+        <li>The evolution and current landscape of social media marketing</li>
+        <li>Key metrics: reach, impressions, engagement, CTR, conversions</li>
+        <li>Organic vs. paid social media strategies</li>
+        <li>How social fits into the broader digital marketing funnel</li>
+    </ul>
+
+    <h3>Content</h3>
+    <h4>The Social Media Funnel</h4>
+    <table>
+        <tr><th>Stage</th><th>Goal</th><th>Example Tactics</th></tr>
+        <tr><td>Awareness</td><td>Get seen</td><td>Viral posts, influencer shoutouts, paid reach ads</td></tr>
+        <tr><td>Consideration</td><td>Build interest</td><td>Educational carousels, live Q&A, testimonials</td></tr>
+        <tr><td>Conversion</td><td>Drive action</td><td>Shoppable posts, limited-time offers, retargeting ads</td></tr>
+        <tr><td>Loyalty</td><td>Retain customers</td><td>Community groups, exclusive content, user-generated campaigns</td></tr>
+    </table>
+
+    <h4>Key Metrics Defined</h4>
+    <ul>
+        <li><strong>Reach</strong> — Unique users who saw your content</li>
+        <li><strong>Impressions</strong> — Total times your content was displayed</li>
+        <li><strong>Engagement Rate</strong> — (Likes + Comments + Shares) ÷ Reach × 100</li>
+        <li><strong>CTR (Click-Through Rate)</strong> — Clicks ÷ Impressions × 100</li>
+        <li><strong>Conversion Rate</strong> — Conversions ÷ Clicks × 100</li>
+    </ul>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Write a one-paragraph summary of why your brand (or a brand you admire) should be on social media. Include at least 3 specific goals.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Open the Facebook Ad Library (<a href="https://www.facebook.com/ads/library" class="resource-link web" target="_blank">🔗 facebook.com/ads/library</a>) and find 3 ads from brands in a niche you're interested in. Note what makes each one stand out.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 3:</strong> Calculate the engagement rate for 5 recent posts from a brand's Instagram account using the formula above. What's the average?</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=QhXMQgMjXkE" class="resource-link yt" target="_blank">▶ YouTube — Social Media Marketing Explained (HubSpot)</a>
+        <a href="https://www.youtube.com/watch?v=7YJG6BbHJgI" class="resource-link yt" target="_blank">▶ YouTube — Digital Marketing Full Course (Simplilearn)</a>
+        <a href="https://blog.hubspot.com/marketing/social-media-marketing" class="resource-link web" target="_blank">🔗 HubSpot — The Ultimate Guide to Social Media Marketing</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> Don't try to master every platform at once. Start with 1–2 where your target audience is most active, then expand.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 2
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m2">
+    <h2>Module 2 — Choosing the Right Platforms</h2>
+    <p><em>Estimated time: 40 min &nbsp;|&nbsp; Difficulty: Beginner</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Not every platform is right for every brand. Choosing where to focus your energy is one of the most strategic decisions you'll make. A B2B software company will get very different results on LinkedIn than on TikTok, while a DTC fashion brand might thrive on Instagram and Pinterest.</p>
+    </div>
+
+    <h3>Platform Overview</h3>
+    <table>
+        <tr><th>Platform</th><th>Best For</th><th>Key Demographics</th><th>Content Types</th></tr>
+        <tr><td>Instagram</td><td>Visual brands, DTC, lifestyle</td><td>18–34, ~50% female</td><td>Reels, Stories, Carousels</td></tr>
+        <tr><td>TikTok</td><td>Gen Z reach, viral growth, authenticity</td><td>16–30, balanced gender</td><td>Short-form video</td></tr>
+        <tr><td>LinkedIn</td><td>B2B, thought leadership, recruiting</td><td>25–54, professional</td><td>Articles, carousels, native video</td></tr>
+        <tr><td>Facebook</td><td>Community, broad reach, ads</td><td>25–65+, balanced</td><td>Groups, video, link posts</td></tr>
+        <tr><td>X / Twitter</td><td>Real-time updates, news, opinions</td><td>25–49, male-skewed</td><td>Text threads, short video</td></tr>
+        <tr><td>Pinterest</td><td>Inspiration, planning, e-commerce</td><td>25–44, ~60% female</td><td>Pins, Idea Pins</td></tr>
+        <tr><td>YouTube</td><td>Long-form education, entertainment</td><td>All ages, broad</td><td>Long video, Shorts</td></tr>
+    </table>
+
+    <h3>How to Choose</h3>
+    <ol>
+        <li><strong>Define your audience</strong> — Where do they spend time online?</li>
+        <li><strong>Match content type</strong> — Can you produce the right format consistently?</li>
+        <li><strong>Assess resources</strong> — Team size, budget, tools available</li>
+        <li><strong>Analyze competitors</strong> — Where are they winning? Where are there gaps?</li>
+        <li><strong>Test &amp; iterate</strong> — Start small, measure, scale what works</li>
+    </ol>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Pick a real brand. Research which 3 platforms they use most actively and explain <em>why</em> those platforms fit their audience and goals.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Complete the platform selection worksheet: define your ideal customer, list 3 platforms, and justify each with demographic and content-fit reasoning.</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=VQwNzJmFqHc" class="resource-link yt" target="_blank">▶ YouTube — Best Social Media Platforms for Business (Ahrefs)</a>
+        <a href="https://sproutsocial.com/insights/social-media-demographics/" class="resource-link web" target="_blank">🔗 Sprout Social — Demographics Research</a>
+        <a href="https://buffer.com/resources/choose-social-media-platforms/" class="resource-link web" target="_blank">🔗 Buffer — How to Choose Platforms</a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 3
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m3">
+    <h2>Module 3 — Building Your Brand Voice &amp; Identity</h2>
+    <p><em>Estimated time: 50 min &nbsp;|&nbsp; Difficulty: Beginner</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Your brand voice is the personality and emotion infused into your communications. A consistent brand voice builds recognition, trust, and loyalty. Think of Wendy's sassy Twitter, Nike's inspiring tone, or Duolingo's unhinged TikTok — each is instantly recognizable.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>Elements of Brand Identity</h4>
+    <ul>
+        <li><strong>Brand Personality</strong> — If your brand were a person, who would it be? (Fun, professional, rebellious, nurturing…)</li>
+        <li><strong>Tone of Voice</strong> — How you say things (formal vs. casual, serious vs. playful)</li>
+        <li><strong>Visual Identity</strong> — Colors, fonts, imagery style, logo usage</li>
+        <li><strong>Brand Values</strong> — What you stand for and won't compromise on</li>
+        <li><strong>Brand Story</strong> — The narrative that connects emotionally</li>
+    </ul>
+
+    <h4>Creating a Brand Voice Guide</h4>
+    <p>A practical brand voice guide includes:</p>
+    <ol>
+        <li>Brand personality traits (pick 3–5 adjectives)</li>
+        <li>"We are / We are not" statements</li>
+        <li>Voice examples (good vs. bad captions)</li>
+        <li>Emoji and hashtag guidelines</li>
+        <li>Response templates for common scenarios</li>
+    </ol>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Create a one-page Brand Voice Guide for a fictional or real brand. Include personality traits, "We are / We are not" statements, and 3 example captions that demonstrate the voice.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Find 3 brands with strong, distinct voices. Write a short analysis of what makes each voice work and whether it matches their audience.</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=9Wp3BbHbM0M" class="resource-link yt" target="_blank">▶ YouTube — How to Find Your Brand Voice (Vanessa Lau)</a>
+        <a href="https://mailchimp.com/marketing-glossary/brand-voice/" class="resource-link web" target="_blank">🔗 Mailchimp — Brand Voice Guide</a>
+        <a href="https://buffer.com/resources/brand-voice/" class="resource-link web" target="_blank">🔗 Buffer — Building a Brand Voice Guide</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> Your brand voice should be consistent across all platforms, but your <em>tone</em> can adapt — a LinkedIn post may be slightly more formal than a TikTok caption, while still sounding like the same brand.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 4
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m4">
+    <h2>Module 4 — Content Strategy &amp; Planning</h2>
+    <p><em>Estimated time: 60 min &nbsp;|&nbsp; Difficulty: Intermediate</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Posting without a strategy is just noise. A content strategy ensures every post serves a purpose — whether it's driving awareness, engagement, leads, or sales. The best strategies blend planned content with real-time agility.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>The Content Pillar Framework</h4>
+    <p>Organize your content into 3–5 pillars (themes) that align with your brand. Example for a fitness brand:</p>
+    <table>
+        <tr><th>Pillar</th><th>Example Topics</th><th>Frequency</th></tr>
+        <tr><td>Workouts</td><td>Exercise tutorials, challenges, form tips</td><td>3× / week</td></tr>
+        <tr><td>Nutrition</td><td>Meal prep, recipes, supplement guides</td><td>2× / week</td></tr>
+        <tr><td>Mindset</td><td>Motivation, habit-building, mental health</td><td>1× / week</td></tr>
+        <tr><td>Community</td><td>Client transformations, Q&amp;A, live sessions</td><td>1× / week</td></tr>
+    </table>
+
+    <h4>Content Calendar Essentials</h4>
+    <ul>
+        <li><strong>Posting frequency</strong> — How often per platform</li>
+        <li><strong>Content mix</strong> — Ratio of educational, entertaining, promotional posts (try the 80/20 rule)</li>
+        <li><strong>Key dates</strong> — Holidays, product launches, industry events</li>
+        <li><strong>Formats</strong> — Video, carousel, story, text, live</li>
+        <li><strong>Responsible team members</strong> — Who creates, approves, schedules, responds</li>
+    </ul>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Define 4 content pillars for a brand of your choice. For each pillar, list 5 specific post ideas.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Create a 2-week content calendar in a spreadsheet (or use <a href="https://www.notion.so/" class="resource-link web" target="_blank">Notion</a> / <a href="https://trello.com/" class="resource-link web" target="_blank">Trello</a>). Include platform, date, content type, pillar, caption draft, and visual notes.</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=1sXJfB3gJkA" class="resource-link yt" target="_blank">▶ YouTube — Content Strategy That Actually Works (Brendan Gahan)</a>
+        <a href="https://blog.hubspot.com/marketing/social-media-content-strategy" class="resource-link web" target="_blank">🔗 HubSpot — Social Media Content Strategy Guide</a>
+        <a href="https://later.com/social-media-content-calendar/" class="resource-link web" target="_blank">🔗 Later — How to Build a Content Calendar</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> Use the <code>3 E's</code> framework for every post: <strong>E</strong>ducate, <strong>E</strong>ntertain, or <strong>E</strong>mpower. If a post doesn't do at least one, skip it.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 5
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m5">
+    <h2>Module 5 — Creating Engaging Visual Content</h2>
+    <p><em>Estimated time: 60 min &nbsp;|&nbsp; Difficulty: Intermediate</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Visual content generates 94% more views than text-only posts. In the scroll-heavy social media world, your visuals are the hook — you have roughly 1.7 seconds to capture attention before someone scrolls past.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>Types of Visual Content</h4>
+    <ul>
+        <li><strong>Images &amp; Photos</strong> — Product shots, lifestyle, behind-the-scenes</li>
+        <li><strong>Graphics &amp; Carousels</strong> — Infographics, step-by-step guides, quote cards</li>
+        <li><strong>Short-form Video</strong> — Reels, TikToks, YouTube Shorts (under 60s)</li>
+        <li><strong>Long-form Video</strong> — YouTube tutorials, webinars, interviews</li>
+        <li><strong>Stories &amp; Temporary Content</strong> — Polls, Q&amp;A, countdowns, day-in-the-life</li>
+        <li><strong>Live Video</strong> — Q&amp;As, product launches, AMA sessions</li>
+    </ul>
+
+    <h4>Design Principles for Social</h4>
+    <ol>
+        <li><strong>Hierarchy</strong> — Lead with the most important element (headline, face, product)</li>
+        <li><strong>Contrast</strong> — Make text readable against backgrounds</li>
+        <li><strong>Consistency</strong> — Use a cohesive color palette and font pairing</li>
+        <li><strong>Simplicity</strong> — Less clutter = more impact on small screens</li>
+        <li><strong>Platform specs</strong> — Instagram square (1080×1080), Reels (1080×1920), LinkedIn (1200×627), etc.</li>
+    </ol>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Using <a href="https://www.canva.com/" class="resource-link tool" target="_blank">Canva</a> (free), design 3 carousel slides for an educational post in your niche. Apply hierarchy, contrast, and consistency principles.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Film and edit a 30-second short-form video using <a href="https://www.capcut.com/" class="resource-link tool" target="_blank">CapCut</a> or your phone's native editor. Include a hook (first 3 seconds), value delivery, and a call-to-action.</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=KJ2Jk6pJdQ0" class="resource-link yt" target="_blank">▶ YouTube — Canva Tutorial for Beginners (Design with Canva)</a>
+        <a href="https://www.youtube.com/watch?v=Vd6vJWkMjXs" class="resource-link yt" target="_blank">▶ YouTube — How to Make Viral Reels (Alex Hormozi)</a>
+        <a href="https://www.youtube.com/watch?v=5MgBikgcWnY" class="resource-link yt" target="_blank">▶ YouTube — CapCut Editing Tutorial (Collin Michael)</a>
+        <a href="https://buffer.com/library/social-media-image-sizes/" class="resource-link web" target="_blank">🔗 Buffer — Complete Social Media Image Sizes Guide</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> The first 3 seconds of any video are everything. Start with a bold statement, surprising visual, or direct question — never with a slow intro or logo animation.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 6
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m6">
+    <h2>Module 6 — Copywriting for Social Media</h2>
+    <p><em>Estimated time: 50 min &nbsp;|&nbsp; Difficulty: Intermediate</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Great visuals stop the scroll, but great copy drives the action. Social media copywriting is different from traditional advertising — it needs to be conversational, scannable, and platform-native. Every word earns its place.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>Caption Formulas That Work</h4>
+    <ul>
+        <li><strong>AIDA</strong> — Attention → Interest → Desire → Action</li>
+        <li><strong>PAS</strong> — Problem → Agitate → Solve</li>
+        <li><strong>Before-After-Bridge</strong> — Current state → Desired state → How to get there</li>
+        <li><strong>Hook-Value-CTA</strong> — Grab attention → Deliver value → Tell them what to do next</li>
+    </ul>
+
+    <h4>Writing Best Practices</h4>
+    <ol>
+        <li><strong>Lead with the hook</strong> — First line determines if they keep reading</li>
+        <li><strong>Write like you speak</strong> — Conversational tone outperforms corporate jargon</li>
+        <li><strong>Use formatting</strong> — Line breaks, emojis, bullet points for scannability</li>
+        <li><strong>One clear CTA</strong> — Tell the reader exactly what to do next</li>
+        <li><strong>Optimize per platform</strong> — Twitter: concise; LinkedIn: professional depth; Instagram: visual-first with supporting caption</li>
+    </ol>
+
+    <h4>Hashtag Strategy</h4>
+    <ul>
+        <li>Use 3–5 highly relevant hashtags (Instagram allows up to 30, but quality > quantity)</li>
+        <li>Mix broad (#marketing, 10M+ posts) with niche (#sustainablefashiontips, 50K posts)</li>
+        <li>Create a branded hashtag for your community</li>
+        <li>Research hashtags your competitors and audience use</li>
+    </ul>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Write 5 captions using 3 different formulas (AIDA, PAS, Hook-Value-CTA). Each should promote the same product or service but feel distinct.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Analyze the top 10 performing posts from a brand in your niche. What patterns do you notice in their hooks, length, and CTAs? Write up your findings.</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=3cBhZ3MjXkA" class="resource-link yt" target="_blank">▶ YouTube — Copywriting Masterclass (Alex Cattoni)</a>
+        <a href="https://www.youtube.com/watch?v=QsFJkP2JqjE" class="resource-link yt" target="_blank">▶ YouTube — How to Write Captions That Convert (Later)</a>
+        <a href="https://blog.hubspot.com/marketing/how-to-write-captions-for-social-media" class="resource-link web" target="_blank">🔗 HubSpot — How to Write Social Media Captions</a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 7
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m7">
+    <h2>Module 7 — Community Management &amp; Engagement</h2>
+    <p><em>Estimated time: 45 min &nbsp;|&nbsp; Difficulty: Intermediate</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Community management is the art of building and nurturing relationships with your audience online. It goes beyond responding to comments — it's about creating a sense of belonging that turns followers into advocates and advocates into customers.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>The Community Management Framework</h4>
+    <table>
+        <tr><th>Pillar</th><th>Actions</th><th>Tools</th></tr>
+        <tr><td><strong>Listen</strong></td><td>Social listening, brand mentions, sentiment analysis</td><td>Hootsuite, Brand24, Mention</td></tr>
+        <tr><td><strong>Respond</strong></td><td>Reply to comments, DMs, reviews within 24hrs</td><td>Meta Business Suite, Sprout Social</td></tr>
+        <tr><td><strong>Engage</strong></td><td>Proactive commenting, polls, UGC features, live sessions</td><td>Native platform features</td></tr>
+        <tr><td><strong>Nurture</strong></td><td>Facebook/Discord groups, loyalty programs, exclusive content</td><td>Discord, Circle, Facebook Groups</td></tr>
+        <tr><td><strong>Measure</strong></td><td>Response rate, sentiment shift, community growth, retention</td><td>Platform analytics, surveys</td></tr>
+    </table>
+
+    <h4>Crisis Management Basics</h4>
+    <ol>
+        <li><strong>Pause scheduled posts</strong> — Don't let automated content go out during a crisis</li>
+        <li><strong>Acknowledge quickly</strong> — Silence looks like indifference</li>
+        <li><strong>Take it offline when possible</strong> — "We'd love to resolve this — please DM us"</li>
+        <li><strong>Never argue publicly</strong> — Stay professional, even when others don't</li>
+        <li><strong>Follow up</strong> — Close the loop and share what changed</li>
+    </ol>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Set up a social listening alert using <a href="https://www.google.com/alerts" class="resource-link tool" target="_blank">Google Alerts</a> (free) for a brand or topic. Monitor for 3 days and summarize what you find.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Draft response templates for 5 common scenarios: positive review, complaint, product question, partnership inquiry, and troll/negative comment. Practice the tone.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 3:</strong> Design a 30-day community engagement plan including daily actions (reply, proactive comment, share UGC) and weekly actions (poll, live session, feature a follower).</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=1v0jMjQJXkE" class="resource-link yt" target="_blank">▶ YouTube — Community Management Best Practices (Hootsuite)</a>
+        <a href="https://blog.hubspot.com/service/community-management" class="resource-link web" target="_blank">🔗 HubSpot — Community Management Guide</a>
+        <a href="https://sproutsocial.com/insights/social-media-crisis-management/" class="resource-link web" target="_blank">🔗 Sprout Social — Crisis Management Playbook</a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 8
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m8">
+    <h2>Module 8 — Social Media Analytics &amp; Reporting</h2>
+    <p><em>Estimated time: 55 min &nbsp;|&nbsp; Difficulty: Intermediate–Advanced</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Data is the compass of social media marketing. Without analytics, you're guessing. With analytics, you're making informed decisions that compound over time. This module teaches you what to measure, how to measure it, and how to turn data into strategy.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>Key Metrics by Goal</h4>
+    <table>
+        <tr><th>Goal</th><th>Primary Metrics</th><th>Secondary Metrics</th></tr>
+        <tr><td>Brand Awareness</td><td>Reach, impressions, follower growth</td><td>Share of voice, brand mentions</td></tr>
+        <tr><td>Engagement</td><td>Likes, comments, shares, saves</td><td>Engagement rate, story interactions</td></tr>
+        <tr><td>Website Traffic</td><td>Link clicks, CTR, sessions</td><td>Bounce rate, time on page</td></tr>
+        <tr><td>Lead Generation</td><td>Form fills, DM inquiries, email signups</td><td>Cost per lead, lead quality</td></tr>
+        <tr><td>Sales</td><td>Conversions, revenue, ROAS</td><td>Avg. order value, customer lifetime value</td></tr>
+    </table>
+
+    <h4>Tools for Analytics</h4>
+    <ul>
+        <li><strong>Native</strong> — Instagram Insights, Facebook Analytics, LinkedIn Analytics, TikTok Analytics</li>
+        <li><strong>Google Analytics 4</strong> — Track social referral traffic and conversions</li>
+        <li><strong>Third-party</strong> — Sprout Social, Hootsuite, Buffer Analyze, Later</li>
+        <li><strong>Free</strong> — Google Data Studio (Looker Studio), native exports, spreadsheets</li>
+    </ul>
+
+    <h4>Building a Monthly Report</h4>
+    <ol>
+        <li><strong>Executive Summary</strong> — 3-5 bullet highlights</li>
+        <li><strong>Performance Overview</strong> — Key metrics vs. last month and vs. goals</li>
+        <li><strong>Top Content</strong> — Best performing posts with analysis</li>
+        <li><strong>Platform Breakdown</strong> — Per-channel performance</li>
+        <li><strong>Insights &amp; Recommendations</strong> — What worked, what didn't, what's next</li>
+    </ol>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Pull analytics from any social account (your own, a friend's, or a brand's public insights). Create a one-page report using the structure above.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Set up Google Analytics 4 (<a href="https://analytics.google.com/" class="resource-link tool" target="_blank">analytics.google.com</a>) and track social referral traffic for one week. Note which platform sends the most engaged visitors.</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=QkKJhJkMjXE" class="resource-link yt" target="_blank">▶ YouTube — Social Media Analytics Tutorial (Simplilearn)</a>
+        <a href="https://www.youtube.com/watch?v=5MgBikgcWnY" class="resource-link yt" target="_blank">▶ YouTube — Google Analytics 4 for Beginners (Loves Data)</a>
+        <a href="https://blog.hubspot.com/marketing/social-media-analytics" class="resource-link web" target="_blank">🔗 HubSpot — Social Media Analytics: The Complete Guide</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> Vanity metrics (followers, likes) look good but don't pay the bills. Always tie your metrics to business outcomes — leads, sales, retention, or brand sentiment.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 9
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m9">
+    <h2>Module 9 — Paid Social Advertising</h2>
+    <p><em>Estimated time: 70 min &nbsp;|&nbsp; Difficulty: Advanced</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Organic reach is declining across all platforms. Paid advertising lets you target specific audiences with precision, scale what works, and accelerate growth. The key is understanding ad structures, targeting, creative, and optimization.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>Ad Account Structure</h4>
+    <pre style="background:#F3F4F6;padding:16px;border-radius:8px;font-size:.9em;overflow-x:auto;margin:12px 0;">
+Campaign (Objective)
+  └── Ad Set (Audience + Placement + Budget + Schedule)
+        └── Ad (Creative + Copy + CTA + Destination URL)
+    </pre>
+
+    <h4>Campaign Objectives (Meta Ads)</h4>
+    <table>
+        <tr><th>Objective</th><th>Best For</th><th>Optimization</th></tr>
+        <tr><td>Awareness</td><td>Maximizing reach and impressions</td><td>Reach / Impressions</td></tr>
+        <tr><td>Traffic</td><td>Driving clicks to website or app</td><td>Link clicks / Landing page views</td></tr>
+        <tr><td>Engagement</td><td>Post engagement, video views, messages</td><td>Engagement / Video views</td></tr>
+        <tr><td>Leads</td><td>Collecting contact information</td><td>Leads / Cost per lead</td></tr>
+        <tr><td>Sales</td><td>E-commerce conversions</td><td>Purchases / ROAS</td></tr>
+    </table>
+
+    <h4>Targeting Strategies</h4>
+    <ul>
+        <li><strong>Interest-based</strong> — Target by hobbies, pages liked, behaviors</li>
+        <li><strong>Lookalike Audiences</strong> — Let the platform find people similar to your best customers</li>
+        <li><strong>Retargeting</strong> — Re-engage people who've already interacted with your brand</li>
+        <li><strong>Custom Audiences</strong> — Upload email lists or website visitors (via pixel)</li>
+        <li><strong>Broad targeting</strong> — Let the algorithm find your audience (works well with strong creative)</li>
+    </ul>
+
+    <h4>Ad Creative Best Practices</h4>
+    <ol>
+        <li>Test 3–5 creatives per ad set</li>
+        <li>Use UGC-style content (feels native, not "ad-like")</li>
+        <li>Include text overlay with clear value proposition</li>
+        <li>First 3 seconds must hook — use motion, faces, or bold text</li>
+        <li>Clear CTA button matching your objective</li>
+    </ol>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Design a paid social campaign brief: define objective, target audience, budget ($50 hypothetical), ad formats, and success metrics.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Create 3 ad variations (different hooks, visuals, and CTAs) for the same product. Explain your creative reasoning for each.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 3:</strong> Use the <a href="https://www.facebook.com/ads/library" class="resource-link web" target="_blank">Facebook Ad Library</a> to analyze 5 competitors' ads. What patterns do you notice in their creative, messaging, and offers?</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=3cBhZ3MjXkA" class="resource-link yt" target="_blank">▶ YouTube — Meta Ads Tutorial for Beginners (Ben Heath)</a>
+        <a href="https://www.youtube.com/watch?v=VQwNzJmFqHc" class="resource-link yt" target="_blank">▶ YouTube — TikTok Ads Strategy 2024 (Nick Theriot)</a>
+        <a href="https://www.youtube.com/watch?v=1sXJfB3gJkA" class="resource-link yt" target="_blank">▶ YouTube — LinkedIn Ads Tutorial (Aaron Knorr)</a>
+        <a href="https://www.wordstream.com/blog/ws/2017/04/19/social-media-advertising" class="resource-link web" target="_blank">🔗 WordStream — Social Media Advertising Guide</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> Creative is the #1 lever in paid social. Before spending more budget, invest in better creative. Test hooks, formats, and angles — the data will tell you what resonates.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 10
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m10">
+    <h2>Module 10 — Influencer Marketing</h2>
+    <p><em>Estimated time: 50 min &nbsp;|&nbsp; Difficulty: Intermediate–Advanced</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Influencer marketing is a $21+ billion industry. Consumers trust influencers 3× more than brand messaging. The key is finding the <em>right</em> influencers — not necessarily the biggest, but the ones whose audience aligns with your brand and who create authentic, engaging content.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>Influencer Tiers</h4>
+    <table>
+        <tr><th>Tier</th><th>Followers</th><th>Engagement Rate</th><th>Best For</th><th>Typical Cost</th></tr>
+        <tr><td>Nano</td><td>1K–10K</td><td>5–10%</td><td>Authenticity, niche audiences</td><td>Free product – $100</td></tr>
+        <tr><td>Micro</td><td>10K–100K</td><td>3–7%</td><td>Targeted reach, good ROI</td><td>$100 – $1,000</td></tr>
+        <tr><td>Mid-tier</td><td>100K–500K</td><td>2–4%</td><td>Broader awareness</td><td>$1,000 – $5,000</td></tr>
+        <tr><td>Macro</td><td>500K–1M</td><td>1–3%</td><td>Mass reach, brand building</td><td>$5,000 – $20,000</td></tr>
+        <tr><td>Mega</td><td>1M+</td><td>0.5–2%</td><td>Celebrity-level awareness</td><td>$20,000+</td></tr>
+    </table>
+
+    <h4>Finding &amp; Vetting Influencers</h4>
+    <ol>
+        <li><strong>Define your ideal partner</strong> — Audience demographics, content style, values alignment</li>
+        <li><strong>Search</strong> — Use hashtags, competitor mentions, or tools like <a href="https://www.modash.io/" class="resource-link tool" target="_blank">Modash</a>, <a href="https://www.upfluence.com/" class="resource-link tool" target="_blank">Upfluence</a></li>
+        <li><strong>Vet</strong> — Check engagement quality, audience authenticity (watch for fake followers), content consistency</li>
+        <li><strong>Reach out</strong> — Personalized pitch, clear expectations, fair compensation</li>
+        <li><strong>Track &amp; measure</strong> — Unique discount codes, UTM links, performance reporting</li>
+    </ol>
+
+    <h4>Campaign Types</h4>
+    <ul>
+        <li>Sponsored posts (feed, stories, reels)</li>
+        <li>Affiliate partnerships (commission-based)</li>
+        <li>Brand ambassadorships (long-term relationships)</li>
+        <li>Product seeding (gifting with no guaranteed post)</li>
+        <li>Takeovers (influencer controls your account temporarily)</li>
+        <li>Co-created products (collaborative launches)</li>
+    </ul>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Identify 5 influencers (mix of nano, micro, and mid-tier) for a brand in your niche. For each, note: follower count, engagement rate, content style, and why they'd be a good fit.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Draft an outreach email to one of those influencers. Include a personalized opener, what you're offering, what you're asking for, and next steps.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 3:</strong> Design a campaign brief with goals, budget, deliverables, timeline, tracking method, and success metrics.</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=KJ2Jk6pJdQ0" class="resource-link yt" target="_blank">▶ YouTube — Influencer Marketing Strategy (Brendan Gahan)</a>
+        <a href="https://www.youtube.com/watch?v=Vd6vJWkMjXs" class="resource-link yt" target="_blank">▶ YouTube — How to Find &amp; Vet Influencers (AspireIQ)</a>
+        <a href="https://blog.hubspot.com/marketing/influencer-marketing" class="resource-link web" target="_blank">🔗 HubSpot — Influencer Marketing: The Complete Guide</a>
+        <a href="https://influencermarketinghub.com/" class="resource-link web" target="_blank">🔗 Influencer Marketing Hub — Industry Reports &amp; Tools</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> Nano and micro influencers often deliver the highest ROI. Their audiences are smaller but more engaged, more trusting, and more likely to convert.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 11
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m11">
+    <h2>Module 11 — Advanced Growth Tactics</h2>
+    <p><em>Estimated time: 60 min &nbsp;|&nbsp; Difficulty: Advanced</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> Once you've mastered the fundamentals, it's time to level up. Advanced tactics focus on compounding growth through experimentation, automation, cross-platform synergy, and leveraging platform algorithms to your advantage.</p>
+    </div>
+
+    <h3>Content</h3>
+    <h4>Growth Loops</h4>
+    <p>A growth loop is a self-reinforcing cycle where each action generates more of the same action. Example:</p>
+    <pre style="background:#F3F4F6;padding:16px;border-radius:8px;font-size:.9em;overflow-x:auto;margin:12px 0;">
+User creates content → Content gets shared → New users discover brand →
+New users engage → More content gets created → Cycle repeats and grows
+    </pre>
+
+    <h4>Advanced Tactics</h4>
+    <ul>
+        <li><strong>Algorithm hacking</strong> — Post when your audience is most active, use native features (Reels, Stories, Live), encourage saves and shares (high-value engagement signals)</li>
+        <li><strong>Cross-posting strategy</strong> — Repurpose one piece of content across multiple platforms with platform-specific tweaks</li>
+        <li><strong>User-generated content (UGC) campaigns</strong> — Create branded hashtags, challenges, or contests that encourage audience participation</li>
+        <li><strong>Social commerce</strong> — Instagram Shopping, TikTok Shop, Facebook Marketplace integration</li>
+        <li><strong>Automation &amp; workflows</strong> — Use tools like Zapier, Make, or native schedulers to streamline posting, reporting, and response management</li>
+        <li><strong>A/B testing at scale</strong> — Test hooks, thumbnails, posting times, captions, and CTAs systematically</li>
+        <li><strong>Collaboration &amp; partnerships</strong> — Co-create content with complementary brands, podcast guesting, joint webinars</li>
+    </ul>
+
+    <h4>Content Repurposing Framework</h4>
+    <table>
+        <tr><th>Original Content</th><th>Repurpose Into</th></tr>
+        <tr><td>YouTube video (20 min)</td><td>3× short-form clips, 1× blog post, 5× social graphics, 1× newsletter</td></tr>
+        <tr><td>Blog post</td><td>Instagram carousel, Twitter thread, LinkedIn article, Pinterest pins</td></tr>
+        <tr><td>Podcast episode</td><td>Quote graphics, short video clips, show notes blog, email summary</td></tr>
+        <tr><td>Live webinar</td><td>Replay highlights, FAQ posts, transcript blog, social clips</td></tr>
+    </table>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Task 1:</strong> Take one long-form piece of content (a blog post, video, or podcast) and map out how you'd repurpose it across 4+ platforms. Include format, hook, and CTA for each.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 2:</strong> Design a UGC campaign: create the concept, hashtag, incentive, rules, and launch plan.</p>
+    </div>
+    <div class="task-box">
+        <p><strong>✅ Task 3:</strong> Set up an automation workflow using <a href="https://zapier.com/" class="resource-link tool" target="_blank">Zapier</a> (free tier). Example: "When I post on Instagram, automatically share to Twitter and save to a Google Sheet."</p>
+    </div>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=QhXMQgMjXkE" class="resource-link yt" target="_blank">▶ YouTube — Content Repurposing Strategy (GaryVee)</a>
+        <a href="https://www.youtube.com/watch?v=7YJG6BbHJgI" class="resource-link yt" target="_blank">▶ YouTube — Growth Loops Explained (Reforge)</a>
+        <a href="https://zapier.com/blog/social-media-automation/" class="resource-link web" target="_blank">🔗 Zapier — Social Media Automation Guide</a>
+        <a href="https://blog.hubspot.com/marketing/content-repurposing" class="resource-link web" target="_blank">🔗 HubSpot — Content Repurposing Strategies</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>💡 Pro Tip:</strong> The best growth hack isn't a hack — it's consistency. Post regularly, engage genuinely, iterate based on data, and compound small wins over time.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     MODULE 12
+     ════════════════════════════════════════════════ -->
+<section class="module" id="m12">
+    <h2>Module 12 — Capstone Project &amp; Next Steps</h2>
+    <p><em>Estimated time: 3–5 hours &nbsp;|&nbsp; Difficulty: All Levels</em></p>
+
+    <div class="context-box">
+        <p><strong>🧠 Context:</strong> This is where everything comes together. You'll apply every concept from this course to build a real, actionable social media strategy for a brand — yours, a client's, or a fictional one. This capstone becomes your portfolio piece.</p>
+    </div>
+
+    <h3>Capstone Project Brief</h3>
+    <p>Create a comprehensive Social Media Marketing Strategy document that includes:</p>
+
+    <h4>Part 1 — Brand Analysis</h4>
+    <ul>
+        <li>Brand overview (mission, values, target audience)</li>
+        <li>Competitor analysis (2–3 competitors, their strengths and gaps)</li>
+        <li>Current social media audit (if applicable)</li>
+    </ul>
+
+    <h4>Part 2 — Strategy</h4>
+    <ul>
+        <li>Platform selection with justification</li>
+        <li>Brand voice guide (personality, tone, visual identity)</li>
+        <li>Content pillars (3–5 themes with examples)</li>
+        <li>Content calendar (1 month, all platforms)</li>
+    </ul>
+
+    <h4>Part 3 — Execution Plan</h4>
+    <ul>
+        <li>Sample content: 3 captions + visual mockups</li>
+        <li>Community management plan (response templates, engagement schedule)</li>
+        <li>Paid ad campaign brief (objective, audience, creative, budget)</li>
+        <li>Influencer outreach plan (5 identified partners + draft pitch)</li>
+    </ul>
+
+    <h4>Part 4 — Measurement</h4>
+    <ul>
+        <li>KPIs tied to business goals</li>
+        <li>Reporting template (monthly dashboard structure)</li>
+        <li>Growth experiments you'll run (A/B tests, new formats, collaborations)</li>
+    </ul>
+
+    <h3>📌 Tasks</h3>
+    <div class="task-box">
+        <p><strong>✅ Final Task:</strong> Complete the full capstone project. Present it as a professional document (Google Docs, Notion, or PDF). Bonus: record a 5-minute video walkthrough of your strategy as if pitching to a client.</p>
+    </div>
+
+    <h3>Next Steps After This Course</h3>
+    <ul>
+        <li><strong>Get certified:</strong> <a href="https://www.facebookblueprint.com/" class="resource-link web" target="_blank">Meta Blueprint</a>, <a href="https://learndigital.withgoogle.com/digitalgarage" class="resource-link web" target="_blank">Google Digital Garage</a>, <a href="https://business.twitter.com/en/learn.html" class="resource-link web" target="_blank">Twitter Flight School</a></li>
+        <li><strong>Build a portfolio:</strong> Document your capstone, freelance work, or personal brand growth</li>
+        <li><strong>Stay current:</strong> Follow industry blogs — <a href="https://www.socialmediaexaminer.com/" class="resource-link web" target="_blank">Social Media Examiner</a>, <a href="https://later.com/blog/" class="resource-link web" target="_blank">Later Blog</a>, <a href="https://www.searchenginejournal.com/social-media/" class="resource-link web" target="_blank">Search Engine Journal</a></li>
+        <li><strong>Network:</strong> Join communities like <a href="https://www.reddit.com/r/socialmedia/" class="resource-link web" target="_blank">r/socialmedia</a>, <a href="https://www.marketingtwitter.com/" class="resource-link web" target="_blank">Marketing Twitter</a>, or local marketing meetups</li>
+        <li><strong>Experiment:</strong> Start a personal brand, volunteer for a nonprofit, or offer free audits to build real-world experience</li>
+    </ul>
+
+    <h3>📺 Video Resources</h3>
+    <div style="margin-top:8px;">
+        <a href="https://www.youtube.com/watch?v=QhXMQgMjXkE" class="resource-link yt" target="_blank">▶ YouTube — How to Build a Social Media Strategy (Neil Patel)</a>
+        <a href="https://www.youtube.com/watch?v=VQwNzJmFqHc" class="resource-link yt" target="_blank">▶ YouTube — Social Media Marketing Career Guide (Simplilearn)</a>
+        <a href="https://www.youtube.com/watch?v=1sXJfB3gJkA" class="resource-link yt" target="_blank">▶ YouTube — How I Grew My Brand to 1M Followers (Alex Hormozi)</a>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>🎓 Congratulations!</strong> You've completed the Social Media Marketing course. The best marketers are lifelong learners — stay curious, test constantly, and let data guide your decisions. Now go build something great.</p>
+    </div>
+</section>
+
+</div><!-- /.container -->
+
+<!-- ════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════ -->
+<footer class="footer">
+    <p><strong>Social Media Marketing — Complete Course</strong></p>
+    <p>12 Modules &nbsp;•&nbsp; Context, Content, Tasks &amp; Resources &nbsp;•&nbsp; ~10 hours total</p>
+    <p style="margin-top:12px;opacity:.7;">Built with ❤️ for aspiring marketers everywhere.</p>
+</footer>
+
+</body>
+</html>
