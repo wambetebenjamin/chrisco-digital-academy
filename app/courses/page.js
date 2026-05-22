@@ -2,7 +2,6 @@
 import { useState } from "react"
 import Navbar from "../Navbar"
 import emailjs from "@emailjs/browser"
-import { Youtube, Code, Shirt, Ghost, Briefcase, BarChart2, PenTool, Mail, DollarSign, Smartphone, Brain } from "lucide-react"
 
 const SERVICE_ID = "service_m86zbad"
 const TEMPLATE_ID = "template_i5wg4c8"
@@ -11,7 +10,8 @@ const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
 const courses = [
   {
     id: 1,
-    icon: Youtube,
+    icon: "▶️",
+    emoji_bg: "#dc2626",
     title: "YouTube Automation",
     level: "Beginner",
     duration: "8 Weeks",
@@ -25,7 +25,7 @@ const courses = [
   },
   {
     id: 2,
-    icon: Code,
+    icon: "🐍",
     title: "Python Programming",
     level: "Beginner",
     duration: "8 Weeks",
@@ -39,7 +39,7 @@ const courses = [
   },
   {
     id: 3,
-    icon: Shirt,
+    icon: "👕",
     title: "Print on Demand",
     level: "Beginner",
     duration: "8 Weeks",
@@ -53,7 +53,7 @@ const courses = [
   },
   {
     id: 4,
-    icon: Ghost,
+    icon: "👻",
     title: "Ghostwriting",
     level: "Intermediate",
     duration: "8 Weeks",
@@ -67,7 +67,7 @@ const courses = [
   },
   {
     id: 5,
-    icon: Briefcase,
+    icon: "💼",
     title: "Freelancing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -81,7 +81,7 @@ const courses = [
   },
   {
     id: 6,
-    icon: BarChart2,
+    icon: "📊",
     title: "Digital Marketing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -95,7 +95,7 @@ const courses = [
   },
   {
     id: 7,
-    icon: PenTool,
+    icon: "✍️",
     title: "Copywriting",
     level: "Beginner",
     duration: "8 Weeks",
@@ -109,7 +109,7 @@ const courses = [
   },
   {
     id: 8,
-    icon: Mail,
+    icon: "📧",
     title: "Email Marketing",
     level: "Intermediate",
     duration: "8 Weeks",
@@ -123,7 +123,7 @@ const courses = [
   },
   {
     id: 9,
-    icon: DollarSign,
+    icon: "💸",
     title: "Affiliate Marketing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -137,7 +137,7 @@ const courses = [
   },
   {
     id: 10,
-    icon: Smartphone,
+    icon: "📱",
     title: "Social Media Marketing",
     level: "Beginner",
     duration: "8 Weeks",
@@ -151,7 +151,7 @@ const courses = [
   },
   {
     id: 11,
-    icon: Brain,
+    icon: "🧠",
     title: "SWE & LLM Mastery",
     level: "Intermediate",
     duration: "8 Weeks",
@@ -235,12 +235,6 @@ export default function Courses() {
     }
   }
 
-  const CourseIcon = ({ icon: Icon, size = 56 }) => (
-    <div className="flex justify-center mb-2">
-      <Icon size={size} color="white" strokeWidth={1.5} />
-    </div>
-  )
-
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
       <style>{`
@@ -256,79 +250,174 @@ export default function Courses() {
           0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 1; }
           100% { transform: translateX(500px) translateY(500px) rotate(45deg); opacity: 0; }
         }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes iconPop {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.15); }
+          100% { transform: scale(1); }
+        }
         .comet {
-          position: absolute; width: 3px; height: 80px;
+          position: absolute; width: 2px; height: 80px;
           background: linear-gradient(to bottom, #f59e0b, transparent);
           border-radius: 50%; animation: cometFly linear infinite;
         }
         .float { animation: float 3s ease-in-out infinite; }
         .fade-up { animation: fadeUp 0.8s ease forwards; }
-        .card { transition: all 0.3s ease; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(109,40,217,0.2); }
-        .glow { box-shadow: 0 0 30px rgba(245,158,11,0.3); }
-        .input-field {
-          width: 100%; border: 2px solid #e9d5ff; border-radius: 10px;
-          padding: 10px 14px; outline: none; font-size: 14px;
-          margin-bottom: 10px; transition: border 0.3s;
+        .card {
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          border: 1px solid rgba(107,33,168,0.1);
         }
-        .input-field:focus { border-color: #7e22ce; }
+        .card:hover {
+          transform: translateY(-12px) scale(1.02);
+          box-shadow: 0 30px 60px rgba(109,40,217,0.25);
+          border-color: rgba(245,158,11,0.4);
+        }
+        .card:hover .course-icon {
+          animation: iconPop 0.4s ease forwards;
+        }
+        .glow { box-shadow: 0 0 30px rgba(245,158,11,0.4); }
+        .input-field {
+          width: 100%; border: 2px solid #e9d5ff; border-radius: 12px;
+          padding: 12px 16px; outline: none; font-size: 14px;
+          margin-bottom: 12px; transition: all 0.3s;
+          background: #faf5ff;
+        }
+        .input-field:focus {
+          border-color: #7e22ce;
+          background: white;
+          box-shadow: 0 0 0 4px rgba(126,34,206,0.1);
+        }
         .overlay {
           position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(0,0,0,0.7); z-index: 100;
+          background: rgba(0,0,0,0.8);
+          backdrop-filter: blur(8px);
+          z-index: 100;
           display: flex; align-items: center; justify-content: center; padding: 20px;
+          animation: fadeUp 0.2s ease forwards;
         }
         .modal {
-          background: white; border-radius: 20px; padding: 30px;
+          background: white; border-radius: 24px; padding: 32px;
           max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;
+          box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+        }
+        .course-icon {
+          font-size: 4rem;
+          display: block;
+          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+          line-height: 1;
+        }
+        .icon-wrapper {
+          width: 90px; height: 90px;
+          border-radius: 24px;
+          display: flex; align-items: center; justify-content: center;
+          margin: 0 auto 16px;
+          background: rgba(255,255,255,0.15);
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255,255,255,0.2);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        .level-badge {
+          display: inline-flex; align-items: center; gap: 4px;
+          background: rgba(255,255,255,0.2);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.3);
+          color: white; font-weight: 700;
+          padding: 4px 14px; border-radius: 50px; font-size: 12px;
+        }
+        .stat-pill {
+          display: inline-flex; align-items: center; gap: 4px;
+          padding: 4px 12px; border-radius: 50px;
+          font-size: 12px; font-weight: 700;
+        }
+        .shimmer-title {
+          background: linear-gradient(90deg, #f59e0b, #fcd34d, #f59e0b);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shimmer 3s linear infinite;
         }
       `}</style>
 
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 text-white py-24 px-6 text-center overflow-hidden">
-        <div className="comet" style={{top:"10%",left:"20%",animationDuration:"3s"}}></div>
-        <div className="comet" style={{top:"50%",left:"60%",animationDuration:"4s",animationDelay:"1s"}}></div>
-        <div className="comet" style={{top:"20%",left:"80%",animationDuration:"2.5s",animationDelay:"2s"}}></div>
-        <div className="absolute top-10 left-10 w-32 h-32 bg-purple-700 rounded-full opacity-20 float"></div>
-        <div className="absolute bottom-10 right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-10 float" style={{animationDelay:"1s"}}></div>
+      <section className="relative bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 text-white py-28 px-6 text-center overflow-hidden">
+        <div className="comet" style={{top:"5%",left:"15%",animationDuration:"3s"}}></div>
+        <div className="comet" style={{top:"45%",left:"65%",animationDuration:"4s",animationDelay:"1s"}}></div>
+        <div className="comet" style={{top:"15%",left:"80%",animationDuration:"2.5s",animationDelay:"2s"}}></div>
+        <div className="comet" style={{top:"70%",left:"30%",animationDuration:"3.5s",animationDelay:"0.5s"}}></div>
+        <div className="absolute top-10 left-10 w-40 h-40 bg-purple-700 rounded-full opacity-20 float"></div>
+        <div className="absolute bottom-10 right-10 w-56 h-56 bg-yellow-400 rounded-full opacity-10 float" style={{animationDelay:"1s"}}></div>
+        <div className="absolute top-1/2 left-5 w-20 h-20 bg-indigo-500 rounded-full opacity-15 float" style={{animationDelay:"2s"}}></div>
         <div className="relative z-10">
-          <h1 className="fade-up text-5xl md:text-6xl font-extrabold mb-4">
-            Our <span className="text-yellow-400">Courses</span>
+          <div className="inline-block bg-yellow-400 bg-opacity-20 border border-yellow-400 border-opacity-40 text-yellow-300 text-xs font-bold px-4 py-2 rounded-full mb-6 tracking-widest uppercase">
+            🎓 CHRISCO Digital Academy
+          </div>
+          <h1 className="fade-up text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+            Our <span className="shimmer-title">Courses</span>
           </h1>
-          <p className="fade-up text-purple-200 text-xl max-w-xl mx-auto">
-            Practical digital skills for the next generation of African innovators
+          <p className="fade-up text-purple-200 text-xl max-w-2xl mx-auto mb-8">
+            11 practical digital skill courses designed for the next generation of African innovators
           </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <div className="bg-white bg-opacity-10 backdrop-blur border border-white border-opacity-20 rounded-2xl px-6 py-3 text-center">
+              <div className="text-2xl font-extrabold text-yellow-400">11</div>
+              <div className="text-xs text-purple-300">Courses</div>
+            </div>
+            <div className="bg-white bg-opacity-10 backdrop-blur border border-white border-opacity-20 rounded-2xl px-6 py-3 text-center">
+              <div className="text-2xl font-extrabold text-yellow-400">500+</div>
+              <div className="text-xs text-purple-300">Students</div>
+            </div>
+            <div className="bg-white bg-opacity-10 backdrop-blur border border-white border-opacity-20 rounded-2xl px-6 py-3 text-center">
+              <div className="text-2xl font-extrabold text-yellow-400">100%</div>
+              <div className="text-xs text-purple-300">Practical</div>
+            </div>
+            <div className="bg-white bg-opacity-10 backdrop-blur border border-white border-opacity-20 rounded-2xl px-6 py-3 text-center">
+              <div className="text-2xl font-extrabold text-yellow-400">🏆</div>
+              <div className="text-xs text-purple-300">Certificate</div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Courses Grid */}
       <section className="py-24 px-6 max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-extrabold text-purple-950 mb-4">Choose Your Path</h2>
+          <p className="text-gray-500 text-lg max-w-xl mx-auto">Every course is designed to give you real skills you can use to earn money online</p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {courses.map((course) => (
-            <div key={course.id} className="card border border-purple-100 rounded-2xl overflow-hidden shadow-md bg-white">
-              <div className={`bg-gradient-to-r ${course.color} p-8 text-white text-center`}>
-                <CourseIcon icon={course.icon} size={56} />
-                <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">{course.level}</span>
+            <div key={course.id} className="card rounded-2xl overflow-hidden bg-white">
+              <div className={`bg-gradient-to-br ${course.color} p-8 text-white text-center relative overflow-hidden`}>
+                <div className="absolute top-0 right-0 w-24 h-24 bg-white opacity-5 rounded-full -translate-y-8 translate-x-8"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-white opacity-5 rounded-full translate-y-6 -translate-x-6"></div>
+                <div className="icon-wrapper">
+                  <span className="course-icon">{course.icon}</span>
+                </div>
+                <span className="level-badge">{course.level}</span>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-purple-950 mb-2">{course.title}</h3>
-                <p className="text-gray-500 text-sm mb-4">{course.desc}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full">⏱ {course.duration}</span>
-                  <span className="bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full">⭐ {course.rating}</span>
-                  <span className="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full">👥 {course.students}</span>
+                <h3 className="text-lg font-extrabold text-purple-950 mb-2">{course.title}</h3>
+                <p className="text-gray-500 text-sm mb-4 leading-relaxed">{course.desc}</p>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="stat-pill bg-purple-50 text-purple-700">⏱ {course.duration}</span>
+                  <span className="stat-pill bg-yellow-50 text-yellow-700">⭐ {course.rating}</span>
+                  <span className="stat-pill bg-green-50 text-green-700">👥 {course.students}</span>
                 </div>
                 <div className="flex gap-2">
                   <button
                     onClick={() => { setSelected(course); setEnrolling(null); setSent(false) }}
-                    className="flex-1 bg-purple-950 text-white font-bold py-2 rounded-xl hover:bg-purple-800 transition text-sm"
+                    className="flex-1 bg-purple-950 text-white font-bold py-3 rounded-xl hover:bg-purple-800 transition text-sm"
                   >
                     View Course
                   </button>
                   <button
                     onClick={() => handleDownload(course)}
-                    className="bg-yellow-400 text-purple-950 font-bold px-3 py-2 rounded-xl hover:bg-yellow-300 transition text-sm"
+                    className="bg-yellow-400 text-purple-950 font-bold px-4 py-3 rounded-xl hover:bg-yellow-300 transition text-sm glow"
                     title="Download Course Outline"
                   >
                     📥
@@ -344,31 +433,34 @@ export default function Courses() {
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className={`bg-gradient-to-r ${selected.color} p-6 rounded-xl text-white text-center mb-6`}>
-              <CourseIcon icon={selected.icon} size={56} />
-              <h2 className="text-2xl font-extrabold mt-2">{selected.title}</h2>
-              <div className="flex justify-center gap-2 mt-3 flex-wrap">
-                <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">{selected.level}</span>
-                <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">⏱ {selected.duration}</span>
-                <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">⭐ {selected.rating}</span>
-                <span className="bg-white bg-opacity-30 text-white font-bold px-3 py-1 rounded-full text-xs">👥 {selected.students}</span>
+            <div className={`bg-gradient-to-br ${selected.color} p-8 rounded-2xl text-white text-center mb-6 relative overflow-hidden`}>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -translate-y-10 translate-x-10"></div>
+              <div className="icon-wrapper mx-auto mb-3">
+                <span className="course-icon">{selected.icon}</span>
+              </div>
+              <h2 className="text-2xl font-extrabold mb-3">{selected.title}</h2>
+              <div className="flex justify-center gap-2 flex-wrap">
+                <span className="level-badge">{selected.level}</span>
+                <span className="level-badge">⏱ {selected.duration}</span>
+                <span className="level-badge">⭐ {selected.rating}</span>
+                <span className="level-badge">👥 {selected.students}</span>
               </div>
             </div>
 
-            <p className="text-gray-600 mb-6">{selected.desc}</p>
+            <p className="text-gray-600 mb-6 leading-relaxed">{selected.desc}</p>
 
             <h3 className="text-lg font-extrabold text-purple-950 mb-3">📋 Course Syllabus</h3>
-            <div className="mb-6">
+            <div className="mb-6 rounded-xl overflow-hidden border border-purple-100">
               {selected.syllabus.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 py-2 border-b border-purple-50">
-                  <span className="bg-yellow-400 text-purple-950 font-black text-xs w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">{i+1}</span>
+                <div key={i} className={`flex items-start gap-3 px-4 py-3 ${i % 2 === 0 ? 'bg-purple-50' : 'bg-white'}`}>
+                  <span className="bg-yellow-400 text-purple-950 font-black text-xs w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">{i+1}</span>
                   <p className="text-gray-700 text-sm">{item}</p>
                 </div>
               ))}
             </div>
 
             <h3 className="text-lg font-extrabold text-purple-950 mb-2">🎯 Who Is This For?</h3>
-            <p className="text-gray-600 text-sm mb-6">{selected.for}</p>
+            <p className="text-gray-600 text-sm mb-6 bg-purple-50 rounded-xl p-4">{selected.for}</p>
 
             {!enrolling && !sent && (
               <div className="flex gap-3">
@@ -386,7 +478,7 @@ export default function Courses() {
                 </button>
                 <button
                   onClick={() => setSelected(null)}
-                  className="bg-gray-100 text-gray-700 font-bold px-4 py-3 rounded-xl hover:bg-gray-200 transition"
+                  className="bg-gray-100 text-gray-500 font-bold px-4 py-3 rounded-xl hover:bg-gray-200 transition"
                 >
                   ✕
                 </button>
@@ -407,7 +499,7 @@ export default function Courses() {
                   >
                     {sending ? "Sending..." : "Submit Enrollment 🚀"}
                   </button>
-                  <button onClick={() => setEnrolling(null)} className="bg-gray-100 text-gray-700 font-bold px-4 py-3 rounded-xl hover:bg-gray-200 transition">
+                  <button onClick={() => setEnrolling(null)} className="bg-gray-100 text-gray-500 font-bold px-4 py-3 rounded-xl hover:bg-gray-200 transition">
                     Back
                   </button>
                 </div>
@@ -429,16 +521,24 @@ export default function Courses() {
       )}
 
       {/* CTA */}
-      <section className="relative bg-gradient-to-br from-purple-950 to-indigo-950 text-white py-20 px-6 text-center overflow-hidden">
+      <section className="relative bg-gradient-to-br from-purple-950 to-indigo-950 text-white py-24 px-6 text-center overflow-hidden">
         <div className="comet" style={{top:"20%",left:"10%",animationDuration:"3s"}}></div>
+        <div className="comet" style={{top:"60%",left:"80%",animationDuration:"4s",animationDelay:"1s"}}></div>
         <div className="absolute top-5 left-10 w-24 h-24 bg-yellow-400 rounded-full opacity-10 float"></div>
         <div className="absolute bottom-5 right-10 w-36 h-36 bg-purple-400 rounded-full opacity-10 float" style={{animationDelay:"1s"}}></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-purple-600 rounded-full opacity-5 float" style={{animationDelay:"2s", transform:"translate(-50%,-50%)"}}></div>
         <div className="relative z-10">
-          <h2 className="text-4xl font-extrabold mb-4 text-yellow-400">Ready to Start Learning?</h2>
-          <p className="text-purple-200 text-lg mb-8 max-w-xl mx-auto">Join CHRISCO Digital Academy today and take your first step towards a digital future.</p>
-          <a href="/contact" className="glow bg-yellow-400 text-purple-950 font-black px-10 py-4 rounded-full hover:bg-yellow-300 transition text-lg">
-            Get Started Today 🔥
-          </a>
+          <div className="text-5xl mb-4 float">🚀</div>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-yellow-400">Ready to Start Learning?</h2>
+          <p className="text-purple-200 text-lg mb-10 max-w-xl mx-auto">Join CHRISCO Digital Academy today and take your first step towards a digital future.</p>
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <a href="/contact" className="glow bg-yellow-400 text-purple-950 font-black px-10 py-4 rounded-full hover:bg-yellow-300 transition text-lg">
+              Get Started Today 🔥
+            </a>
+            <a href="https://wa.me/254112272061" className="border-2 border-yellow-400 text-yellow-400 font-black px-10 py-4 rounded-full hover:bg-yellow-400 hover:text-purple-950 transition text-lg">
+              WhatsApp Us 💬
+            </a>
+          </div>
         </div>
       </section>
 
