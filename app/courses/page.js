@@ -544,8 +544,8 @@ export default function Courses() {
 
       <footer className="bg-purple-950 text-purple-300 text-center py-8 text-sm">
         <p className="text-yellow-400 font-bold text-lg mb-1">CHRISCO Digital Academy</p>
-        <p>Under CHRISCO Youth Aflame • Founded by Wambete Benjamin</p>
-        <p className="mt-2">📧 shambetz@gmail.com • 📞 +254112272061 • 📍 Nairobi, Kenya</p>
+        <p>Under CHRISCO Youth Aflame • Founded by CHRISCO</p>
+        <p className="mt-2">📧 chriscoyouthaflame2025@gmail.com • 📞 +254112272061 • 📍 Nairobi, Kenya</p>
         <p className="mt-4 text-purple-600">© 2026 All Rights Reserved</p>
       </footer>
     </main>
