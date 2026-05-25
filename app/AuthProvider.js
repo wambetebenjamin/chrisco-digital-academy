@@ -93,14 +93,14 @@ export function AuthProvider({ children }) {
     }}>
       <div style={{textAlign:"center"}}>
         <div style={{
-          width:60,height:60,borderRadius:16,
+          width:64,height:64,borderRadius:20,
           background:"linear-gradient(135deg,#f59e0b,#fbbf24)",
           display:"flex",alignItems:"center",justifyContent:"center",
           fontSize:"1.8rem",margin:"0 auto 16px",
           boxShadow:"0 8px 24px rgba(245,158,11,0.4)"
         }}>🎓</div>
         <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.2rem",fontWeight:800,color:"#f59e0b",marginBottom:8}}>CHRISCO Digital Academy</div>
-        <div style={{color:"rgba(255,255,255,0.4)",fontSize:14}}>Loading your experience...</div>
+        <div style={{color:"rgba(255,255,255,0.4)",fontSize:14}}>Loading...</div>
       </div>
     </div>
   )

@@ -33,3 +33,18 @@ body {
 h1, h2, h3, h4 {
   font-family: 'Bricolage Grotesque', sans-serif;
 }
+
+@media (max-width: 768px) {
+  .desktop-nav { display: none !important; }
+  .burger-btn { display: flex !important; }
+  .hide-mobile { display: none !important; }
+  .two-col {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .four-col {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .hero-right { display: none !important; }
+}
