@@ -1,17 +1,18 @@
-"use client"
 import Link from "next/link"
+import Image from "next/image"
 import Navbar from "./Navbar"
 import Footer from "./components/Footer"
 import Chatbot from "./Chatbot"
+import Icon from "./components/Icon"
 import { courses, categories, categoryCounts } from "./data/courses"
 
 const skills = [
-  { num: "01", icon: "🎨", title: "Graphic Design", desc: "Branding, posters and visual identity with Canva and Adobe tools." },
-  { num: "02", icon: "💻", title: "Web Development", desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js." },
-  { num: "03", icon: "📱", title: "Social Media", desc: "Strategy, content creation and growth that gets real engagement." },
-  { num: "04", icon: "🎬", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events — a skill in demand." },
-  { num: "05", icon: "✨", title: "Animation", desc: "Motion graphics and animated content that stops the scroll." },
-  { num: "06", icon: "🤖", title: "AI Expertise", desc: "Leveraging AI tools like ChatGPT for creativity and productivity." },
+  { num: "01", icon: "palette", title: "Graphic Design", desc: "Branding, posters and visual identity with Canva and Adobe tools." },
+  { num: "02", icon: "code", title: "Web Development", desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js." },
+  { num: "03", icon: "smartphone", title: "Social Media", desc: "Strategy, content creation and growth that gets real engagement." },
+  { num: "04", icon: "clapper", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events — a skill in demand." },
+  { num: "05", icon: "sparkles", title: "Animation", desc: "Motion graphics and animated content that stops the scroll." },
+  { num: "06", icon: "robot", title: "AI Expertise", desc: "Leveraging AI tools like ChatGPT for creativity and productivity." },
 ]
 
 const stats = [
@@ -29,9 +30,9 @@ const marqueeItems = [
 ]
 
 const steps = [
-  { num: "01", icon: "🔎", title: "Browse & Choose", desc: "Pick from 11 practical courses across design, code, marketing, writing, video and AI." },
-  { num: "02", icon: "📝", title: "Enroll in Minutes", desc: "Send an enrollment request — we confirm on WhatsApp or email within a day." },
-  { num: "03", icon: "🚀", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate — and start earning." },
+  { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 11 practical courses across design, code, marketing, writing, video and AI." },
+  { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request — we confirm on WhatsApp or email within a day." },
+  { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate — and start earning." },
 ]
 
 export default function Home() {
@@ -77,7 +78,7 @@ export default function Home() {
                     style={{ justifyContent: "space-between", width: "100%", textDecoration: "none" }}
                   >
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-                      <span style={{ fontSize: 15 }}>{cat.icon}</span> {cat.name}
+                      <Icon name={cat.icon} size={15} /> {cat.name}
                     </span>
                     <span style={{ color: "var(--muted)", fontWeight: 700 }}>{counts[cat.name] || 0}</span>
                   </Link>
@@ -121,7 +122,7 @@ export default function Home() {
 
               <div className="fade-up fade-up-2" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 34 }}>
                 <Link href="/courses" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
-                  Explore Courses <span style={{ fontSize: 17 }}>→</span>
+                  Explore Courses →
                 </Link>
                 <Link href="/about" className="btn btn-outline btn-lg" style={{ textDecoration: "none" }}>
                   Meet the Founder
@@ -181,18 +182,22 @@ export default function Home() {
                     overflow: "hidden",
                     border: "1px solid var(--line)",
                     boxShadow: "var(--shadow-lg)",
+                    aspectRatio: "4/4.4",
                   }}
                 >
-                  <img
+                  <Image
                     src="/images/hero-tile.jpg"
                     alt="Young learner at CHRISCO Digital Academy"
-                    style={{ width: "100%", height: "100%", minHeight: 320, objectFit: "cover", aspectRatio: "4/4.4" }}
+                    fill
+                    priority
+                    sizes="(min-width: 1100px) 400px, (min-width: 768px) 45vw, 92vw"
+                    style={{ objectFit: "cover" }}
                   />
                   <span
                     className="pill pill-green pill-sm"
                     style={{ position: "absolute", top: 18, left: 18, boxShadow: "0 6px 20px rgba(0,35,51,0.25)" }}
                   >
-                    🔥 500+ learners
+                    <Icon name="flame" size={13} strokeWidth={2.4} /> 500+ learners
                   </span>
                 </div>
 
@@ -261,7 +266,7 @@ export default function Home() {
       <div className="marquee" style={{ background: "var(--navy)", marginTop: 96 }}>
         <div className="marquee-track">
           {[0, 1].map((dup) => (
-            <div key={dup} style={{ display: "flex" }}>
+            <div key={dup} style={{ display: "flex" }} aria-hidden={dup === 1}>
               {marqueeItems.map((item, i) => (
                 <span key={`${dup}-${i}`} className="marquee-item">
                   {item} <span className="dot">✦</span>
@@ -292,14 +297,14 @@ export default function Home() {
                     height: 56,
                     borderRadius: 16,
                     background: "var(--green-tint)",
+                    color: "var(--green-deep)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "1.6rem",
                     marginBottom: 20,
                   }}
                 >
-                  {skill.icon}
+                  <Icon name={skill.icon} size={26} />
                 </div>
                 <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 10 }}>{skill.title}</h3>
                 <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.65, marginBottom: 20 }}>{skill.desc}</p>
@@ -328,7 +333,7 @@ export default function Home() {
           </div>
 
           <div className="grid-3">
-            {featured.map((course, i) => (
+            {featured.map((course) => (
               <Link
                 key={course.id}
                 href="/courses"
@@ -350,13 +355,13 @@ export default function Home() {
                       borderRadius: 18,
                       background: "rgba(255,255,255,0.18)",
                       border: "1px solid rgba(255,255,255,0.3)",
+                      color: "#fff",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "1.9rem",
                     }}
                   >
-                    {course.icon}
+                    <Icon name={course.icon} size={30} strokeWidth={1.7} />
                   </div>
                 </div>
 
@@ -365,9 +370,9 @@ export default function Home() {
                   <h3 style={{ fontSize: "1.12rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
                   <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{course.desc}</p>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-                    <span className="pill pill-soft pill-sm">⏱ {course.duration}</span>
-                    <span className="pill pill-soft pill-sm">⭐ {course.rating}</span>
-                    <span className="pill pill-soft pill-sm">👥 {course.students}</span>
+                    <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
+                    <span className="pill pill-soft pill-sm"><Icon name="star" size={13} strokeWidth={2.2} /> {course.rating}</span>
+                    <span className="pill pill-soft pill-sm"><Icon name="users" size={13} strokeWidth={2.2} /> {course.students}</span>
                   </div>
                   <span className="link-arrow" style={{ fontSize: 13.5 }}>
                     View course <span className="arr">→</span>
@@ -403,7 +408,9 @@ export default function Home() {
                     >
                       {step.num}
                     </span>
-                    <span style={{ fontSize: "2rem" }}>{step.icon}</span>
+                    <span style={{ color: "var(--ink)" }}>
+                      <Icon name={step.icon} size={30} strokeWidth={1.6} />
+                    </span>
                   </div>
                   <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 10 }}>{step.title}</h3>
                   <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7 }}>{step.desc}</p>
@@ -476,11 +483,15 @@ export default function Home() {
                     filter: "blur(60px)",
                   }}
                 />
-                <img
-                  src="/images/workspace.jpg"
-                  alt="Creative workspace — design, code and video"
-                  style={{ position: "relative", width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid rgba(255,255,255,0.12)", aspectRatio: "4/3.2", objectFit: "cover" }}
-                />
+                <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
+                  <Image
+                    src="/images/workspace.jpg"
+                    alt="Creative workspace — design, code and video"
+                    fill
+                    sizes="(min-width: 768px) 46vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
                 <div
                   style={{
                     position: "absolute",
@@ -496,7 +507,9 @@ export default function Home() {
                     alignItems: "center",
                   }}
                 >
-                  <span style={{ fontSize: "1.6rem" }}>👨‍💻</span>
+                  <span style={{ color: "var(--green)" }}>
+                    <Icon name="laptop" size={26} strokeWidth={1.7} />
+                  </span>
                   <div>
                     <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>7+ skill areas</div>
                     <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>taught hands-on</div>
@@ -523,7 +536,7 @@ export default function Home() {
             </div>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               <a href="https://wa.me/254112272061" className="btn btn-navy btn-lg" style={{ textDecoration: "none" }}>
-                WhatsApp Us 💬
+                <Icon name="whatsapp" size={17} /> WhatsApp Us
               </a>
               <Link href="/courses" className="btn btn-outline btn-lg" style={{ textDecoration: "none", borderColor: "var(--navy)", color: "var(--navy)" }}>
                 Browse Courses →

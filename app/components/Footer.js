@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Icon from "./Icon"
 
 export default function Footer() {
   return (
@@ -94,18 +95,18 @@ export default function Footer() {
               Contact
             </div>
             <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12, fontSize: 14 }}>
-              <li style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <span style={{ color: "var(--green)" }}>✉</span> shambetz@gmail.com
+              <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="mail" size={15} /></span> shambetz@gmail.com
               </li>
-              <li style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <span style={{ color: "var(--green)" }}>✆</span> +254 112 272 061
+              <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="phone" size={15} /></span> +254 112 272 061
               </li>
-              <li style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <span style={{ color: "var(--green)" }}>⌖</span> Nairobi, Kenya
+              <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="pin" size={15} /></span> Nairobi, Kenya
               </li>
             </ul>
             <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ marginTop: 22 }}>
-              WhatsApp Us 💬
+              <Icon name="whatsapp" size={15} /> WhatsApp Us
             </a>
           </div>
 
@@ -132,7 +133,7 @@ export default function Footer() {
             © 2026 CHRISCO Digital Academy. All Rights Reserved.
           </span>
           <span style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
-            Founded by Wambete Benjamin 🇰🇪
+            Founded by Wambete Benjamin · Nairobi, Kenya
           </span>
         </div>
       </div>
