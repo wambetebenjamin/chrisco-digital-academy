@@ -1,363 +1,539 @@
 "use client"
-import { useEffect, useState } from "react"
+import Link from "next/link"
 import Navbar from "./Navbar"
+import Footer from "./components/Footer"
 import Chatbot from "./Chatbot"
+import { courses, categories, categoryCounts } from "./data/courses"
 
 const skills = [
-  { icon:"🎨", title:"Graphic Design", desc:"Branding, posters and visual identity" },
-  { icon:"💻", title:"Web Development", desc:"Modern websites with Next.js & React" },
-  { icon:"📱", title:"Social Media", desc:"Strategy, content and growth" },
-  { icon:"🎬", title:"Video Editing", desc:"Cinematic edits for any platform" },
-  { icon:"✨", title:"Animations", desc:"Motion graphics and animated content" },
-  { icon:"🤖", title:"AI Expert", desc:"Leveraging AI for creativity and productivity" },
+  { num: "01", icon: "🎨", title: "Graphic Design", desc: "Branding, posters and visual identity with Canva and Adobe tools." },
+  { num: "02", icon: "💻", title: "Web Development", desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js." },
+  { num: "03", icon: "📱", title: "Social Media", desc: "Strategy, content creation and growth that gets real engagement." },
+  { num: "04", icon: "🎬", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events — a skill in demand." },
+  { num: "05", icon: "✨", title: "Animation", desc: "Motion graphics and animated content that stops the scroll." },
+  { num: "06", icon: "🤖", title: "AI Expertise", desc: "Leveraging AI tools like ChatGPT for creativity and productivity." },
 ]
 
 const stats = [
-  { value:"500+", label:"Youth Trained" },
-  { value:"11", label:"Courses" },
-  { value:"5+", label:"Counties" },
-  { value:"100%", label:"Practical" },
+  { value: "500+", label: "Youth Trained" },
+  { value: "11", label: "Courses" },
+  { value: "5+", label: "Counties" },
+  { value: "100%", label: "Practical" },
+]
+
+const featured = [courses[4], courses[0], courses[10]] // Freelancing, YouTube Automation, SWE & LLM
+
+const marqueeItems = [
+  "Graphic Design", "Web Development", "Video Editing", "Social Media",
+  "Python Coding", "AI Tools", "Freelancing", "Digital Marketing",
+]
+
+const steps = [
+  { num: "01", icon: "🔎", title: "Browse & Choose", desc: "Pick from 11 practical courses across design, code, marketing, writing, video and AI." },
+  { num: "02", icon: "📝", title: "Enroll in Minutes", desc: "Send an enrollment request — we confirm on WhatsApp or email within a day." },
+  { num: "03", icon: "🚀", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate — and start earning." },
 ]
 
 export default function Home() {
-  return (
-    <main style={{background:"var(--cream)",minHeight:"100vh",overflowX:"hidden"}}>
-      <style>{`
-        @keyframes cometFly {
-          0% { transform:translate(0,0) rotate(45deg); opacity:1; }
-          100% { transform:translate(600px,600px) rotate(45deg); opacity:0; }
-        }
-        @keyframes float {
-          0%,100% { transform:translateY(0); }
-          50% { transform:translateY(-16px); }
-        }
-        @keyframes orbFloat {
-          0%,100% { transform:translate(0,0) scale(1); }
-          33% { transform:translate(30px,-20px) scale(1.05); }
-          66% { transform:translate(-20px,30px) scale(0.95); }
-        }
-        @keyframes shimmer {
-          0% { background-position:-200% center; }
-          100% { background-position:200% center; }
-        }
-        @keyframes fadeUp {
-          from { opacity:0; transform:translateY(30px); }
-          to { opacity:1; transform:translateY(0); }
-        }
-        .comet {
-          position:absolute; width:2px; height:90px;
-          background:linear-gradient(to bottom,#f59e0b,transparent);
-          border-radius:50%; animation:cometFly linear infinite;
-          pointer-events:none;
-        }
-        .float-anim { animation:float 4s ease-in-out infinite; }
-        .fade-up { animation:fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
-        .shimmer-text {
-          background:linear-gradient(90deg,#f59e0b,#fde68a,#f59e0b);
-          background-size:200% auto;
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;
-          animation:shimmer 4s linear infinite;
-        }
-        .skill-card {
-          background:white;
-          border:1px solid var(--border);
-          border-radius:24px; padding:28px;
-          transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-        }
-        .skill-card:hover {
-          transform:translateY(-8px) scale(1.02);
-          box-shadow:0 24px 48px rgba(124,58,237,0.12);
-          border-color:rgba(245,158,11,0.4);
-        }
-        .cta-btn {
-          display:inline-block;
-          background:linear-gradient(135deg,#2d1b69,#7c3aed);
-          color:white;
-          fontFamily:'Bricolage Grotesque',sans-serif;
-          font-weight:700; font-size:16px;
-          padding:16px 36px; border-radius:100px;
-          text-decoration:none; transition:all 0.3s;
-          box-shadow:0 8px 32px rgba(124,58,237,0.3);
-        }
-        .cta-btn:hover {
-          transform:translateY(-3px);
-          box-shadow:0 16px 48px rgba(124,58,237,0.4);
-        }
-        .cta-btn-outline {
-          display:inline-block;
-          background:transparent;
-          color:rgba(255,255,255,0.8);
-          font-weight:700; font-size:16px;
-          padding:16px 36px; border-radius:100px;
-          border:2px solid rgba(255,255,255,0.2);
-          text-decoration:none; transition:all 0.3s;
-        }
-        .cta-btn-outline:hover {
-          border-color:rgba(255,255,255,0.5);
-          transform:translateY(-3px);
-        }
-        .tag-pill {
-          display:inline-flex; align-items:center; gap:6px;
-          background:rgba(124,58,237,0.08);
-          border:1px solid rgba(124,58,237,0.15);
-          color:#7c3aed; padding:6px 16px; border-radius:50px;
-          font-size:13px; font-weight:600;
-        }
-        .course-preview-item {
-          background:white;
-          border:1px solid var(--border);
-          border-radius:16px; padding:16px 20px;
-          font-size:13px; font-weight:600; color:var(--ink);
-          transition:all 0.3s; cursor:default;
-        }
-        .course-preview-item:hover {
-          border-color:rgba(245,158,11,0.5);
-          transform:translateY(-2px);
-          box-shadow:0 8px 20px rgba(124,58,237,0.08);
-        }
-      `}</style>
+  const counts = categoryCounts()
 
+  return (
+    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
       <Navbar />
 
-      {/* HERO */}
-      <section style={{
-        minHeight:"100vh",
-        background:"linear-gradient(160deg,#0d0a1a 0%,#2d1b69 40%,#4c1d95 70%,#1e1b4b 100%)",
-        display:"flex",alignItems:"center",
-        padding:"100px 24px 80px",
-        position:"relative",overflow:"hidden"
-      }}>
-        <div style={{position:"absolute",width:500,height:500,background:"rgba(124,58,237,0.15)",borderRadius:"50%",top:-150,right:-150,filter:"blur(80px)",animation:"orbFloat 8s ease-in-out infinite"}}></div>
-        <div style={{position:"absolute",width:350,height:350,background:"rgba(245,158,11,0.08)",borderRadius:"50%",bottom:-100,left:-100,filter:"blur(60px)",animation:"orbFloat 10s ease-in-out infinite",animationDelay:"2s"}}></div>
-        <div style={{position:"absolute",width:250,height:250,background:"rgba(167,139,250,0.08)",borderRadius:"50%",top:"40%",left:"35%",filter:"blur(60px)",animation:"orbFloat 12s ease-in-out infinite",animationDelay:"4s"}}></div>
+      {/* ================= HERO ================= */}
+      <section style={{ padding: "150px 0 0", position: "relative" }}>
+        <div className="container">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 16,
+              flexWrap: "wrap",
+              borderBottom: "1px solid var(--line)",
+              paddingBottom: 20,
+              marginBottom: 48,
+            }}
+          >
+            <span className="eyebrow fade-up">CHRISCO Digital Academy — Nairobi, Kenya</span>
+            <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }} className="fade-up fade-up-1">
+              Under CHRISCO Youth Aflame
+            </span>
+          </div>
 
-        <div className="comet" style={{top:"5%",left:"10%",animationDuration:"3s"}}></div>
-        <div className="comet" style={{top:"20%",left:"65%",animationDuration:"4s",animationDelay:"1s"}}></div>
-        <div className="comet" style={{top:"65%",left:"80%",animationDuration:"3.5s",animationDelay:"2s"}}></div>
-        <div className="comet" style={{top:"75%",left:"20%",animationDuration:"5s",animationDelay:"0.5s"}}></div>
-
-        <div style={{maxWidth:1100,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-          <div className="two-col" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:60,alignItems:"center"}}>
-
-            {/* Left */}
-            <div>
-              <div style={{
-                display:"inline-block",
-                background:"rgba(245,158,11,0.15)",
-                border:"1px solid rgba(245,158,11,0.3)",
-                color:"#fde68a",fontSize:13,fontWeight:600,
-                padding:"6px 16px",borderRadius:50,marginBottom:24
-              }}>🔥 CHRISCO Digital Academy</div>
-
-              <h1 style={{
-                fontFamily:"'Bricolage Grotesque',sans-serif",
-                fontSize:"clamp(2.4rem,5vw,4rem)",
-                fontWeight:800,lineHeight:1.05,
-                color:"white",marginBottom:24
-              }} className="fade-up">
-                Empowering Youth Through{" "}
-                <span className="shimmer-text">Digital Skills</span>
-              </h1>
-
-              <p style={{color:"rgba(255,255,255,0.6)",fontSize:"1.05rem",lineHeight:1.8,marginBottom:36,maxWidth:480}} className="fade-up">
-                Learn. Grow. Transform Your Future. Join thousands of young Africans building real skills for the digital world.
-              </p>
-
-              <div style={{display:"flex",gap:16,flexWrap:"wrap"}} className="fade-up">
-                <a href="/courses" className="cta-btn">Explore Courses →</a>
-                <a href="/about" className="cta-btn-outline">Learn More</a>
+          <div className="hero-grid">
+            {/* Category sidebar */}
+            <aside className="hero-side" style={{ minWidth: 0 }}>
+              <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>
+                Explore by Category
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {categories.map((cat) => (
+                  <Link
+                    key={cat.name}
+                    href="/courses"
+                    className="pill"
+                    style={{ justifyContent: "space-between", width: "100%", textDecoration: "none" }}
+                  >
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+                      <span style={{ fontSize: 15 }}>{cat.icon}</span> {cat.name}
+                    </span>
+                    <span style={{ color: "var(--muted)", fontWeight: 700 }}>{counts[cat.name] || 0}</span>
+                  </Link>
+                ))}
               </div>
 
-              <div style={{display:"flex",gap:28,marginTop:48,flexWrap:"wrap"}}>
-                {stats.map((s,i) => (
-                  <div key={i}>
-                    <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.8rem",fontWeight:800,color:"#f59e0b"}}>{s.value}</div>
-                    <div style={{fontSize:11,color:"rgba(255,255,255,0.4)",fontWeight:500,letterSpacing:1,textTransform:"uppercase"}}>{s.label}</div>
+              <div
+                style={{
+                  marginTop: 20,
+                  background: "var(--navy)",
+                  borderRadius: 18,
+                  padding: "20px 18px",
+                  color: "#fff",
+                }}
+              >
+                <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", lineHeight: 1 }}>
+                  11<span style={{ color: "var(--green)", fontSize: "1rem" }}> courses</span>
+                </div>
+                <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", margin: "8px 0 14px" }}>
+                  All built for real income.
+                </div>
+                <Link href="/courses" className="btn btn-green btn-sm" style={{ textDecoration: "none", width: "100%" }}>
+                  Browse All →
+                </Link>
+              </div>
+            </aside>
+
+            {/* Main hero content */}
+            <div style={{ minWidth: 0 }}>
+              <h1 className="display fade-up" style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)" }}>
+                Learn skills
+                <br />
+                that <span className="outline" style={{ WebkitTextStrokeColor: "var(--ink)" }}>pay</span>{" "}
+                <span className="accent">for life.</span>
+              </h1>
+
+              <p className="lead fade-up fade-up-1" style={{ maxWidth: 560, marginTop: 26 }}>
+                CHRISCO Digital Academy is a modern learning platform for African youth — practical courses in
+                design, code, marketing, writing, video and AI, taught by Wambete Benjamin.
+              </p>
+
+              <div className="fade-up fade-up-2" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 34 }}>
+                <Link href="/courses" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
+                  Explore Courses <span style={{ fontSize: 17 }}>→</span>
+                </Link>
+                <Link href="/about" className="btn btn-outline btn-lg" style={{ textDecoration: "none" }}>
+                  Meet the Founder
+                </Link>
+              </div>
+
+              {/* Stats */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(2, 1fr)",
+                  gap: 0,
+                  borderTop: "1px solid var(--line)",
+                  marginTop: 56,
+                }}
+              >
+                {stats.map((s, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: "22px 24px 22px 0",
+                      borderBottom: "1px solid var(--line)",
+                      borderRight: i % 2 === 0 ? "1px solid var(--line)" : "none",
+                      paddingRight: i % 2 === 0 ? 24 : 0,
+                    }}
+                  >
+                    <div className="stat-num" style={{ color: "var(--ink)" }}>{s.value}</div>
+                    <div style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 600, marginTop: 4 }}>
+                      {s.label}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Right - hidden on mobile */}
-            <div className="hero-right" style={{display:"flex",justifyContent:"center"}}>
-              <div style={{
-                background:"rgba(255,255,255,0.04)",
-                backdropFilter:"blur(20px)",
-                border:"1px solid rgba(255,255,255,0.08)",
-                borderRadius:32,padding:36,maxWidth:340,width:"100%"
-              }} className="float-anim">
-                <div style={{fontSize:"3rem",marginBottom:16}}>👨‍💻</div>
-                <h3 style={{fontFamily:"'Bricolage Grotesque',sans-serif",color:"white",fontSize:"1.2rem",fontWeight:700,marginBottom:6}}>Wambete Benjamin</h3>
-                <p style={{color:"rgba(255,255,255,0.4)",fontSize:13,marginBottom:20}}>Founder & Lead Instructor</p>
-                <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:24}}>
-                  {["CS Graduate","Designer","Developer","AI Expert","Animator"].map((tag,i) => (
-                    <span key={i} style={{background:"rgba(245,158,11,0.12)",border:"1px solid rgba(245,158,11,0.2)",color:"#fde68a",fontSize:11,fontWeight:600,padding:"4px 12px",borderRadius:50}}>{tag}</span>
-                  ))}
+            {/* Hero image tile */}
+            <div className="fade-up fade-up-1" style={{ minWidth: 0 }}>
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -18,
+                    right: -10,
+                    width: 120,
+                    height: 120,
+                    background: "rgba(0,255,132,0.25)",
+                    borderRadius: "50%",
+                    filter: "blur(50px)",
+                    zIndex: 0,
+                  }}
+                />
+                <div
+                  style={{
+                    position: "relative",
+                    zIndex: 1,
+                    borderRadius: "var(--radius-xl)",
+                    overflow: "hidden",
+                    border: "1px solid var(--line)",
+                    boxShadow: "var(--shadow-lg)",
+                  }}
+                >
+                  <img
+                    src="/images/hero-tile.jpg"
+                    alt="Young learner at CHRISCO Digital Academy"
+                    style={{ width: "100%", height: "100%", minHeight: 320, objectFit: "cover", aspectRatio: "4/4.4" }}
+                  />
+                  <span
+                    className="pill pill-green pill-sm"
+                    style={{ position: "absolute", top: 18, left: 18, boxShadow: "0 6px 20px rgba(0,35,51,0.25)" }}
+                  >
+                    🔥 500+ learners
+                  </span>
                 </div>
-                <div style={{padding:"16px 0",borderTop:"1px solid rgba(255,255,255,0.07)"}}>
-                  <div style={{color:"rgba(255,255,255,0.3)",fontSize:11,letterSpacing:2,textTransform:"uppercase",marginBottom:6}}>Founded Under</div>
-                  <div style={{color:"white",fontWeight:700,fontFamily:"'Bricolage Grotesque',sans-serif"}}>CHRISCO Youth Aflame 🇰🇪</div>
+
+                {/* Overlay caption card */}
+                <div
+                  style={{
+                    position: "relative",
+                    zIndex: 2,
+                    marginTop: -46,
+                    marginLeft: 18,
+                    marginRight: 18,
+                    background: "var(--navy)",
+                    borderRadius: 18,
+                    padding: "18px 22px",
+                    color: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                    boxShadow: "var(--shadow-md)",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 46,
+                      height: 46,
+                      borderRadius: 14,
+                      background: "var(--green)",
+                      color: "var(--navy)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontFamily: "var(--font-display)",
+                      fontSize: 16,
+                      flexShrink: 0,
+                    }}
+                  >
+                    WB
+                  </span>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14.5 }}>Wambete Benjamin</div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>Founder & Lead Instructor</div>
+                  </div>
+                  <span
+                    style={{
+                      marginLeft: "auto",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      fontSize: 11.5,
+                      fontWeight: 700,
+                      color: "var(--green)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--green)" }} />
+                    Open
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div style={{position:"absolute",bottom:0,left:0,right:0,height:120,background:"linear-gradient(to bottom,transparent,var(--cream))",pointerEvents:"none"}}></div>
       </section>
 
-      {/* SKILLS */}
-      <section style={{padding:"80px 24px",background:"var(--cream)"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{textAlign:"center",marginBottom:56}}>
-            <span className="tag-pill" style={{marginBottom:16,display:"inline-block"}}>What We Teach</span>
-            <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(1.8rem,4vw,2.8rem)",fontWeight:800,color:"var(--ink)",marginBottom:16}}>
-              Skills That Pay in <span style={{color:"var(--purple-mid)"}}>2026 & Beyond</span>
-            </h2>
-            <p style={{color:"var(--muted)",fontSize:"1rem",maxWidth:480,margin:"0 auto"}}>
-              Practical courses taught by Wambete Benjamin — real skills for real income
-            </p>
-          </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20}}>
-            {skills.map((skill,i) => (
-              <div key={i} className="skill-card">
-                <div style={{fontSize:"2.2rem",marginBottom:16}}>{skill.icon}</div>
-                <h3 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontWeight:700,fontSize:"1rem",color:"var(--ink)",marginBottom:8}}>{skill.title}</h3>
-                <p style={{color:"var(--muted)",fontSize:14,lineHeight:1.6}}>{skill.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* COURSES PREVIEW */}
-      <section style={{padding:"80px 24px",background:"var(--surface)"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div className="two-col" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:60,alignItems:"center"}}>
-            <div>
-              <span className="tag-pill" style={{marginBottom:16,display:"inline-block"}}>Our Courses</span>
-              <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(1.8rem,3vw,2.8rem)",fontWeight:800,color:"var(--ink)",marginBottom:20,lineHeight:1.1}}>
-                11 Courses to Launch Your Digital Career
-              </h2>
-              <p style={{color:"var(--muted)",fontSize:"1rem",lineHeight:1.8,marginBottom:32}}>
-                From YouTube Automation to AI & LLM Mastery — every course is built to help you earn real money online from anywhere in Africa.
-              </p>
-              <a href="/courses" className="cta-btn">Browse All Courses →</a>
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-              {["▶️ YouTube Automation","🐍 Python Programming","💼 Freelancing","🧠 SWE & LLM Mastery","📧 Email Marketing","💸 Affiliate Marketing"].map((c,i) => (
-                <div key={i} className="course-preview-item">{c}</div>
+      {/* ================= MARQUEE ================= */}
+      <div className="marquee" style={{ background: "var(--navy)", marginTop: 96 }}>
+        <div className="marquee-track">
+          {[0, 1].map((dup) => (
+            <div key={dup} style={{ display: "flex" }}>
+              {marqueeItems.map((item, i) => (
+                <span key={`${dup}-${i}`} className="marquee-item">
+                  {item} <span className="dot">✦</span>
+                </span>
               ))}
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
 
-      {/* FOUNDER */}
-      <section style={{padding:"80px 24px",background:"var(--cream)"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{
-            background:"linear-gradient(135deg,#0d0a1a 0%,#2d1b69 60%,#4c1d95 100%)",
-            borderRadius:40,padding:"60px 40px",
-            position:"relative",overflow:"hidden"
-          }}>
-            <div className="comet" style={{top:"20%",left:"5%",animationDuration:"3s"}}></div>
-            <div className="comet" style={{top:"60%",left:"85%",animationDuration:"4s",animationDelay:"1.5s"}}></div>
-            <div style={{position:"absolute",width:400,height:400,background:"rgba(124,58,237,0.1)",borderRadius:"50%",top:-150,right:-100,filter:"blur(80px)"}}></div>
+      {/* ================= SKILLS ================= */}
+      <section className="section section-paper">
+        <div className="container">
+          <div style={{ maxWidth: 640, marginBottom: 56 }}>
+            <span className="eyebrow">What you&apos;ll master</span>
+            <h2 className="title" style={{ marginTop: 16 }}>
+              Six skill tracks. One mission: <span className="accent">your future.</span>
+            </h2>
+          </div>
 
-            <div className="two-col" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:60,alignItems:"center",position:"relative",zIndex:1}}>
-              <div>
-                <span style={{background:"rgba(245,158,11,0.15)",border:"1px solid rgba(245,158,11,0.3)",color:"#fde68a",padding:"6px 16px",borderRadius:50,fontSize:12,fontWeight:600,display:"inline-block",marginBottom:20}}>Meet The Founder</span>
-                <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(1.8rem,3vw,2.8rem)",fontWeight:800,color:"white",marginBottom:16,lineHeight:1.1}}>
-                  Wambete Benjamin
-                </h2>
-                <p style={{color:"rgba(255,255,255,0.6)",fontSize:"1rem",lineHeight:1.8,marginBottom:24}}>
-                  CS Graduate, Graphic Designer, Web Developer, Video Editor, Animator and AI Expert. Founder of CHRISCO Digital Academy under CHRISCO Youth Aflame.
-                </p>
-                <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:32}}>
-                  {["Graphic Design","Web Development","Video Editing","Animations","Social Media","AI Expert"].map((tag,i) => (
-                    <span key={i} style={{background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.7)",fontSize:12,fontWeight:600,padding:"6px 14px",borderRadius:50}}>{tag}</span>
-                  ))}
+          <div className="grid-3">
+            {skills.map((skill, i) => (
+              <div key={i} className="card card-hover" style={{ padding: "30px 28px", position: "relative" }}>
+                <div className="ghost-num">{skill.num}</div>
+                <div
+                  style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: 16,
+                    background: "var(--green-tint)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "1.6rem",
+                    marginBottom: 20,
+                  }}
+                >
+                  {skill.icon}
                 </div>
-                <a href="/contact" className="cta-btn">Get In Touch →</a>
+                <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 10 }}>{skill.title}</h3>
+                <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.65, marginBottom: 20 }}>{skill.desc}</p>
+                <Link href="/courses" className="link-arrow" style={{ fontSize: 13 }}>
+                  Explore courses <span className="arr">→</span>
+                </Link>
               </div>
-              <div className="hero-right" style={{display:"flex",justifyContent:"center"}}>
-                <div style={{
-                  width:240,height:240,borderRadius:"50%",
-                  background:"linear-gradient(135deg,rgba(124,58,237,0.3),rgba(245,158,11,0.2))",
-                  border:"2px solid rgba(255,255,255,0.1)",
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  fontSize:"7rem"
-                }} className="float-anim">👨‍💻</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section style={{padding:"40px 24px 80px",background:"var(--cream)"}}>
-        <div style={{maxWidth:800,margin:"0 auto"}}>
-          <div style={{
-            background:"linear-gradient(135deg,#2d1b69,#7c3aed)",
-            borderRadius:40,padding:"60px 40px",
-            textAlign:"center",position:"relative",overflow:"hidden"
-          }}>
-            <div className="comet" style={{top:"20%",left:"5%",animationDuration:"3s"}}></div>
-            <div className="comet" style={{top:"60%",left:"85%",animationDuration:"4s",animationDelay:"1.5s"}}></div>
-            <div style={{position:"relative",zIndex:1}}>
-              <div style={{fontSize:"3rem",marginBottom:16}} className="float-anim">🚀</div>
-              <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(1.6rem,4vw,2.8rem)",fontWeight:800,color:"white",marginBottom:16}}>
-                Ready to Start Your <span className="shimmer-text">Digital Journey?</span>
-              </h2>
-              <p style={{color:"rgba(255,255,255,0.6)",fontSize:"1rem",marginBottom:32,lineHeight:1.7}}>
-                Join CHRISCO Digital Academy today. Real skills. Real income. Real future.
-              </p>
-              <div style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
-                <a href="/courses" style={{
-                  background:"#f59e0b",color:"#1a0533",
-                  fontFamily:"'Bricolage Grotesque',sans-serif",
-                  fontWeight:800,fontSize:16,
-                  padding:"16px 36px",borderRadius:100,
-                  textDecoration:"none",transition:"all 0.3s",display:"inline-block"
-                }}>Explore Courses 🔥</a>
-                <a href="https://wa.me/254112272061" style={{
-                  background:"rgba(255,255,255,0.1)",
-                  border:"2px solid rgba(255,255,255,0.2)",
-                  color:"white",
-                  fontFamily:"'Bricolage Grotesque',sans-serif",
-                  fontWeight:700,fontSize:16,
-                  padding:"16px 36px",borderRadius:100,
-                  textDecoration:"none",transition:"all 0.3s",display:"inline-block"
-                }}>WhatsApp Us 💬</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer style={{background:"var(--ink)",padding:"48px 24px",textAlign:"center"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.3rem",fontWeight:800,color:"#f59e0b",marginBottom:8}}>CHRISCO Digital Academy</div>
-          <p style={{color:"rgba(255,255,255,0.4)",fontSize:14,marginBottom:20}}>Under CHRISCO Youth Aflame • Founded by Wambete Benjamin</p>
-          <div style={{display:"flex",gap:24,justifyContent:"center",flexWrap:"wrap",marginBottom:16}}>
-            {["Home","About","Courses","Contact"].map((link,i) => (
-              <a key={i} href={`/${link.toLowerCase()==="home"?"":link.toLowerCase()}`} style={{color:"rgba(255,255,255,0.4)",fontSize:14,textDecoration:"none"}}>{link}</a>
             ))}
           </div>
-          <div style={{color:"rgba(255,255,255,0.3)",fontSize:13,display:"flex",gap:20,justifyContent:"center",flexWrap:"wrap",marginBottom:20}}>
-            <span>📧 shambetz@gmail.com</span>
-            <span>📞 +254112272061</span>
-            <span>📍 Nairobi, Kenya</span>
+        </div>
+      </section>
+
+      {/* ================= FEATURED COURSES ================= */}
+      <section className="section" style={{ background: "#F4F6F4" }}>
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 48 }}>
+            <div>
+              <span className="eyebrow">Course catalogue</span>
+              <h2 className="title" style={{ marginTop: 16 }}>
+                Featured courses that <span className="accent">actually pay</span>
+              </h2>
+            </div>
+            <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>
+              View all 11 courses →
+            </Link>
           </div>
-          <div style={{borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:20,color:"rgba(255,255,255,0.2)",fontSize:12}}>
-            © 2026 CHRISCO Digital Academy. All Rights Reserved.
+
+          <div className="grid-3">
+            {featured.map((course, i) => (
+              <Link
+                key={course.id}
+                href="/courses"
+                className="card card-hover"
+                style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
+              >
+                {/* Card header */}
+                <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "28px 26px", position: "relative" }}>
+                  <span
+                    className="pill pill-sm"
+                    style={{ position: "absolute", top: 16, right: 16, background: "rgba(255,255,255,0.92)", border: "none", color: "var(--ink)" }}
+                  >
+                    {course.category}
+                  </span>
+                  <div
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 18,
+                      background: "rgba(255,255,255,0.18)",
+                      border: "1px solid rgba(255,255,255,0.3)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.9rem",
+                    }}
+                  >
+                    {course.icon}
+                  </div>
+                </div>
+
+                {/* Card body */}
+                <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
+                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
+                  <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{course.desc}</p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+                    <span className="pill pill-soft pill-sm">⏱ {course.duration}</span>
+                    <span className="pill pill-soft pill-sm">⭐ {course.rating}</span>
+                    <span className="pill pill-soft pill-sm">👥 {course.students}</span>
+                  </div>
+                  <span className="link-arrow" style={{ fontSize: 13.5 }}>
+                    View course <span className="arr">→</span>
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
-      </footer>
+      </section>
 
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="section section-paper">
+        <div className="container">
+          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
+            <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
+            <h2 className="title" style={{ marginTop: 16 }}>
+              From zero to earning — <span className="accent">in 3 steps</span>
+            </h2>
+          </div>
+
+          <div className="grid-3" style={{ alignItems: "stretch" }}>
+            {steps.map((step, i) => (
+              <div key={i} style={{ position: "relative" }}>
+                <div className="card card-hover" style={{ padding: "34px 30px", height: "100%" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "2.2rem",
+                        color: "var(--green-deep)",
+                      }}
+                    >
+                      {step.num}
+                    </span>
+                    <span style={{ fontSize: "2rem" }}>{step.icon}</span>
+                  </div>
+                  <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 10 }}>{step.title}</h3>
+                  <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7 }}>{step.desc}</p>
+                </div>
+                {i < steps.length - 1 && (
+                  <span
+                    className="hide-mobile"
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: -34,
+                      zIndex: 2,
+                      fontFamily: "var(--font-display)",
+                      color: "var(--line-strong)",
+                      fontSize: "1.4rem",
+                      transform: "translateY(-50%)",
+                    }}
+                  >
+                    →
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOUNDER ================= */}
+      <section className="section section-navy">
+        <div className="container">
+          <div className="split" style={{ alignItems: "center" }}>
+            <div>
+              <span className="eyebrow on-dark">Meet the founder</span>
+              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
+                Wambete <span className="accent-bright">Benjamin</span>
+              </h2>
+              <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
+                CS Graduate · Designer · Developer · Video Editor · AI Expert
+              </p>
+              <p className="lead on-dark" style={{ maxWidth: 520 }}>
+                Founder of CHRISCO Digital Academy under CHRISCO Youth Aflame. He built this platform so that every
+                young person in Africa can learn real, practical digital skills — and turn them into real income.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
+                {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t) => (
+                  <span key={t} className="pill pill-dark pill-sm">{t}</span>
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                <Link href="/contact" className="btn btn-green" style={{ textDecoration: "none" }}>
+                  Get In Touch →
+                </Link>
+                <Link href="/about" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
+                  Read Our Story
+                </Link>
+              </div>
+            </div>
+
+            <div>
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    left: -20,
+                    width: 140,
+                    height: 140,
+                    borderRadius: "50%",
+                    background: "rgba(0,255,132,0.18)",
+                    filter: "blur(60px)",
+                  }}
+                />
+                <img
+                  src="/images/workspace.jpg"
+                  alt="Creative workspace — design, code and video"
+                  style={{ position: "relative", width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid rgba(255,255,255,0.12)", aspectRatio: "4/3.2", objectFit: "cover" }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 20,
+                    bottom: 20,
+                    background: "rgba(0,35,51,0.9)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255,255,255,0.14)",
+                    borderRadius: 16,
+                    padding: "14px 18px",
+                    display: "flex",
+                    gap: 14,
+                    alignItems: "center",
+                  }}
+                >
+                  <span style={{ fontSize: "1.6rem" }}>👨‍💻</span>
+                  <div>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>7+ skill areas</div>
+                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>taught hands-on</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="section section-green" style={{ padding: "88px 0" }}>
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 32, flexWrap: "wrap" }}>
+            <div style={{ maxWidth: 620 }}>
+              <span className="eyebrow on-green">Start today</span>
+              <h2 className="display" style={{ fontSize: "clamp(1.9rem, 4.2vw, 3.2rem)", marginTop: 14 }}>
+                Ready to build your digital career?
+              </h2>
+              <p style={{ marginTop: 14, fontWeight: 500, color: "rgba(0,35,51,0.75)", fontSize: "1.02rem", lineHeight: 1.7 }}>
+                Real skills. Real income. Real future. Join CHRISCO Digital Academy and start learning this week.
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              <a href="https://wa.me/254112272061" className="btn btn-navy btn-lg" style={{ textDecoration: "none" }}>
+                WhatsApp Us 💬
+              </a>
+              <Link href="/courses" className="btn btn-outline btn-lg" style={{ textDecoration: "none", borderColor: "var(--navy)", color: "var(--navy)" }}>
+                Browse Courses →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
       <Chatbot />
     </main>
   )
