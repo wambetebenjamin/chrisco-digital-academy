@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Navbar from "../Navbar"
 import Footer from "../components/Footer"
+import Icon from "../components/Icon"
 import { useAuth } from "../AuthProvider"
 
 export default function Dashboard() {
@@ -20,10 +21,10 @@ export default function Dashboard() {
   }, [user])
 
   const stats = [
-    { icon: "📚", label: "Courses Available", value: "11" },
-    { icon: "✅", label: "Courses Enrolled", value: loading ? "…" : enrollments.length },
-    { icon: "🏆", label: "Certificates Earned", value: "0" },
-    { icon: "🌍", label: "Member Since", value: user?.created_at ? new Date(user.created_at).toLocaleDateString("en-KE", { month: "short", year: "numeric" }) : "Today" },
+    { icon: "book", label: "Courses Available", value: "11" },
+    { icon: "checkCircle", label: "Courses Enrolled", value: loading ? "…" : enrollments.length },
+    { icon: "trophy", label: "Certificates Earned", value: "0" },
+    { icon: "calendar", label: "Member Since", value: user?.created_at ? new Date(user.created_at).toLocaleDateString("en-KE", { month: "short", year: "numeric" }) : "Today" },
   ]
 
   return (
@@ -41,7 +42,7 @@ export default function Dashboard() {
                 {profile?.name || user?.email?.split("@")[0] || "Student"}
               </h1>
               <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "1rem", marginTop: 12 }}>
-                Continue your digital learning journey 🔥
+                Continue your digital learning journey
               </p>
             </div>
 
@@ -64,8 +65,8 @@ export default function Dashboard() {
           <div className="grid-4">
             {stats.map((stat, i) => (
               <div key={i} className="card card-hover" style={{ padding: "24px 22px", display: "flex", alignItems: "center", gap: 16 }}>
-                <span style={{ width: 54, height: 54, borderRadius: 16, background: "var(--green-tint)", color: "var(--green-deep)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", flexShrink: 0 }}>
-                  {stat.icon}
+                <span style={{ width: 54, height: 54, borderRadius: 16, background: "var(--green-tint)", color: "var(--green-deep)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon name={stat.icon} size={24} />
                 </span>
                 <div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", color: "var(--ink)" }}>{stat.value}</div>
@@ -116,7 +117,9 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="card" style={{ padding: "64px 40px", textAlign: "center" }}>
-              <div style={{ fontSize: "3.6rem", marginBottom: 16 }}>📚</div>
+              <span style={{ display: "inline-flex", width: 80, height: 80, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+                <Icon name="book" size={38} strokeWidth={1.6} />
+              </span>
               <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.25rem", fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>
                 No courses yet
               </h3>
@@ -125,7 +128,7 @@ export default function Dashboard() {
                 up here.
               </p>
               <Link href="/courses" className="btn btn-green" style={{ textDecoration: "none" }}>
-                Browse Courses 🚀
+                Browse Courses →
               </Link>
             </div>
           )}

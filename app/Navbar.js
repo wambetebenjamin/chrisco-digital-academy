@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useAuth } from "./AuthProvider"
+import Icon from "./components/Icon"
 
 const links = [
   { label: "Home", href: "/" },
@@ -217,7 +218,7 @@ export default function Navbar() {
             justifyContent: "center",
           }}
         >
-          {open ? "✕" : "☰"}
+          <Icon name={open ? "x" : "menu"} size={20} strokeWidth={2.2} />
         </button>
       </div>
 

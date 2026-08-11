@@ -1,44 +1,23 @@
-"use client"
-import { useState } from "react"
-import Link from "next/link"
 import Navbar from "../Navbar"
 import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
-import emailjs from "@emailjs/browser"
+import Icon from "../components/Icon"
+import ContactForm from "./ContactForm"
 
-const SERVICE_ID = "service_m86zbad"
-const TEMPLATE_ID = "template_i5wg4c8"
-const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
+export const metadata = {
+  title: "Contact",
+  description:
+    "Get in touch with CHRISCO Digital Academy — ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
+}
 
 const infoItems = [
-  { icon: "✉", label: "Email", value: "shambetz@gmail.com", href: "mailto:shambetz@gmail.com" },
-  { icon: "✆", label: "Phone & WhatsApp", value: "+254 112 272 061", href: "https://wa.me/254112272061" },
-  { icon: "⌖", label: "Location", value: "Nairobi, Kenya", href: null },
-  { icon: "⛪", label: "Organisation", value: "CHRISCO Youth Aflame", href: "/about" },
+  { icon: "mail", label: "Email", value: "shambetz@gmail.com" },
+  { icon: "phone", label: "Phone & WhatsApp", value: "+254 112 272 061" },
+  { icon: "pin", label: "Location", value: "Nairobi, Kenya" },
+  { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame" },
 ]
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" })
-  const [sending, setSending] = useState(false)
-  const [sent, setSent] = useState(false)
-
-  async function handleSubmit() {
-    if (!form.name || !form.message) return
-    setSending(true)
-    try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: form.email,
-        phone: form.phone,
-        message: form.message,
-      }, PUBLIC_KEY)
-      setSent(true)
-    } catch {
-      alert("Failed to send. Please email shambetz@gmail.com directly.")
-    }
-    setSending(false)
-  }
-
   return (
     <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
       <Navbar />
@@ -79,11 +58,10 @@ export default function Contact() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        fontSize: "1.35rem",
                         flexShrink: 0,
                       }}
                     >
-                      {item.icon}
+                      <Icon name={item.icon} size={22} />
                     </span>
                     <div style={{ minWidth: 0 }}>
                       <div style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 700, marginBottom: 3 }}>
@@ -116,75 +94,13 @@ export default function Contact() {
                   Chat with us directly — we reply fast.
                 </p>
                 <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
-                  Chat on WhatsApp →
+                  <Icon name="whatsapp" size={15} /> Chat on WhatsApp
                 </a>
               </div>
             </div>
 
-            {/* RIGHT — form */}
-            <div className="card" style={{ padding: "40px 36px", boxShadow: "var(--shadow-md)" }}>
-              {sent ? (
-                <div style={{ textAlign: "center", padding: "48px 20px" }}>
-                  <div style={{ fontSize: "3.6rem", marginBottom: 14 }}>🎉</div>
-                  <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.5rem", fontWeight: 800, color: "var(--ink)", marginBottom: 10 }}>
-                    Message sent!
-                  </h3>
-                  <p style={{ color: "var(--muted)", fontSize: 14.5, marginBottom: 24 }}>
-                    We&apos;ll get back to you soon. Thank you for reaching out to CHRISCO Digital Academy.
-                  </p>
-                  <button onClick={() => setSent(false)} className="btn btn-navy btn-sm" style={{ cursor: "pointer" }}>
-                    Send another message
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
-                    <span
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 13,
-                        background: "var(--green-tint)",
-                        color: "var(--green-deep)",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      ✉
-                    </span>
-                    <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.3rem", color: "var(--ink)" }}>
-                      Send a message
-                    </h2>
-                  </div>
-
-                  <div className="field">
-                    <label>Full name *</label>
-                    <input className="input" placeholder="e.g. Amani Mwangi" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-                  </div>
-                  <div className="field">
-                    <label>Email address</label>
-                    <input className="input" type="email" placeholder="you@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-                  </div>
-                  <div className="field">
-                    <label>Phone / WhatsApp</label>
-                    <input className="input" placeholder="+254 7xx xxx xxx" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-                  </div>
-                  <div className="field">
-                    <label>Your message *</label>
-                    <textarea className="input" rows={5} placeholder="Tell us what you need help with..." style={{ resize: "none" }} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
-                  </div>
-
-                  <button onClick={handleSubmit} disabled={sending} className="btn btn-green btn-lg btn-block" style={{ cursor: sending ? "default" : "pointer" }}>
-                    {sending ? "Sending..." : "Send Message →"}
-                  </button>
-                  <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>
-                    Prefer email? Write to us at <Link href="mailto:shambetz@gmail.com" style={{ color: "var(--green-deep)", fontWeight: 600, textDecoration: "none" }}>shambetz@gmail.com</Link>
-                  </p>
-                </>
-              )}
-            </div>
+            {/* RIGHT — form (client island) */}
+            <ContactForm />
           </div>
         </div>
       </section>

@@ -1,16 +1,16 @@
 export const categories = [
-  { name: "Marketing", icon: "📈" },
-  { name: "Coding", icon: "💻" },
-  { name: "Writing", icon: "✍️" },
-  { name: "Design", icon: "🎨" },
-  { name: "Video", icon: "🎬" },
-  { name: "Career", icon: "🚀" },
+  { name: "Marketing", icon: "chart" },
+  { name: "Coding", icon: "code" },
+  { name: "Writing", icon: "pen" },
+  { name: "Design", icon: "palette" },
+  { name: "Video", icon: "clapper" },
+  { name: "Career", icon: "rocket" },
 ]
 
 export const courses = [
   {
     id: 1,
-    icon: "▶️",
+    icon: "play",
     title: "YouTube Automation",
     category: "Video",
     level: "Beginner",
@@ -34,7 +34,7 @@ export const courses = [
   },
   {
     id: 2,
-    icon: "🐍",
+    icon: "braces",
     title: "Python Programming",
     category: "Coding",
     level: "Beginner",
@@ -58,7 +58,7 @@ export const courses = [
   },
   {
     id: 3,
-    icon: "👕",
+    icon: "tshirt",
     title: "Print on Demand",
     category: "Design",
     level: "Beginner",
@@ -82,7 +82,7 @@ export const courses = [
   },
   {
     id: 4,
-    icon: "👻",
+    icon: "feather",
     title: "Ghostwriting",
     category: "Writing",
     level: "Intermediate",
@@ -106,7 +106,7 @@ export const courses = [
   },
   {
     id: 5,
-    icon: "💼",
+    icon: "briefcase",
     title: "Freelancing",
     category: "Career",
     level: "Beginner",
@@ -130,7 +130,7 @@ export const courses = [
   },
   {
     id: 6,
-    icon: "📊",
+    icon: "bars",
     title: "Digital Marketing",
     category: "Marketing",
     level: "Beginner",
@@ -154,7 +154,7 @@ export const courses = [
   },
   {
     id: 7,
-    icon: "✍️",
+    icon: "pen",
     title: "Copywriting",
     category: "Writing",
     level: "Beginner",
@@ -178,7 +178,7 @@ export const courses = [
   },
   {
     id: 8,
-    icon: "📧",
+    icon: "mail",
     title: "Email Marketing",
     category: "Marketing",
     level: "Intermediate",
@@ -202,7 +202,7 @@ export const courses = [
   },
   {
     id: 9,
-    icon: "💸",
+    icon: "cash",
     title: "Affiliate Marketing",
     category: "Marketing",
     level: "Beginner",
@@ -226,7 +226,7 @@ export const courses = [
   },
   {
     id: 10,
-    icon: "📱",
+    icon: "smartphone",
     title: "Social Media Marketing",
     category: "Marketing",
     level: "Beginner",
@@ -250,7 +250,7 @@ export const courses = [
   },
   {
     id: 11,
-    icon: "🧠",
+    icon: "cpu",
     title: "SWE & LLM Mastery",
     category: "Coding",
     level: "Intermediate",

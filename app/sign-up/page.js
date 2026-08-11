@@ -3,6 +3,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { useAuth } from "../AuthProvider"
 import AuthShell from "../components/AuthShell"
+import Icon from "../components/Icon"
 
 export default function SignUp() {
   const [form, setForm] = useState({ name: "", email: "", password: "" })
@@ -39,7 +40,9 @@ export default function SignUp() {
     <AuthShell subtitle="Join thousands of young Africans building real, practical digital skills — for free, forever.">
       {success ? (
         <div style={{ textAlign: "center", padding: "20px 0" }}>
-          <div style={{ fontSize: "3.6rem", marginBottom: 14 }}>🎉</div>
+          <span style={{ display: "inline-flex", width: 76, height: 76, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
+            <Icon name="mail" size={36} strokeWidth={1.6} />
+          </span>
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.9rem", color: "var(--ink)", textTransform: "uppercase", marginBottom: 12 }}>
             Check your email!
           </h1>
@@ -89,7 +92,7 @@ export default function SignUp() {
           </button>
 
           <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 18, lineHeight: 1.6 }}>
-            By signing up you agree to learn, practice and build something great. 🚀
+            By signing up you agree to learn, practice and build something great.
           </p>
         </>
       )}

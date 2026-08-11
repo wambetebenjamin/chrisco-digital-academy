@@ -829,6 +829,12 @@
     .roadmap { padding: 40px 20px; }
     .resources { padding: 40px 20px; }
   }
+
+    /* Natural vector icons (replace emojis) */
+    .header-icon svg { width: 76px; height: 76px; }
+    .c-icon svg { width: 38px; height: 38px; }
+    .icon svg, .r-icon svg, .tool-icon svg, .cc-icon svg, .p-icon svg, .e-icon svg { width: 30px; height: 30px; }
+    .header-icon svg, .icon svg, .r-icon svg, .tool-icon svg, .c-icon svg, .cc-icon svg, .p-icon svg, .e-icon svg { display: block; margin: 0 auto; }
 </style>
 </head>
 <body>
@@ -842,17 +848,17 @@
   <div class="comet" style="top:10%;left:5%;animation-duration:4s;"></div>
   <div class="comet" style="top:30%;left:60%;animation-duration:6s;animation-delay:2s;opacity:0.5;"></div>
 
-  <div class="logo">📘 Beginner's Guide to the Dev World</div>
-  <span class="header-icon">💻</span>
+ <div class="logo">Beginner's Guide to the Dev World</div>
+ <span class="header-icon"></span>
   <h1>So You Want to<br/><span>Build Software?</span></h1>
   <p>A friendly, from-scratch guide to understanding how the real world of software development works — covering code, tools, teamwork, and even AI.</p>
   <div class="badges">
-    <span class="badge">🦀 What is Rust?</span>
-    <span class="badge">🔀 What is Git?</span>
-    <span class="badge">🐳 What is Docker?</span>
-    <span class="badge">📦 Open Source</span>
-    <span class="badge">🤖 AI & LLMs</span>
-    <span class="badge">✨ Zero Experience Needed</span>
+ <span class="badge">What is Rust?</span>
+ <span class="badge">What is Git?</span>
+ <span class="badge">What is Docker?</span>
+ <span class="badge">Open Source</span>
+ <span class="badge">AI & LLMs</span>
+ <span class="badge">Zero Experience Needed</span>
   </div>
 </div>
 
@@ -862,7 +868,7 @@
 ══════════════════════════════════ -->
 <div class="what-is">
   <div class="container">
-    <div class="section-label">👋 Welcome</div>
+ <div class="section-label">Welcome</div>
     <div class="section-title">Before We Start — Let's Be Real</div>
 
     <p>You don't need to be a genius to understand software. You don't need a computer science degree. You don't need to have started coding at age 10. What you need is curiosity, patience, and a willingness to embrace confusion — because confusion is just the feeling of your brain building new roads.</p>
@@ -870,40 +876,40 @@
     <p>This guide covers <strong>five big ideas</strong> that every working software developer uses every single day. We'll explain each one like you're hearing about it for the first time — because you might be! And that's perfectly fine.</p>
 
     <div class="highlight-box">
-      <h3>🎯 What You'll Understand By the End</h3>
+ <h3>What You'll Understand By the End</h3>
       <p>By the time you finish reading, you'll be able to have an intelligent conversation about how software is built, versioned, packaged, shared, and even tested by AI. These are the building blocks of the modern tech world — and they're way less scary than they sound.</p>
     </div>
 
     <div class="overview-grid">
       <div class="overview-card">
-        <div class="icon">🦀</div>
+        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/></svg></div>
         <div class="label">Chapter 1</div>
         <div class="value">Rust</div>
       </div>
       <div class="overview-card">
-        <div class="icon">🔀</div>
+        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7"/><path d="M18 10.5c0 3.8-3.5 4.2-8.5 4.4"/></svg></div>
         <div class="label">Chapter 2</div>
         <div class="value">Git</div>
       </div>
       <div class="overview-card">
-        <div class="icon">🐳</div>
+        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M3.2 8.2L12 13l8.8-4.8M12 13v9.5"/></svg></div>
         <div class="label">Chapter 3</div>
         <div class="value">Docker</div>
       </div>
       <div class="overview-card">
-        <div class="icon">📦</div>
+        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M3.2 8.2L12 13l8.8-4.8M12 13v9.5"/></svg></div>
         <div class="label">Chapter 4</div>
         <div class="value">Open Source</div>
       </div>
       <div class="overview-card">
-        <div class="icon">🤖</div>
+        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="4.5" y="8.5" width="15" height="11" rx="2.5"/><path d="M12 8.5V5.6"/><circle cx="12" cy="4" r="1.5"/><circle cx="9.2" cy="13" r="1.15" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13" r="1.15" fill="currentColor" stroke="none"/><path d="M9.5 16.3c1.7.8 3.3.8 5 0"/><path d="M2.5 12.5v3.5M21.5 12.5v3.5"/></svg></div>
         <div class="label">Chapter 5</div>
         <div class="value">AI & LLMs</div>
       </div>
     </div>
 
     <div class="callout callout-gold">
-      <div class="ci">💛</div>
+ <div class="ci"></div>
       <div class="callout-body">
         <strong>A Note on Learning</strong>
         <p>Every concept in this guide has a "real-life analogy" box. That's because the best way to understand something new is to connect it to something you already know. Software isn't magic — it's just a very organised way of giving instructions to a machine.</p>
@@ -918,7 +924,7 @@
 ══════════════════════════════════ -->
 <div class="roadmap">
   <div class="container">
-    <div class="section-label">🗺️ Your Learning Journey</div>
+ <div class="section-label">Your Learning Journey</div>
     <div class="section-title">Five Chapters, One Big Picture</div>
 
     <div class="roadmap-steps">
@@ -1001,21 +1007,21 @@
 ══════════════════════════════════ -->
 <div class="syllabus">
   <div class="container">
-    <div class="section-label">📖 The Chapters</div>
+ <div class="section-label">The Chapters</div>
     <div class="section-title">Let's Actually Learn This</div>
 
     <!-- ─── CHAPTER 1: RUST ─── -->
     <div class="week-card">
       <div class="week-header">
         <div class="week-number">CHAPTER 1</div>
-        <div class="week-title">🦀 Rust — A Programming Language Built for Trust</div>
+ <div class="week-title">Rust — A Programming Language Built for Trust</div>
       </div>
       <div class="week-body">
 
         <p class="intro-text">Let's start with the obvious question: <em>What even is a programming language?</em> Think of it like this — computers don't understand English. They understand electrical signals. A programming language is basically a very precise, unambiguous version of English that sits in the middle — something humans can write and computers can eventually understand.</p>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy</strong>
+ <strong>Real-Life Analogy</strong>
           Imagine you're giving instructions to a very literal robot. You can't say "make me a cup of tea." You have to say: "Walk to the kitchen. Open the cupboard. Take out a mug. Fill the kettle with exactly 250ml of water..." Programming is writing those exact, complete, no-room-for-guessing instructions — for a computer.
         </div>
 
@@ -1028,7 +1034,7 @@
         <p class="intro-text">Most programming bugs happen because programs handle memory badly. Memory is just where a program stores information while it's running. Imagine you're using a notebook — if you forget to erase old notes, your notebook gets messy and you might read wrong information. If someone else grabs your notebook while you're still writing, things go wrong. Rust prevents all of this at the stage of writing code — before you even run it.</p>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy</strong>
+ <strong>Real-Life Analogy</strong>
           Most programming languages are like driving a fast car with no seatbelt — great speed, but you're responsible for not crashing. Rust is like a car that physically won't let you drive without your seatbelt fastened — and the engine checks your route before you set off. Slower to get started, but you arrive safely every time.
         </div>
 
@@ -1043,7 +1049,7 @@
         </ul>
 
         <div class="callout callout-purple">
-          <div class="ci">💜</div>
+ <div class="ci"></div>
           <div class="callout-body">
             <strong>Don't panic about the syntax yet</strong>
             <p>When you first see Rust code, it can look alien — lots of symbols like <code>&</code>, <code>::</code>, and angle brackets. That's totally normal. Every language looks weird at first. Focus on understanding the ideas. The syntax comes with practice.</p>
@@ -1051,7 +1057,7 @@
         </div>
 
         <div class="code-block">
-          <span class="code-label">👀 What Rust code actually looks like</span>
+ <span class="code-label">What Rust code actually looks like</span>
 <span class="cmt">// This is a comment — the computer ignores it. It's for humans.</span>
 <span class="cmt">// This program asks for your name and greets you.</span>
 
@@ -1074,7 +1080,7 @@
         </ul>
 
         <div class="checklist-section">
-          <h3>✅ Chapter 1 — What You Now Understand</h3>
+ <h3>Chapter 1 — What You Now Understand</h3>
           <div class="check-item"><div class="check-box"></div>A programming language is a structured way for humans to give precise instructions to computers</div>
           <div class="check-item"><div class="check-box"></div>Rust is designed to be fast AND safe — it catches memory errors before your code even runs</div>
           <div class="check-item"><div class="check-box"></div>Ownership and borrowing are Rust's unique way of managing memory without a garbage collector</div>
@@ -1088,14 +1094,14 @@
     <div class="week-card">
       <div class="week-header">
         <div class="week-number">CHAPTER 2</div>
-        <div class="week-title">🔀 Git — Never Lose Your Work Again</div>
+ <div class="week-title">Git — Never Lose Your Work Again</div>
       </div>
       <div class="week-body">
 
         <p class="intro-text">Imagine you're writing a novel. You save it as <em>novel_final.docx</em>. Then you make changes and save it as <em>novel_final_REAL.docx</em>. Then <em>novel_final_v2_THIS_ONE.docx</em>. Sound familiar? Now imagine 10 developers working on the same codebase at the same time, each making changes. Without a system to manage this, it would be absolute chaos. That system is <strong>Git.</strong></p>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy</strong>
+ <strong>Real-Life Analogy</strong>
           Git is like a magical notebook that records every single change you've ever made, who made it, and why — and lets you "undo" back to any point in history. It also lets multiple people write in the same notebook simultaneously without overwriting each other's work.
         </div>
 
@@ -1111,14 +1117,14 @@
         </ul>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy — Branches</strong>
+ <strong>Real-Life Analogy — Branches</strong>
           Imagine a tree. The trunk is your main project (usually called "main" or "master"). When you want to add a new feature — say, a login page — you grow a new branch. You work on that branch without disturbing the trunk. When the branch is ready, you merge it back into the trunk. Simple as that.
         </div>
 
         <div class="chapter-divider"><div class="cd-line"></div><div class="cd-label">What does a Git workflow look like?</div><div class="cd-line"></div></div>
 
         <div class="code-block">
-          <span class="code-label">👀 Common Git commands — in plain English</span>
+ <span class="code-label">Common Git commands — in plain English</span>
 git init             <span class="cmt"># Start a new repository (create the magic notebook)</span>
 git add .            <span class="cmt"># Tell Git "I want to save these changes"</span>
 git commit -m <span class="str">"Add login page"</span>  <span class="cmt"># Actually save them, with a note</span>
@@ -1128,7 +1134,7 @@ git log              <span class="cmt"># See the full history of all commits</sp
         </div>
 
         <div class="callout callout-green">
-          <div class="ci">✅</div>
+ <div class="ci"></div>
           <div class="callout-body">
             <strong>Git vs GitHub — They Are Not the Same Thing</strong>
             <p>Git is a tool you install on your computer. GitHub is a website. Git tracks your changes locally. GitHub lets you store those changes online and collaborate with others. You can use Git without GitHub — but most developers use both together.</p>
@@ -1145,7 +1151,7 @@ git log              <span class="cmt"># See the full history of all commits</sp
         </ul>
 
         <div class="checklist-section">
-          <h3>✅ Chapter 2 — What You Now Understand</h3>
+ <h3>Chapter 2 — What You Now Understand</h3>
           <div class="check-item"><div class="check-box"></div>Git is a version control system — it tracks every change ever made to your code</div>
           <div class="check-item"><div class="check-box"></div>A commit is a saved snapshot; a branch is a parallel workspace; a merge brings work together</div>
           <div class="check-item"><div class="check-box"></div>GitHub is a platform for hosting Git repositories and collaborating with others online</div>
@@ -1159,7 +1165,7 @@ git log              <span class="cmt"># See the full history of all commits</sp
     <div class="week-card">
       <div class="week-header">
         <div class="week-number">CHAPTER 3</div>
-        <div class="week-title">🐳 Docker — "It Works on My Machine" Solved</div>
+ <div class="week-title">Docker — "It Works on My Machine" Solved</div>
       </div>
       <div class="week-body">
 
@@ -1167,7 +1173,7 @@ git log              <span class="cmt"># See the full history of all commits</sp
         <p class="intro-text">This happens because software doesn't exist in a vacuum. It depends on the operating system, installed libraries, specific versions of tools, environment variables, and dozens of other invisible things. Docker solves this by bundling the software <em>and</em> its entire environment into one portable, self-contained unit called a <strong>container.</strong></p>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy</strong>
+ <strong>Real-Life Analogy</strong>
           Before Docker: imagine you make an incredible recipe, but it only works because of your specific oven, your exact pans, and a spice you bought from one specific market. If someone else tries to make it, it tastes different. Docker is like shipping the recipe, the exact oven, the exact pans, and the exact spice — all in one box. Anyone anywhere opens the box, and they get the exact same dish.
         </div>
 
@@ -1182,12 +1188,12 @@ git log              <span class="cmt"># See the full history of all commits</sp
         </ul>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy — Image vs Container</strong>
+ <strong>Real-Life Analogy — Image vs Container</strong>
           An image is like a cookie cutter. A container is like an actual cookie you made with it. You can use one cookie cutter (image) to produce hundreds of identical cookies (containers). Each cookie is independent — you can eat one without affecting the others.
         </div>
 
         <div class="code-block">
-          <span class="code-label">👀 A simple Dockerfile — in plain English</span>
+ <span class="code-label">A simple Dockerfile — in plain English</span>
 <span class="cmt"># Start from an official Rust environment (like renting a pre-set kitchen)</span>
 FROM rust:latest
 
@@ -1205,7 +1211,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
         </div>
 
         <div class="callout callout-gold">
-          <div class="ci">🎯</div>
+ <div class="ci"></div>
           <div class="callout-body">
             <strong>Containers vs Virtual Machines — A Common Confusion</strong>
             <p>Virtual machines (VMs) also isolate software, but they simulate an entire computer including its own operating system — very heavy and slow to start. Containers share the host OS and are incredibly lightweight. A container starts in milliseconds; a VM can take minutes.</p>
@@ -1222,7 +1228,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
         </ul>
 
         <div class="checklist-section">
-          <h3>✅ Chapter 3 — What You Now Understand</h3>
+ <h3>Chapter 3 — What You Now Understand</h3>
           <div class="check-item"><div class="check-box"></div>Docker solves the "works on my machine" problem by packaging software and its environment together</div>
           <div class="check-item"><div class="check-box"></div>An image is the blueprint; a container is the running instance made from that blueprint</div>
           <div class="check-item"><div class="check-box"></div>A Dockerfile contains the instructions for building an image — readable like a recipe</div>
@@ -1236,14 +1242,14 @@ CMD [<span class="str">"./target/release/my_app"</span>]
     <div class="week-card">
       <div class="week-header">
         <div class="week-number">CHAPTER 4</div>
-        <div class="week-title">📦 Open Source — Software the World Builds Together</div>
+ <div class="week-title">Open Source — Software the World Builds Together</div>
       </div>
       <div class="week-body">
 
         <p class="intro-text">Most of the software powering the world — the internet, your phone's operating system, the tools hospitals use, the infrastructure of banks — was not written by one company in secret. It was written collaboratively, shared publicly, and improved continuously by thousands of developers around the world. This is open source software.</p>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy</strong>
+ <strong>Real-Life Analogy</strong>
           Imagine if the recipe for Coca-Cola was public. Anyone could see exactly how it's made. Anyone could suggest improvements. Anyone could use it to make their own version. And the most popular improvements, reviewed and approved by the community, would be added to the official recipe. That's open source — but for code.
         </div>
 
@@ -1269,7 +1275,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
         </ul>
 
         <div class="callout callout-purple">
-          <div class="ci">💜</div>
+ <div class="ci"></div>
           <div class="callout-body">
             <strong>Why Would Anyone Give Code Away for Free?</strong>
             <p>Great question. Some do it to build a reputation (companies and individuals). Some do it because they genuinely believe software should be free. Some do it because the project they need doesn't exist yet — so they build it, and sharing it means others will help improve it. Often it's all three. The result is a global engine of innovation that no single company could match.</p>
@@ -1288,7 +1294,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
         </ul>
 
         <div class="checklist-section">
-          <h3>✅ Chapter 4 — What You Now Understand</h3>
+ <h3>Chapter 4 — What You Now Understand</h3>
           <div class="check-item"><div class="check-box"></div>Open source means the code is publicly visible and anyone can contribute to it</div>
           <div class="check-item"><div class="check-box"></div>Most of the world's critical software infrastructure is built on open source projects</div>
           <div class="check-item"><div class="check-box"></div>Contributing follows a clear flow: fork → clone → branch → change → pull request → review → merge</div>
@@ -1302,14 +1308,14 @@ CMD [<span class="str">"./target/release/my_app"</span>]
     <div class="week-card">
       <div class="week-header">
         <div class="week-number">CHAPTER 5</div>
-        <div class="week-title">🤖 AI & LLMs — Teaching Machines to Understand Code</div>
+ <div class="week-title">AI & LLMs — Teaching Machines to Understand Code</div>
       </div>
       <div class="week-body">
 
         <p class="intro-text">You've probably used ChatGPT, Gemini, or Copilot. You've seen AI write essays, answer questions, generate images, and even write code. But what is actually happening under the hood? And why do AI researchers spend so much time asking: <em>"But is it actually good at this?"</em></p>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy</strong>
+ <strong>Real-Life Analogy</strong>
           Imagine you wanted to teach someone to write recipes without ever teaching them cooking rules directly. Instead, you showed them 500 million recipes and let them figure out the patterns themselves. After enough examples, they'd understand that recipes have ingredients, then steps, that baking uses different verbs than sautéing, and so on. That's essentially how Large Language Models are trained — on enormous amounts of text, they learn patterns, structure, and relationships between words.
         </div>
 
@@ -1331,7 +1337,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
         <p class="intro-text">But here's the important part: <strong>AI can be confidently wrong.</strong> It might write code that looks correct but has a subtle bug. Or it might solve the wrong problem entirely. This is why <strong>evaluation</strong> matters so much.</p>
 
         <div class="analogy">
-          <strong>🧠 Real-Life Analogy — Evaluation</strong>
+ <strong>Real-Life Analogy — Evaluation</strong>
           Imagine hiring an intern who is very eager, writes fast, and always sounds confident. But sometimes they're wrong. You wouldn't just trust everything they produce without checking it. You'd have a way to test their work — a set of standards, exercises, or scenarios. LLM evaluation is exactly this: building rigorous tests to check whether AI is actually producing correct, high-quality output.
         </div>
 
@@ -1346,7 +1352,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
         </ul>
 
         <div class="callout callout-green">
-          <div class="ci">🌟</div>
+ <div class="ci"></div>
           <div class="callout-body">
             <strong>The Bigger Picture</strong>
             <p>All five things we've covered — Rust, Git, Docker, Open Source, and LLMs — connect. Real open source Rust repositories on GitHub are used to create LLM training and evaluation datasets. Docker ensures those evaluation environments run the same everywhere. Git tracks every change. This is how the modern AI-powered software world actually operates.</p>
@@ -1354,7 +1360,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
         </div>
 
         <div class="checklist-section">
-          <h3>✅ Chapter 5 — What You Now Understand</h3>
+ <h3>Chapter 5 — What You Now Understand</h3>
           <div class="check-item"><div class="check-box"></div>LLMs are trained on enormous amounts of text (including code) to learn patterns and relationships</div>
           <div class="check-item"><div class="check-box"></div>AI can write and reason about code — but it can also be confidently wrong, which is why evaluation matters</div>
           <div class="check-item"><div class="check-box"></div>Benchmarks like SWE-Bench test whether AI can fix real bugs — using automated test suites as the judge</div>
@@ -1372,47 +1378,47 @@ CMD [<span class="str">"./target/release/my_app"</span>]
 ══════════════════════════════════ -->
 <div class="tools">
   <div class="container">
-    <div class="section-label">🛠️ The Tools of the Trade</div>
+ <div class="section-label">The Tools of the Trade</div>
     <div class="section-title">Things Every Developer Uses</div>
     <p style="color:#4b5563; font-size:1rem; margin-bottom:8px;">You don't need to master all of these immediately — but recognising their names and knowing what they do is already a big step forward.</p>
     <div class="tools-grid">
       <div class="tool-card">
-        <div class="tool-icon">🦀</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/></svg></div>
         <div class="tool-name">Rust + Cargo</div>
         <div class="tool-desc">Fast, safe systems language</div>
       </div>
       <div class="tool-card">
-        <div class="tool-icon">🐙</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M8 6l-6 6 6 6"/><path d="M16 6l6 6-6 6"/></svg></div>
         <div class="tool-name">Git + GitHub</div>
         <div class="tool-desc">Code versioning & collaboration</div>
       </div>
       <div class="tool-card">
-        <div class="tool-icon">🐳</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M3.2 8.2L12 13l8.8-4.8M12 13v9.5"/></svg></div>
         <div class="tool-name">Docker</div>
         <div class="tool-desc">Portable environments</div>
       </div>
       <div class="tool-card">
-        <div class="tool-icon">📝</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M11.5 4.5l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z"/><path d="M18.5 3l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/><path d="M5 15.5l.7 1.8 1.8.7-1.8.7L5 20.5l-.7-1.8-1.8-.7 1.8-.7z"/></svg></div>
         <div class="tool-name">VS Code</div>
         <div class="tool-desc">Most popular code editor</div>
       </div>
       <div class="tool-card">
-        <div class="tool-icon">🖥️</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg></div>
         <div class="tool-name">Terminal</div>
         <div class="tool-desc">Text-based command interface</div>
       </div>
       <div class="tool-card">
-        <div class="tool-icon">🤖</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="4.5" y="8.5" width="15" height="11" rx="2.5"/><path d="M12 8.5V5.6"/><circle cx="12" cy="4" r="1.5"/><circle cx="9.2" cy="13" r="1.15" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13" r="1.15" fill="currentColor" stroke="none"/><path d="M9.5 16.3c1.7.8 3.3.8 5 0"/><path d="M2.5 12.5v3.5M21.5 12.5v3.5"/></svg></div>
         <div class="tool-name">LLMs / Copilot</div>
         <div class="tool-desc">AI coding assistants</div>
       </div>
       <div class="tool-card">
-        <div class="tool-icon">🧪</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M9.5 3h5"/><path d="M10 3v5.6L4.6 19a2 2 0 0 0 1.8 2.9h11.2a2 2 0 0 0 1.8-2.9L14 8.6V3"/><path d="M7.5 15h9"/></svg></div>
         <div class="tool-name">Unit Tests</div>
         <div class="tool-desc">Automated code checking</div>
       </div>
       <div class="tool-card">
-        <div class="tool-icon">☁️</div>
+        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M6.5 19a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 18 8.5a4.8 4.8 0 0 1-.5 10.5z"/></svg></div>
         <div class="tool-name">Cloud Platforms</div>
         <div class="tool-desc">AWS, GCP, Azure</div>
       </div>
@@ -1426,90 +1432,90 @@ CMD [<span class="str">"./target/release/my_app"</span>]
 ══════════════════════════════════ -->
 <div class="resources">
   <div class="container">
-    <div class="section-label">🔗 Go Deeper</div>
+ <div class="section-label">Go Deeper</div>
     <div class="section-title">Free Resources to Learn More</div>
     <p style="color: var(--muted); font-size: 0.95rem;">Every single resource below is completely free. Pick the one that interests you most from each chapter and start there.</p>
 
     <div class="resources-grid">
       <div class="resource-card">
-        <div class="r-icon">📗</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M4 19.2V6a2.5 2.5 0 0 1 2.5-2.5H20V17H6.5A2.5 2.5 0 0 0 4 19.2z"/><path d="M4 19.2A2.5 2.5 0 0 0 6.5 21.5H20V17"/></svg></div>
         <div class="r-type">Rust — Book</div>
         <h4>The Rust Book <span class="free-badge">FREE</span></h4>
         <p>The official, beginner-friendly Rust textbook. Written clearly with lots of examples. Start at Chapter 1 — no prior experience needed.</p>
         <a href="https://doc.rust-lang.org/book/" target="_blank">Read Online →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🏋️</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M13 2.5L4.5 13.5h6L9.8 21.5l8.7-11h-6z"/></svg></div>
         <div class="r-type">Rust — Exercises</div>
         <h4>Rustlings <span class="free-badge">FREE</span></h4>
         <p>Bite-sized exercises that teach Rust concepts interactively. Perfect for learning by doing rather than just reading. Highly recommended.</p>
         <a href="https://rustlings.cool/" target="_blank">Start Exercises →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">▶️</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.4l5.2 2.6L10 14.6z" fill="currentColor" stroke="none"/></svg></div>
         <div class="r-type">Rust — Videos</div>
         <h4>Let's Get Rusty <span class="free-badge">FREE</span></h4>
         <p>The best YouTube series for learning Rust. Friendly, well-paced, covers all the key concepts from beginner to advanced.</p>
         <a href="https://www.youtube.com/c/LetsGetRusty" target="_blank">Watch on YouTube →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🌳</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7"/><path d="M18 10.5c0 3.8-3.5 4.2-8.5 4.4"/></svg></div>
         <div class="r-type">Git — Interactive</div>
         <h4>Learn Git Branching <span class="free-badge">FREE</span></h4>
         <p>A visual, game-like website that teaches Git by letting you see branches and commits come to life in real time. Genuinely fun.</p>
         <a href="https://learngitbranching.js.org/" target="_blank">Play & Learn →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">📖</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M4 19.2V6a2.5 2.5 0 0 1 2.5-2.5H20V17H6.5A2.5 2.5 0 0 0 4 19.2z"/><path d="M4 19.2A2.5 2.5 0 0 0 6.5 21.5H20V17"/></svg></div>
         <div class="r-type">Git — Book</div>
         <h4>Pro Git (Official Book) <span class="free-badge">FREE</span></h4>
         <p>The comprehensive guide to Git — from basics to advanced. You can read just the first three chapters and already know more than most people.</p>
         <a href="https://git-scm.com/book/en/v2" target="_blank">Read Online →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🐳</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M3.2 8.2L12 13l8.8-4.8M12 13v9.5"/></svg></div>
         <div class="r-type">Docker — Official</div>
         <h4>Docker Get Started Guide <span class="free-badge">FREE</span></h4>
         <p>Docker's own beginner tutorial. 8 short parts, very practical. By the end you'll have built, run, and shared your first container.</p>
         <a href="https://docs.docker.com/get-started/" target="_blank">Start Tutorial →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">▶️</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.4l5.2 2.6L10 14.6z" fill="currentColor" stroke="none"/></svg></div>
         <div class="r-type">Docker — Video</div>
         <h4>Docker Full Course — Nana <span class="free-badge">FREE</span></h4>
         <p>TechWorld with Nana's 4-hour Docker course on YouTube. One of the most-watched Docker tutorials ever made. Very clear and practical.</p>
         <a href="https://www.youtube.com/watch?v=pg19Z8LL06w" target="_blank">Watch on YouTube →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">📦</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M3.2 8.2L12 13l8.8-4.8M12 13v9.5"/></svg></div>
         <div class="r-type">Open Source</div>
         <h4>Good First Issue <span class="free-badge">FREE</span></h4>
         <p>A website that lists beginner-friendly open source issues across many languages and projects. Your gateway to your first real contribution.</p>
         <a href="https://goodfirstissue.dev/" target="_blank">Find an Issue →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🤖</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="4.5" y="8.5" width="15" height="11" rx="2.5"/><path d="M12 8.5V5.6"/><circle cx="12" cy="4" r="1.5"/><circle cx="9.2" cy="13" r="1.15" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13" r="1.15" fill="currentColor" stroke="none"/><path d="M9.5 16.3c1.7.8 3.3.8 5 0"/><path d="M2.5 12.5v3.5M21.5 12.5v3.5"/></svg></div>
         <div class="r-type">AI Evaluation</div>
         <h4>SWE-Bench Website <span class="free-badge">FREE</span></h4>
         <p>The official SWE-Bench benchmark site. See how well top AI models perform at fixing real software bugs. Great for understanding what AI evaluation looks like in practice.</p>
         <a href="https://www.swebench.com/" target="_blank">Explore Benchmark →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🏃</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M13 2.5L4.5 13.5h6L9.8 21.5l8.7-11h-6z"/></svg></div>
         <div class="r-type">General — Practice</div>
         <h4>Exercism <span class="free-badge">FREE</span></h4>
         <p>Practice programming in 67 languages with real mentor feedback. Free, welcoming community. Great for building practical coding confidence.</p>
         <a href="https://exercism.org/" target="_blank">Start Practicing →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🎮</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="2.5" y="8" width="19" height="9" rx="4.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/><circle cx="15.5" cy="11.8" r="1" fill="currentColor" stroke="none"/><circle cx="18" cy="13.6" r="1" fill="currentColor" stroke="none"/></svg></div>
         <div class="r-type">General — Fun</div>
         <h4>Rust Playground <span class="free-badge">FREE</span></h4>
         <p>Write and run Rust code directly in your browser — no installation needed. Perfect for trying things out without any setup.</p>
         <a href="https://play.rust-lang.org/" target="_blank">Open Playground →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">📄</div>
+        <div class="r-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M6.5 2.5h7l5 5V21a1.5 1.5 0 0 1-1.5 1.5H6.5A1.5 1.5 0 0 1 5 21V4a1.5 1.5 0 0 1 1.5-1.5z"/><path d="M13.5 2.5V8h5"/></svg></div>
         <div class="r-type">AI Research</div>
         <h4>SWE-Bench Paper <span class="free-badge">FREE</span></h4>
         <p>The original research paper explaining how SWE-Bench was built and why it matters. Surprisingly readable even for non-researchers.</p>
@@ -1525,7 +1531,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
 ══════════════════════════════════ -->
 <div class="outcomes">
   <div class="container">
-    <div class="section-label">🏆 What Changes After Reading This</div>
+ <div class="section-label">What Changes After Reading This</div>
     <div class="section-title">You Now Understand Things Most People Don't</div>
     <div class="outcomes-grid">
       <div class="outcome-item">
@@ -1562,7 +1568,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
 ══════════════════════════════════ -->
 <div class="project">
   <div class="container">
-    <div class="section-label">🚀 What to Do Next</div>
+ <div class="section-label">What to Do Next</div>
     <div class="section-title">You've Read It. Now Build It.</div>
     <p>Reading is step one. Understanding gets locked in when you start doing. Here are five concrete first steps — each takes under an hour.</p>
 
@@ -1585,31 +1591,31 @@ CMD [<span class="str">"./target/release/my_app"</span>]
 ══════════════════════════════════ -->
 <div class="careers">
   <div class="container">
-    <div class="section-label">🌍 Where This Knowledge Takes You</div>
+ <div class="section-label">Where This Knowledge Takes You</div>
     <div class="section-title">Doors That Open When You Understand These Concepts</div>
     <div class="careers-grid">
       <div class="career-card">
-        <div class="c-icon">👩‍💻</div>
+        <div class="c-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="3.5" y="4.5" width="17" height="11.5" rx="2"/><path d="M2 19.5h20"/></svg></div>
         <h4>Software Developer</h4>
         <p>Build applications, tools, and systems. Rust, Git, and Docker are daily tools at every level.</p>
       </div>
       <div class="career-card">
-        <div class="c-icon">🔬</div>
+        <div class="c-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M9.5 3h5"/><path d="M10 3v5.6L4.6 19a2 2 0 0 0 1.8 2.9h11.2a2 2 0 0 0 1.8-2.9L14 8.6V3"/><path d="M7.5 15h9"/></svg></div>
         <h4>AI/ML Engineer</h4>
         <p>Build and evaluate machine learning systems. LLM knowledge + coding = one of the most in-demand skillsets of this decade.</p>
       </div>
       <div class="career-card">
-        <div class="c-icon">☁️</div>
+        <div class="c-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M6.5 19a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 18 8.5a4.8 4.8 0 0 1-.5 10.5z"/></svg></div>
         <h4>DevOps / Cloud Engineer</h4>
         <p>Manage infrastructure, deployments, and pipelines. Docker and Git are your primary tools.</p>
       </div>
       <div class="career-card">
-        <div class="c-icon">🔒</div>
+        <div class="c-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/></svg></div>
         <h4>Security Engineer</h4>
         <p>Rust's safety focus makes it a top choice in cybersecurity. Understanding open source code is key to finding vulnerabilities.</p>
       </div>
       <div class="career-card">
-        <div class="c-icon">📊</div>
+        <div class="c-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M4 21V11"/><path d="M10 21V4"/><path d="M16 21v-7"/><path d="M21 21V8"/></svg></div>
         <h4>Technical Researcher</h4>
         <p>Build evaluation frameworks, study AI behaviour, and design experiments. Combines coding with analytical thinking.</p>
       </div>
@@ -1622,7 +1628,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
      CTA
 ══════════════════════════════════ -->
 <div class="cta">
-  <div class="section-label" style="color:var(--purple-light);">💪 You've Got This</div>
+ <div class="section-label" style="color:var(--purple-light);">You've Got This</div>
   <div class="section-title">The Best Time to Start Was Yesterday.<br/>The Next Best Time Is Right Now.</div>
   <p>Everything in this guide is learnable. Everything is free to access. And every expert developer you've ever heard of started exactly where you are — reading, confused, but curious. That curiosity is the engine. Keep feeding it.</p>
   <div class="cta-buttons">
@@ -1637,7 +1643,7 @@ CMD [<span class="str">"./target/release/my_app"</span>]
      FOOTER
 ══════════════════════════════════ -->
 <footer>
-  <div class="footer-logo">💻 So You Want to Build Software</div>
+ <div class="footer-logo">So You Want to Build Software</div>
   <p>A Beginner's Guide to Rust · Git · Docker · Open Source · AI & LLMs</p>
   <div class="footer-contact">
     <span>All resources are free · No experience required · Start anywhere</span>

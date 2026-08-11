@@ -6,6 +6,10 @@ import { supabase } from "./supabase"
 const AuthContext = createContext(null)
 const PUBLIC_ROUTES = ["/sign-in", "/sign-up"]
 const PROTECTED_ROUTES = ["/dashboard"]
+// Only these routes wait for the session check before revealing content.
+// Public marketing pages render immediately so their HTML is fully
+// server-rendered / statically prerendered (better first paint + SEO).
+const AUTH_GATED_ROUTES = [...PROTECTED_ROUTES, ...PUBLIC_ROUTES]
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -87,7 +91,7 @@ export function AuthProvider({ children }) {
     return data || []
   }
 
-  if (loading) {
+  if (loading && AUTH_GATED_ROUTES.includes(pathname)) {
     return (
       <div
         style={{

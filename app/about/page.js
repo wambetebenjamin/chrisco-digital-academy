@@ -1,8 +1,15 @@
-"use client"
 import Link from "next/link"
+import Image from "next/image"
 import Navbar from "../Navbar"
 import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
+import Icon from "../components/Icon"
+
+export const metadata = {
+  title: "About Us",
+  description:
+    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, founded by Wambete Benjamin — bridging the digital divide with practical, affordable digital skills training across Africa.",
+}
 
 const stats = [
   { number: "500+", label: "Youth Trained" },
@@ -11,11 +18,19 @@ const stats = [
   { number: "100%", label: "Practical Skills" },
 ]
 
+const founderTags = [
+  { icon: "cap", label: "CS Graduate" },
+  { icon: "palette", label: "Designer" },
+  { icon: "code", label: "Developer" },
+  { icon: "clapper", label: "Video Editor" },
+  { icon: "robot", label: "AI Expert" },
+]
+
 const values = [
-  { icon: "🌍", title: "Accessible", desc: "Affordable, beginner-friendly learning for every young person in Africa." },
-  { icon: "🛠️", title: "Practical", desc: "Every course ends with a real project you can show — and sell." },
-  { icon: "🤝", title: "Mentorship", desc: "Learn directly from a founder who works in these fields every day." },
-  { icon: "🔥", title: "Community", desc: "Join a growing family of young creators, coders and entrepreneurs." },
+  { icon: "globe", title: "Accessible", desc: "Affordable, beginner-friendly learning for every young person in Africa." },
+  { icon: "wrench", title: "Practical", desc: "Every course ends with a real project you can show — and sell." },
+  { icon: "users", title: "Mentorship", desc: "Learn directly from a founder who works in these fields every day." },
+  { icon: "flame", title: "Community", desc: "Join a growing family of young creators, coders and entrepreneurs." },
 ]
 
 export default function About() {
@@ -86,21 +101,25 @@ export default function About() {
                 social media and AI.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 28 }}>
-                <span className="pill pill-soft">🎓 CS Graduate</span>
-                <span className="pill pill-soft">🎨 Designer</span>
-                <span className="pill pill-soft">💻 Developer</span>
-                <span className="pill pill-soft">🎬 Video Editor</span>
-                <span className="pill pill-soft">🤖 AI Expert</span>
+                {founderTags.map((t) => (
+                  <span key={t.label} className="pill pill-soft">
+                    <Icon name={t.icon} size={14} strokeWidth={2.1} /> {t.label}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div>
               <div style={{ position: "relative" }}>
-                <img
-                  src="/images/hero-tile.jpg"
-                  alt="Learner at CHRISCO Digital Academy"
-                  style={{ width: "100%", borderRadius: "var(--radius-xl)", aspectRatio: "4/3.4", objectFit: "cover", border: "1px solid var(--line)", boxShadow: "var(--shadow-md)" }}
-                />
+                <div style={{ position: "relative", aspectRatio: "4/3.4", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--line)", boxShadow: "var(--shadow-md)" }}>
+                  <Image
+                    src="/images/hero-tile.jpg"
+                    alt="Learner at CHRISCO Digital Academy"
+                    fill
+                    sizes="(min-width: 768px) 46vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
                 <span
                   style={{
                     position: "absolute",
@@ -113,9 +132,12 @@ export default function About() {
                     fontWeight: 700,
                     padding: "8px 16px",
                     borderRadius: 999,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 7,
                   }}
                 >
-                  🇰🇪 Made in Kenya
+                  <Icon name="pin" size={13} strokeWidth={2.2} /> Made in Kenya
                 </span>
               </div>
             </div>
@@ -136,7 +158,9 @@ export default function About() {
           <div className="grid-2" style={{ alignItems: "stretch" }}>
             <div style={{ background: "var(--navy)", borderRadius: "var(--radius-xl)", padding: "48px 40px", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", background: "rgba(0,255,132,0.12)", top: -80, right: -80, filter: "blur(50px)" }} />
-              <span style={{ fontSize: "2.6rem", display: "block", marginBottom: 24 }}>🎯</span>
+              <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: 18, background: "rgba(0,255,132,0.14)", color: "var(--green)", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
+                <Icon name="target" size={30} strokeWidth={1.7} />
+              </span>
               <h3 style={{ fontFamily: "var(--font-display)", color: "var(--green)", fontSize: "1.3rem", marginBottom: 16 }}>OUR MISSION</h3>
               <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "1.02rem" }}>
                 To bridge the digital divide by providing accessible, affordable and practical digital education to
@@ -145,7 +169,9 @@ export default function About() {
             </div>
 
             <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "var(--radius-xl)", padding: "48px 40px", boxShadow: "var(--shadow-sm)" }}>
-              <span style={{ fontSize: "2.6rem", display: "block", marginBottom: 24 }}>🌍</span>
+              <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: 18, background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
+                <Icon name="globe" size={30} strokeWidth={1.7} />
+              </span>
               <h3 style={{ fontFamily: "var(--font-display)", color: "var(--ink)", fontSize: "1.3rem", marginBottom: 16 }}>OUR VISION</h3>
               <p style={{ color: "var(--body)", lineHeight: 1.8, fontSize: "1.02rem" }}>
                 A generation of digitally empowered African youth creating solutions, building businesses and leading
@@ -168,7 +194,9 @@ export default function About() {
           <div className="grid-4">
             {values.map((v, i) => (
               <div key={i} className="card card-hover" style={{ padding: "30px 26px" }}>
-                <span style={{ fontSize: "2rem", display: "block", marginBottom: 16 }}>{v.icon}</span>
+                <span style={{ display: "inline-flex", width: 52, height: 52, borderRadius: 15, background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+                  <Icon name={v.icon} size={24} />
+                </span>
                 <h3 style={{ fontSize: "1.05rem", fontWeight: 800, marginBottom: 8 }}>{v.title}</h3>
                 <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.65 }}>{v.desc}</p>
               </div>
@@ -205,11 +233,15 @@ export default function About() {
             </div>
             <div>
               <div style={{ position: "relative" }}>
-                <img
-                  src="/images/workspace.jpg"
-                  alt="Wambete Benjamin's creative workspace"
-                  style={{ width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid rgba(255,255,255,0.12)", aspectRatio: "4/3.2", objectFit: "cover" }}
-                />
+                <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
+                  <Image
+                    src="/images/workspace.jpg"
+                    alt="Wambete Benjamin's creative workspace"
+                    fill
+                    sizes="(min-width: 768px) 46vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
                 <div
                   style={{
                     position: "absolute",
@@ -223,7 +255,9 @@ export default function About() {
                   }}
                 >
                   <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>Founded under</div>
-                  <div style={{ fontSize: 11.5, color: "var(--green)" }}>CHRISCO Youth Aflame ⛪</div>
+                  <div style={{ fontSize: 11.5, color: "var(--green)", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                    <Icon name="flame" size={13} strokeWidth={2.2} /> CHRISCO Youth Aflame
+                  </div>
                 </div>
               </div>
             </div>
@@ -244,7 +278,9 @@ export default function About() {
             </div>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>Explore Courses →</Link>
-              <a href="https://wa.me/254112272061" className="btn btn-outline" style={{ textDecoration: "none", borderColor: "var(--navy)", color: "var(--navy)" }}>WhatsApp Us 💬</a>
+              <a href="https://wa.me/254112272061" className="btn btn-outline" style={{ textDecoration: "none", borderColor: "var(--navy)", color: "var(--navy)" }}>
+                <Icon name="whatsapp" size={16} /> WhatsApp Us
+              </a>
             </div>
           </div>
         </div>

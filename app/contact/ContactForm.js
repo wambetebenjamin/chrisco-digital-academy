@@ -1,0 +1,99 @@
+"use client"
+import { useState } from "react"
+import Link from "next/link"
+import emailjs from "@emailjs/browser"
+import Icon from "../components/Icon"
+
+const SERVICE_ID = "service_m86zbad"
+const TEMPLATE_ID = "template_i5wg4c8"
+const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
+
+export default function ContactForm() {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" })
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+
+  async function handleSubmit() {
+    if (!form.name || !form.message) return
+    setSending(true)
+    try {
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+        from_name: form.name,
+        from_email: form.email,
+        phone: form.phone,
+        message: form.message,
+      }, PUBLIC_KEY)
+      setSent(true)
+    } catch {
+      alert("Failed to send. Please email shambetz@gmail.com directly.")
+    }
+    setSending(false)
+  }
+
+  return (
+    <div className="card" style={{ padding: "40px 36px", boxShadow: "var(--shadow-md)" }}>
+      {sent ? (
+        <div style={{ textAlign: "center", padding: "48px 20px" }}>
+          <span style={{ display: "inline-flex", width: 76, height: 76, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
+            <Icon name="checkCircle" size={40} strokeWidth={1.6} />
+          </span>
+          <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.5rem", fontWeight: 800, color: "var(--ink)", marginBottom: 10 }}>
+            Message sent!
+          </h3>
+          <p style={{ color: "var(--muted)", fontSize: 14.5, marginBottom: 24 }}>
+            We&apos;ll get back to you soon. Thank you for reaching out to CHRISCO Digital Academy.
+          </p>
+          <button onClick={() => setSent(false)} className="btn btn-navy btn-sm" style={{ cursor: "pointer" }}>
+            Send another message
+          </button>
+        </div>
+      ) : (
+        <>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+            <span
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 13,
+                background: "var(--green-tint)",
+                color: "var(--green-deep)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Icon name="mail" size={20} />
+            </span>
+            <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.3rem", color: "var(--ink)" }}>
+              Send a message
+            </h2>
+          </div>
+
+          <div className="field">
+            <label>Full name *</label>
+            <input className="input" placeholder="e.g. Amani Mwangi" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+          </div>
+          <div className="field">
+            <label>Email address</label>
+            <input className="input" type="email" placeholder="you@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          </div>
+          <div className="field">
+            <label>Phone / WhatsApp</label>
+            <input className="input" placeholder="+254 7xx xxx xxx" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+          </div>
+          <div className="field">
+            <label>Your message *</label>
+            <textarea className="input" rows={5} placeholder="Tell us what you need help with..." style={{ resize: "none" }} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+          </div>
+
+          <button onClick={handleSubmit} disabled={sending} className="btn btn-green btn-lg btn-block" style={{ cursor: sending ? "default" : "pointer" }}>
+            {sending ? "Sending..." : "Send Message →"}
+          </button>
+          <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>
+            Prefer email? Write to us at <Link href="mailto:shambetz@gmail.com" style={{ color: "var(--green-deep)", fontWeight: 600, textDecoration: "none" }}>shambetz@gmail.com</Link>
+          </p>
+        </>
+      )}
+    </div>
+  )
+}

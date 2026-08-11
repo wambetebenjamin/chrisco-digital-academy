@@ -1,8 +1,19 @@
 import "./globals.css"
+/*
+ * Self-hosted fonts via Fontsource — bundled at build time and served from
+ * the same origin. Replaces the render-blocking external Google Fonts CSS
+ * (faster first paint, no third-party dependency, CLS-safe).
+ */
+import "@fontsource/archivo-black/400.css"
+import "@fontsource-variable/archivo"
+import "@fontsource-variable/inter"
 import { AuthProvider } from "./AuthProvider"
 
 export const metadata = {
-  title: "CHRISCO Digital Academy",
+  title: {
+    default: "CHRISCO Digital Academy — Learn Skills That Pay For Life",
+    template: "%s | CHRISCO Digital Academy",
+  },
   description:
     "A modern learning platform equipping African youth with practical digital skills — design, code, marketing, writing, video and AI. Under CHRISCO Youth Aflame.",
   keywords: [

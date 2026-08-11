@@ -37,7 +37,7 @@ export default function AuthShell({ children, subtitle }) {
         </div>
 
         <div style={{ position: "relative", zIndex: 1, color: "rgba(255,255,255,0.35)", fontSize: 13 }}>
-          © 2026 CHRISCO Digital Academy · Nairobi, Kenya 🇰🇪
+          © 2026 CHRISCO Digital Academy · Nairobi, Kenya
         </div>
       </aside>
 
