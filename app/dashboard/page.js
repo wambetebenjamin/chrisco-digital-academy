@@ -8,6 +8,9 @@ import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
 import MicroQuiz from "../components/MicroQuiz"
 import InteractiveCalendar from "../components/InteractiveCalendar"
+import PomodoroTimer from "../components/PomodoroTimer"
+import DailyChallenge from "../components/DailyChallenge"
+import BadgeModal from "../components/BadgeModal"
 import { useAuth } from "../AuthProvider"
 import { useGamification } from "../GamificationContext"
 
@@ -34,9 +37,11 @@ export default function Dashboard() {
   const {
     xp, level, streak, levelProgress, xpToNext,
     earnedBadges, badgeDefs,
+    startedCourses, coursesStarted,
   } = useGamification()
   const [enrollments, setEnrollments] = useState([])
   const [loading, setLoading] = useState(true)
+  const [badgeModal, setBadgeModal] = useState(null)
 
   useEffect(() => {
     async function load() {
@@ -57,12 +62,20 @@ export default function Dashboard() {
     { icon: "flame", label: "Day Streak", value: String(streak), color: "lime" },
     { icon: "bolt", label: "Total XP", value: String(xp), color: "yellow" },
     { icon: "trophy", label: "Badges Earned", value: `${earnedBadges.length}/${badgeDefs.length}`, color: "pink" },
-    { icon: "book", label: "Courses Active", value: String(Math.max(enrollments.length, fallbackCourses.length)), color: "purple" },
+    { icon: "book", label: "Courses Active", value: String(coursesStarted || myCourses.length), color: "purple" },
   ]
 
-  const myCourses = enrollments.length
-    ? enrollments.map((e, i) => ({ course_title: e.course_title, progress: e.progress ?? Math.floor(20 + i * 22) }))
-    : fallbackCourses
+  // Merge enrollments with gamification started courses so My Courses reflects real progress
+  const myCourses = (() => {
+    const fromGam = Object.entries(startedCourses || {})
+      .filter(([, v]) => v && v.title)
+      .map(([, v]) => ({ course_title: v.title, progress: v.progress || 0 }))
+    if (fromGam.length) return fromGam
+    if (enrollments.length) {
+      return enrollments.map((e, i) => ({ course_title: e.course_title, progress: e.progress ?? Math.floor(20 + i * 22) }))
+    }
+    return fallbackCourses
+  })()
 
   return (
     <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
@@ -245,6 +258,12 @@ export default function Dashboard() {
 
             {/* SIDEBAR */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {/* Daily Challenge */}
+              <DailyChallenge />
+
+              {/* Pomodoro */}
+              <PomodoroTimer />
+
               {/* Streak */}
               <div className="card pink" style={{ padding: 22, color: "#fff" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
@@ -322,9 +341,10 @@ export default function Dashboard() {
                   {badgeDefs.slice(0, 8).map((b) => {
                     const earned = earnedBadges.includes(b.id)
                     return (
-                      <div
+                      <button
                         key={b.id}
                         title={b.label}
+                        onClick={() => setBadgeModal(b)}
                         style={{
                           aspectRatio: 1,
                           borderRadius: 12,
@@ -336,15 +356,17 @@ export default function Dashboard() {
                           justifyContent: "center",
                           opacity: earned ? 1 : 0.4,
                           filter: earned ? "none" : "grayscale(0.8)",
+                          cursor: "pointer",
+                          padding: 0,
                         }}
                       >
                         <Icon name={b.icon} size={20} />
-                      </div>
+                      </button>
                     )
                   })}
                 </div>
                 <div style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--muted)", marginTop: 12 }}>
-                  {earnedBadges.length} of {badgeDefs.length} unlocked
+                  {earnedBadges.length} of {badgeDefs.length} unlocked · click for details
                 </div>
               </div>
 
@@ -367,6 +389,14 @@ export default function Dashboard() {
 
       <Footer />
       <Chatbot />
+
+      {badgeModal && (
+        <BadgeModal
+          badge={badgeModal}
+          earned={earnedBadges.includes(badgeModal.id)}
+          onClose={() => setBadgeModal(null)}
+        />
+      )}
 
       <style jsx>{`
         @media (min-width: 900px) {
@@ -422,7 +452,7 @@ function PageBackdropDash() {
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(700px 500px at 88% 6%, rgba(198,255,61,0.24), transparent 62%), radial-gradient(760px 560px at 4% 94%, rgba(124,58,237,0.24), transparent 62%)",
+              "radial-gradient(680px 480px at 88% 6%, rgba(198,255,61,0.15), transparent 65%), radial-gradient(700px 520px at 4% 94%, rgba(124,58,237,0.14), transparent 65%)",
             mixBlendMode: "soft-light",
           }}
         />

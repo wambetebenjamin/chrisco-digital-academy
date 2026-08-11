@@ -49,13 +49,13 @@ export default function PageBackdrop({
           background: `linear-gradient(180deg, rgba(255,248,236,${wash}) 0%, rgba(255,248,236,${wash + 0.06}) 55%, rgba(243,234,216,${wash + 0.10}) 100%)`,
         }}
       />
-      {/* Stronger colored glows for a vibrant neo-brutalist vibe */}
+      {/* Subtle colored glows for vibrant but calmer neo-brutalist vibe */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(720px 520px at 88% 6%, rgba(198,255,61,0.28), transparent 62%), radial-gradient(760px 560px at 4% 94%, rgba(124,58,237,0.26), transparent 62%), radial-gradient(560px 400px at 60% 20%, rgba(255,79,163,0.18), transparent 60%), radial-gradient(520px 400px at 20% 50%, rgba(255,210,63,0.14), transparent 60%)",
+            "radial-gradient(680px 480px at 88% 6%, rgba(198,255,61,0.16), transparent 65%), radial-gradient(700px 520px at 4% 94%, rgba(124,58,237,0.15), transparent 65%), radial-gradient(520px 380px at 60% 20%, rgba(255,79,163,0.11), transparent 62%), radial-gradient(480px 360px at 20% 50%, rgba(255,210,63,0.09), transparent 62%)",
           mixBlendMode: "soft-light",
         }}
       />

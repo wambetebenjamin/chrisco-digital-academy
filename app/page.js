@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import Navbar from "./Navbar"
@@ -10,6 +10,7 @@ import PhotoBand from "./components/PhotoBand"
 import Icon from "./components/Icon"
 import InteractiveCalendar from "./components/InteractiveCalendar"
 import MicroQuiz from "./components/MicroQuiz"
+import BadgeModal from "./components/BadgeModal"
 import { useGamification } from "./GamificationContext"
 import { courses, categoryCounts } from "./data/courses"
 
@@ -53,13 +54,14 @@ const steps = [
 // All badge definitions (used to render earned/locked badge grid)
 import { BADGE_DEFS } from "./badgeDefs"
 
-// Leaderboard (mock community data)
-const leaderboard = [
-  { name: "Aisha M.", xp: 2480, streak: 21, rank: 1, color: "var(--yellow)" },
-  { name: "Brian K.", xp: 2215, streak: 18, rank: 2, color: "var(--pink)" },
-  { name: "Neema W.", xp: 1980, streak: 14, rank: 3, color: "var(--purple)" },
-  { name: "Kevin O.", xp: 1720, streak: 12, rank: 4, color: "var(--lime)" },
-  { name: "Faith J.", xp: 1540, streak: 9, rank: 5, color: "var(--paper-2)" },
+// Leaderboard base (mock community data)
+const LEADERBOARD_BASE = [
+  { name: "Aisha M.", xp: 2480, streak: 21, you: false, color: "var(--yellow)" },
+  { name: "Brian K.", xp: 2215, streak: 18, you: false, color: "var(--pink)" },
+  { name: "Neema W.", xp: 1980, streak: 14, you: false, color: "var(--purple)" },
+  { name: "Kevin O.", xp: 1720, streak: 12, you: false, color: "var(--lime)" },
+  { name: "Faith J.", xp: 1540, streak: 9, you: false, color: "var(--paper-2)" },
+  { name: "David T.", xp: 1280, streak: 7, you: false, color: "var(--paper-2)" },
 ]
 
 // Built-in calendar events for August 2026 (the demo month on this page)
@@ -111,6 +113,7 @@ const quickQuestions = [
 // ================= CLIENT COMPONENT =================
 export default function Home() {
   const counts = categoryCounts()
+  const [badgeModal, setBadgeModal] = useState(null)
 
   // Real gamification state (localStorage + Supabase sync)
   const {
@@ -123,6 +126,13 @@ export default function Home() {
     upvotedThreads,
     touchActivity,
   } = useGamification()
+
+  // Build dynamic leaderboard: insert you among the community list
+  const leaderboard = useMemo(() => {
+    const youEntry = { name: "You", xp, streak, you: true, color: "var(--lime)" }
+    const merged = [...LEADERBOARD_BASE, youEntry].sort((a, b) => b.xp - a.xp).slice(0, 6)
+    return merged.map((row, i) => ({ ...row, rank: i + 1 }))
+  }, [xp, streak])
 
   function handleFindBuddy() {
     gamFindBuddy()
@@ -321,8 +331,9 @@ export default function Home() {
                 {BADGE_DEFS.map((b) => {
                   const earned = earnedBadges.includes(b.id)
                   return (
-                    <div
+                    <button
                       key={b.id}
+                      onClick={() => setBadgeModal(b)}
                       style={{
                         display: "flex",
                         flexDirection: "column",
@@ -334,6 +345,7 @@ export default function Home() {
                         border: earned ? "2px solid rgba(255,255,255,0.5)" : "2px dashed rgba(255,255,255,0.25)",
                         opacity: earned ? 1 : 0.55,
                         filter: earned ? "none" : "grayscale(0.5)",
+                        cursor: "pointer",
                       }}
                       title={b.label}
                     >
@@ -355,13 +367,13 @@ export default function Home() {
                       <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", textAlign: "center" }}>
                         {b.label}
                       </span>
-                    </div>
+                    </button>
                   )
                 })}
               </div>
             </div>
 
-            {/* Leaderboard */}
+            {/* Dynamic Leaderboard: you are sorted in at your real rank */}
             <div className="card yellow" style={{ padding: 26 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <span style={{ width: 40, height: 40, borderRadius: 12, background: "var(--ink)", color: "var(--lime)", border: "2.5px solid var(--ink)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
@@ -369,63 +381,50 @@ export default function Home() {
                 </span>
                 <div>
                   <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14 }}>Weekly Leaderboard</div>
-                  <div style={{ fontSize: 12 }}>Top 5 learners</div>
+                  <div style={{ fontSize: 12 }}>Your rank updates live</div>
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {leaderboard.map((u) => (
-                  <div key={u.rank} className="lb-row" style={{ background: u.color }}>
-                    <span
+                {leaderboard.map((u) => {
+                  const isYou = u.you
+                  return (
+                    <div
+                      key={isYou ? "you" : u.name}
+                      className="lb-row"
                       style={{
-                        width: 32,
-                        height: 32,
-                        borderRadius: 10,
-                        background: "var(--ink)",
-                        color: u.color,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "var(--font-display)",
-                        fontSize: 14,
-                        flexShrink: 0,
-                        border: "2px solid var(--ink)",
+                        background: isYou ? "var(--lime)" : u.color,
+                        outline: isYou ? "3px dashed var(--ink)" : "none",
+                        outlineOffset: isYou ? 2 : 0,
                       }}
                     >
-                      {u.rank}
-                    </span>
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14 }}>{u.name}</div>
-                      <div style={{ fontSize: 11, fontWeight: 700, opacity: 0.8 }}>{u.streak} day streak</div>
+                      <span
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 10,
+                          background: isYou ? "var(--purple)" : "var(--ink)",
+                          color: isYou ? "#fff" : u.color,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontFamily: "var(--font-display)",
+                          fontSize: isYou ? 11 : 14,
+                          flexShrink: 0,
+                          border: "2px solid var(--ink)",
+                        }}
+                      >
+                        {isYou ? "YOU" : u.rank}
+                      </span>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14 }}>{isYou ? "That is you" : u.name}</div>
+                        <div style={{ fontSize: 11, fontWeight: 700, opacity: 0.85 }}>
+                          {isYou ? `Rank #${u.rank} · ` : ""}{u.streak} day streak
+                        </div>
+                      </div>
+                      <div style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem" }}>{u.xp}</div>
                     </div>
-                    <div style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem" }}>{u.xp}</div>
-                  </div>
-                ))}
-                {/* You row */}
-                <div className="lb-row" style={{ background: "var(--lime)", outline: "3px dashed var(--ink)", outlineOffset: 2 }}>
-                  <span
-                    style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 10,
-                      background: "var(--purple)",
-                      color: "#fff",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontFamily: "var(--font-display)",
-                      fontSize: 13,
-                      flexShrink: 0,
-                      border: "2px solid var(--ink)",
-                    }}
-                  >
-                    YOU
-                  </span>
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14 }}>That is you</div>
-                    <div style={{ fontSize: 11, fontWeight: 700 }}>{streak} day streak</div>
-                  </div>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem" }}>{xp}</div>
-                </div>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -895,6 +894,14 @@ export default function Home() {
 
       <Footer />
       <Chatbot />
+
+      {badgeModal && (
+        <BadgeModal
+          badge={badgeModal}
+          earned={earnedBadges.includes(badgeModal.id)}
+          onClose={() => setBadgeModal(null)}
+        />
+      )}
 
       {/* Local styles */}
       <style jsx>{`

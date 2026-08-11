@@ -23,16 +23,47 @@ const EMAILJS_KEY = "eVsfqNv-Jtq46-4b2"
 
 // Badge check functions (kept here since they inspect state shape)
 const BADGE_CHECKS = {
-  streak_3:      (s) => s.streak >= 3,
-  streak_7:      (s) => s.streak >= 7,
-  streak_21:     (s) => s.streak >= 21,
-  first_quiz:    (s) => s.quizzesAnswered >= 1,
-  quiz_10:       (s) => s.quizzesAnswered >= 10,
-  buddy:         (s) => s.buddyFound,
-  level_5:       (s) => calcLevel(s.xp) >= 5,
-  xp_5000:       (s) => s.xp >= 5000,
-  first_course:  (s) => s.coursesStarted >= 1,
-  vault:         (s) => s.downloads >= 3,
+  streak_3:       (s) => s.streak >= 3,
+  streak_7:       (s) => s.streak >= 7,
+  streak_21:      (s) => s.streak >= 21,
+  first_quiz:     (s) => s.quizzesAnswered >= 1,
+  quiz_10:        (s) => s.quizzesAnswered >= 10,
+  buddy:          (s) => s.buddyFound,
+  level_5:        (s) => calcLevel(s.xp) >= 5,
+  xp_5000:        (s) => s.xp >= 5000,
+  first_course:   (s) => s.coursesStarted >= 1,
+  vault:          (s) => s.downloads >= 3,
+  pomodoro_5:     (s) => (s.pomodoroCompleted || 0) >= 5,
+  pomodoro_25:    (s) => (s.pomodoroCompleted || 0) >= 25,
+  focus_master:   (s) => (s.focusMinutes || 0) >= 500,
+  course_complete:(s) => {
+    return Object.values(s.startedCourses || {}).some((c) => (c.progress || 0) >= 100)
+  },
+  daily_7:        (s) => (s.dailyChallengesCompleted || 0) >= 7,
+  quiz_perfect:   (s) => (s.perfectQuizzes || 0) >= 3,
+}
+
+// Daily challenge generator - deterministic from date so everyone gets the same challenge each day
+const DAILY_CHALLENGES = [
+  { id: "d_quiz",    label: "Answer a quiz correctly",         xp: 75, icon: "bolt" },
+  { id: "d_lesson",  label: "Complete 1 video lesson",         xp: 60, icon: "play" },
+  { id: "d_pomo",    label: "Finish a 25 min focus session",   xp: 80, icon: "clock" },
+  { id: "d_buddy",   label: "Match with a study buddy",        xp: 50, icon: "users" },
+  { id: "d_upvote",  label: "Upvote 2 community threads",      xp: 30, icon: "arrow-up" },
+  { id: "d_download",label: "Grab a free resource",            xp: 40, icon: "download" },
+  { id: "d_streak",  label: "Keep your streak alive",          xp: 25, icon: "flame" },
+]
+
+function getTodayChallenge() {
+  const d = new Date()
+  const start = new Date(d.getFullYear(), 0, 0)
+  const dayOfYear = Math.floor((d - start) / 86400000)
+  return DAILY_CHALLENGES[dayOfYear % DAILY_CHALLENGES.length]
+}
+
+function isToday(dateStr) {
+  if (!dateStr) return false
+  return dateStr === todayKey()
 }
 
 const QUIZ_BANK = [
@@ -155,17 +186,30 @@ function defaultState() {
     quizzesAnswered: 0,
     quizzesCorrect: 0,
     answeredQuizIds: [],
-    buddyFound: false,
+    perfectQuizzes: 0,
+    perfectStreak: 0,
+    lastQuizCorrect: false,
+    lastQuizDate: null,
+    lastLessonDate: null,
+    lastPomodoroDate: null,
+    lastDownloadDate: null,
+    upvoteCountToday: 0,
     coursesStarted: 0,
-    startedCourses: {}, // { courseId: { startedAt, progress, lessonsCompleted: n } }
+    startedCourses: {},
+    lessonsCompleted: 0,
     downloads: 0,
-    personalEvents: [], // {id, date, title, type, time, emailReminder, reminderEmail}
+    personalEvents: [],
     upvotedThreads: [],
     referralCode,
-    referralsMade: [], // list of referred codes we've already rewarded for
-    pendingReferral, // code from the friend who referred us
-    referralBonusClaimed: false, // whether we got our bonus for signing up via a link
-    referralRewards: 0, // count of friends who signed up via our link
+    referralsMade: [],
+    pendingReferral,
+    referralBonusClaimed: false,
+    referralRewards: 0,
+    pomodoroCompleted: 0,
+    focusMinutes: 0,
+    dailyChallengesCompleted: 0,
+    dailyChallengeDate: null,
+    dailyChallengeDone: false,
   }
 }
 
@@ -207,10 +251,14 @@ export function GamificationProvider({ children }) {
         if (parsed.lastActiveDate !== tk) {
           const diff = daysBetween(parsed.lastActiveDate, tk)
           if (diff === 1) {
-            // yesterday's streak continues once they take an action today; do not auto increment
+            // yesterday's streak continues once they take an action today
           } else if (diff > 1) {
             parsed.streak = 0
           }
+        }
+        // Reset daily flags if last action was not today
+        if (!isToday(parsed.dailyChallengeDate)) {
+          parsed.dailyChallengeDone = false
         }
         setState(parsed)
       }
@@ -234,7 +282,7 @@ export function GamificationProvider({ children }) {
       try {
         const { data, error } = await supabase
           .from("profiles")
-          .select("xp, streak, badges, last_active_date, quizzes_answered, quizzes_correct, answered_quiz_ids, buddy_found, courses_started, started_courses, downloads, personal_events, upvoted_threads, referral_code, referrals_made, referral_bonus_claimed, referral_rewards")
+          .select("xp, streak, badges, last_active_date, quizzes_answered, quizzes_correct, answered_quiz_ids, buddy_found, courses_started, started_courses, downloads, personal_events, upvoted_threads, referral_code, referrals_made, referral_bonus_claimed, referral_rewards, pomodoro_completed, focus_minutes, daily_challenges_completed, daily_challenge_date, daily_challenge_done, lessons_completed, perfect_quizzes")
           .eq("id", user.id)
           .single()
         if (error || !data || cancelled) return
@@ -258,6 +306,13 @@ export function GamificationProvider({ children }) {
             referralsMade: data.referrals_made ?? prev.referralsMade,
             referralBonusClaimed: data.referral_bonus_claimed ?? prev.referralBonusClaimed,
             referralRewards: data.referral_rewards ?? prev.referralRewards,
+            pomodoroCompleted: data.pomodoro_completed ?? prev.pomodoroCompleted,
+            focusMinutes: data.focus_minutes ?? prev.focusMinutes,
+            dailyChallengesCompleted: data.daily_challenges_completed ?? prev.dailyChallengesCompleted,
+            dailyChallengeDate: data.daily_challenge_date ?? prev.dailyChallengeDate,
+            dailyChallengeDone: data.daily_challenge_done ?? prev.dailyChallengeDone,
+            lessonsCompleted: data.lessons_completed ?? prev.lessonsCompleted,
+            perfectQuizzes: data.perfect_quizzes ?? prev.perfectQuizzes,
           }
           // persist referral code to localStorage
           try {
@@ -295,6 +350,13 @@ export function GamificationProvider({ children }) {
           referrals_made: state.referralsMade,
           referral_bonus_claimed: state.referralBonusClaimed,
           referral_rewards: state.referralRewards,
+          pomodoro_completed: state.pomodoroCompleted,
+          focus_minutes: state.focusMinutes,
+          daily_challenges_completed: state.dailyChallengesCompleted,
+          daily_challenge_date: state.dailyChallengeDate,
+          daily_challenge_done: state.dailyChallengeDone,
+          lessons_completed: state.lessonsCompleted,
+          perfect_quizzes: state.perfectQuizzes,
           updated_at: new Date().toISOString(),
         })
         .then(() => {})
@@ -318,6 +380,57 @@ export function GamificationProvider({ children }) {
     setToast({ text, tone })
     setTimeout(() => setToast(null), 2200)
   }, [])
+
+  // Internal helper: checks if today's challenge is met and awards XP once per day
+  const checkDailyChallenge = useCallback(() => {
+    setState((prev) => {
+      const tk = todayKey()
+      if (prev.dailyChallengeDate === tk && prev.dailyChallengeDone) return prev
+      const challenge = getTodayChallenge()
+      // Evaluate challenge condition against current state
+      let met = false
+      switch (challenge.id) {
+        case "d_quiz":
+          met = (prev.lastQuizCorrect === true && prev.lastQuizDate === tk)
+          break
+        case "d_lesson":
+          met = (prev.lastLessonDate === tk)
+          break
+        case "d_pomo":
+          met = (prev.lastPomodoroDate === tk)
+          break
+        case "d_buddy":
+          met = prev.buddyFound
+          break
+        case "d_upvote":
+          met = (prev.upvoteCountToday || 0) >= 2
+          break
+        case "d_download":
+          met = (prev.lastDownloadDate === tk)
+          break
+        case "d_streak":
+          met = prev.streak >= 1 && prev.lastActiveDate === tk
+          break
+      }
+      if (!met) return prev
+      const next = {
+        ...prev,
+        xp: prev.xp + challenge.xp,
+        dailyChallengeDate: tk,
+        dailyChallengeDone: true,
+        dailyChallengesCompleted: (prev.dailyChallengesCompleted || 0) + 1,
+      }
+      // check if any new badges unlocked from this
+      for (const b of BADGE_DEFS) {
+        if (!next.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(next)) {
+          next.badges = [...next.badges, b.id]
+          setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 1200)
+        }
+      }
+      setTimeout(() => showToast(`Daily Challenge done! +${challenge.xp} XP`, "yellow"), 400)
+      return next
+    })
+  }, [showToast])
 
   // Award XP (with level up detection)
   const awardXP = useCallback((amount, reason) => {
@@ -352,33 +465,47 @@ export function GamificationProvider({ children }) {
     const quiz = QUIZ_BANK.find((q) => q.id === quizId)
     if (!quiz) return { correct: false, quiz }
     let alreadyAnswered = false
+    let wasCorrect = false
+    let newBadges = []
     setState((prev) => {
       if (prev.answeredQuizIds.includes(quizId)) {
         alreadyAnswered = true
         return prev
       }
       const correct = chosenIndex === quiz.answer
-      const newState = {
+      wasCorrect = correct
+      const next = {
         ...prev,
         quizzesAnswered: prev.quizzesAnswered + 1,
         quizzesCorrect: prev.quizzesCorrect + (correct ? 1 : 0),
         answeredQuizIds: [...prev.answeredQuizIds, quizId],
+        lastQuizCorrect: correct,
+        lastQuizDate: todayKey(),
       }
-      // Check badges
+      if (correct) {
+        next.perfectStreak = (prev.perfectStreak || 0) + 1
+        if (next.perfectStreak >= 3) next.perfectQuizzes = (prev.perfectQuizzes || 0) + 1
+      } else {
+        next.perfectStreak = 0
+      }
       for (const b of BADGE_DEFS) {
-        if (!newState.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(newState)) {
-          newState.badges = [...newState.badges, b.id]
+        if (!next.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(next)) {
+          next.badges = [...next.badges, b.id]
+          newBadges.push(b)
         }
       }
-      return newState
+      return next
     })
-    const correct = chosenIndex === quiz.answer
     if (!alreadyAnswered) {
-      if (correct) awardXP(50, "for nailing the quiz")
+      if (wasCorrect) awardXP(50, "for nailing the quiz")
       else awardXP(10, "for trying the quiz")
+      setTimeout(() => checkDailyChallenge(), 50)
     }
-    return { correct, quiz, alreadyAnswered }
-  }, [awardXP])
+    newBadges.forEach((b, i) => {
+      setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 800 + i * 500)
+    })
+    return { correct: wasCorrect, quiz, alreadyAnswered }
+  }, [awardXP, checkDailyChallenge, showToast])
 
   const findBuddy = useCallback(() => {
     let newBadges = []
@@ -397,12 +524,17 @@ export function GamificationProvider({ children }) {
     newBadges.forEach((b, i) => {
       setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 400 + i * 500)
     })
-  }, [awardXP, showToast])
+    setTimeout(() => checkDailyChallenge(), 50)
+  }, [awardXP, checkDailyChallenge, showToast])
 
   const trackDownload = useCallback(() => {
     let newBadges = []
     setState((prev) => {
-      const next = { ...prev, downloads: prev.downloads + 1 }
+      const next = {
+        ...prev,
+        downloads: prev.downloads + 1,
+        lastDownloadDate: todayKey(),
+      }
       for (const b of BADGE_DEFS) {
         if (!next.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(next)) {
           next.badges = [...next.badges, b.id]
@@ -412,10 +544,11 @@ export function GamificationProvider({ children }) {
       return next
     })
     awardXP(15, "for grabbing a resource")
+    setTimeout(() => checkDailyChallenge(), 50)
     newBadges.forEach((b, i) => {
       setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 400 + i * 500)
     })
-  }, [awardXP, showToast])
+  }, [awardXP, checkDailyChallenge, showToast])
 
   const trackCourseStart = useCallback((courseId, courseTitle) => {
     let firstStart = false
@@ -469,6 +602,7 @@ export function GamificationProvider({ children }) {
 
   const trackLessonComplete = useCallback((courseId, lessonCount = 1) => {
     let newBadges = []
+    let courseFinished = false
     setState((prev) => {
       const key = String(courseId)
       const existing = prev.startedCourses?.[key]
@@ -478,14 +612,15 @@ export function GamificationProvider({ children }) {
         lessonsCompleted: (existing.lessonsCompleted || 0) + lessonCount,
         lastOpened: new Date().toISOString(),
       }
-      // progress auto-advances by one lesson out of 8 (typical course length)
       updated.progress = Math.min(100, Math.round(((updated.lessonsCompleted || 0) / 8) * 100))
+      if (updated.progress >= 100) courseFinished = true
       const next = {
         ...prev,
         startedCourses: { ...(prev.startedCourses || {}), [key]: updated },
+        lessonsCompleted: (prev.lessonsCompleted || 0) + lessonCount,
+        xp: prev.xp + 20 * lessonCount,
+        lastLessonDate: todayKey(),
       }
-      next.xp = prev.xp + 20 // 20 XP per lesson
-      // check badges
       for (const b of BADGE_DEFS) {
         if (!next.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(next)) {
           next.badges = [...next.badges, b.id]
@@ -495,24 +630,34 @@ export function GamificationProvider({ children }) {
       return next
     })
     touchActivity()
-    showToast("+20 XP lesson complete", "lime")
+    showToast(`+${20 * lessonCount} XP lesson complete`, "lime")
+    if (courseFinished) {
+      awardXP(100, "for finishing a course!")
+      setTimeout(() => showToast("Course Finished! +100 XP", "yellow"), 500)
+    }
+    // Check daily challenge completion
+    checkDailyChallenge()
     newBadges.forEach((b, i) => {
       setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 600 + i * 500)
     })
-  }, [showToast, touchActivity])
+  }, [showToast, touchActivity, awardXP])
 
   const toggleUpvote = useCallback((threadKey) => {
+    let wasAdded = false
     setState((prev) => {
       const has = prev.upvotedThreads.includes(threadKey)
+      wasAdded = !has
       return {
         ...prev,
         upvotedThreads: has
           ? prev.upvotedThreads.filter((k) => k !== threadKey)
           : [...prev.upvotedThreads, threadKey],
+        upvoteCountToday: has ? Math.max(0, (prev.upvoteCountToday || 0) - 1) : (prev.upvoteCountToday || 0) + 1,
       }
     })
-    awardXP(5, "")
-  }, [awardXP])
+    if (wasAdded) awardXP(5, "")
+    setTimeout(() => checkDailyChallenge(), 50)
+  }, [awardXP, checkDailyChallenge])
 
   const addPersonalEvent = useCallback((event) => {
     const id = Date.now()
@@ -629,6 +774,33 @@ export function GamificationProvider({ children }) {
     return `https://meet.jit.si/chrisco-${safe}-${dayKey}`
   }, [])
 
+  // Complete a pomodoro focus session (default 25 min)
+  const completePomodoro = useCallback((minutes = 25) => {
+    let newBadges = []
+    setState((prev) => {
+      const next = {
+        ...prev,
+        pomodoroCompleted: (prev.pomodoroCompleted || 0) + 1,
+        focusMinutes: (prev.focusMinutes || 0) + minutes,
+        lastPomodoroDate: todayKey(),
+        xp: prev.xp + 30 + Math.floor(minutes / 5),
+      }
+      for (const b of BADGE_DEFS) {
+        if (!next.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(next)) {
+          next.badges = [...next.badges, b.id]
+          newBadges.push(b)
+        }
+      }
+      return next
+    })
+    touchActivity()
+    showToast(`+${30 + Math.floor(minutes / 5)} XP focus session done`, "lime")
+    newBadges.forEach((b, i) => {
+      setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 600 + i * 500)
+    })
+    setTimeout(() => checkDailyChallenge(), 50)
+  }, [showToast, touchActivity, checkDailyChallenge])
+
   const earnedBadges = BADGE_DEFS.filter((b) => state.badges.includes(b.id))
 
   const value = {
@@ -653,6 +825,8 @@ export function GamificationProvider({ children }) {
     addPersonalEvent,
     removePersonalEvent,
     getRandomQuiz,
+    getTodayChallenge,
+    completePomodoro,
     touchActivity,
     getReferralLink,
     claimReferralBonus,

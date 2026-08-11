@@ -8,6 +8,8 @@ import Chatbot from "../Chatbot"
 import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 import Icon from "../components/Icon"
+import PomodoroTimer from "../components/PomodoroTimer"
+import DailyChallenge from "../components/DailyChallenge"
 import { useGamification } from "../GamificationContext"
 
 const lounges = [
@@ -270,6 +272,23 @@ export function CommunityClient() {
                 </button>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOCUS TOOLS: Daily Challenge + Pomodoro */}
+      <section className="section band-cream">
+        <div className="container">
+          <div style={{ maxWidth: 700, marginBottom: 30 }}>
+            <span className="eyebrow pink">Focus Zone</span>
+            <h2 className="title" style={{ marginTop: 16 }}>Show up. Lock in. <span className="marker purple">Earn XP.</span></h2>
+            <p style={{ marginTop: 12 }}>
+              Grab today's challenge, run a Pomodoro session, and stack focus minutes toward badges.
+            </p>
+          </div>
+          <div className="grid-2" style={{ alignItems: "start" }}>
+            <DailyChallenge />
+            <PomodoroTimer />
           </div>
         </div>
       </section>

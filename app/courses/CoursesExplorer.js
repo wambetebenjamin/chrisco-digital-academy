@@ -27,7 +27,8 @@ export default function CoursesExplorer() {
    } catch { return {} }
  })
 
- const { trackCourseStart, xp, level: userLevel } = useGamification()
+ const { trackCourseStart, trackLessonComplete, startedCourses: gamStartedCourses, xp, level: userLevel } = useGamification()
+ const [activeLesson, setActiveLesson] = useState(null)
 
  const counts = categoryCounts()
 
@@ -63,6 +64,7 @@ export default function CoursesExplorer() {
  setSelected(course)
  setEnrolling(null)
  setSent(false)
+ setActiveLesson(0)
  // Award XP the first time they open a course
  if (!startedCourses[course.id]) {
    trackCourseStart(course.id, course.title)
@@ -70,6 +72,23 @@ export default function CoursesExplorer() {
    setStartedCourses(next)
    try { localStorage.setItem("chrisco_started_popups", JSON.stringify(next)) } catch {}
  }
+ }
+
+ function getCourseProgress(courseId) {
+   const key = String(courseId)
+   const g = gamStartedCourses?.[key]
+   return {
+     lessonsCompleted: g?.lessonsCompleted || 0,
+     progress: g?.progress || 0,
+   }
+ }
+
+ function markLessonDone(course, lessonIdx) {
+   const { lessonsCompleted } = getCourseProgress(course.id)
+   if (lessonIdx < lessonsCompleted) return
+   trackLessonComplete(course.id, 1)
+   // Auto advance
+   if (lessonIdx + 1 < course.syllabus.length) setActiveLesson(lessonIdx + 1)
  }
 
  function clearFilters() {
@@ -238,10 +257,10 @@ export default function CoursesExplorer() {
  <div style={{ padding: "22px 24px 24px", display: "flex", flexDirection: "column", flex: 1, background: "#fff" }}>
  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
  <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.6, marginBottom: 16, flex: 1 }}>{course.desc}</p>
- {/* Progress bar */}
- <div className="progress" style={{ height: 12, marginBottom: 14 }}>
- <span style={{ width: `${30 + (i * 9) % 60}%` }} />
- </div>
+                 {/* Progress bar: real progress from gamification context if started */}
+                 <div className="progress" style={{ height: 12, marginBottom: 14 }}>
+                 <span style={{ width: `${getCourseProgress(course.id).progress}%` }} />
+                 </div>
  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
  <span className="sticker lime" style={{ fontSize: 10 }}><Icon name="clock" size={11} strokeWidth={2.4} /> {course.duration}</span>
  <span className="sticker yellow" style={{ fontSize: 10 }}><Icon name="star" size={11} strokeWidth={2.4} /> {course.rating}</span>
@@ -325,31 +344,147 @@ export default function CoursesExplorer() {
  <div style={{ padding: "28px 28px 32px" }}>
  <p style={{ color: "var(--body)", lineHeight: 1.7, marginBottom: 22, fontSize: 14.5 }}>{selected.desc}</p>
 
- {!enrolling && !sent && (
+ {!enrolling && !sent && (() => {
+ const prog = getCourseProgress(selected.id)
+ const doneCount = prog.lessonsCompleted
+ const currentIdx = activeLesson != null ? activeLesson : Math.min(doneCount, selected.syllabus.length - 1)
+ const currentLesson = selected.syllabus[currentIdx]
+ const isDone = currentIdx < doneCount
+ return (
  <>
- <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
+ <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem", marginBottom: 8, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
  <span style={{ width: 28, height: 28, borderRadius: 8, background: "var(--purple)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", border: "2px solid var(--ink)" }}>
- <Icon name="clipboard" size={14} strokeWidth={2.2} />
+ <Icon name="play" size={14} strokeWidth={2.2} />
  </span>
- Course syllabus
+ Lesson Viewer
  </h3>
- <div className="card" style={{ background: "var(--paper-2)", padding: "8px 18px", marginBottom: 22, boxShadow: "none" }}>
- {selected.syllabus.map((item, i) => (
- <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 0", borderBottom: i < selected.syllabus.length - 1 ? "2px dashed var(--ink)" : "none" }}>
+
+ {/* Progress header */}
+ <div style={{ marginBottom: 14 }}>
+ <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
+ <span>{doneCount} / {selected.syllabus.length} lessons</span>
+ <span>{prog.progress}% complete</span>
+ </div>
+ <div className="progress" style={{ height: 12 }}>
+ <span style={{ width: `${prog.progress}%` }} />
+ </div>
+ </div>
+
+ {/* Lesson video placeholder with play button */}
+ <div className="card" style={{ background: selected.color[0], padding: 0, marginBottom: 14, overflow: "hidden", boxShadow: "var(--shadow-chunk-sm)" }}>
+ <div style={{ position: "relative", aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center" }}>
+ <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${selected.color[0]}dd, ${selected.color[1]}aa)` }} />
+ <button
+ onClick={() => markLessonDone(selected, currentIdx)}
+ disabled={isDone}
+ style={{
+ position: "relative",
+ width: 72, height: 72, borderRadius: "50%",
+ background: isDone ? "var(--lime)" : "#fff",
+ color: "var(--ink)",
+ border: "4px solid var(--ink)",
+ display: "inline-flex", alignItems: "center", justifyContent: "center",
+ cursor: isDone ? "default" : "pointer",
+ boxShadow: "4px 4px 0 0 var(--ink)",
+ }}
+ title={isDone ? "Completed" : "Mark lesson watched"}
+ >
+ <Icon name={isDone ? "check" : "play"} size={32} strokeWidth={isDone ? 3 : 2} />
+ </button>
+ <div style={{ position: "absolute", bottom: 14, left: 16, right: 16, color: "#fff", textShadow: "0 2px 6px rgba(0,0,0,0.7)" }}>
+ <div style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.9 }}>
+ Lesson {currentIdx + 1} · 3 to 5 min
+ </div>
+ <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.2, marginTop: 2 }}>
+ {currentLesson}
+ </div>
+ </div>
+ </div>
+ </div>
+
+ {/* Controls */}
+ <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+ <button
+ onClick={() => setActiveLesson(Math.max(0, currentIdx - 1))}
+ disabled={currentIdx === 0}
+ className="btn btn-sm"
+ style={{ cursor: currentIdx === 0 ? "not-allowed" : "pointer", opacity: currentIdx === 0 ? 0.5 : 1, padding: "10px 14px", fontSize: 12 }}
+ >
+ <Icon name="chevron-left" size={14} /> Prev
+ </button>
+ <button
+ onClick={() => markLessonDone(selected, currentIdx)}
+ disabled={isDone}
+ className="btn btn-lime btn-sm"
+ style={{ flex: 1, cursor: isDone ? "default" : "pointer", fontSize: 12, opacity: isDone ? 0.7 : 1 }}
+ >
+ <Icon name={isDone ? "checkCircle" : "check"} size={14} />
+ {isDone ? "Lesson completed" : "Mark as done (+20 XP)"}
+ </button>
+ <button
+ onClick={() => setActiveLesson(Math.min(selected.syllabus.length - 1, currentIdx + 1))}
+ disabled={currentIdx === selected.syllabus.length - 1}
+ className="btn btn-sm"
+ style={{ cursor: currentIdx === selected.syllabus.length - 1 ? "not-allowed" : "pointer", opacity: currentIdx === selected.syllabus.length - 1 ? 0.5 : 1, padding: "10px 14px", fontSize: 12 }}
+ >
+ Next <Icon name="chevron-right" size={14} />
+ </button>
+ </div>
+
+ {/* Chapter checklist */}
+ <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "0.95rem", marginBottom: 10, color: "var(--ink)" }}>
+ Chapters
+ </h4>
+ <div className="card" style={{ background: "var(--paper-2)", padding: "4px 16px", marginBottom: 18, boxShadow: "3px 3px 0 0 var(--ink)" }}>
+ {selected.syllabus.map((item, i) => {
+ const chapterDone = i < doneCount
+ const isCurrent = i === currentIdx
+ return (
+ <button
+ key={i}
+ onClick={() => setActiveLesson(i)}
+ style={{
+ display: "flex",
+ alignItems: "center",
+ gap: 12,
+ padding: "12px 0",
+ width: "100%",
+ background: "transparent",
+ border: "none",
+ borderBottom: i < selected.syllabus.length - 1 ? "2px dashed var(--ink)" : "none",
+ cursor: "pointer",
+ textAlign: "left",
+ }}
+ >
  <span
  style={{
- background: "var(--ink)", color: "var(--lime)",
+ width: 28, height: 28, borderRadius: 8,
+ background: chapterDone ? "var(--lime)" : isCurrent ? "var(--purple)" : "var(--ink)",
+ color: chapterDone || isCurrent ? "var(--ink)" : "var(--lime)",
  fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 11,
- width: 26, height: 26, borderRadius: 8,
- display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1,
+ display: "flex", alignItems: "center", justifyContent: "center",
+ flexShrink: 0,
  border: "2px solid var(--ink)",
  }}
  >
- {String(i + 1).padStart(2, "0")}
+ {chapterDone ? <Icon name="check" size={14} strokeWidth={3} /> : String(i + 1).padStart(2, "0")}
  </span>
- <p style={{ color: "var(--ink)", fontSize: 14, lineHeight: 1.5 }}>{item}</p>
+ <div style={{ flex: 1, minWidth: 0 }}>
+ <p style={{
+ color: isCurrent ? "var(--purple)" : "var(--ink)",
+ fontSize: 14,
+ lineHeight: 1.4,
+ fontWeight: isCurrent ? 800 : 600,
+ textDecoration: chapterDone ? "line-through" : "none",
+ opacity: chapterDone ? 0.6 : 1,
+ }}>
+ {item}
+ </p>
  </div>
- ))}
+ {isCurrent && <span className="sticker purple" style={{ fontSize: 9 }}>Now</span>}
+ </button>
+ )
+ })}
  </div>
 
  <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem", marginBottom: 10, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
@@ -358,7 +493,7 @@ export default function CoursesExplorer() {
  </span>
  Who is this for
  </h3>
- <div className="card lime" style={{ padding: "16px 18px", marginBottom: 24 }}>
+ <div className="card lime" style={{ padding: "16px 18px", marginBottom: 20 }}>
  <p style={{ color: "var(--ink)", fontSize: 14, lineHeight: 1.6, fontWeight: 600 }}>{selected.for}</p>
  </div>
 
@@ -388,8 +523,7 @@ export default function CoursesExplorer() {
  Close
  </button>
  </div>
- </>
- )}
+ </>)})()}
 
  {enrolling && !sent && (
  <div>

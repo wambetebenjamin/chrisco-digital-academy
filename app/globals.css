@@ -39,14 +39,20 @@
   --radius-xl: 32px;
 
   /* Chunky offset shadow (neo-brutalist signature) */
-  --shadow-chunk: 6px 6px 0 0 var(--ink);
-  --shadow-chunk-lg: 10px 10px 0 0 var(--ink);
-  --shadow-chunk-sm: 4px 4px 0 0 var(--ink);
-  --shadow-chunk-purple: 6px 6px 0 0 var(--purple);
-  --shadow-chunk-pink: 6px 6px 0 0 var(--pink);
-  --shadow-chunk-lime: 6px 6px 0 0 var(--lime-deep);
-  --shadow-soft: 0 10px 30px rgba(10,10,10,0.08);
+  --shadow-chunk: 5px 5px 0 0 var(--ink);
+  --shadow-chunk-lg: 9px 9px 0 0 var(--ink);
+  --shadow-chunk-sm: 3px 3px 0 0 var(--ink);
+  --shadow-chunk-purple: 5px 5px 0 0 var(--purple);
+  --shadow-chunk-pink: 5px 5px 0 0 var(--pink);
+  --shadow-chunk-lime: 5px 5px 0 0 var(--lime-deep);
+  --shadow-soft: 0 8px 20px rgba(10,10,10,0.07);
 }
+
+/* Shadow tier variants for visual hierarchy */
+.card-soft { box-shadow: 3px 3px 0 0 var(--ink); }
+.card-soft:hover { box-shadow: 5px 5px 0 0 var(--ink); transform: translate(-1px,-1px); }
+.card-lg { box-shadow: 9px 9px 0 0 var(--ink); }
+.card-lg:hover { box-shadow: 12px 12px 0 0 var(--ink); transform: translate(-3px,-3px); }
 
 * { box-sizing: border-box; }
 
@@ -67,7 +73,7 @@ html:has(.has-backdrop) { background: var(--ink); }
 body:has(.has-backdrop) { background: transparent; }
 body:has(.has-backdrop)::before { display: none; }
 
-/* Stronger cream text halo so body copy stays readable even over vivid photos */
+/* Calmer cream text halo so body copy stays readable over photos without visual fatigue */
 .has-backdrop p,
 .has-backdrop .lead,
 .has-backdrop .title,
@@ -76,28 +82,26 @@ body:has(.has-backdrop)::before { display: none; }
 .has-backdrop li,
 .has-backdrop label {
   text-shadow:
-    0 0 1px rgba(255,248,236,0.98),
-    0 0 3px rgba(255,248,236,0.95),
-    0 0 8px rgba(255,248,236,0.85),
-    0 0 16px rgba(255,248,236,0.7),
-    0 2px 0 rgba(255,248,236,0.4);
+    0 0 2px rgba(255,248,236,0.96),
+    0 0 6px rgba(255,248,236,0.88),
+    0 0 14px rgba(255,248,236,0.62),
+    0 1px 0 rgba(255,248,236,0.3);
 }
 .has-backdrop .lead { color: var(--ink); }
 .has-backdrop .display.on-dark,
 .has-backdrop .title.on-dark {
   color: #fff;
   text-shadow:
-    0 0 1px rgba(0,0,0,0.95),
-    0 0 3px rgba(0,0,0,0.9),
-    0 0 8px rgba(0,0,0,0.75),
-    0 2px 0 rgba(0,0,0,0.6);
+    0 0 2px rgba(0,0,0,0.92),
+    0 0 6px rgba(0,0,0,0.7),
+    0 0 14px rgba(0,0,0,0.45);
 }
 .has-backdrop .on-dark.lead {
   color: rgba(255,255,255,0.96);
   text-shadow:
-    0 0 1px rgba(0,0,0,0.9),
-    0 0 4px rgba(0,0,0,0.8),
-    0 0 10px rgba(0,0,0,0.6);
+    0 0 2px rgba(0,0,0,0.8),
+    0 0 6px rgba(0,0,0,0.6),
+    0 0 12px rgba(0,0,0,0.35);
 }
 .has-backdrop .eyebrow,
 .has-backdrop .sticker,
@@ -107,9 +111,9 @@ body:has(.has-backdrop)::before { display: none; }
 .has-backdrop .accent-bright {
   color: var(--purple);
   text-shadow:
-    0 0 1px rgba(255,248,236,0.98),
-    0 0 6px rgba(255,248,236,0.9),
-    0 0 14px rgba(255,248,236,0.7);
+    0 0 2px rgba(255,248,236,0.96),
+    0 0 8px rgba(255,248,236,0.8),
+    0 0 16px rgba(255,248,236,0.5);
 }
 /* Lists in hero/content on top of photos: keep the dots visible against the halo */
 .has-backdrop ul { list-style: none; padding-left: 0; }
@@ -351,7 +355,7 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-.btn:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 0 var(--ink); }
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 0 var(--ink); }
 .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 0 var(--ink); }
 
 .btn-lime { background: var(--lime); }
@@ -367,8 +371,8 @@ img { display: block; max-width: 100%; }
 
 .btn-sm { padding: 11px 18px; font-size: 13px; border-width: 2.5px; box-shadow: 4px 4px 0 0 var(--ink); }
 .btn-sm:hover { box-shadow: 6px 6px 0 0 var(--ink); }
-.btn-lg { padding: 18px 32px; font-size: 16px; box-shadow: 8px 8px 0 0 var(--ink); }
-.btn-lg:hover { box-shadow: 10px 10px 0 0 var(--ink); transform: translate(-3px,-3px); }
+.btn-lg { padding: 18px 32px; font-size: 16px; box-shadow: 7px 7px 0 0 var(--ink); }
+.btn-lg:hover { box-shadow: 9px 9px 0 0 var(--ink); transform: translate(-2px,-2px); }
 .btn-block { width: 100%; }
 
 /* ---------- Pills (kept softer, not chunky) ---------- */
@@ -409,8 +413,8 @@ img { display: block; max-width: 100%; }
   position: relative;
 }
 .card-hover:hover {
-  transform: translate(-4px,-4px) rotate(-0.5deg);
-  box-shadow: 10px 10px 0 0 var(--ink);
+  transform: translate(-3px,-3px) rotate(-0.4deg);
+  box-shadow: 8px 8px 0 0 var(--ink);
 }
 .card.lime { background: var(--lime); }
 .card.purple { background: var(--purple); color: #fff; }
