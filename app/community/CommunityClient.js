@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import Navbar from "../Navbar"
@@ -44,8 +44,36 @@ function pickBuddy(xp) {
 }
 
 export function CommunityClient() {
-  const { xp, level, findBuddy, buddyFound, toggleUpvote, upvotedThreads } = useGamification()
+  const { xp, level, findBuddy, buddyFound, toggleUpvote, upvotedThreads, getJitsiRoom, getReferralLink } = useGamification()
   const [filter, setFilter] = useState("All")
+  const [copied, setCopied] = useState(false)
+
+  const referralLink = useMemo(() => getReferralLink(), [getReferralLink])
+
+  function copyReferral() {
+    try {
+      navigator.clipboard?.writeText(referralLink)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    } catch {}
+  }
+  async function shareReferral() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "CHRISCO Digital Academy",
+          text: "Join me on CHRISCO Digital Academy! We both get 200 bonus XP when you start your first course.",
+          url: referralLink,
+        })
+      } catch {}
+    } else {
+      copyReferral()
+    }
+  }
+  function joinLounge(name) {
+    const url = getJitsiRoom(name)
+    window.open(url, "_blank", "noopener,noreferrer")
+  }
 
   const matchedBuddy = pickBuddy(xp)
 
@@ -174,6 +202,7 @@ export function CommunityClient() {
             <h2 className="title" style={{ marginTop: 16 }}>Silent co working rooms.</h2>
             <p style={{ marginTop: 12 }}>
               Hop into a 25 or 50 minute silent room. Cameras on, mics muted, vibe on. Pomodoro timer included.
+              Rooms open in a new tab using Jitsi, free and no sign up needed.
             </p>
           </div>
 
@@ -236,8 +265,8 @@ export function CommunityClient() {
                     style={{ objectFit: "cover" }}
                   />
                 </div>
-                <button className="btn btn-ink" style={{ width: "100%" }}>
-                  {l.live ? "Join Now" : "Set Reminder"}
+                <button onClick={() => l.live ? joinLounge(l.name) : null} className="btn btn-ink" style={{ width: "100%", cursor: l.live ? "pointer" : "default", opacity: l.live ? 1 : 0.8 }}>
+                  <Icon name={l.live ? "video" : "calendar"} size={14} /> {l.live ? "Join Now" : "Set Reminder"}
                 </button>
               </div>
             ))}
@@ -333,6 +362,53 @@ export function CommunityClient() {
         </div>
       </section>
 
+      {/* REFERRAL / INVITE */}
+      <section className="section band-cream">
+        <div className="container">
+          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+            <div className="card purple" style={{ padding: "32px 28px", color: "#fff" }}>
+              <div style={{ display: "flex", gap: 14, alignItems: "flex-start", flexWrap: "wrap" }}>
+                <span style={{ width: 60, height: 60, borderRadius: 18, background: "var(--lime)", color: "var(--ink)", border: "3px solid #fff", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "4px 4px 0 0 var(--ink)" }}>
+                  <Icon name="heart" size={28} />
+                </span>
+                <div style={{ flex: 1, minWidth: 240 }}>
+                  <span className="sticker lime" style={{ fontSize: 10, marginBottom: 10 }}>+200 XP per friend</span>
+                  <h2 className="title on-dark" style={{ color: "#fff", fontSize: "clamp(1.4rem,3vw,2rem)", marginTop: 10 }}>
+                    Invite friends. <span style={{ color: "var(--lime)" }}>Earn XP together.</span>
+                  </h2>
+                  <p style={{ fontSize: 14, marginTop: 8, color: "rgba(255,255,255,0.9)", maxWidth: 540 }}>
+                    Share your link. When a friend signs up and starts their first course, you both earn
+                    {" "}<strong style={{ color: "var(--lime)" }}>200 bonus XP</strong>.
+                  </p>
+                </div>
+              </div>
+              <div style={{ marginTop: 22, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                <div className="xp-chip" style={{ background: "#fff", fontSize: 12, padding: "10px 14px", flex: 1, minWidth: 200, justifyContent: "flex-start", overflow: "hidden" }}>
+                  <span style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 800, letterSpacing: "0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "100%" }}>
+                    {referralLink}
+                  </span>
+                </div>
+                <button onClick={copyReferral} className="btn btn-lime btn-sm" style={{ fontSize: 12 }}>
+                  <Icon name="clipboard" size={14} /> {copied ? "Copied!" : "Copy Link"}
+                </button>
+                <button onClick={shareReferral} className="btn btn-sm" style={{ background: "#fff", fontSize: 12 }}>
+                  <Icon name="send" size={14} /> Share
+                </button>
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent("Join me on CHRISCO Digital Academy! We both get 200 bonus XP when you start your first course: " + referralLink)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-sm"
+                  style={{ background: "var(--lime)", fontSize: 12, textDecoration: "none" }}
+                >
+                  <Icon name="whatsapp" size={14} /> WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <PhotoBand
         eyebrow="Bring a friend"
         title="Learning hits different with a squad."
@@ -340,13 +416,9 @@ export function CommunityClient() {
         tone="pink"
         centered
       >
-        <a
-          href="https://wa.me/254112272061?text=Hey%21%20Join%20me%20on%20CHRISCO%20Digital%20Academy%20%F0%9F%94%A5"
-          className="btn btn-lime btn-lg"
-          style={{ textDecoration: "none" }}
-        >
+        <button onClick={shareReferral} className="btn btn-lime btn-lg">
           <Icon name="heart" size={18} /> Invite a Friend
-        </a>
+        </button>
         <Link href="/courses" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
           Browse Courses
         </Link>

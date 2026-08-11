@@ -31,7 +31,8 @@ export default function InteractiveCalendar({
   const [viewMonth, setViewMonth] = useState(now.getMonth())
   const [selectedKey, setSelectedKey] = useState(dateKey(now.getFullYear(), now.getMonth(), now.getDate()))
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ title: "", type: "class", time: "" })
+  const [form, setForm] = useState({ title: "", type: "class", time: "", reminderEmail: "" })
+  const [emailReminder, setEmailReminder] = useState(false)
 
   const { personalEvents, addPersonalEvent, removePersonalEvent } = useGamification()
 
@@ -97,8 +98,17 @@ export default function InteractiveCalendar({
     // Parse date from selectedKey
     const [y, m, d] = selectedKey.split("-").map(Number)
     const iso = new Date(y, m - 1, d, form.time ? parseInt(form.time.split(":")[0]) : 12, form.time ? parseInt(form.time.split(":")[1]) : 0).toISOString()
-    addPersonalEvent({ date: iso, title: form.title.trim(), type: form.type, time: form.time || "12:00", user: true })
-    setForm({ title: "", type: "class", time: "" })
+    addPersonalEvent({
+      date: iso,
+      title: form.title.trim(),
+      type: form.type,
+      time: form.time || "12:00",
+      user: true,
+      emailReminder: emailReminder && form.reminderEmail.trim(),
+      reminderEmail: form.reminderEmail.trim(),
+    })
+    setForm({ title: "", type: "class", time: "", reminderEmail: "" })
+    setEmailReminder(false)
     setShowForm(false)
   }
 
@@ -256,6 +266,25 @@ export default function InteractiveCalendar({
                     style={{ padding: "10px 12px", fontSize: 13, margin: 0, width: 120 }}
                   />
                 </div>
+                <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                  <input
+                    type="checkbox"
+                    checked={emailReminder}
+                    onChange={(e) => setEmailReminder(e.target.checked)}
+                    style={{ width: 16, height: 16, accentColor: "var(--purple)" }}
+                  />
+                  Email me a reminder
+                </label>
+                {emailReminder && (
+                  <input
+                    type="email"
+                    className="input"
+                    placeholder="your@email.com"
+                    value={form.reminderEmail}
+                    onChange={(e) => setForm({ ...form, reminderEmail: e.target.value })}
+                    style={{ padding: "10px 14px", fontSize: 13, margin: 0 }}
+                  />
+                )}
                 <div style={{ display: "flex", gap: 8 }}>
                   <button type="submit" className="btn btn-lime btn-sm" style={{ fontSize: 12, flex: 1, cursor: "pointer" }}>Save</button>
                   <button type="button" onClick={() => setShowForm(false)} className="btn btn-sm" style={{ fontSize: 12, cursor: "pointer" }}>Cancel</button>

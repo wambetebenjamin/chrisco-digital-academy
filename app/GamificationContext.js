@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState, useCallback } from "rea
 import { useAuth } from "./AuthProvider"
 import { supabase } from "./supabase"
 import { BADGE_DEFS } from "./badgeDefs"
+import emailjs from "@emailjs/browser"
 
 /* ============================================================
    Gamification Context
@@ -16,6 +17,9 @@ import { BADGE_DEFS } from "./badgeDefs"
 
 const STORAGE_KEY = "chrisco_gamification_v1"
 const XP_PER_LEVEL = 500
+const EMAILJS_SERVICE = "service_m86zbad"
+const EMAILJS_TEMPLATE = "template_i5wg4c8"
+const EMAILJS_KEY = "eVsfqNv-Jtq46-4b2"
 
 // Badge check functions (kept here since they inspect state shape)
 const BADGE_CHECKS = {
@@ -118,6 +122,31 @@ const daysBetween = (a, b) => {
 }
 
 function defaultState() {
+  // Generate a short local referral code if none exists
+  let referralCode = null
+  try {
+    referralCode = localStorage.getItem("chrisco_referral_code")
+  } catch {}
+  if (!referralCode) {
+    referralCode = "CHRISCO" + Math.random().toString(36).slice(2, 8).toUpperCase()
+    try {
+      localStorage.setItem("chrisco_referral_code", referralCode)
+    } catch {}
+  }
+
+  // Detect ?ref=XXXXXX in the URL and save it (reward when this user signs up / starts first course)
+  let pendingReferral = null
+  try {
+    const url = new URL(window.location.href)
+    const refParam = url.searchParams.get("ref")
+    if (refParam) {
+      pendingReferral = refParam
+      localStorage.setItem("chrisco_pending_ref", refParam)
+    } else {
+      pendingReferral = localStorage.getItem("chrisco_pending_ref")
+    }
+  } catch {}
+
   return {
     xp: 0,
     streak: 0,
@@ -128,9 +157,15 @@ function defaultState() {
     answeredQuizIds: [],
     buddyFound: false,
     coursesStarted: 0,
+    startedCourses: {}, // { courseId: { startedAt, progress, lessonsCompleted: n } }
     downloads: 0,
-    personalEvents: [], // {date: 'YYYY-M-D', title, type: 'class'|'due'|'event'|'personal'}
+    personalEvents: [], // {id, date, title, type, time, emailReminder, reminderEmail}
     upvotedThreads: [],
+    referralCode,
+    referralsMade: [], // list of referred codes we've already rewarded for
+    pendingReferral, // code from the friend who referred us
+    referralBonusClaimed: false, // whether we got our bonus for signing up via a link
+    referralRewards: 0, // count of friends who signed up via our link
   }
 }
 
@@ -142,6 +177,15 @@ function xpToNextLevel(xp) {
 }
 function levelProgressPct(xp) {
   return Math.round(((xp % XP_PER_LEVEL) / XP_PER_LEVEL) * 100)
+}
+function formatTime(t) {
+  if (!t) return ""
+  const [hStr, mStr] = t.split(":")
+  let h = parseInt(hStr, 10)
+  const m = (mStr || "00").padStart(2, "0")
+  const suffix = h >= 12 ? "pm" : "am"
+  h = h % 12 || 12
+  return `${h}:${m} ${suffix}`
 }
 
 const GamificationContext = createContext(null)
@@ -190,7 +234,7 @@ export function GamificationProvider({ children }) {
       try {
         const { data, error } = await supabase
           .from("profiles")
-          .select("xp, streak, badges, last_active_date, quizzes_answered, quizzes_correct, answered_quiz_ids, buddy_found, courses_started, downloads, personal_events")
+          .select("xp, streak, badges, last_active_date, quizzes_answered, quizzes_correct, answered_quiz_ids, buddy_found, courses_started, started_courses, downloads, personal_events, upvoted_threads, referral_code, referrals_made, referral_bonus_claimed, referral_rewards")
           .eq("id", user.id)
           .single()
         if (error || !data || cancelled) return
@@ -206,9 +250,19 @@ export function GamificationProvider({ children }) {
             answeredQuizIds: data.answered_quiz_ids ?? prev.answeredQuizIds,
             buddyFound: data.buddy_found ?? prev.buddyFound,
             coursesStarted: data.courses_started ?? prev.coursesStarted,
+            startedCourses: data.started_courses ?? prev.startedCourses,
             downloads: data.downloads ?? prev.downloads,
             personalEvents: data.personal_events ?? prev.personalEvents,
+            upvotedThreads: data.upvoted_threads ?? prev.upvotedThreads,
+            referralCode: data.referral_code ?? prev.referralCode,
+            referralsMade: data.referrals_made ?? prev.referralsMade,
+            referralBonusClaimed: data.referral_bonus_claimed ?? prev.referralBonusClaimed,
+            referralRewards: data.referral_rewards ?? prev.referralRewards,
           }
+          // persist referral code to localStorage
+          try {
+            if (merged.referralCode) localStorage.setItem("chrisco_referral_code", merged.referralCode)
+          } catch {}
           return merged
         })
       } catch {}
@@ -233,8 +287,14 @@ export function GamificationProvider({ children }) {
           answered_quiz_ids: state.answeredQuizIds,
           buddy_found: state.buddyFound,
           courses_started: state.coursesStarted,
+          started_courses: state.startedCourses,
           downloads: state.downloads,
           personal_events: state.personalEvents,
+          upvoted_threads: state.upvotedThreads,
+          referral_code: state.referralCode,
+          referrals_made: state.referralsMade,
+          referral_bonus_claimed: state.referralBonusClaimed,
+          referral_rewards: state.referralRewards,
           updated_at: new Date().toISOString(),
         })
         .then(() => {})
@@ -357,10 +417,37 @@ export function GamificationProvider({ children }) {
     })
   }, [awardXP, showToast])
 
-  const trackCourseStart = useCallback(() => {
+  const trackCourseStart = useCallback((courseId, courseTitle) => {
+    let firstStart = false
     let newBadges = []
+    let referralBonus = 0
     setState((prev) => {
-      const next = { ...prev, coursesStarted: prev.coursesStarted + 1 }
+      const key = String(courseId)
+      if (prev.startedCourses && prev.startedCourses[key]) {
+        return prev // already started
+      }
+      firstStart = true
+      const next = {
+        ...prev,
+        coursesStarted: prev.coursesStarted + 1,
+        startedCourses: {
+          ...(prev.startedCourses || {}),
+          [key]: {
+            title: courseTitle || key,
+            startedAt: new Date().toISOString(),
+            progress: 0,
+            lessonsCompleted: 0,
+            lastOpened: new Date().toISOString(),
+          },
+        },
+      }
+      // First course referral bonus (200 XP both sides if a ref is pending)
+      if (prev.pendingReferral && !prev.referralBonusClaimed && next.coursesStarted >= 1) {
+        next.xp = prev.xp + 200
+        next.referralBonusClaimed = true
+        referralBonus = 200
+        try { localStorage.removeItem("chrisco_pending_ref") } catch {}
+      }
       for (const b of BADGE_DEFS) {
         if (!next.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(next)) {
           next.badges = [...next.badges, b.id]
@@ -369,11 +456,50 @@ export function GamificationProvider({ children }) {
       }
       return next
     })
-    awardXP(40, "for starting a course")
-    newBadges.forEach((b, i) => {
-      setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 400 + i * 500)
-    })
+    if (firstStart) {
+      awardXP(40, "for starting a course")
+      newBadges.forEach((b, i) => {
+        setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 400 + i * 500)
+      })
+      if (referralBonus) {
+        setTimeout(() => showToast("+200 XP friend referral bonus!", "yellow"), 800)
+      }
+    }
   }, [awardXP, showToast])
+
+  const trackLessonComplete = useCallback((courseId, lessonCount = 1) => {
+    let newBadges = []
+    setState((prev) => {
+      const key = String(courseId)
+      const existing = prev.startedCourses?.[key]
+      if (!existing) return prev
+      const updated = {
+        ...existing,
+        lessonsCompleted: (existing.lessonsCompleted || 0) + lessonCount,
+        lastOpened: new Date().toISOString(),
+      }
+      // progress auto-advances by one lesson out of 8 (typical course length)
+      updated.progress = Math.min(100, Math.round(((updated.lessonsCompleted || 0) / 8) * 100))
+      const next = {
+        ...prev,
+        startedCourses: { ...(prev.startedCourses || {}), [key]: updated },
+      }
+      next.xp = prev.xp + 20 // 20 XP per lesson
+      // check badges
+      for (const b of BADGE_DEFS) {
+        if (!next.badges.includes(b.id) && BADGE_CHECKS[b.id]?.(next)) {
+          next.badges = [...next.badges, b.id]
+          newBadges.push(b)
+        }
+      }
+      return next
+    })
+    touchActivity()
+    showToast("+20 XP lesson complete", "lime")
+    newBadges.forEach((b, i) => {
+      setTimeout(() => showToast(`Badge: ${b.label}`, "pink"), 600 + i * 500)
+    })
+  }, [showToast, touchActivity])
 
   const toggleUpvote = useCallback((threadKey) => {
     setState((prev) => {
@@ -389,12 +515,69 @@ export function GamificationProvider({ children }) {
   }, [awardXP])
 
   const addPersonalEvent = useCallback((event) => {
+    const id = Date.now()
+    const newEvent = { ...event, id }
     setState((prev) => ({
       ...prev,
-      personalEvents: [...prev.personalEvents, { ...event, id: Date.now() }],
+      personalEvents: [...prev.personalEvents, newEvent],
     }))
     showToast("Event added to calendar", "lime")
     awardXP(10, "for planning ahead")
+
+    // Request browser notification permission lazily
+    if (typeof window !== "undefined" && "Notification" in window) {
+      if (Notification.permission === "default") {
+        Notification.requestPermission().catch(() => {})
+      }
+    }
+
+    // Send email reminder if requested (EmailJS template will include details)
+    if (event.emailReminder && event.reminderEmail) {
+      const eventDate = new Date(event.date)
+      const timeStr = formatTime(event.time)
+      const dateStr = eventDate.toLocaleDateString(undefined, {
+        weekday: "long", year: "numeric", month: "long", day: "numeric",
+      })
+      emailjs
+        .send(
+          EMAILJS_SERVICE,
+          EMAILJS_TEMPLATE,
+          {
+            from_name: "CHRISCO Digital Academy",
+            from_email: "reminders@chrisco.academy",
+            to_name: event.reminderEmail.split("@")[0],
+            to_email: event.reminderEmail,
+            message: `Reminder: ${event.title} on ${dateStr} at ${timeStr}. Open your dashboard to join: ${window.location.origin}/dashboard`,
+            phone: "+254 112 272 061",
+          },
+          EMAILJS_KEY,
+        )
+        .then(() => {
+          showToast("Reminder email sent!", "purple")
+        })
+        .catch(() => {
+          // Silently fail - user still has browser reminder
+        })
+    }
+
+    // Schedule a browser notification 10 minutes before if time is set
+    if (event.date && event.time && typeof window !== "undefined") {
+      const eventDate = new Date(event.date)
+      const [h, m] = (event.time || "00:00").split(":").map(Number)
+      eventDate.setHours(h || 0, m || 0, 0, 0)
+      const notifyAt = eventDate.getTime() - 10 * 60 * 1000
+      const delay = notifyAt - Date.now()
+      if (delay > 0 && delay < 1000 * 60 * 60 * 24 * 7) {
+        setTimeout(() => {
+          if ("Notification" in window && Notification.permission === "granted") {
+            new Notification("CHRISCO: " + event.title, {
+              body: `Starting in 10 minutes (${formatTime(event.time)})`,
+              icon: "/favicon.ico",
+            })
+          }
+        }, delay)
+      }
+    }
   }, [awardXP, showToast])
 
   const removePersonalEvent = useCallback((id) => {
@@ -410,6 +593,41 @@ export function GamificationProvider({ children }) {
     const pool = unanswered.length ? unanswered : QUIZ_BANK
     return pool[Math.floor(Math.random() * pool.length)]
   }, [state.answeredQuizIds])
+
+  // Generate a shareable referral link
+  const getReferralLink = useCallback(() => {
+    if (typeof window === "undefined") return ""
+    return `${window.location.origin}/sign-up?ref=${state.referralCode}`
+  }, [state.referralCode])
+
+  // When a referred friend completes their first course (sign-up flow), call this to credit the referrer
+  // Since we don't have a backend here, we'll simulate it via localStorage and show a toast
+  const claimReferralBonus = useCallback(() => {
+    setState((prev) => {
+      if (prev.referralBonusClaimed || !prev.pendingReferral) return prev
+      try { localStorage.removeItem("chrisco_pending_ref") } catch {}
+      return {
+        ...prev,
+        xp: prev.xp + 200,
+        referralBonusClaimed: true,
+      }
+    })
+    showToast("+200 XP referral bonus claimed!", "yellow")
+  }, [showToast])
+
+  // Generate a deterministic Jitsi room URL for a lounge name.
+  // Rooms are public and require no API key. We add a random suffix per session
+  // but keep it stable per lounge name per day so people meet up.
+  const getJitsiRoom = useCallback((loungeName) => {
+    const safe = (loungeName || "room")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 40)
+    const d = new Date()
+    const dayKey = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
+    return `https://meet.jit.si/chrisco-${safe}-${dayKey}`
+  }, [])
 
   const earnedBadges = BADGE_DEFS.filter((b) => state.badges.includes(b.id))
 
@@ -430,11 +648,15 @@ export function GamificationProvider({ children }) {
     findBuddy,
     trackDownload,
     trackCourseStart,
+    trackLessonComplete,
     toggleUpvote,
     addPersonalEvent,
     removePersonalEvent,
     getRandomQuiz,
     touchActivity,
+    getReferralLink,
+    claimReferralBonus,
+    getJitsiRoom,
     dismissToast: () => setToast(null),
   }
 

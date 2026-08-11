@@ -3,6 +3,7 @@ import { useState } from "react"
 import emailjs from "@emailjs/browser"
 import Image from "next/image"
 import Icon from "../components/Icon"
+import { useGamification } from "../GamificationContext"
 import { courses, categories, categoryCounts } from "../data/courses"
 
 const SERVICE_ID = "service_m86zbad"
@@ -20,6 +21,13 @@ export default function CoursesExplorer() {
  const [sent, setSent] = useState(false)
  const [category, setCategory] = useState("All")
  const [level, setLevel] = useState("All")
+ const [startedCourses, setStartedCourses] = useState(() => {
+   try {
+     return JSON.parse(localStorage.getItem("chrisco_started_popups") || "{}")
+   } catch { return {} }
+ })
+
+ const { trackCourseStart, xp, level: userLevel } = useGamification()
 
  const counts = categoryCounts()
 
@@ -55,6 +63,13 @@ export default function CoursesExplorer() {
  setSelected(course)
  setEnrolling(null)
  setSent(false)
+ // Award XP the first time they open a course
+ if (!startedCourses[course.id]) {
+   trackCourseStart(course.id, course.title)
+   const next = { ...startedCourses, [course.id]: true }
+   setStartedCourses(next)
+   try { localStorage.setItem("chrisco_started_popups", JSON.stringify(next)) } catch {}
+ }
  }
 
  function clearFilters() {
