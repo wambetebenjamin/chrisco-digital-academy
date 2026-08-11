@@ -5,6 +5,7 @@ import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
+import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 
 export const metadata = {
@@ -37,7 +38,8 @@ const values = [
 
 export default function About() {
   return (
-    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
+    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <PageBackdrop image="/images/bg-about.jpg" position="center 35%" />
       <Navbar />
 
       {/* HERO */}
@@ -87,7 +89,7 @@ export default function About() {
       </section>
 
       {/* WHO WE ARE */}
-      <section className="section section-paper">
+      <section className="section section-frost">
         <div className="container">
           <div className="split">
             <div>
@@ -150,7 +152,7 @@ export default function About() {
       </section>
 
       {/* MISSION & VISION */}
-      <section className="section" style={{ background: "#F4F6F4" }}>
+      <section className="section section-frost-alt">
         <div className="container">
           <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
             <span className="eyebrow" style={{ justifyContent: "center" }}>Our purpose</span>
@@ -187,7 +189,7 @@ export default function About() {
       </section>
 
       {/* VALUES */}
-      <section className="section section-paper">
+      <section className="section section-frost">
         <div className="container">
           <div style={{ maxWidth: 560, marginBottom: 56 }}>
             <span className="eyebrow">What we stand for</span>

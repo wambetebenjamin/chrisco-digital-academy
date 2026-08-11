@@ -4,6 +4,7 @@ import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
+import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 import CoursesExplorer from "./CoursesExplorer"
 
@@ -21,7 +22,8 @@ const heroPills = [
 
 export default function Courses() {
   return (
-    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
+    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <PageBackdrop image="/images/bg-courses.jpg" position="center 30%" />
       <Navbar />
 
       {/* HERO */}

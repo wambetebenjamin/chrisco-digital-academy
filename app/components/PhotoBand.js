@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function PhotoBand({ image = "/images/bg-cta.jpg", eyebrow, title, body, children, centered = false, imagePosition = "center 35%" }) {
   return (
-    <section className="section" style={{ position: "relative", overflow: "hidden", background: "var(--navy)", padding: "104px 0" }}>
+    <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)", padding: "104px 0" }}>
       <div aria-hidden style={{ position: "absolute", inset: 0 }}>
         <Image src={image} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.42 }} />
       </div>
