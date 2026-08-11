@@ -87,7 +87,9 @@ export function AuthProvider({ children }) {
     return data || []
   }
 
-  if (loading) {
+  const isProtected = PROTECTED_ROUTES.includes(pathname)
+
+  if (loading && isProtected) {
     return (
       <div
         style={{
@@ -129,7 +131,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, profile, signUp, signIn, logout, enrollCourse, getEnrollments }}>
+    <AuthContext.Provider value={{ user, profile, loading, signUp, signIn, logout, enrollCourse, getEnrollments }}>
       {children}
     </AuthContext.Provider>
   )
