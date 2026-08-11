@@ -4,6 +4,8 @@ import Navbar from "../Navbar"
 import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
+import PhotoHero from "../components/PhotoHero"
+import PhotoBand from "../components/PhotoBand"
 
 export const metadata = {
   title: "About Us",
@@ -39,19 +41,22 @@ export default function About() {
       <Navbar />
 
       {/* HERO */}
-      <section style={{ padding: "150px 0 0" }}>
-        <div className="container">
-          <span className="eyebrow fade-up">About us</span>
-          <h1 className="display fade-up fade-up-1" style={{ maxWidth: 900, marginTop: 20 }}>
-            Building Africa&apos;s <span className="outline" style={{ WebkitTextStrokeColor: "var(--ink)" }}>digital</span>{" "}
-            <span className="accent">future.</span>
-          </h1>
-          <p className="lead fade-up fade-up-2" style={{ maxWidth: 620, marginTop: 26 }}>
-            CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame — equipping
-            young Africans with practical digital skills that open real doors.
-          </p>
+      <PhotoHero
+        image="/images/bg-about.jpg"
+        eyebrow="About us"
+        title={
+          <>
+            Building Africa&apos;s <span className="outline" style={{ WebkitTextStrokeColor: "rgba(255,255,255,0.85)" }}>digital</span>{" "}
+            <span className="accent-bright">future.</span>
+          </>
+        }
+        titleStyle={{ maxWidth: 900 }}
+        lead="CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame — equipping young Africans with practical digital skills that open real doors."
+      />
 
-          {/* Stats */}
+      {/* STATS */}
+      <section style={{ padding: "72px 0 0" }}>
+        <div className="container">
           <div
             className="fade-up fade-up-3"
             style={{
@@ -60,7 +65,6 @@ export default function About() {
               gap: 0,
               borderTop: "1px solid var(--line)",
               borderBottom: "1px solid var(--line)",
-              marginTop: 56,
             }}
           >
             {stats.map((s, i) => (
@@ -266,25 +270,20 @@ export default function About() {
       </section>
 
       {/* CTA strip */}
-      <section className="section section-green" style={{ padding: "72px 0" }}>
-        <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
-            <div>
-              <span className="eyebrow on-green">Join the movement</span>
-              <h2 style={{ fontFamily: "var(--font-display)", color: "var(--navy)", fontSize: "clamp(1.6rem, 3.6vw, 2.6rem)", marginTop: 12, lineHeight: 1.1 }}>
-                Your future is digital.
-                <br /> Let&apos;s build it together.
-              </h2>
-            </div>
-            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-              <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>Explore Courses →</Link>
-              <a href="https://wa.me/254112272061" className="btn btn-outline" style={{ textDecoration: "none", borderColor: "var(--navy)", color: "var(--navy)" }}>
-                <Icon name="whatsapp" size={16} /> WhatsApp Us
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PhotoBand
+        eyebrow="Join the movement"
+        title={
+          <>
+            Your future is digital.
+            <br /> Let&apos;s build it together.
+          </>
+        }
+      >
+        <Link href="/courses" className="btn btn-green" style={{ textDecoration: "none" }}>Explore Courses →</Link>
+        <a href="https://wa.me/254112272061" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
+          <Icon name="whatsapp" size={16} /> WhatsApp Us
+        </a>
+      </PhotoBand>
 
       <Footer />
       <Chatbot />

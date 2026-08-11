@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import emailjs from "@emailjs/browser"
+import Image from "next/image"
 import Icon from "../components/Icon"
 import { courses, categories, categoryCounts } from "../data/courses"
 
@@ -203,15 +204,23 @@ export default function CoursesExplorer() {
                       style={{ overflow: "hidden", display: "flex", flexDirection: "column", cursor: "pointer", animation: `fadeUp 0.5s ease ${i * 0.05}s both` }}
                       onClick={() => openCourse(course)}
                     >
-                      {/* Header */}
-                      <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "26px 26px", position: "relative" }}>
+                      {/* Header — photo + course-tone overlay */}
+                      <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                        <Image
+                          src={course.img}
+                          alt=""
+                          fill
+                          sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
+                          style={{ objectFit: "cover" }}
+                        />
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${course.color[0]}DB, ${course.color[1]}A8)` }} />
                         <span
                           className="pill pill-sm"
                           style={{ position: "absolute", top: 14, right: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
                         >
                           {course.category}
                         </span>
-                        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 16, position: "relative" }}>
                           <div
                             style={{
                               width: 58,
@@ -275,15 +284,23 @@ export default function CoursesExplorer() {
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            {/* Header */}
+            {/* Header — photo + course-tone overlay */}
             <div style={{ background: `linear-gradient(135deg, ${selected.color[0]}, ${selected.color[1]})`, padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
+              <Image
+                src={selected.img}
+                alt=""
+                fill
+                sizes="(min-width: 640px) 600px, 92vw"
+                style={{ objectFit: "cover" }}
+              />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${selected.color[0]}DB, ${selected.color[1]}A8)` }} />
               <span
                 className="pill pill-sm"
                 style={{ position: "absolute", top: 18, right: 18, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
               >
                 {selected.category}
               </span>
-              <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 18, position: "relative" }}>
                 <div
                   style={{
                     width: 68,

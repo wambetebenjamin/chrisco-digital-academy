@@ -1,10 +1,14 @@
 import Link from "next/link"
+import Image from "next/image"
 
 export default function AuthShell({ children, subtitle }) {
   return (
     <main style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr", background: "var(--paper)" }}>
       {/* Left brand panel */}
       <aside className="hide-mobile" style={{ background: "var(--navy)", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "56px 56px" }}>
+        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
+          <Image src="/images/bg-home.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.1 }} />
+        </div>
         <div style={{ position: "absolute", width: 480, height: 480, borderRadius: "50%", background: "rgba(0,255,132,0.08)", top: -160, right: -160, filter: "blur(80px)" }} />
         <div style={{ position: "absolute", width: 320, height: 320, borderRadius: "50%", background: "rgba(0,255,132,0.06)", bottom: -120, left: -120, filter: "blur(70px)" }} />
 
