@@ -3,6 +3,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { useAuth } from "../AuthProvider"
 import AuthShell from "../components/AuthShell"
+import Icon from "../components/Icon"
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: "", password: "" })
@@ -30,21 +31,21 @@ export default function SignIn() {
   }
 
   return (
-    <AuthShell subtitle="Sign in to track your courses, certificates and learning progress across the academy.">
-      <span className="eyebrow">Welcome back</span>
-      <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4vw, 2.6rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14 }}>
+    <AuthShell subtitle="Sign in to track your courses, keep your streaks, earn badges, and unlock new levels across the academy.">
+      <span className="eyebrow purple">Welcome back</span>
+      <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 5vw, 3rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14, lineHeight: 0.95 }}>
         Sign in
       </h1>
-      <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 32 }}>
+      <p style={{ color: "var(--body)", fontSize: 14.5, marginTop: 12, marginBottom: 28 }}>
         Don&apos;t have an account?{" "}
-        <Link href="/sign-up" style={{ color: "var(--green-deep)", fontWeight: 700, textDecoration: "none" }}>
+        <Link href="/sign-up" style={{ color: "var(--purple)", fontWeight: 800, textDecoration: "none" }}>
           Create one free →
         </Link>
       </p>
 
       {error && (
-        <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, textAlign: "center" }}>
-          {error}
+        <div className="sticker pink" style={{ marginBottom: 18, fontSize: 12, display: "flex", alignItems: "center", gap: 8 }}>
+          <Icon name="warn" size={14} /> {error}
         </div>
       )}
 
@@ -57,17 +58,17 @@ export default function SignIn() {
         <input className="input" type="password" placeholder="••••••••" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} onKeyDown={handleKey} />
       </div>
 
-      <button onClick={handleLogin} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 6 }}>
-        {loading ? "Signing in..." : "Sign In →"}
+      <button onClick={handleLogin} disabled={loading} className="btn btn-lime btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 6 }}>
+        {loading ? "Signing in..." : "Sign In"} <span aria-hidden>→</span>
       </button>
 
       <div style={{ display: "flex", alignItems: "center", gap: 14, margin: "26px 0 18px" }}>
-        <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
-        <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>or</span>
-        <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
+        <div style={{ flex: 1, height: 3, background: "var(--ink)" }} />
+        <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>or</span>
+        <div style={{ flex: 1, height: 3, background: "var(--ink)" }} />
       </div>
 
-      <Link href="/" className="btn btn-outline btn-block" style={{ textDecoration: "none" }}>
+      <Link href="/" className="btn btn-purple btn-block" style={{ textDecoration: "none" }}>
         ← Back to homepage
       </Link>
     </AuthShell>

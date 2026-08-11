@@ -37,40 +37,40 @@ export default function SignUp() {
   }
 
   return (
-    <AuthShell subtitle="Join thousands of young Africans building real, practical digital skills — for free, forever.">
+    <AuthShell subtitle="Join thousands of young Africans building real, practical digital skills, and earning XP every day.">
       {success ? (
         <div style={{ textAlign: "center", padding: "20px 0" }}>
-          <span style={{ display: "inline-flex", width: 76, height: 76, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
-            <Icon name="mail" size={36} strokeWidth={1.6} />
+          <span style={{ display: "inline-flex", width: 84, height: 84, borderRadius: 22, background: "var(--lime)", color: "var(--ink)", alignItems: "center", justifyContent: "center", marginBottom: 18, border: "3px solid var(--ink)", boxShadow: "6px 6px 0 0 var(--ink)" }}>
+            <Icon name="mail" size={38} strokeWidth={1.8} />
           </span>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.9rem", color: "var(--ink)", textTransform: "uppercase", marginBottom: 12 }}>
-            Check your email!
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 4vw, 2.4rem)", color: "var(--ink)", textTransform: "uppercase", marginBottom: 12, lineHeight: 1 }}>
+            Check your email
           </h1>
-          <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.7, marginBottom: 26 }}>
+          <p style={{ color: "var(--body)", fontSize: 14.5, lineHeight: 1.7, marginBottom: 26 }}>
             We sent a confirmation link to{" "}
-            <strong style={{ color: "var(--green-deep)" }}>{form.email}</strong>. Click it to activate your account,
-            then sign in.
+            <strong style={{ color: "var(--purple)" }}>{form.email}</strong>. Click it to activate your account,
+            then sign in to start earning XP.
           </p>
-          <Link href="/sign-in" className="btn btn-green" style={{ textDecoration: "none" }}>
-            Go to Sign In →
+          <Link href="/sign-in" className="btn btn-lime btn-lg" style={{ textDecoration: "none" }}>
+            Go to Sign In <span aria-hidden>→</span>
           </Link>
         </div>
       ) : (
         <>
-          <span className="eyebrow">Join the academy</span>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4vw, 2.6rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14 }}>
+          <span className="eyebrow pink">Join the academy</span>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 5vw, 3rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14, lineHeight: 0.95 }}>
             Create account
           </h1>
-          <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 32 }}>
+          <p style={{ color: "var(--body)", fontSize: 14.5, marginTop: 12, marginBottom: 28 }}>
             Already have an account?{" "}
-            <Link href="/sign-in" style={{ color: "var(--green-deep)", fontWeight: 700, textDecoration: "none" }}>
+            <Link href="/sign-in" style={{ color: "var(--purple)", fontWeight: 800, textDecoration: "none" }}>
               Sign In →
             </Link>
           </p>
 
           {error && (
-            <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, textAlign: "center" }}>
-              {error}
+            <div className="sticker pink" style={{ marginBottom: 18, fontSize: 12, display: "flex", alignItems: "center", gap: 8 }}>
+              <Icon name="warn" size={14} /> {error}
             </div>
           )}
 
@@ -87,13 +87,15 @@ export default function SignUp() {
             <input className="input" type="password" placeholder="••••••••" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} onKeyDown={handleKey} />
           </div>
 
-          <button onClick={handleSignUp} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 6 }}>
-            {loading ? "Creating account..." : "Create Account →"}
+          <button onClick={handleSignUp} disabled={loading} className="btn btn-purple btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 6 }}>
+            {loading ? "Creating account..." : "Create Account"} <span aria-hidden>→</span>
           </button>
 
-          <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 18, lineHeight: 1.6 }}>
-            By signing up you agree to learn, practice and build something great.
-          </p>
+          <div style={{ display: "flex", gap: 8, marginTop: 20, flexWrap: "wrap", justifyContent: "center" }}>
+            <span className="sticker lime" style={{ fontSize: 10 }}>🔥 Daily streaks</span>
+            <span className="sticker yellow" style={{ fontSize: 10 }}>⚡ XP & badges</span>
+            <span className="sticker pink" style={{ fontSize: 10 }}>🤖 AI study help</span>
+          </div>
         </>
       )}
     </AuthShell>

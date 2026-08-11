@@ -1,9 +1,9 @@
 /**
- * Icon — the academy's natural vector icon set.
+ * Icon: the academy's natural vector icon set.
  *
  * Hand-drawn, stroke-based SVG icons (Lucide/Feather style) that render in
  * `currentColor`, so they inherit any surrounding text colour automatically.
- * Pure server-safe component — no client JS required.
+ * Pure server-safe component: no client JS required.
  *
  * Usage:  <Icon name="rocket" size={18} />
  */
