@@ -26,7 +26,7 @@ writing, video and AI. Built for **CHRISCO Youth Aflame** and founded by **Wambe
   courses, how-it-works, founder band, CTA, footer, chatbot.
 - **About** — story, stats, mission & vision, values, founder profile.
 - **Courses** — 11 courses across 6 categories with sidebar filters, syllabus modals, download & enrollment
-  (EmailJS → shambetz@gmail.com).
+  (EmailJS → chriscoyouthaflame2025@gmail.com).
 - **Contact** — info cards, WhatsApp shortcut, EmailJS contact form.
 - **Dashboard** — stats, enrollments, account (Supabase auth, gated).
 - **Sign In / Sign Up** — split editorial auth screens.
@@ -57,7 +57,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 **Wambete Benjamin**
 Computer Science Graduate | Graphic Designer | Web Developer | Video Editor | Animator | Social Media Manager | AI Expert
 
-- 📧 shambetz@gmail.com
+- 📧 chriscoyouthaflame2025@gmail.com
 - 📞 +254112272061
 - 📍 Nairobi, Kenya
 - 🏫 Founder — CHRISCO Youth Aflame

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Quick Reference | CHRISCO Digital Academy</title>
+<style>
+  body { font-family: Inter, Arial, sans-serif; max-width: 820px; margin: 40px auto; padding: 0 24px; color: #0a0a0a; line-height: 1.55; }
+  h1 { font-family: 'Archivo Black', sans-serif; font-size: 2.2rem; text-transform: uppercase; letter-spacing: -0.02em; }
+  h2 { font-family: 'Archivo Black', sans-serif; font-size: 1.1rem; text-transform: uppercase; background: #ffd23f; display: inline-block; padding: 6px 12px; border: 3px solid #0a0a0a; margin-top: 28px; box-shadow: 4px 4px 0 #0a0a0a; }
+  pre { background: #0a0a0a; color: #c6ff3d; padding: 16px; border: 3px solid #0a0a0a; border-radius: 12px; overflow-x: auto; font-size: 13px; box-shadow: 6px 6px 0 #7c3aed; }
+  code { background: #f3ead8; border: 2px solid #0a0a0a; padding: 2px 6px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 0.92em; }
+  ul { padding-left: 22px; } li { margin: 6px 0; }
+  .tip { background: #ff4fa3; color: #fff; padding: 12px 16px; border: 3px solid #0a0a0a; border-radius: 12px; font-weight: 700; box-shadow: 4px 4px 0 #0a0a0a; margin: 14px 0; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 3px solid #0a0a0a; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+  th, td { border: 2px solid #0a0a0a; padding: 8px 10px; text-align: left; font-size: 13px; }
+  th { background: #c6ff3d; font-family: 'Archivo Black'; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<h1>Python Quick Reference</h1>
+<p>Your pocket guide to the most useful Python bits. Print it or save it offline.</p>
+
+<h2>Variables and Types</h2>
+<pre>name = "Aisha"        # str (string, text)
+age = 19              # int (whole number)
+height = 1.65         # float (decimal)
+is_learning = True    # bool (True or False)
+scores = [80, 90, 75] # list
+person = {"name": "Aisha", "age": 19}  # dict</pre>
+
+<h2>Print and Input</h2>
+<pre>print("Hello, CHRISCO")
+name = input("What is your name? ")
+print("Welcome, " + name)</pre>
+
+<h2>Math</h2>
+<pre>x = 10 + 5     # add
+x = 10 - 5     # subtract
+x = 10 * 5     # multiply
+x = 10 / 5     # divide (gives float)
+x = 10 // 3    # floor divide
+x = 10 % 3     # remainder (modulo)
+x = 2 ** 3     # exponent (2 to power 3 = 8)</pre>
+
+<h2>If / Elif / Else</h2>
+<pre>score = 75
+if score >= 80:
+    print("Grade A")
+elif score >= 60:
+    print("Grade B")
+else:
+    print("Keep going")</pre>
+
+<div class="tip">Indentation matters in Python. Use 4 spaces. Never mix tabs and spaces.</div>
+
+<h2>Loops</h2>
+<pre># for loop over a list
+for name in ["Aisha", "Brian", "Neema"]:
+    print("Hello " + name)
+
+# for loop with range
+for i in range(5):    # 0, 1, 2, 3, 4
+    print(i)
+
+# while loop
+count = 0
+while count < 5:
+    print(count)
+    count = count + 1</pre>
+
+<h2>Functions</h2>
+<pre>def greet(name):
+    return "Hello " + name
+
+print(greet("Benjamin"))
+
+def add(a, b):
+    return a + b
+
+print(add(3, 7))   # 10</pre>
+
+<h2>Lists</h2>
+<pre>fruits = ["mango", "banana", "orange"]
+fruits.append("pawpaw")      # add to end
+fruits[0]                    # first item
+len(fruits)                  # length
+for f in fruits:
+    print(f)</pre>
+
+<h2>Dictionaries</h2>
+<pre>student = {
+    "name": "Aisha",
+    "age": 19,
+    "course": "Python"
+}
+print(student["name"])
+student["xp"] = 1240         # add new key
+</pre>
+
+<h2>String Tricks</h2>
+<table>
+<tr><th>Code</th><th>What it does</th></tr>
+<tr><td><code>s.lower()</code></td><td>Make lowercase</td></tr>
+<tr><td><code>s.upper()</code></td><td>Make uppercase</td></tr>
+<tr><td><code>s.strip()</code></td><td>Remove extra spaces</td></tr>
+<tr><td><code>s.replace("a", "e")</code></td><td>Replace text</td></tr>
+<tr><td><code>s.split(",")</code></td><td>Split into list</td></tr>
+<tr><td><code>f"Hello {name}"</code></td><td>f-strings for building text</td></tr>
+</table>
+
+<h2>Working with Files</h2>
+<pre># Read a file
+with open("notes.txt", "r") as f:
+    content = f.read()
+    print(content)
+
+# Write a file
+with open("output.txt", "w") as f:
+    f.write("Done for today.")</pre>
+
+<h2>Try / Except (errors)</h2>
+<pre>try:
+    num = int(input("Enter a number: "))
+    print("Great:", num)
+except ValueError:
+    print("That was not a number.")</pre>
+
+<h2>Useful Built In Functions</h2>
+<ul>
+  <li><code>len(x)</code> &mdash; length of string, list, etc.</li>
+  <li><code>max(list)</code>, <code>min(list)</code>, <code>sum(list)</code></li>
+  <li><code>sorted(list)</code> &mdash; return sorted version</li>
+  <li><code>range(n)</code> &mdash; numbers 0 to n minus 1</li>
+  <li><code>type(x)</code> &mdash; check the type</li>
+  <li><code>int("5")</code>, <code>str(5)</code>, <code>float("3.14")</code> &mdash; convert</li>
+</ul>
+
+<div class="footer">CHRISCO Digital Academy &middot; Python Track &middot; chriscoyouthaflame2025@gmail.com</div>
+</body>
+</html>

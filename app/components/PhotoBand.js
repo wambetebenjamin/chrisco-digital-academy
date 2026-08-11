@@ -1,23 +1,104 @@
 import Image from "next/image"
 
-export default function PhotoBand({ image = "/images/bg-cta.jpg", eyebrow, title, body, children, centered = false, imagePosition = "center 35%" }) {
-  return (
-    <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)", padding: "104px 0" }}>
-      <div aria-hidden style={{ position: "absolute", inset: 0 }}>
-        <Image src={image} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.42 }} />
-      </div>
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(0,35,51,0.95) 8%, rgba(0,35,51,0.82) 55%, rgba(1,58,79,0.74) 100%)" }} />
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(560px 300px at 92% 0%, rgba(0,255,132,0.20), transparent 60%)" }} />
-      <div className="container" style={{ position: "relative", zIndex: 1, textAlign: centered ? "center" : "left" }}>
-        <div style={centered ? { maxWidth: 660, margin: "0 auto" } : { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 32, flexWrap: "wrap" }}>
-          <div style={centered ? {} : { maxWidth: 620 }}>
-            {eyebrow && <span className="eyebrow on-dark" style={centered ? { justifyContent: "center" } : {}}>{eyebrow}</span>}
-            <h2 className="display on-dark" style={{ fontSize: "clamp(1.9rem, 4.2vw, 3.1rem)", marginTop: 14 }}>{title}</h2>
-            {body && <p style={{ marginTop: 16, fontWeight: 500, color: "rgba(255,255,255,0.75)", fontSize: "1.02rem", lineHeight: 1.7 }}>{body}</p>}
-          </div>
-          {children && <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: centered ? 30 : 0, justifyContent: centered ? "center" : "flex-start" }}>{children}</div>}
-        </div>
-      </div>
-    </section>
-  )
+export default function PhotoBand({
+ image = "/images/bg-cta.jpg",
+ eyebrow,
+ title,
+ body,
+ children,
+ centered = false,
+ imagePosition = "center 35%",
+ tone = "purple", // purple, lime, pink, ink
+}) {
+ const bg = {
+ purple: "var(--purple)",
+ lime: "var(--lime)",
+ pink: "var(--pink)",
+ ink: "var(--ink)",
+ }[tone]
+ const textColor = tone === "lime" ? "var(--ink)" : "#fff"
+
+ return (
+ <section className="section" style={{ padding: "90px 0", position: "relative" }}>
+ <div className="container">
+ <div
+ className="photo-frame"
+ style={{
+ background: bg,
+ color: textColor,
+ padding: "56px 48px",
+ boxShadow: "12px 12px 0 0 var(--ink)",
+ position: "relative",
+ }}
+ >
+ {/* Framed photo peeking in the corner */}
+ <div
+ aria-hidden
+ style={{
+ position: "absolute",
+ right: 40,
+ bottom: 26,
+ width: 220,
+ height: 160,
+ borderRadius: 20,
+ overflow: "hidden",
+ border: "3px solid var(--ink)",
+ boxShadow: "6px 6px 0 0 var(--ink)",
+ display: "none",
+ }}
+ className="hide-mobile"
+ >
+ <Image src={image} alt="" fill sizes="220px" style={{ objectFit: "cover", objectPosition: imagePosition }} />
+ </div>
+
+ <div style={centered ? { maxWidth: 720, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 } : { maxWidth: 700, position: "relative", zIndex: 1 }}>
+ {eyebrow && (
+ <span
+ className={`sticker ${tone === "lime" ? "ink" : "lime"}`}
+ style={centered ? {} : {}}
+ >
+ {eyebrow}
+ </span>
+ )}
+ <h2
+ className="display"
+ style={{
+ fontSize: "clamp(2rem, 5vw, 3.4rem)",
+ marginTop: 18,
+ color: textColor,
+ }}
+ >
+ {title}
+ </h2>
+ {body && (
+ <p
+ style={{
+ marginTop: 18,
+ fontSize: "1.1rem",
+ lineHeight: 1.65,
+ color: tone === "lime" ? "var(--ink)" : "rgba(255,255,255,0.92)",
+ fontWeight: 500,
+ }}
+ >
+ {body}
+ </p>
+ )}
+ {children && (
+ <div
+ style={{
+ display: "flex",
+ gap: 14,
+ flexWrap: "wrap",
+ marginTop: 28,
+ justifyContent: centered ? "center" : "flex-start",
+ }}
+ >
+ {children}
+ </div>
+ )}
+ </div>
+ </div>
+ </div>
+ </section>
+ )
 }
