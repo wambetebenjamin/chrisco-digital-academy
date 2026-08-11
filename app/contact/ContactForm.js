@@ -29,7 +29,7 @@ export default function ContactForm() {
  }, PUBLIC_KEY)
  setSent(true)
  } catch {
- setErr("Failed to send. Please email shambetz@gmail.com directly.")
+ setErr("Failed to send. Please email chriscoyouthaflame2025@gmail.com directly.")
  }
  setSending(false)
  }
@@ -89,7 +89,7 @@ export default function ContactForm() {
  {sending ? "Sending..." : "Send Message"}
  </button>
  <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>
- Prefer email? Write to us at <a href="mailto:shambetz@gmail.com" style={{ color: "var(--purple)", fontWeight: 800, textDecoration: "none" }}>shambetz@gmail.com</a>
+ Prefer email? Write to us at <a href="mailto:chriscoyouthaflame2025@gmail.com" style={{ color: "var(--purple)", fontWeight: 800, textDecoration: "none" }}>chriscoyouthaflame2025@gmail.com</a>
  </p>
  </>
  )}

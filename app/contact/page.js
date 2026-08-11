@@ -12,7 +12,7 @@ export const metadata = {
 }
 
 const infoItems = [
- { icon: "mail", label: "Email", value: "shambetz@gmail.com", color: "lime" },
+ { icon: "mail", label: "Email", value: "chriscoyouthaflame2025@gmail.com", color: "lime" },
  { icon: "phone", label: "Phone/WhatsApp", value: "+254 112 272 061", color: "purple" },
  { icon: "pin", label: "Location", value: "Nairobi, Kenya", color: "pink" },
  { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame", color: "yellow" },

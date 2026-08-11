@@ -11,6 +11,7 @@ const links = [
  { label: "About", href: "/about" },
  { label: "Courses", href: "/courses" },
  { label: "Community", href: "/community" },
+ { label: "Shop", href: "/shop" },
  { label: "Contact", href: "/contact" },
 ]
 

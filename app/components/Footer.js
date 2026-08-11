@@ -60,14 +60,15 @@ export default function Footer() {
  Explore
  </div>
  <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
- {[
- { label: "Home", href: "/" },
- { label: "About Us", href: "/about" },
- { label: "Courses", href: "/courses" },
- { label: "Community", href: "/community" },
- { label: "Contact", href: "/contact" },
- { label: "Dashboard", href: "/dashboard" },
- ].map((l) => (
+              {[
+                { label: "Home", href: "/" },
+                { label: "About Us", href: "/about" },
+                { label: "Courses", href: "/courses" },
+                { label: "Community", href: "/community" },
+                { label: "Shop", href: "/shop" },
+                { label: "Contact", href: "/contact" },
+                { label: "Dashboard", href: "/dashboard" },
+              ].map((l) => (
  <li key={l.href}>
  <Link href={l.href} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "color 0.2s" }} className="footer-link">
  {l.label}
@@ -105,7 +106,7 @@ export default function Footer() {
  </div>
  <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12, fontSize: 14 }}>
  <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
- <span style={{ color: "var(--lime)" }}><Icon name="mail" size={15} /></span> shambetz@gmail.com
+ <span style={{ color: "var(--lime)" }}><Icon name="mail" size={15} /></span> chriscoyouthaflame2025@gmail.com
  </li>
  <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
  <span style={{ color: "var(--lime)" }}><Icon name="phone" size={15} /></span> +254 112 272 061
@@ -126,7 +127,7 @@ export default function Footer() {
  © 2026 CHRISCO Digital Academy. All rights reserved.
  </span>
  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>
- Founded by Wambete Benjamin · Nairobi, Kenya
+ CHRISCO Youth Aflame · Nairobi, Kenya
  </span>
  </div>
  </div>

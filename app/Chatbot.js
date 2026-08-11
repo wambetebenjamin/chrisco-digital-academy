@@ -11,10 +11,10 @@ const menuOptions = [
  { number: "1", label: "View Courses" },
  { number: "2", label: "Pricing" },
  { number: "3", label: "Enroll Now" },
- { number: "4", label: "About Founder" },
+ { number: "4", label: "About Us" },
  { number: "5", label: "Contact" },
  { number: "6", label: "Certificates" },
- { number: "7", label: "Online Classes" },
+ { number: "7", label: "Shop Merch" },
  { number: "8", label: "Send Message" },
 ]
 
@@ -26,12 +26,14 @@ const responses = [
  { keywords: ["video", "editing", "youtube", "reels", "film"], reply: "Our Video Editing and YouTube Automation courses cover cinematic edits, channel growth and automation. These are highly in demand skills." },
  { keywords: ["python", "coding", "programming", "code"], reply: "Our Python Programming course teaches coding fundamentals. SWE & LLM Mastery takes you into building AI powered apps." },
  { keywords: ["ai", "artificial intelligence", "chatgpt", "tools"], reply: "Our SWE & LLM Mastery course teaches you to build AI powered apps and use tools like ChatGPT to boost your creativity and productivity." },
- { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: shambetz@gmail.com\nPhone: +254112272061" },
- { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly.\nEmail: shambetz@gmail.com\nPhone: +254112272061\n\nYou can also type 8 to send us a message right here." },
- { keywords: ["4", "wambete", "benjamin", "founder", "instructor", "teacher", "who"], reply: "Wambete Benjamin is our founder and lead instructor. He is a CS Graduate skilled in graphic design, web development, video editing, animation, social media and AI." },
- { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "nairobi"], reply: "Reach us here:\nEmail: shambetz@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Nairobi, Kenya" },
+ { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: chriscoyouthaflame2025@gmail.com\nPhone: +254112272061" },
+ { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly.\nEmail: chriscoyouthaflame2025@gmail.com\nPhone: +254112272061\n\nYou can also type 8 to send us a message right here." },
+ { keywords: ["4", "who", "about", "mission", "team"], reply: "CHRISCO Digital Academy is a youth focused learning platform under CHRISCO Youth Aflame, based in Nairobi, Kenya. We exist to bridge the digital divide with practical, affordable digital skills training for African youth." },
+ { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "nairobi"], reply: "Reach us here:\nEmail: chriscoyouthaflame2025@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Nairobi, Kenya" },
  { keywords: ["6", "certificate", "certification", "qualify"], reply: "Yes. You receive a certificate upon completing any course. It is practical skills based and recognized." },
- { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes. We offer both online and in person classes. Learn from anywhere in Kenya and beyond." },
+ { keywords: ["7", "merch", "shop", "tshirt", "t-shirt", "merchandise", "book", "swag"], reply: "We have CHRISCO branded merch: t shirts, hoodies, study books, stickers, and more. Head to the Shop page to browse and order." },
+ { keywords: ["online", "remote", "zoom", "virtual"], reply: "Yes. We offer both online and in person classes. Learn from anywhere in Kenya and beyond." },
+ { keywords: ["7", "shop", "merch", "tshirt", "t-shirt", "merchandise", "hoodie", "book", "sticker"], reply: "We sell CHRISCO branded merch: t shirts, hoodies, study books, stickers and more. Visit the Shop page to place an order." },
  { keywords: ["study buddy", "buddy", "community", "friends"], reply: "We have Study Buddies automated peer matching and Group Study Rooms. Head to the Community page to join a squad." },
  { keywords: ["streak", "xp", "badge", "leaderboard", "gamif"], reply: "Earn XP and keep a daily streak as you complete lessons. Climb the leaderboard and unlock badges every week." },
  { keywords: ["hello", "hi", "hey", "hujambo", "start", "menu"], reply: "SHOW_MENU" },
@@ -43,7 +45,7 @@ function getReply(input) {
  for (const item of responses) {
  if (item.keywords.some((k) => lower.includes(k))) return item.reply
  }
- return "I am not sure about that. Here is what I can help with. Type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Founder\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message"
+ return "I am not sure about that. Here is what I can help with. Type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Us\n5. Contact\n6. Certificates\n7. Shop Merch\n8. Send a Message"
 }
 
 export default function Chatbot() {
@@ -64,7 +66,7 @@ export default function Chatbot() {
  setMessages((prev) => [
  ...prev,
  { role: "user", content: userInput },
- { role: "assistant", content: "Sure. Fill the form below and your message will go straight to Wambete." },
+ { role: "assistant", content: "Sure. Fill the form below and your message will go straight to the CHRISCO team." },
  ])
  setShowForm(true)
  setInput("")
@@ -98,14 +100,14 @@ export default function Chatbot() {
  }, PUBLIC_KEY)
  setMessages((prev) => [...prev, {
  role: "assistant",
- content: `Message sent. Wambete will get back to you soon. Asante, ${form.name}.`,
+ content: `Message sent. The CHRISCO team will get back to you soon. Asante, ${form.name}.`,
  }])
  setForm({ name: "", email: "", phone: "", message: "" })
  setShowForm(false)
  } catch {
  setMessages((prev) => [...prev, {
  role: "assistant",
- content: "Sorry, the message failed to send. Email us directly at shambetz@gmail.com",
+ content: "Sorry, the message failed to send. Email us directly at chriscoyouthaflame2025@gmail.com",
  }])
  }
  setSending(false)
@@ -193,7 +195,7 @@ export default function Chatbot() {
  {showForm && (
  <div style={{ padding: "14px 16px", background: "#fff", borderTop: "2.5px solid var(--ink)" }}>
  <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "var(--ink)", fontSize: 13.5, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
- <Icon name="mail" size={15} style={{ color: "var(--purple)" }} /> Send Wambete a message
+ <Icon name="mail" size={15} style={{ color: "var(--purple)" }} /> Send the CHRISCO team a message
  </div>
  <input className="input" placeholder="Your Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={{ marginBottom: 8, padding: "10px 14px", fontSize: 13 }} />
  <input className="input" placeholder="Your Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} style={{ marginBottom: 8, padding: "10px 14px", fontSize: 13 }} />

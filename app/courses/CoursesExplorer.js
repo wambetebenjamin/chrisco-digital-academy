@@ -51,7 +51,7 @@ export default function CoursesExplorer() {
  setSent(true)
  setForm({ name: "", email: "", phone: "" })
  } catch {
- alert("Failed to send. Please email shambetz@gmail.com directly.")
+ alert("Failed to send. Please email chriscoyouthaflame2025@gmail.com directly.")
  }
  setSending(false)
  }
@@ -570,7 +570,7 @@ export default function CoursesExplorer() {
  Enrollment sent.
  </h3>
  <p style={{ color: "var(--ink)", fontSize: 14, marginBottom: 20, lineHeight: 1.6 }}>
- Wambete will contact you soon on WhatsApp or email. Karibu to CHRISCO Digital Academy.
+ Our team will contact you soon on WhatsApp or email. Karibu to CHRISCO Digital Academy.
  </p>
  <button onClick={() => setSelected(null)} className="btn btn-ink" style={{ cursor: "pointer" }}>
  Close

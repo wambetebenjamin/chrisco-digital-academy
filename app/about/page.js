@@ -11,7 +11,7 @@ import PhotoBand from "../components/PhotoBand"
 export const metadata = {
  title: "About Us",
  description:
- "CHRISCO Digital Academy is a youth focused learning platform under CHRISCO Youth Aflame, founded by Wambete Benjamin. We bridge the digital divide with practical, affordable digital skills training across Africa.",
+ "CHRISCO Digital Academy is a youth focused learning platform under CHRISCO Youth Aflame. We bridge the digital divide with practical, affordable digital skills training across Africa.",
 }
 
 const stats = [
@@ -21,18 +21,18 @@ const stats = [
  { number: "100%", label: "Practical Skills", color: "yellow" },
 ]
 
-const founderTags = [
- { icon: "cap", label: "CS Graduate" },
- { icon: "palette", label: "Designer" },
- { icon: "code", label: "Developer" },
- { icon: "clapper", label: "Video Editor" },
- { icon: "robot", label: "AI Expert" },
+const skillTags = [
+ { icon: "cap", label: "Certified" },
+ { icon: "palette", label: "Design" },
+ { icon: "code", label: "Code" },
+ { icon: "clapper", label: "Video" },
+ { icon: "robot", label: "AI" },
 ]
 
 const values = [
  { icon: "globe", title: "Accessible", desc: "Affordable, beginner friendly learning for every young person in Africa.", color: "lime" },
  { icon: "wrench", title: "Practical", desc: "Every course ends with a real project you can show and sell.", color: "purple" },
- { icon: "users", title: "Mentorship", desc: "Learn directly from a founder who works in these fields every day.", color: "pink" },
+ { icon: "users", title: "Mentorship", desc: "Learn directly from working professionals who live these skills every day.", color: "pink" },
  { icon: "flame", title: "Community", desc: "Join a growing family of young creators, coders and entrepreneurs.", color: "yellow" },
 ]
 
@@ -87,13 +87,13 @@ export default function About() {
  practical skills to turn them into income. CHRISCO Digital Academy fixes that.
  </p>
  <p className="lead" style={{ marginTop: 16 }}>
- Founded by <strong style={{ color: "var(--ink)" }}>Wambete Benjamin</strong>, a Computer Science
- graduate with hands on expertise in graphic design, web development, video editing, animation,
- social media and AI.
+ Our team blends working professionals across graphic design, web development, video editing, animation,
+ social media and AI, all committed to passing on real world skills to the next generation of African
+ creators and builders.
  </p>
  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 28 }}>
- {founderTags.map((t) => (
- <span key={t.label} className={`sticker ${["lime","purple","pink","yellow","lime"][Math.floor(Math.random()*4)]}`}>
+ {skillTags.map((t, i) => (
+ <span key={t.label} className={`sticker ${["lime","purple","pink","yellow","lime"][i % 5]}`}>
  <Icon name={t.icon} size={12} strokeWidth={2.4} /> {t.label}
  </span>
  ))}
@@ -178,37 +178,42 @@ export default function About() {
  </div>
  </section>
 
- {/* FOUNDER */}
+ {/* MOVEMENT */}
  <section className="section band-ink" style={{ color: "#fff" }}>
  <div className="container">
  <div className="split" style={{ alignItems: "center" }}>
  <div>
- <span className="eyebrow" style={{ background: "var(--pink)", color: "#fff" }}>Founder and lead instructor</span>
+ <span className="eyebrow" style={{ background: "var(--pink)", color: "#fff" }}>CHRISCO Youth Aflame</span>
  <h2 className="display on-dark" style={{ fontSize: "clamp(2.2rem,5vw,3.8rem)", marginTop: 20 }}>
- Wambete <span style={{ color: "var(--lime)" }}>Benjamin.</span>
+ A youth <span style={{ color: "var(--lime)" }}>movement.</span>
  </h2>
  <p style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--pink)", margin: "14px 0 22px" }}>
- CS Graduate · Designer · Developer · AI Expert
+ Faith · Skills · Community · Impact
  </p>
  <p className="lead on-dark" style={{ maxWidth: 540 }}>
- Passionate about equipping African youth with digital skills that open real doors and transform
- lives. He founded CHRISCO Digital Academy to make quality digital education accessible to every
- young person in Africa.
+ CHRISCO Digital Academy is run by CHRISCO Youth Aflame, a community of young people using creativity,
+ faith and digital skills to build a brighter future across Kenya and Africa. Every course, every
+ study room and every badge is built by youth, for youth.
  </p>
  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "28px 0 34px" }}>
  {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t, i) => (
  <span key={t} className={`sticker ${["lime","yellow","pink","purple","lime","yellow"][i]}`} style={{ fontSize: 10 }}>{t}</span>
  ))}
  </div>
+ <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
  <Link href="/contact" className="btn btn-lime btn-lg" style={{ textDecoration: "none" }}>
  Get in Touch
  </Link>
+ <Link href="/community" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
+ Join Community
+ </Link>
+ </div>
  </div>
  <div style={{ position: "relative" }}>
  <div className="photo-frame tilt-left" style={{ aspectRatio: "4/4.3" }}>
  <Image
  src="/images/workspace.jpg"
- alt="Wambete Benjamin creative workspace"
+ alt="CHRISCO youth learning together"
  fill
  sizes="(min-width: 768px) 46vw, 92vw"
  style={{ objectFit: "cover" }}
@@ -218,8 +223,8 @@ export default function About() {
  <div className="card lime" style={{ position: "absolute", left: 20, bottom: 20, padding: "14px 18px", display: "flex", gap: 12, alignItems: "center" }}>
  <Icon name="flame" size={22} />
  <div>
- <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 13 }}>Founded under</div>
- <div style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em" }}>CHRISCO Youth Aflame</div>
+ <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 13 }}>By youth, for youth</div>
+ <div style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em" }}>Nairobi, Kenya</div>
  </div>
  </div>
  </div>
