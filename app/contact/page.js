@@ -3,6 +3,7 @@ import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
+import PageBackdrop from "../components/PageBackdrop"
 import ContactForm from "./ContactForm"
 
 export const metadata = {
@@ -20,7 +21,8 @@ const infoItems = [
 
 export default function Contact() {
   return (
-    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
+    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <PageBackdrop image="/images/bg-contact.jpg" position="center 35%" />
       <Navbar />
 
       {/* HERO */}

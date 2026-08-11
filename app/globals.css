@@ -52,6 +52,48 @@ body {
   line-height: 1.6;
 }
 
+/* ---------- Full-page photographic backdrop ----------
+   PageBackdrop paints a fixed, per-route photo behind everything (z-index -1).
+   Routes using it mark their <main> with .has-backdrop so no opaque surface
+   is painted over the photo; sections opt into translucency via .section-frost
+   and cards via .card-frost. */
+.has-backdrop { background: transparent !important; }
+
+/* Frosted section surface — lets the backdrop read through while keeping
+   body copy on a legible base. */
+.section-frost {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(18px) saturate(1.12);
+  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  border-bottom: 1px solid rgba(227, 233, 231, 0.5);
+}
+
+/* Alternating tone so consecutive frosted bands stay distinguishable. */
+.section-frost-alt {
+  background: rgba(244, 246, 244, 0.58);
+  backdrop-filter: blur(18px) saturate(1.12);
+  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  border-bottom: 1px solid rgba(227, 233, 231, 0.45);
+}
+
+/* Cards sitting on a frosted band need a touch more opacity to hold contrast. */
+.card-frost {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Graceful degradation: browsers without backdrop-filter get opaque surfaces
+   rather than washed-out, unreadable text over the photo. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .section-frost { background: rgba(255, 255, 255, 0.95); }
+  .section-frost-alt { background: rgba(244, 246, 244, 0.95); }
+  .card-frost { background: #fff; }
+}
+
 h1, h2, h3, h4, h5 {
   font-family: var(--font-head);
   color: var(--ink);

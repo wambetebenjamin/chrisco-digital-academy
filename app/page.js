@@ -4,6 +4,7 @@ import Navbar from "./Navbar"
 import Footer from "./components/Footer"
 import Chatbot from "./Chatbot"
 import PhotoBand from "./components/PhotoBand"
+import PageBackdrop from "./components/PageBackdrop"
 import Icon from "./components/Icon"
 import { courses, categories, categoryCounts } from "./data/courses"
 
@@ -40,18 +41,17 @@ export default function Home() {
   const counts = categoryCounts()
 
   return (
-    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
+    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <PageBackdrop image="/images/bg-home.jpg" position="center 30%" />
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "var(--navy)" }}>
-        {/* Cinematic photo backdrop */}
-        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/bg-home.jpg" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.4 }} />
-        </div>
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.94) 0%, rgba(0,35,51,0.78) 50%, rgba(1,58,79,0.55) 100%)" }} />
+      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)" }}>
+        {/* The page-wide PageBackdrop supplies the photo; the hero only needs
+            its dark scrim so the white display type stays legible. */}
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.90) 0%, rgba(0,35,51,0.72) 50%, rgba(1,58,79,0.50) 100%)" }} />
         <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
-        <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, var(--paper), transparent)" }} />
+        <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
             style={{
@@ -287,7 +287,7 @@ export default function Home() {
       </div>
 
       {/* ================= SKILLS ================= */}
-      <section className="section section-paper">
+      <section className="section section-frost">
         <div className="container">
           <div style={{ maxWidth: 640, marginBottom: 56 }}>
             <span className="eyebrow">What you&apos;ll master</span>
@@ -327,7 +327,7 @@ export default function Home() {
       </section>
 
       {/* ================= FEATURED COURSES ================= */}
-      <section className="section" style={{ background: "#F4F6F4" }}>
+      <section className="section section-frost-alt">
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 48 }}>
             <div>
@@ -394,7 +394,7 @@ export default function Home() {
       </section>
 
       {/* ================= HOW IT WORKS ================= */}
-      <section className="section section-paper">
+      <section className="section section-frost">
         <div className="container">
           <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
             <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
@@ -448,7 +448,7 @@ export default function Home() {
       </section>
 
       {/* ================= FOUNDER ================= */}
-      <section className="section section-navy" style={{ position: "relative", overflow: "hidden" }}>
+      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.92)", color: "rgba(255,255,255,0.72)" }}>
         <div aria-hidden style={{ position: "absolute", inset: 0 }}>
           <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.08 }} />
         </div>
