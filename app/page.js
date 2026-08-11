@@ -3,6 +3,7 @@ import Image from "next/image"
 import Navbar from "./Navbar"
 import Footer from "./components/Footer"
 import Chatbot from "./Chatbot"
+import PhotoBand from "./components/PhotoBand"
 import Icon from "./components/Icon"
 import { courses, categories, categoryCounts } from "./data/courses"
 
@@ -43,8 +44,15 @@ export default function Home() {
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section style={{ padding: "150px 0 0", position: "relative" }}>
-        <div className="container">
+      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "var(--navy)" }}>
+        {/* Cinematic photo backdrop */}
+        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
+          <Image src="/images/bg-home.jpg" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.4 }} />
+        </div>
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.94) 0%, rgba(0,35,51,0.78) 50%, rgba(1,58,79,0.55) 100%)" }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
+        <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, var(--paper), transparent)" }} />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
             style={{
               display: "flex",
@@ -52,13 +60,13 @@ export default function Home() {
               alignItems: "center",
               gap: 16,
               flexWrap: "wrap",
-              borderBottom: "1px solid var(--line)",
+              borderBottom: "1px solid rgba(255,255,255,0.16)",
               paddingBottom: 20,
               marginBottom: 48,
             }}
           >
-            <span className="eyebrow fade-up">CHRISCO Digital Academy — Nairobi, Kenya</span>
-            <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }} className="fade-up fade-up-1">
+            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy — Nairobi, Kenya</span>
+            <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
               Under CHRISCO Youth Aflame
             </span>
           </div>
@@ -66,7 +74,7 @@ export default function Home() {
           <div className="hero-grid">
             {/* Category sidebar */}
             <aside className="hero-side" style={{ minWidth: 0 }}>
-              <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>
+              <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>
                 Explore by Category
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -74,13 +82,13 @@ export default function Home() {
                   <Link
                     key={cat.name}
                     href="/courses"
-                    className="pill"
+                    className="pill pill-dark"
                     style={{ justifyContent: "space-between", width: "100%", textDecoration: "none" }}
                   >
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
                       <Icon name={cat.icon} size={15} /> {cat.name}
                     </span>
-                    <span style={{ color: "var(--muted)", fontWeight: 700 }}>{counts[cat.name] || 0}</span>
+                    <span style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>{counts[cat.name] || 0}</span>
                   </Link>
                 ))}
               </div>
@@ -89,6 +97,7 @@ export default function Home() {
                 style={{
                   marginTop: 20,
                   background: "var(--navy)",
+                  border: "1px solid rgba(255,255,255,0.14)",
                   borderRadius: 18,
                   padding: "20px 18px",
                   color: "#fff",
@@ -108,14 +117,14 @@ export default function Home() {
 
             {/* Main hero content */}
             <div style={{ minWidth: 0 }}>
-              <h1 className="display fade-up" style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)" }}>
+              <h1 className="display on-dark fade-up" style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)" }}>
                 Learn skills
                 <br />
-                that <span className="outline" style={{ WebkitTextStrokeColor: "var(--ink)" }}>pay</span>{" "}
-                <span className="accent">for life.</span>
+                that <span className="outline" style={{ WebkitTextStrokeColor: "rgba(255,255,255,0.85)" }}>pay</span>{" "}
+                <span className="accent-bright">for life.</span>
               </h1>
 
-              <p className="lead fade-up fade-up-1" style={{ maxWidth: 560, marginTop: 26 }}>
+              <p className="lead on-dark fade-up fade-up-1" style={{ maxWidth: 560, marginTop: 26 }}>
                 CHRISCO Digital Academy is a modern learning platform for African youth — practical courses in
                 design, code, marketing, writing, video and AI, taught by Wambete Benjamin.
               </p>
@@ -124,7 +133,7 @@ export default function Home() {
                 <Link href="/courses" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
                   Explore Courses →
                 </Link>
-                <Link href="/about" className="btn btn-outline btn-lg" style={{ textDecoration: "none" }}>
+                <Link href="/about" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
                   Meet the Founder
                 </Link>
               </div>
@@ -135,7 +144,7 @@ export default function Home() {
                   display: "grid",
                   gridTemplateColumns: "repeat(2, 1fr)",
                   gap: 0,
-                  borderTop: "1px solid var(--line)",
+                  borderTop: "1px solid rgba(255,255,255,0.16)",
                   marginTop: 56,
                 }}
               >
@@ -144,13 +153,13 @@ export default function Home() {
                     key={i}
                     style={{
                       padding: "22px 24px 22px 0",
-                      borderBottom: "1px solid var(--line)",
-                      borderRight: i % 2 === 0 ? "1px solid var(--line)" : "none",
+                      borderBottom: "1px solid rgba(255,255,255,0.16)",
+                      borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.16)" : "none",
                       paddingRight: i % 2 === 0 ? 24 : 0,
                     }}
                   >
-                    <div className="stat-num" style={{ color: "var(--ink)" }}>{s.value}</div>
-                    <div style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 600, marginTop: 4 }}>
+                    <div className="stat-num" style={{ color: "#fff" }}>{s.value}</div>
+                    <div style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 600, marginTop: 4 }}>
                       {s.label}
                     </div>
                   </div>
@@ -439,8 +448,11 @@ export default function Home() {
       </section>
 
       {/* ================= FOUNDER ================= */}
-      <section className="section section-navy">
-        <div className="container">
+      <section className="section section-navy" style={{ position: "relative", overflow: "hidden" }}>
+        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
+          <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.08 }} />
+        </div>
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split" style={{ alignItems: "center" }}>
             <div>
               <span className="eyebrow on-dark">Meet the founder</span>
@@ -522,29 +534,18 @@ export default function Home() {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="section section-green" style={{ padding: "88px 0" }}>
-        <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 32, flexWrap: "wrap" }}>
-            <div style={{ maxWidth: 620 }}>
-              <span className="eyebrow on-green">Start today</span>
-              <h2 className="display" style={{ fontSize: "clamp(1.9rem, 4.2vw, 3.2rem)", marginTop: 14 }}>
-                Ready to build your digital career?
-              </h2>
-              <p style={{ marginTop: 14, fontWeight: 500, color: "rgba(0,35,51,0.75)", fontSize: "1.02rem", lineHeight: 1.7 }}>
-                Real skills. Real income. Real future. Join CHRISCO Digital Academy and start learning this week.
-              </p>
-            </div>
-            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-              <a href="https://wa.me/254112272061" className="btn btn-navy btn-lg" style={{ textDecoration: "none" }}>
-                <Icon name="whatsapp" size={17} /> WhatsApp Us
-              </a>
-              <Link href="/courses" className="btn btn-outline btn-lg" style={{ textDecoration: "none", borderColor: "var(--navy)", color: "var(--navy)" }}>
-                Browse Courses →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PhotoBand
+        eyebrow="Start today"
+        title="Ready to build your digital career?"
+        body="Real skills. Real income. Real future. Join CHRISCO Digital Academy and start learning this week."
+      >
+        <a href="https://wa.me/254112272061" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
+          <Icon name="whatsapp" size={17} /> WhatsApp Us
+        </a>
+        <Link href="/courses" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
+          Browse Courses →
+        </Link>
+      </PhotoBand>
 
       <Footer />
       <Chatbot />

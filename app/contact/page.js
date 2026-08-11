@@ -2,6 +2,7 @@ import Navbar from "../Navbar"
 import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
+import PhotoHero from "../components/PhotoHero"
 import ContactForm from "./ContactForm"
 
 export const metadata = {
@@ -23,18 +24,17 @@ export default function Contact() {
       <Navbar />
 
       {/* HERO */}
-      <section style={{ padding: "150px 0 64px" }}>
-        <div className="container">
-          <span className="eyebrow fade-up">Get in touch</span>
-          <h1 className="display fade-up fade-up-1" style={{ maxWidth: 820, marginTop: 20 }}>
-            Let&apos;s start a <span className="accent">conversation</span>
-          </h1>
-          <p className="lead fade-up fade-up-2" style={{ maxWidth: 560, marginTop: 24 }}>
-            Have a question, want to enroll, or ready to partner? We respond fast — usually the same day on
-            WhatsApp.
-          </p>
-        </div>
-      </section>
+      <PhotoHero
+        image="/images/bg-contact.jpg"
+        eyebrow="Get in touch"
+        title={
+          <>
+            Let&apos;s start a <span className="accent-bright">conversation</span>
+          </>
+        }
+        titleStyle={{ maxWidth: 820 }}
+        lead="Have a question, want to enroll, or ready to partner? We respond fast — usually the same day on WhatsApp."
+      />
 
       {/* BODY */}
       <section style={{ padding: "0 0 96px" }}>
