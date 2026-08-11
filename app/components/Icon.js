@@ -328,6 +328,14 @@ const paths = {
  <path d="M21 3.5L9.2 13.4" />
  </>
  ),
+ "arrow-up": <path d="M12 19V5M5 12l7-7 7 7" />,
+ "chevron-left": <path d="M15 18l-6-6 6-6" />,
+ "chevron-right": <path d="M9 18l6-6-6-6" />,
+ plus: (
+ <>
+ <path d="M12 5v14M5 12h14" />
+ </>
+ ),
 }
 
 export default function Icon({ name, size = 18, strokeWidth = 1.9, style, className, ...rest }) {

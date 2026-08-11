@@ -8,6 +8,8 @@ import "@fontsource/archivo-black/400.css"
 import "@fontsource-variable/archivo"
 import "@fontsource-variable/inter"
 import { AuthProvider } from "./AuthProvider"
+import { GamificationProvider } from "./GamificationContext"
+import XPToast from "./components/XPToast"
 
 export const metadata = {
  title: {
@@ -35,9 +37,14 @@ export const viewport = {
 export default function RootLayout({ children }) {
  return (
  <html lang="en">
- <body className="antialiased">
- <AuthProvider>{children}</AuthProvider>
- </body>
+<body className="antialiased">
+<AuthProvider>
+  <GamificationProvider>
+    {children}
+    <XPToast />
+  </GamificationProvider>
+</AuthProvider>
+</body>
  </html>
  )
 }

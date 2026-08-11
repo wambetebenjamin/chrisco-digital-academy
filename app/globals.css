@@ -19,9 +19,10 @@
   --purple: #7c3aed;           /* electric purple */
   --purple-deep: #5b21b6;
   --pink: #ff4fa3;             /* hot pink accent */
-  --orange: #ff7a1a;           /* blaze orange accent */
-  --blue: #2f7bff;             /* electric blue */
-  --yellow: #ffd23f;
+ --orange: #ff7a1a;           /* blaze orange accent */
+ --red: #ef2b4a;              /* hot red */
+ --blue: #2f7bff;             /* electric blue */
+ --yellow: #ffd23f;
   --muted: #5b6170;
   --line: #0a0a0a;
   --line-soft: #1f1f24;
@@ -66,40 +67,57 @@ html:has(.has-backdrop) { background: var(--ink); }
 body:has(.has-backdrop) { background: transparent; }
 body:has(.has-backdrop)::before { display: none; }
 
-/* Soft text halo so body copy stays readable when it sits directly
-   over the photographic backdrop (before any card/band covers it). */
+/* Stronger cream text halo so body copy stays readable even over vivid photos */
 .has-backdrop p,
 .has-backdrop .lead,
-.has-backdrop .eyebrow,
 .has-backdrop .title,
 .has-backdrop .display,
-.has-backdrop .stat-num {
+.has-backdrop .stat-num,
+.has-backdrop li,
+.has-backdrop label {
   text-shadow:
-    0 0 1px rgba(255,248,236,0.9),
-    0 0 6px rgba(255,248,236,0.75),
-    0 0 14px rgba(255,248,236,0.55);
+    0 0 1px rgba(255,248,236,0.98),
+    0 0 3px rgba(255,248,236,0.95),
+    0 0 8px rgba(255,248,236,0.85),
+    0 0 16px rgba(255,248,236,0.7),
+    0 2px 0 rgba(255,248,236,0.4);
 }
 .has-backdrop .lead { color: var(--ink); }
 .has-backdrop .display.on-dark,
 .has-backdrop .title.on-dark {
   color: #fff;
   text-shadow:
-    0 0 1px rgba(0,0,0,0.9),
-    0 0 6px rgba(0,0,0,0.7),
-    0 2px 0 rgba(0,0,0,0.5);
+    0 0 1px rgba(0,0,0,0.95),
+    0 0 3px rgba(0,0,0,0.9),
+    0 0 8px rgba(0,0,0,0.75),
+    0 2px 0 rgba(0,0,0,0.6);
 }
 .has-backdrop .on-dark.lead {
-  color: rgba(255,255,255,0.92);
+  color: rgba(255,255,255,0.96);
   text-shadow:
-    0 0 1px rgba(0,0,0,0.85),
-    0 0 6px rgba(0,0,0,0.7);
+    0 0 1px rgba(0,0,0,0.9),
+    0 0 4px rgba(0,0,0,0.8),
+    0 0 10px rgba(0,0,0,0.6);
 }
-.has-backdrop .eyebrow { text-shadow: none; } /* eyebrows sit on stickers */
+.has-backdrop .eyebrow,
+.has-backdrop .sticker,
+.has-backdrop .btn,
+.has-backdrop .pill,
+.has-backdrop .xp-chip { text-shadow: none; } /* solid UI, no halo */
 .has-backdrop .accent-bright {
   color: var(--purple);
   text-shadow:
-    0 0 1px rgba(255,248,236,0.9),
-    0 0 8px rgba(255,248,236,0.6);
+    0 0 1px rgba(255,248,236,0.98),
+    0 0 6px rgba(255,248,236,0.9),
+    0 0 14px rgba(255,248,236,0.7);
+}
+/* Lists in hero/content on top of photos: keep the dots visible against the halo */
+.has-backdrop ul { list-style: none; padding-left: 0; }
+.has-backdrop ul li { position: relative; padding-left: 18px; }
+.has-backdrop ul li::before {
+  content: ""; position: absolute; left: 0; top: 10px;
+  width: 8px; height: 8px; background: var(--ink); border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--ink);
 }
 
 /* Subtle paper dot grid for pages without a photographic backdrop */
@@ -696,6 +714,8 @@ img { display: block; max-width: 100%; }
 .cal-cell.event { background: var(--purple); color: #fff; }
 .cal-cell.due { background: var(--pink); color: #fff; }
 .cal-cell.class { background: var(--lime); }
+.cal-cell.personal { background: var(--yellow); color: var(--ink); }
+.cal-cell.today-mark { outline: 3px solid var(--ink); outline-offset: 1; }
 
 /* Resource vault item */
 .vault-item {
@@ -738,7 +758,50 @@ img { display: block; max-width: 100%; }
 @media (max-width: 767px) {
   .hide-mobile { display: none !important; }
   .chat-window { right: 12px !important; left: 12px; width: auto !important; }
+  .container { padding-left: 16px; padding-right: 16px; }
+  .section { padding: 64px 0; }
+  .display { font-size: clamp(2.2rem, 11vw, 3.6rem) !important; }
+  .title { font-size: clamp(1.5rem, 6vw, 2.2rem) !important; }
+  .btn { padding: 13px 20px; font-size: 14px; }
+  .btn-lg { padding: 16px 24px; font-size: 15px; }
+  .card { box-shadow: 5px 5px 0 0 var(--ink); }
+  .photo-frame { box-shadow: 8px 8px 0 0 var(--ink) !important; }
+  .grid-2, .grid-3, .grid-4 { gap: 18px; }
+  .marquee-item { font-size: 1rem; padding: 14px 18px; gap: 20px; }
+  .eyebrow { font-size: 11px; padding: 5px 12px; }
 }
 @media (min-width: 768px) {
   .hide-desktop { display: none !important; }
+}
+
+/* XP chip pulse when updated */
+@keyframes chipPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.xp-chip.pulse { animation: chipPop 0.5s cubic-bezier(.16,1,.3,1); }
+
+/* Streak dot when DONE/TODAY */
+.streak-dot.done {
+  background: var(--lime);
+  color: var(--ink);
+}
+.streak-dot.today {
+  background: var(--pink);
+  color: #fff;
+  animation: wiggle 1.4s ease-in-out infinite;
+}
+
+/* Confetti burst small animation */
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pop { animation: pop 0.45s cubic-bezier(.16,1,.3,1) both; }
+
+/* Navbar on mobile: a touch more compact */
+@media (max-width: 480px) {
+  nav .container { padding-left: 10px !important; padding-right: 10px !important; }
 }

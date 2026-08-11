@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useAuth } from "./AuthProvider"
+import { useGamification } from "./GamificationContext"
 import Icon from "./components/Icon"
 
 const links = [
@@ -16,7 +17,8 @@ const links = [
 export default function Navbar() {
  const [open, setOpen] = useState(false)
  const [scrolled, setScrolled] = useState(false)
- const { user, profile, logout } = useAuth()
+ const { user, logout } = useAuth()
+ const { xp, level, streak, levelProgress } = useGamification()
  const pathname = usePathname()
 
  useEffect(() => {
@@ -103,29 +105,39 @@ export default function Navbar() {
  </span>
  </Link>
 
- {/* Desktop nav */}
- <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 4 }}>
- {links.map((l) => (
- <Link
- key={l.href}
- href={l.href}
- style={{
- color: isActive(l.href) ? "var(--ink)" : "var(--body)",
- textDecoration: "none",
- fontFamily: "var(--font-head)",
- fontSize: 14,
- fontWeight: 700,
- padding: "8px 14px",
- borderRadius: 999,
- transition: "all 0.2s",
- background: isActive(l.href) ? "var(--lime)" : "transparent",
- border: isActive(l.href) ? "2px solid var(--ink)" : "2px solid transparent",
- }}
- >
- {l.label}
- </Link>
- ))}
- </div>
+        {/* Desktop nav */}
+        <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            {links.map((l) => (
+            <Link
+                key={l.href}
+                href={l.href}
+                style={{
+                color: isActive(l.href) ? "var(--ink)" : "var(--ink)",
+                textDecoration: "none",
+                fontFamily: "var(--font-head)",
+                fontSize: 14,
+                fontWeight: 700,
+                padding: "8px 14px",
+                borderRadius: 999,
+                transition: "all 0.2s",
+                background: isActive(l.href) ? "var(--lime)" : "transparent",
+                border: isActive(l.href) ? "2px solid var(--ink)" : "2px solid transparent",
+                }}
+            >
+                {l.label}
+            </Link>
+            ))}
+        </div>
+
+        {/* XP + Streak chips (desktop) */}
+        <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Link href="/dashboard" className="xp-chip" style={{ textDecoration: "none", background: "var(--yellow)" }}>
+                <Icon name="bolt" size={12} /> Lv {level} · {xp} XP
+            </Link>
+            <Link href="/dashboard" className="xp-chip" style={{ textDecoration: "none", background: "var(--orange)", color: "#fff" }}>
+                <Icon name="flame" size={12} /> {streak}d
+            </Link>
+        </div>
 
  {/* Auth actions */}
  <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -190,27 +202,35 @@ export default function Navbar() {
  animation: "fadeUp 0.3s ease",
  }}
  >
- {links.map((l) => (
- <Link
- key={l.href}
- href={l.href}
- onClick={() => setOpen(false)}
- style={{
- color: isActive(l.href) ? "var(--ink)" : "var(--body)",
- textDecoration: "none",
- fontFamily: "var(--font-head)",
- fontSize: 15,
- fontWeight: 700,
- padding: "12px 14px",
- borderRadius: 12,
- background: isActive(l.href) ? "var(--lime)" : "transparent",
- border: isActive(l.href) ? "2px solid var(--ink)" : "2px solid transparent",
- }}
- >
- {l.label}
- </Link>
- ))}
- <div style={{ borderTop: "2px dashed var(--ink)", margin: "10px 0 6px" }} />
+                {links.map((l) => (
+                <Link
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    style={{
+                    color: "var(--ink)",
+                    textDecoration: "none",
+                    fontFamily: "var(--font-head)",
+                    fontSize: 15,
+                    fontWeight: 700,
+                    padding: "12px 14px",
+                    borderRadius: 12,
+                    background: isActive(l.href) ? "var(--lime)" : "transparent",
+                    border: isActive(l.href) ? "2px solid var(--ink)" : "2px solid transparent",
+                    }}
+                >
+                    {l.label}
+                </Link>
+                ))}
+                <div style={{ display: "flex", gap: 8, padding: "8px 0" }}>
+                    <Link href="/dashboard" onClick={() => setOpen(false)} className="xp-chip" style={{ textDecoration: "none", background: "var(--yellow)", flex: 1, justifyContent: "center" }}>
+                        <Icon name="bolt" size={12} /> Lv {level} · {xp} XP
+                    </Link>
+                    <Link href="/dashboard" onClick={() => setOpen(false)} className="xp-chip" style={{ textDecoration: "none", background: "var(--orange)", color: "#fff", flex: 1, justifyContent: "center" }}>
+                        <Icon name="flame" size={12} /> {streak} day
+                    </Link>
+                </div>
+            <div style={{ borderTop: "2px dashed var(--ink)", margin: "6px 0" }} />
  {user ? (
  <button
  onClick={() => { logout(); setOpen(false); }}
