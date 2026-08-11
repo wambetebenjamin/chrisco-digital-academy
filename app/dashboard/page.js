@@ -255,14 +255,14 @@ export default function Dashboard() {
   )
 }
 
-// Small framed backdrop for the dashboard (reuses home image for consistency)
+// Small framed backdrop for the dashboard (reuses courses image for consistency)
 function PageBackdropDash() {
   return (
-    <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: -1, pointerEvents: "none", padding: 18 }}>
-      <div style={{ position: "absolute", inset: 18, borderRadius: 28, overflow: "hidden", border: "3px solid var(--ink)", boxShadow: "10px 10px 0 0 var(--ink)" }}>
+    <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: -1, pointerEvents: "none", padding: 14 }}>
+      <div style={{ position: "absolute", inset: 14, borderRadius: 28, overflow: "hidden", border: "4px solid var(--ink)", boxShadow: "12px 12px 0 0 var(--ink)" }}>
         <Image src="/images/bg-courses.jpg" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,248,236,0.78) 0%, rgba(243,234,216,0.9) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(10,10,10,0.08) 1px, transparent 1px)", backgroundSize: "22px 22px", mixBlendMode: "multiply", opacity: 0.5 }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,248,236,0.28) 0%, rgba(243,234,216,0.55) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(700px 500px at 88% 6%, rgba(198,255,61,0.18), transparent 62%), radial-gradient(760px 560px at 4% 94%, rgba(124,58,237,0.18), transparent 62%)" }} />
       </div>
     </div>
   )
