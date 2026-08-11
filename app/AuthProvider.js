@@ -5,6 +5,7 @@ import { supabase } from "./supabase"
 
 const AuthContext = createContext(null)
 const PUBLIC_ROUTES = ["/sign-in", "/sign-up"]
+const PROTECTED_ROUTES = ["/dashboard"]
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -12,6 +13,15 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
   const pathname = usePathname()
+
+  async function fetchProfile(userId) {
+    const { data } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single()
+    if (data) setProfile(data)
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -29,20 +39,12 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe()
   }, [])
 
-  async function fetchProfile(userId) {
-    const { data } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .single()
-    if (data) setProfile(data)
-  }
-
   useEffect(() => {
     if (loading) return
-    const isPublic = PUBLIC_ROUTES.includes(pathname)
-    if (!user && !isPublic) router.push("/sign-in")
-    if (user && isPublic) router.push("/")
+    // Public site: only the dashboard requires signing in.
+    if (PROTECTED_ROUTES.includes(pathname) && !user) router.push("/sign-in")
+    // Signed-in users skip the auth screens.
+    if (user && PUBLIC_ROUTES.includes(pathname)) router.push("/dashboard")
   }, [user, loading, pathname])
 
   async function signUp(name, email, password) {
@@ -85,25 +87,46 @@ export function AuthProvider({ children }) {
     return data || []
   }
 
-  if (loading) return (
-    <div style={{
-      minHeight:"100vh",
-      background:"linear-gradient(160deg, #0d0a1a 0%, #2d1b69 50%, #4c1d95 100%)",
-      display:"flex", alignItems:"center", justifyContent:"center"
-    }}>
-      <div style={{textAlign:"center"}}>
-        <div style={{
-          width:64,height:64,borderRadius:20,
-          background:"linear-gradient(135deg,#f59e0b,#fbbf24)",
-          display:"flex",alignItems:"center",justifyContent:"center",
-          fontSize:"1.8rem",margin:"0 auto 16px",
-          boxShadow:"0 8px 24px rgba(245,158,11,0.4)"
-        }}>🎓</div>
-        <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.2rem",fontWeight:800,color:"#f59e0b",marginBottom:8}}>CHRISCO Digital Academy</div>
-        <div style={{color:"rgba(255,255,255,0.4)",fontSize:14}}>Loading...</div>
+  if (loading) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "var(--navy)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <div
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: 18,
+              background: "var(--green)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "var(--font-display)",
+              fontSize: "1.6rem",
+              color: "var(--navy)",
+              margin: "0 auto 20px",
+              transform: "rotate(-4deg)",
+            }}
+          >
+            C
+          </div>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", color: "#fff", marginBottom: 16 }}>
+            CHRISCO Digital Academy
+          </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div className="spinner" />
+          </div>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   return (
     <AuthContext.Provider value={{ user, profile, signUp, signIn, logout, enrollCourse, getEnrollments }}>

@@ -1,182 +1,229 @@
 "use client"
+import Link from "next/link"
 import Navbar from "../Navbar"
+import Footer from "../components/Footer"
+import Chatbot from "../Chatbot"
+
+const stats = [
+  { number: "500+", label: "Youth Trained" },
+  { number: "11", label: "Courses Available" },
+  { number: "5+", label: "Counties Reached" },
+  { number: "100%", label: "Practical Skills" },
+]
+
+const values = [
+  { icon: "🌍", title: "Accessible", desc: "Affordable, beginner-friendly learning for every young person in Africa." },
+  { icon: "🛠️", title: "Practical", desc: "Every course ends with a real project you can show — and sell." },
+  { icon: "🤝", title: "Mentorship", desc: "Learn directly from a founder who works in these fields every day." },
+  { icon: "🔥", title: "Community", desc: "Join a growing family of young creators, coders and entrepreneurs." },
+]
 
 export default function About() {
   return (
-    <main style={{background:"var(--cream)",minHeight:"100vh"}}>
-      <style>{`
-        @keyframes cometFly {
-          0% { transform: translate(0,0) rotate(45deg); opacity:1; }
-          100% { transform: translate(600px,600px) rotate(45deg); opacity:0; }
-        }
-        @keyframes float {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(-15px); }
-        }
-        @keyframes orbFloat {
-          0%,100% { transform: translate(0,0) scale(1); }
-          33% { transform: translate(30px,-20px) scale(1.05); }
-          66% { transform: translate(-20px,30px) scale(0.95); }
-        }
-        .comet {
-          position:absolute; width:2px; height:90px;
-          background:linear-gradient(to bottom, #f59e0b, transparent);
-          border-radius:50%; animation:cometFly linear infinite;
-          pointer-events:none;
-        }
-        .float-anim { animation:float 4s ease-in-out infinite; }
-        .stat-card {
-          background:white; border:1px solid rgba(124,58,237,0.1);
-          border-radius:24px; padding:32px; text-align:center;
-          transition:all 0.3s;
-        }
-        .stat-card:hover {
-          transform:translateY(-6px);
-          box-shadow:0 20px 40px rgba(124,58,237,0.12);
-          border-color:rgba(245,158,11,0.4);
-        }
-        .skill-tag {
-          background:rgba(124,58,237,0.08);
-          border:1px solid rgba(124,58,237,0.15);
-          color:#7c3aed; font-size:13px; font-weight:600;
-          padding:6px 16px; border-radius:50px;
-          display:inline-block;
-        }
-        .tag-pill {
-          display:inline-flex; align-items:center; gap:6px;
-          background:rgba(124,58,237,0.08);
-          border:1px solid rgba(124,58,237,0.15);
-          color:#7c3aed; padding:6px 16px; border-radius:50px;
-          font-size:13px; font-weight:600;
-        }
-      `}</style>
-
+    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
       <Navbar />
 
       {/* HERO */}
-      <section style={{
-        background:"linear-gradient(160deg, #0d0a1a 0%, #2d1b69 50%, #4c1d95 100%)",
-        padding:"160px 24px 100px",
-        textAlign:"center", position:"relative", overflow:"hidden"
-      }}>
-        <div style={{position:"absolute",width:500,height:500,background:"rgba(124,58,237,0.12)",borderRadius:"50%",top:-150,right:-150,filter:"blur(80px)",animation:"orbFloat 8s ease-in-out infinite"}}></div>
-        <div style={{position:"absolute",width:350,height:350,background:"rgba(245,158,11,0.07)",borderRadius:"50%",bottom:-100,left:-100,filter:"blur(60px)",animation:"orbFloat 10s ease-in-out infinite",animationDelay:"2s"}}></div>
-        <div className="comet" style={{top:"10%",left:"15%",animationDuration:"3s"}}></div>
-        <div className="comet" style={{top:"50%",left:"70%",animationDuration:"4s",animationDelay:"1s"}}></div>
-        <div className="comet" style={{top:"70%",left:"30%",animationDuration:"3.5s",animationDelay:"2s"}}></div>
-        <div style={{position:"relative",zIndex:1,maxWidth:700,margin:"0 auto"}}>
-          <span className="tag-pill" style={{background:"rgba(245,158,11,0.15)",border:"1px solid rgba(245,158,11,0.3)",color:"#fde68a",marginBottom:20,display:"inline-block"}}>
-            🌍 About Us
-          </span>
-          <h1 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(2.5rem,5vw,4rem)",fontWeight:800,color:"white",marginBottom:20,lineHeight:1.1}}>
-            We Are Building Africa's
-            <span style={{background:"linear-gradient(90deg,#f59e0b,#fde68a,#f59e0b)",backgroundSize:"200% auto",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}> Digital Future</span>
+      <section style={{ padding: "150px 0 0" }}>
+        <div className="container">
+          <span className="eyebrow fade-up">About us</span>
+          <h1 className="display fade-up fade-up-1" style={{ maxWidth: 900, marginTop: 20 }}>
+            Building Africa&apos;s <span className="outline" style={{ WebkitTextStrokeColor: "var(--ink)" }}>digital</span>{" "}
+            <span className="accent">future.</span>
           </h1>
-          <p style={{color:"rgba(255,255,255,0.6)",fontSize:"1.1rem",lineHeight:1.7}}>
-            A youth-focused learning platform under CHRISCO Youth Aflame — equipping young Africans with practical digital skills that open real doors.
+          <p className="lead fade-up fade-up-2" style={{ maxWidth: 620, marginTop: 26 }}>
+            CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame — equipping
+            young Africans with practical digital skills that open real doors.
           </p>
-        </div>
-        <div style={{position:"absolute",bottom:0,left:0,right:0,height:100,background:"linear-gradient(to bottom, transparent, var(--cream))",pointerEvents:"none"}}></div>
-      </section>
 
-      {/* WHO WE ARE */}
-      <section style={{padding:"80px 24px",background:"var(--cream)"}}>
-        <div style={{maxWidth:1100,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:60,alignItems:"center"}}>
-          <div>
-            <span className="tag-pill" style={{marginBottom:16,display:"inline-block"}}>Who We Are</span>
-            <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(1.8rem,3vw,2.8rem)",fontWeight:800,color:"var(--ink)",marginBottom:20,lineHeight:1.1}}>
-              Born From a Passion to See Youth Thrive
-            </h2>
-            <p style={{color:"var(--muted)",fontSize:"1.05rem",lineHeight:1.8,marginBottom:16}}>
-              CHRISCO Digital Academy is a youth-focused learning platform under <strong style={{color:"var(--purple-mid)"}}>CHRISCO Youth Aflame</strong>. We exist to equip young people across Africa with practical digital skills that open doors to real opportunities.
-            </p>
-            <p style={{color:"var(--muted)",fontSize:"1.05rem",lineHeight:1.8}}>
-              Founded by <strong style={{color:"var(--purple-mid)"}}>Wambete Benjamin</strong> — a Computer Science graduate with expertise in graphic design, web development, video editing, animations, social media management and AI.
-            </p>
-          </div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-            {[
-              {number:"500+",label:"Youth Trained"},
-              {number:"11",label:"Courses Available"},
-              {number:"5+",label:"Counties Reached"},
-              {number:"100%",label:"Practical Skills"},
-            ].map((stat,i) => (
-              <div key={i} className="stat-card">
-                <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"2.5rem",fontWeight:800,color:"#f59e0b",marginBottom:8}}>{stat.number}</div>
-                <div style={{color:"var(--muted)",fontSize:14,fontWeight:500}}>{stat.label}</div>
+          {/* Stats */}
+          <div
+            className="fade-up fade-up-3"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 0,
+              borderTop: "1px solid var(--line)",
+              borderBottom: "1px solid var(--line)",
+              marginTop: 56,
+            }}
+          >
+            {stats.map((s, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "26px 24px 26px 0",
+                  borderRight: i % 2 === 0 ? "1px solid var(--line)" : "none",
+                  borderBottom: i < 2 ? "1px solid var(--line)" : "none",
+                }}
+              >
+                <div className="stat-num" style={{ color: "var(--green-deep)" }}>{s.number}</div>
+                <div style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 600, marginTop: 4 }}>
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* WHO WE ARE */}
+      <section className="section section-paper">
+        <div className="container">
+          <div className="split">
+            <div>
+              <span className="eyebrow">Who we are</span>
+              <h2 className="title" style={{ marginTop: 16 }}>
+                Born from a passion to see <span className="accent">youth thrive</span>
+              </h2>
+              <p className="lead" style={{ marginTop: 22 }}>
+                We exist to bridge the digital divide. Too many young people have talent and ambition — but not the
+                practical skills to turn them into income. CHRISCO Digital Academy fixes that.
+              </p>
+              <p className="lead" style={{ marginTop: 16 }}>
+                Founded by <strong style={{ color: "var(--ink)" }}>Wambete Benjamin</strong> — a Computer Science
+                graduate with hands-on expertise in graphic design, web development, video editing, animation,
+                social media and AI.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 28 }}>
+                <span className="pill pill-soft">🎓 CS Graduate</span>
+                <span className="pill pill-soft">🎨 Designer</span>
+                <span className="pill pill-soft">💻 Developer</span>
+                <span className="pill pill-soft">🎬 Video Editor</span>
+                <span className="pill pill-soft">🤖 AI Expert</span>
+              </div>
+            </div>
+
+            <div>
+              <div style={{ position: "relative" }}>
+                <img
+                  src="/images/hero-tile.jpg"
+                  alt="Learner at CHRISCO Digital Academy"
+                  style={{ width: "100%", borderRadius: "var(--radius-xl)", aspectRatio: "4/3.4", objectFit: "cover", border: "1px solid var(--line)", boxShadow: "var(--shadow-md)" }}
+                />
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 18,
+                    left: 18,
+                    background: "var(--navy)",
+                    color: "#fff",
+                    fontFamily: "var(--font-head)",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    padding: "8px 16px",
+                    borderRadius: 999,
+                  }}
+                >
+                  🇰🇪 Made in Kenya
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* MISSION & VISION */}
-      <section style={{padding:"80px 24px",background:"var(--surface)"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{textAlign:"center",marginBottom:60}}>
-            <span className="tag-pill" style={{marginBottom:16,display:"inline-block"}}>Our Purpose</span>
-            <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(1.8rem,3vw,2.8rem)",fontWeight:800,color:"var(--ink)"}}>
-              Mission & Vision
+      <section className="section" style={{ background: "#F4F6F4" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
+            <span className="eyebrow" style={{ justifyContent: "center" }}>Our purpose</span>
+            <h2 className="title" style={{ marginTop: 16 }}>
+              Mission & <span className="accent">vision</span>
             </h2>
           </div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24}}>
-            <div style={{
-              background:"linear-gradient(135deg, #2d1b69, #7c3aed)",
-              borderRadius:32, padding:"48px 40px",
-              position:"relative", overflow:"hidden"
-            }}>
-              <div style={{position:"absolute",width:200,height:200,background:"rgba(255,255,255,0.05)",borderRadius:"50%",top:-60,right:-60}}></div>
-              <div style={{fontSize:"3rem",marginBottom:20}}>🎯</div>
-              <h3 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.5rem",fontWeight:800,color:"#fde68a",marginBottom:16}}>Our Mission</h3>
-              <p style={{color:"rgba(255,255,255,0.75)",lineHeight:1.8,fontSize:"1.05rem"}}>
-                To bridge the digital divide by providing accessible, affordable and practical digital education to youth across Kenya and beyond.
+
+          <div className="grid-2" style={{ alignItems: "stretch" }}>
+            <div style={{ background: "var(--navy)", borderRadius: "var(--radius-xl)", padding: "48px 40px", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", background: "rgba(0,255,132,0.12)", top: -80, right: -80, filter: "blur(50px)" }} />
+              <span style={{ fontSize: "2.6rem", display: "block", marginBottom: 24 }}>🎯</span>
+              <h3 style={{ fontFamily: "var(--font-display)", color: "var(--green)", fontSize: "1.3rem", marginBottom: 16 }}>OUR MISSION</h3>
+              <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "1.02rem" }}>
+                To bridge the digital divide by providing accessible, affordable and practical digital education to
+                youth across Kenya and beyond.
               </p>
             </div>
-            <div style={{
-              background:"white", border:"2px solid rgba(124,58,237,0.12)",
-              borderRadius:32, padding:"48px 40px",
-              transition:"all 0.3s"
-            }}>
-              <div style={{fontSize:"3rem",marginBottom:20}}>🌍</div>
-              <h3 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.5rem",fontWeight:800,color:"var(--purple-deep)",marginBottom:16}}>Our Vision</h3>
-              <p style={{color:"var(--muted)",lineHeight:1.8,fontSize:"1.05rem"}}>
-                A generation of digitally empowered African youth creating solutions, building businesses and leading transformation across the continent.
+
+            <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "var(--radius-xl)", padding: "48px 40px", boxShadow: "var(--shadow-sm)" }}>
+              <span style={{ fontSize: "2.6rem", display: "block", marginBottom: 24 }}>🌍</span>
+              <h3 style={{ fontFamily: "var(--font-display)", color: "var(--ink)", fontSize: "1.3rem", marginBottom: 16 }}>OUR VISION</h3>
+              <p style={{ color: "var(--body)", lineHeight: 1.8, fontSize: "1.02rem" }}>
+                A generation of digitally empowered African youth creating solutions, building businesses and leading
+                transformation across the continent.
               </p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* VALUES */}
+      <section className="section section-paper">
+        <div className="container">
+          <div style={{ maxWidth: 560, marginBottom: 56 }}>
+            <span className="eyebrow">What we stand for</span>
+            <h2 className="title" style={{ marginTop: 16 }}>
+              The values behind <span className="accent">every course</span>
+            </h2>
+          </div>
+          <div className="grid-4">
+            {values.map((v, i) => (
+              <div key={i} className="card card-hover" style={{ padding: "30px 26px" }}>
+                <span style={{ fontSize: "2rem", display: "block", marginBottom: 16 }}>{v.icon}</span>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: 800, marginBottom: 8 }}>{v.title}</h3>
+                <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.65 }}>{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FOUNDER */}
-      <section style={{padding:"80px 24px",background:"var(--cream)"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{
-            background:"linear-gradient(135deg, #0d0a1a 0%, #2d1b69 60%, #4c1d95 100%)",
-            borderRadius:40, padding:"60px 48px",
-            position:"relative", overflow:"hidden"
-          }}>
-            <div className="comet" style={{top:"20%",left:"5%",animationDuration:"3s"}}></div>
-            <div className="comet" style={{top:"60%",left:"80%",animationDuration:"4s",animationDelay:"1s"}}></div>
-            <div style={{position:"absolute",width:400,height:400,background:"rgba(124,58,237,0.1)",borderRadius:"50%",top:-150,right:-100,filter:"blur(80px)"}}></div>
-            <div style={{position:"relative",zIndex:1,display:"grid",gridTemplateColumns:"auto 1fr",gap:48,alignItems:"center"}}>
-              <div style={{
-                width:160,height:160,borderRadius:"50%",
-                background:"linear-gradient(135deg, rgba(124,58,237,0.3), rgba(245,158,11,0.2))",
-                border:"2px solid rgba(255,255,255,0.1)",
-                display:"flex",alignItems:"center",justifyContent:"center",
-                fontSize:"5rem", flexShrink:0
-              }} className="float-anim">👨‍💻</div>
-              <div>
-                <span style={{background:"rgba(245,158,11,0.15)",border:"1px solid rgba(245,158,11,0.3)",color:"#fde68a",padding:"6px 16px",borderRadius:50,fontSize:12,fontWeight:600,display:"inline-block",marginBottom:16}}>Founder & Lead Instructor</span>
-                <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(1.8rem,3vw,2.5rem)",fontWeight:800,color:"white",marginBottom:8}}>Wambete Benjamin</h2>
-                <p style={{color:"rgba(255,255,255,0.5)",marginBottom:20,fontSize:14}}>CS Graduate • Designer • Developer • AI Expert</p>
-                <p style={{color:"rgba(255,255,255,0.65)",lineHeight:1.7,marginBottom:24,maxWidth:600}}>
-                  Passionate about equipping African youth with digital skills that open real doors and transform lives. Founded CHRISCO Digital Academy to make quality digital education accessible to every young person in Africa.
-                </p>
-                <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                  {["Graphic Design","Web Development","Video Editing","Animations","Social Media","AI Expert"].map((tag,i) => (
-                    <span key={i} className="skill-tag" style={{background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.7)"}}>{tag}</span>
-                  ))}
+      <section className="section section-navy">
+        <div className="container">
+          <div className="split" style={{ alignItems: "center" }}>
+            <div>
+              <span className="eyebrow on-dark">Founder & lead instructor</span>
+              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
+                Wambete <span className="accent-bright">Benjamin</span>
+              </h2>
+              <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 22px" }}>
+                CS Graduate · Designer · Developer · AI Expert
+              </p>
+              <p className="lead on-dark" style={{ maxWidth: 540 }}>
+                Passionate about equipping African youth with digital skills that open real doors and transform
+                lives. Founded CHRISCO Digital Academy to make quality digital education accessible to every young
+                person in Africa.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
+                {["Graphic Design", "Web Development", "Video Editing", "Animations", "Social Media", "AI"].map((t) => (
+                  <span key={t} className="pill pill-dark pill-sm">{t}</span>
+                ))}
+              </div>
+              <Link href="/contact" className="btn btn-green" style={{ textDecoration: "none" }}>
+                Get In Touch →
+              </Link>
+            </div>
+            <div>
+              <div style={{ position: "relative" }}>
+                <img
+                  src="/images/workspace.jpg"
+                  alt="Wambete Benjamin's creative workspace"
+                  style={{ width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid rgba(255,255,255,0.12)", aspectRatio: "4/3.2", objectFit: "cover" }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 20,
+                    bottom: 20,
+                    background: "rgba(0,35,51,0.9)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255,255,255,0.14)",
+                    borderRadius: 16,
+                    padding: "14px 18px",
+                  }}
+                >
+                  <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>Founded under</div>
+                  <div style={{ fontSize: 11.5, color: "var(--green)" }}>CHRISCO Youth Aflame ⛪</div>
                 </div>
               </div>
             </div>
@@ -184,26 +231,27 @@ export default function About() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{background:"var(--ink)",padding:"48px 24px",textAlign:"center"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.4rem",fontWeight:800,color:"#f59e0b",marginBottom:8}}>CHRISCO Digital Academy</div>
-          <p style={{color:"rgba(255,255,255,0.4)",fontSize:14,marginBottom:20}}>Under CHRISCO Youth Aflame • Founded by Wambete Benjamin</p>
-          <div style={{display:"flex",gap:24,justifyContent:"center",flexWrap:"wrap",marginBottom:20}}>
-            {["Home","About","Courses","Contact"].map((link,i) => (
-              <a key={i} href={`/${link.toLowerCase()==="home"?"":link.toLowerCase()}`} style={{color:"rgba(255,255,255,0.4)",fontSize:14,textDecoration:"none"}}>{link}</a>
-            ))}
-          </div>
-          <div style={{color:"rgba(255,255,255,0.3)",fontSize:13,display:"flex",gap:20,justifyContent:"center",flexWrap:"wrap",marginBottom:20}}>
-            <span>📧 shambetz@gmail.com</span>
-            <span>📞 +254112272061</span>
-            <span>📍 Nairobi, Kenya</span>
-          </div>
-          <div style={{borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:20,color:"rgba(255,255,255,0.2)",fontSize:12}}>
-            © 2026 CHRISCO Digital Academy. All Rights Reserved.
+      {/* CTA strip */}
+      <section className="section section-green" style={{ padding: "72px 0" }}>
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+            <div>
+              <span className="eyebrow on-green">Join the movement</span>
+              <h2 style={{ fontFamily: "var(--font-display)", color: "var(--navy)", fontSize: "clamp(1.6rem, 3.6vw, 2.6rem)", marginTop: 12, lineHeight: 1.1 }}>
+                Your future is digital.
+                <br /> Let&apos;s build it together.
+              </h2>
+            </div>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>Explore Courses →</Link>
+              <a href="https://wa.me/254112272061" className="btn btn-outline" style={{ textDecoration: "none", borderColor: "var(--navy)", color: "var(--navy)" }}>WhatsApp Us 💬</a>
+            </div>
           </div>
         </div>
-      </footer>
+      </section>
+
+      <Footer />
+      <Chatbot />
     </main>
   )
 }

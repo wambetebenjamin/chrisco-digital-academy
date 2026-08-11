@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import Navbar from "../Navbar"
+import Footer from "../components/Footer"
 import { useAuth } from "../AuthProvider"
 
 export default function Dashboard() {
@@ -17,190 +19,135 @@ export default function Dashboard() {
     if (user) load()
   }, [user])
 
-  return (
-    <main style={{background:"var(--cream)",minHeight:"100vh"}}>
-      <style>{`
-        @keyframes orbFloat {
-          0%,100% { transform:translate(0,0); }
-          50% { transform:translate(20px,-15px); }
-        }
-        @keyframes fadeUp {
-          from { opacity:0; transform:translateY(20px); }
-          to { opacity:1; transform:translateY(0); }
-        }
-        .dash-card {
-          background:white;
-          border:1px solid rgba(124,58,237,0.08);
-          border-radius:20px; padding:24px;
-          transition:all 0.3s;
-          animation:fadeUp 0.5s ease forwards;
-        }
-        .dash-card:hover {
-          transform:translateY(-4px);
-          box-shadow:0 16px 40px rgba(124,58,237,0.1);
-          border-color:rgba(245,158,11,0.3);
-        }
-      `}</style>
+  const stats = [
+    { icon: "📚", label: "Courses Available", value: "11" },
+    { icon: "✅", label: "Courses Enrolled", value: loading ? "…" : enrollments.length },
+    { icon: "🏆", label: "Certificates Earned", value: "0" },
+    { icon: "🌍", label: "Member Since", value: user?.created_at ? new Date(user.created_at).toLocaleDateString("en-KE", { month: "short", year: "numeric" }) : "Today" },
+  ]
 
+  return (
+    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
       <Navbar />
 
-      {/* Hero */}
-      <section style={{
-        background:"linear-gradient(160deg, #0d0a1a 0%, #2d1b69 50%, #4c1d95 100%)",
-        padding:"140px 24px 80px",
-        position:"relative", overflow:"hidden"
-      }}>
-        <div style={{position:"absolute",width:400,height:400,background:"rgba(124,58,237,0.12)",borderRadius:"50%",top:-150,right:-100,filter:"blur(80px)",animation:"orbFloat 8s ease-in-out infinite"}}></div>
-        <div style={{maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:20}}>
+      {/* Header */}
+      <section style={{ background: "var(--navy)", padding: "140px 0 96px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "rgba(0,255,132,0.1)", top: -160, right: -120, filter: "blur(70px)" }} />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
             <div>
-              <div style={{color:"rgba(255,255,255,0.4)",fontSize:13,marginBottom:8,textTransform:"uppercase",letterSpacing:2}}>Welcome back</div>
-              <h1 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"clamp(2rem,4vw,3rem)",fontWeight:800,color:"white",marginBottom:8}}>
-                {profile?.name || user?.email?.split("@")[0]} 👋
+              <span className="eyebrow on-dark" style={{ marginBottom: 14 }}>Welcome back</span>
+              <h1 style={{ fontFamily: "var(--font-display)", color: "#fff", fontSize: "clamp(1.9rem, 4vw, 3rem)", lineHeight: 1.05, textTransform: "uppercase" }}>
+                {profile?.name || user?.email?.split("@")[0] || "Student"}
               </h1>
-              <p style={{color:"rgba(255,255,255,0.5)",fontSize:"1rem"}}>Continue your digital learning journey 🔥</p>
+              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "1rem", marginTop: 12 }}>
+                Continue your digital learning journey 🔥
+              </p>
             </div>
-            <div style={{
-              background:"rgba(255,255,255,0.06)",
-              border:"1px solid rgba(255,255,255,0.1)",
-              borderRadius:20, padding:"16px 20px",
-              display:"flex", alignItems:"center", gap:12
-            }}>
-              <div style={{
-                width:44,height:44,borderRadius:"50%",
-                background:"linear-gradient(135deg,#f59e0b,#fbbf24)",
-                display:"flex",alignItems:"center",justifyContent:"center",
-                fontFamily:"'Bricolage Grotesque',sans-serif",
-                fontWeight:800,fontSize:"1.1rem",color:"#1a0533"
-              }}>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "14px 20px" }}>
+              <span style={{ width: 46, height: 46, borderRadius: "50%", background: "var(--green)", color: "var(--navy)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.1rem", flexShrink: 0 }}>
                 {(profile?.name || user?.email || "U")[0].toUpperCase()}
-              </div>
+              </span>
               <div>
-                <div style={{color:"white",fontWeight:600,fontSize:14}}>{profile?.name || "Student"}</div>
-                <div style={{color:"rgba(255,255,255,0.4)",fontSize:12}}>{user?.email}</div>
+                <div style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>{profile?.name || "Student"}</div>
+                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 12 }}>{user?.email}</div>
               </div>
             </div>
           </div>
         </div>
-        <div style={{position:"absolute",bottom:0,left:0,right:0,height:80,background:"linear-gradient(to bottom, transparent, var(--cream))",pointerEvents:"none"}}></div>
       </section>
 
       {/* Stats */}
-      <section style={{padding:"40px 24px 0"}}>
-        <div style={{maxWidth:1100,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16}}>
-          {[
-            {icon:"📚",label:"Courses Available",value:"11"},
-            {icon:"✅",label:"Courses Enrolled",value:loading ? "..." : enrollments.length},
-            {icon:"🏆",label:"Certificates Earned",value:"0"},
-            {icon:"🌍",label:"Member Since",value:user?.created_at ? new Date(user.created_at).toLocaleDateString("en-KE",{month:"short",year:"numeric"}) : "Today"},
-          ].map((stat,i) => (
-            <div key={i} className="dash-card" style={{display:"flex",alignItems:"center",gap:16,animationDelay:`${i*0.1}s`}}>
-              <div style={{
-                width:52,height:52,borderRadius:16,
-                background:"linear-gradient(135deg,rgba(124,58,237,0.1),rgba(245,158,11,0.08))",
-                display:"flex",alignItems:"center",justifyContent:"center",
-                fontSize:"1.6rem",flexShrink:0
-              }}>{stat.icon}</div>
-              <div>
-                <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontWeight:800,fontSize:"1.5rem",color:"var(--ink)"}}>{stat.value}</div>
-                <div style={{color:"var(--muted)",fontSize:13}}>{stat.label}</div>
+      <section style={{ marginTop: -56, padding: "0 0 16px" }}>
+        <div className="container">
+          <div className="grid-4">
+            {stats.map((stat, i) => (
+              <div key={i} className="card card-hover" style={{ padding: "24px 22px", display: "flex", alignItems: "center", gap: 16 }}>
+                <span style={{ width: 54, height: 54, borderRadius: 16, background: "var(--green-tint)", color: "var(--green-deep)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", flexShrink: 0 }}>
+                  {stat.icon}
+                </span>
+                <div>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", color: "var(--ink)" }}>{stat.value}</div>
+                  <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>{stat.label}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Enrollments */}
-      <section style={{padding:"40px 24px"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24,flexWrap:"wrap",gap:12}}>
-            <h2 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontWeight:800,fontSize:"1.4rem",color:"var(--ink)"}}>
-              {enrollments.length > 0 ? "Your Enrolled Courses" : "Start Learning Today"}
+      <section style={{ padding: "40px 0 32px" }}>
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 24 }}>
+            <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.35rem", color: "var(--ink)" }}>
+              {enrollments.length > 0 ? "Your enrolled courses" : "Start learning today"}
             </h2>
-            <a href="/courses" style={{
-              background:"linear-gradient(135deg,#2d1b69,#7c3aed)",
-              color:"white",fontFamily:"'Bricolage Grotesque',sans-serif",
-              fontWeight:700,fontSize:14,padding:"10px 24px",
-              borderRadius:50,textDecoration:"none"
-            }}>Browse All Courses →</a>
+            <Link href="/courses" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
+              Browse All Courses →
+            </Link>
           </div>
 
           {loading ? (
-            <div style={{textAlign:"center",padding:"60px 20px",color:"var(--muted)"}}>Loading your courses...</div>
+            <div style={{ textAlign: "center", padding: "60px 20px", color: "var(--muted)", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+              <div className="spinner" />
+              Loading your courses...
+            </div>
           ) : enrollments.length > 0 ? (
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:16}}>
-              {enrollments.map((enrollment,i) => (
-                <div key={i} className="dash-card" style={{animationDelay:`${i*0.1}s`}}>
-                  <h3 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontWeight:700,color:"var(--ink)",marginBottom:8}}>{enrollment.course_title}</h3>
-                  <div style={{color:"var(--muted)",fontSize:13,marginBottom:12}}>
+            <div className="grid-3">
+              {enrollments.map((enrollment, i) => (
+                <div key={i} className="card card-hover" style={{ padding: "26px 26px" }}>
+                  <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "var(--ink)", fontSize: "1.1rem", marginBottom: 6 }}>{enrollment.course_title}</h3>
+                  <div style={{ color: "var(--muted)", fontSize: 13, marginBottom: 18 }}>
                     Enrolled {new Date(enrollment.enrolled_at).toLocaleDateString("en-KE")}
                   </div>
-                  <div style={{background:"rgba(124,58,237,0.06)",borderRadius:50,height:6,marginBottom:8,overflow:"hidden"}}>
-                    <div style={{height:"100%",width:"0%",background:"linear-gradient(90deg,#7c3aed,#f59e0b)",borderRadius:50}}></div>
+                  <div style={{ background: "var(--green-tint)", borderRadius: 999, height: 8, marginBottom: 8, overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: "0%", background: "linear-gradient(90deg, var(--green-deep), var(--green))", borderRadius: 999 }} />
                   </div>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                    <span style={{color:"var(--muted)",fontSize:12}}>0% complete</span>
-                    <a href="/courses" style={{
-                      background:"linear-gradient(135deg,#2d1b69,#7c3aed)",
-                      color:"white",fontSize:12,fontWeight:700,
-                      padding:"6px 16px",borderRadius:50,textDecoration:"none"
-                    }}>Continue →</a>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10 }}>
+                    <span style={{ color: "var(--muted)", fontSize: 12.5 }}>0% complete</span>
+                    <Link href="/courses" className="btn btn-navy btn-sm" style={{ textDecoration: "none", fontSize: 12.5 }}>
+                      Continue →
+                    </Link>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div style={{
-              background:"white",border:"1px solid rgba(124,58,237,0.08)",
-              borderRadius:24,padding:"60px 40px",textAlign:"center"
-            }}>
-              <div style={{fontSize:"4rem",marginBottom:16}}>📚</div>
-              <h3 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.3rem",fontWeight:800,color:"var(--ink)",marginBottom:8}}>
+            <div className="card" style={{ padding: "64px 40px", textAlign: "center" }}>
+              <div style={{ fontSize: "3.6rem", marginBottom: 16 }}>📚</div>
+              <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.25rem", fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>
                 No courses yet
               </h3>
-              <p style={{color:"var(--muted)",marginBottom:24,maxWidth:400,margin:"0 auto 24px"}}>
-                Browse our 11 practical courses and enroll in one that matches your goals.
+              <p style={{ color: "var(--muted)", fontSize: 14.5, marginBottom: 26, maxWidth: 420, margin: "0 auto 26px" }}>
+                Browse our 11 practical courses and enroll in one that matches your goals. Your progress will show
+                up here.
               </p>
-              <a href="/courses" style={{
-                background:"linear-gradient(135deg,#2d1b69,#7c3aed)",
-                color:"white",fontFamily:"'Bricolage Grotesque',sans-serif",
-                fontWeight:700,fontSize:15,padding:"14px 32px",
-                borderRadius:50,textDecoration:"none",display:"inline-block"
-              }}>Browse Courses 🚀</a>
+              <Link href="/courses" className="btn btn-green" style={{ textDecoration: "none" }}>
+                Browse Courses 🚀
+              </Link>
             </div>
           )}
         </div>
       </section>
 
-      {/* Account Info */}
-      <section style={{padding:"0 24px 80px"}}>
-        <div style={{maxWidth:1100,margin:"0 auto"}}>
-          <div style={{
-            background:"linear-gradient(135deg,#0d0a1a,#2d1b69)",
-            borderRadius:28,padding:"36px 40px",
-            display:"flex",justifyContent:"space-between",
-            alignItems:"center",flexWrap:"wrap",gap:20
-          }}>
+      {/* Account */}
+      <section style={{ padding: "0 0 80px" }}>
+        <div className="container">
+          <div style={{ background: "var(--navy)", borderRadius: "var(--radius-lg)", padding: "32px 36px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
             <div>
-              <h3 style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontWeight:800,color:"white",fontSize:"1.2rem",marginBottom:4}}>Account Settings</h3>
-              <p style={{color:"rgba(255,255,255,0.4)",fontSize:14}}>{user?.email}</p>
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: "1.15rem", marginBottom: 4 }}>Account settings</h3>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14 }}>{user?.email}</p>
             </div>
-            <button onClick={logout} style={{
-              background:"rgba(239,68,68,0.12)",
-              border:"1px solid rgba(239,68,68,0.25)",
-              color:"#fca5a5",fontFamily:"'Bricolage Grotesque',sans-serif",
-              fontWeight:700,fontSize:14,
-              padding:"12px 28px",borderRadius:50,cursor:"pointer",
-              transition:"all 0.2s"
-            }}>Sign Out</button>
+            <button onClick={logout} className="btn btn-outline-light btn-sm" style={{ cursor: "pointer" }}>
+              Sign Out
+            </button>
           </div>
         </div>
       </section>
 
-      <footer style={{background:"var(--ink)",padding:"40px 24px",textAlign:"center"}}>
-        <div style={{fontFamily:"'Bricolage Grotesque',sans-serif",fontSize:"1.2rem",fontWeight:800,color:"#f59e0b",marginBottom:8}}>CHRISCO Digital Academy</div>
-        <p style={{color:"rgba(255,255,255,0.3)",fontSize:13}}>© 2026 All Rights Reserved</p>
-      </footer>
+      <Footer />
     </main>
   )
 }
