@@ -11,6 +11,7 @@ import InteractiveCalendar from "../components/InteractiveCalendar"
 import PomodoroTimer from "../components/PomodoroTimer"
 import DailyChallenge from "../components/DailyChallenge"
 import BadgeModal from "../components/BadgeModal"
+import VerseOfTheDay from "../components/VerseOfTheDay"
 import { useAuth } from "../AuthProvider"
 import { useGamification } from "../GamificationContext"
 
@@ -258,6 +259,9 @@ export default function Dashboard() {
 
             {/* SIDEBAR */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {/* Verse of the Day (compact) */}
+              <VerseOfTheDay compact />
+
               {/* Daily Challenge */}
               <DailyChallenge />
 

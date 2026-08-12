@@ -210,6 +210,8 @@ function defaultState() {
     dailyChallengesCompleted: 0,
     dailyChallengeDate: null,
     dailyChallengeDone: false,
+    bookmarkedCourses: [],
+    lessonNotes: {},
   }
 }
 
@@ -282,7 +284,7 @@ export function GamificationProvider({ children }) {
       try {
         const { data, error } = await supabase
           .from("profiles")
-          .select("xp, streak, badges, last_active_date, quizzes_answered, quizzes_correct, answered_quiz_ids, buddy_found, courses_started, started_courses, downloads, personal_events, upvoted_threads, referral_code, referrals_made, referral_bonus_claimed, referral_rewards, pomodoro_completed, focus_minutes, daily_challenges_completed, daily_challenge_date, daily_challenge_done, lessons_completed, perfect_quizzes")
+          .select("xp, streak, badges, last_active_date, quizzes_answered, quizzes_correct, answered_quiz_ids, buddy_found, courses_started, started_courses, downloads, personal_events, upvoted_threads, referral_code, referrals_made, referral_bonus_claimed, referral_rewards, pomodoro_completed, focus_minutes, daily_challenges_completed, daily_challenge_date, daily_challenge_done, lessons_completed, perfect_quizzes, bookmarked_courses, lesson_notes")
           .eq("id", user.id)
           .single()
         if (error || !data || cancelled) return
@@ -313,6 +315,8 @@ export function GamificationProvider({ children }) {
             dailyChallengeDone: data.daily_challenge_done ?? prev.dailyChallengeDone,
             lessonsCompleted: data.lessons_completed ?? prev.lessonsCompleted,
             perfectQuizzes: data.perfect_quizzes ?? prev.perfectQuizzes,
+            bookmarkedCourses: data.bookmarked_courses ?? prev.bookmarkedCourses,
+            lessonNotes: data.lesson_notes ?? prev.lessonNotes,
           }
           // persist referral code to localStorage
           try {
@@ -357,6 +361,8 @@ export function GamificationProvider({ children }) {
           daily_challenge_done: state.dailyChallengeDone,
           lessons_completed: state.lessonsCompleted,
           perfect_quizzes: state.perfectQuizzes,
+          bookmarked_courses: state.bookmarkedCourses,
+          lesson_notes: state.lessonNotes,
           updated_at: new Date().toISOString(),
         })
         .then(() => {})
@@ -801,6 +807,29 @@ export function GamificationProvider({ children }) {
     setTimeout(() => checkDailyChallenge(), 50)
   }, [showToast, touchActivity, checkDailyChallenge])
 
+  // Toggle bookmark/favorite on a course
+  const toggleBookmark = useCallback((courseId) => {
+    const key = String(courseId)
+    setState((prev) => {
+      const list = prev.bookmarkedCourses || []
+      const has = list.includes(key)
+      return {
+        ...prev,
+        bookmarkedCourses: has ? list.filter((k) => k !== key) : [...list, key],
+      }
+    })
+    awardXP(2, "")
+  }, [awardXP])
+
+  // Save lesson notes
+  const saveLessonNote = useCallback((courseId, lessonIdx, text) => {
+    const key = `${String(courseId)}:${lessonIdx}`
+    setState((prev) => ({
+      ...prev,
+      lessonNotes: { ...(prev.lessonNotes || {}), [key]: text },
+    }))
+  }, [])
+
   const earnedBadges = BADGE_DEFS.filter((b) => state.badges.includes(b.id))
 
   const value = {
@@ -831,6 +860,8 @@ export function GamificationProvider({ children }) {
     getReferralLink,
     claimReferralBonus,
     getJitsiRoom,
+    toggleBookmark,
+    saveLessonNote,
     dismissToast: () => setToast(null),
   }
 

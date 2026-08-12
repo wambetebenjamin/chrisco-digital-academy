@@ -11,6 +11,7 @@ import Icon from "./components/Icon"
 import InteractiveCalendar from "./components/InteractiveCalendar"
 import MicroQuiz from "./components/MicroQuiz"
 import BadgeModal from "./components/BadgeModal"
+import VerseOfTheDay from "./components/VerseOfTheDay"
 import { useGamification } from "./GamificationContext"
 import { courses, categoryCounts } from "./data/courses"
 
@@ -663,6 +664,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= FAITH & DEVOTION ================= */}
+      <section className="section" style={{ background: "var(--cream)" }}>
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 18, flexWrap: "wrap", marginBottom: 40 }}>
+            <div style={{ maxWidth: 640 }}>
+              <span className="eyebrow pink">Faith & Devotion</span>
+              <h2 className="title" style={{ marginTop: 18 }}>
+                Rooted in <span className="marker pink">faith.</span>
+              </h2>
+              <p style={{ marginTop: 12, fontSize: "1.05rem", maxWidth: 620 }}>
+                We are a Christ centered community. Start each day with a short Bible verse, a worship pick
+                and a linked study video to dig deeper when you have a few extra minutes.
+              </p>
+            </div>
+            <span className="sticker lime" style={{ fontSize: 12 }}>
+              <Icon name="book" size={12} /> Updated daily
+            </span>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 24 }} className="faith-grid">
+            <VerseOfTheDay />
+          </div>
+        </div>
+      </section>
+
       {/* ================= FEATURED COURSES ================= */}
       <section className="section band-cream">
         <div className="container">
@@ -909,6 +935,10 @@ export default function Home() {
           .hero-split {
             grid-template-columns: 1.1fr 1fr !important;
             gap: 60px !important;
+          }
+          .faith-grid {
+            grid-template-columns: 1.3fr 1fr !important;
+            align-items: stretch;
           }
         }
       `}</style>
