@@ -165,7 +165,7 @@ pdf.cell(180, 6, "Why it fits Changemakers")
 y += 6.8
 points = [
     "Education + economic empowerment - skills that create real youth income in Jinja & Buikwe.",
-    "In-kind equipment only (no cash): laptops, tablets, projector, internet - total UGX 19.1M (< 20M).",
+    "In-kind equipment only (no cash): laptops, tablets, projector, internet - total UGX 19.0M (< 20M).",
     "Teaches money management, website-building + an offline study app so no-internet youth keep learning.",
     "Sustainable: existing 19-course curriculum, books & videos + train-the-trainer + graduate mentorship.",
 ]
