@@ -62,20 +62,28 @@ body {
 /* Frosted section surface — lets the backdrop read through while keeping
    body copy on a legible base. */
 .section-frost {
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(18px) saturate(1.12);
-  -webkit-backdrop-filter: blur(18px) saturate(1.12);
-  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid rgba(227, 233, 231, 0.5);
 }
 
 /* Alternating tone so consecutive frosted bands stay distinguishable. */
 .section-frost-alt {
-  background: rgba(244, 246, 244, 0.58);
-  backdrop-filter: blur(18px) saturate(1.12);
-  -webkit-backdrop-filter: blur(18px) saturate(1.12);
-  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(243, 250, 246, 0.72);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
   border-bottom: 1px solid rgba(227, 233, 231, 0.45);
+}
+
+/* A lighter veil for sections that sit straight on the backdrop photo: enough
+   paper to keep ink-coloured copy readable, sheer enough to keep the photo. */
+.section-veil {
+  background: linear-gradient(180deg, rgba(250, 250, 246, 0.62) 0%, rgba(250, 250, 246, 0.82) 22%, rgba(250, 250, 246, 0.86) 100%);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
 }
 
 /* Cards sitting on a frosted band need a touch more opacity to hold contrast. */
@@ -91,6 +99,7 @@ body {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .section-frost { background: rgba(255, 255, 255, 0.95); }
   .section-frost-alt { background: rgba(244, 246, 244, 0.95); }
+  .section-veil { background: rgba(250, 250, 246, 0.96); }
   .card-frost { background: #fff; }
 }
 
@@ -536,4 +545,236 @@ img { display: block; max-width: 100%; }
 }
 @media (min-width: 768px) {
   .hide-desktop { display: none !important; }
+}
+
+/* ============================================================
+   MOTION LAYER — "lively but professional"
+   Scroll reveals, Ken-Burns hero photography, floating brand
+   accents and photo hovers. Everything below is switched off
+   wholesale for visitors who prefer reduced motion (see the
+   media query at the end of this block).
+   ============================================================ */
+
+/* ---------- Scroll reveal (driven by <Reveal>) ---------- */
+.reveal {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.85s ease;
+}
+.reveal-up { transform: translate3d(0, 38px, 0); }
+.reveal-down { transform: translate3d(0, -28px, 0); }
+.reveal-left { transform: translate3d(-46px, 0, 0); }
+.reveal-right { transform: translate3d(46px, 0, 0); }
+.reveal-scale { transform: scale(0.93); }
+.reveal-blur { filter: blur(10px); transform: translate3d(0, 24px, 0); }
+.reveal-fade { transform: none; }
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+/* Once revealed, stop reserving a compositor layer. */
+.reveal.is-in { will-change: auto; }
+
+/* ---------- Ken-Burns photography ---------- */
+@keyframes kenburns {
+  0%   { transform: scale(1.04) translate3d(0, 0, 0); }
+  50%  { transform: scale(1.16) translate3d(-1.8%, -1.6%, 0); }
+  100% { transform: scale(1.04) translate3d(0, 0, 0); }
+}
+.kenburns { animation: kenburns 30s ease-in-out infinite; will-change: transform; }
+.kenburns-slow { animation: kenburns 52s ease-in-out infinite; will-change: transform; }
+.kenburns-media { position: absolute; inset: 0; overflow: hidden; }
+
+/* ---------- Floating brand accent shapes ---------- */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33%      { transform: translate3d(26px, -34px, 0) scale(1.09); }
+  66%      { transform: translate3d(-22px, 20px, 0) scale(0.94); }
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(58px);
+  animation: drift 20s ease-in-out infinite;
+  will-change: transform;
+}
+.blob-green { background: radial-gradient(circle, rgba(0, 255, 132, 0.55), rgba(0, 255, 132, 0) 70%); }
+.blob-teal  { background: radial-gradient(circle, rgba(0, 190, 220, 0.40), rgba(1, 58, 79, 0) 70%); }
+.blob-lime  { background: radial-gradient(circle, rgba(160, 255, 90, 0.35), rgba(160, 255, 90, 0) 70%); }
+.blob-slow  { animation-duration: 32s; }
+.blob-delay { animation-delay: -7s; }
+.blob-delay-2 { animation-delay: -14s; }
+
+/* ---------- Animated aurora gradient (over hero photos) ---------- */
+@keyframes auroraShift {
+  0%   { transform: translate3d(-3%, 0, 0) scale(1.05); opacity: 0.55; }
+  50%  { transform: translate3d(3%, 2%, 0) scale(1.15); opacity: 0.8; }
+  100% { transform: translate3d(-3%, 0, 0) scale(1.05); opacity: 0.55; }
+}
+.aurora {
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  background:
+    radial-gradient(48% 55% at 18% 18%, rgba(0, 255, 132, 0.30), transparent 62%),
+    radial-gradient(45% 50% at 82% 30%, rgba(0, 190, 220, 0.26), transparent 62%),
+    radial-gradient(52% 55% at 60% 92%, rgba(0, 255, 132, 0.18), transparent 60%);
+  mix-blend-mode: screen;
+  animation: auroraShift 26s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Gradient scrim helpers — readable text WITHOUT flattening the photo. */
+.scrim-hero {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, rgba(0, 24, 35, 0.90) 0%, rgba(0, 28, 41, 0.72) 34%, rgba(0, 35, 51, 0.34) 62%, rgba(0, 35, 51, 0.12) 100%),
+    linear-gradient(180deg, rgba(0, 24, 35, 0.62) 0%, rgba(0, 24, 35, 0.06) 34%, rgba(0, 24, 35, 0.48) 100%);
+}
+.scrim-band {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(104deg, rgba(0, 24, 35, 0.90) 0%, rgba(0, 30, 44, 0.70) 45%, rgba(0, 35, 51, 0.30) 100%),
+    linear-gradient(0deg, rgba(0, 24, 35, 0.45), rgba(0, 24, 35, 0) 55%);
+}
+.scrim-soft {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 24, 35, 0.55) 0%, rgba(0, 24, 35, 0.20) 40%, rgba(0, 24, 35, 0.72) 100%);
+}
+
+/* Cards that are themselves reveal targets: keep hover snappy while still
+   getting a smooth entrance. */
+.card.reveal {
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* ---------- Photo hover ---------- */
+.zoom-media { overflow: hidden; position: relative; }
+.zoom-media img {
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+.zoom-media:hover img,
+.card-hover:hover .zoom-media img,
+a:hover .zoom-media img {
+  transform: scale(1.09);
+  filter: saturate(1.2) contrast(1.05);
+}
+
+/* Glossy sweep across a card on hover. */
+.shine { position: relative; }
+.shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-18deg);
+  transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 3;
+}
+.card-hover:hover .shine::after,
+.shine:hover::after { left: 125%; }
+
+/* Lift cards a touch further + brand glow. */
+.card-hover:hover {
+  box-shadow: 0 10px 26px rgba(0, 35, 51, 0.10), 0 28px 68px rgba(0, 120, 70, 0.16);
+}
+
+/* Animated underline for headings / accents. */
+@keyframes sheen {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.gradient-text {
+  background: linear-gradient(90deg, #00FF84, #7CFFC4, #00E0FF, #00FF84);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 7s linear infinite;
+}
+
+/* Soft pulsing ring behind badges / stats. */
+@keyframes softPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.95; transform: scale(1.06); }
+}
+.pulse-soft { animation: softPulse 3.6s ease-in-out infinite; }
+
+/* Scroll cue at the bottom of the hero. */
+@keyframes scrollCue {
+  0%   { transform: translateY(0); opacity: 0; }
+  35%  { opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+.scroll-cue {
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 14px;
+  position: relative;
+}
+.scroll-cue::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 3px;
+  background: var(--green);
+  animation: scrollCue 1.9s ease-in-out infinite;
+}
+
+/* On small screens the fixed full-page backdrop is the most expensive layer
+   to animate — hold it still and keep the motion budget for the hero. */
+@media (max-width: 767px) {
+  .kenburns-slow { animation: none; transform: scale(1.05); }
+  .blob { filter: blur(44px); }
+}
+
+/* ---------- Respect the visitor's motion preference ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .kenburns,
+  .kenburns-slow,
+  .blob,
+  .aurora,
+  .marquee-track,
+  .float-anim,
+  .pulse-soft,
+  .chat-btn,
+  .gradient-text,
+  .scroll-cue::after {
+    animation: none !important;
+  }
+  .zoom-media img { transition: none; }
+  .card,
+  .btn,
+  .pill { transition: none !important; }
 }

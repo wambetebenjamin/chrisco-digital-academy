@@ -35,10 +35,16 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 200,
-        background: scrolled ? "rgba(0,35,51,0.96)" : "var(--navy)",
-        backdropFilter: scrolled ? "blur(16px)" : "none",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
-        transition: "background 0.3s ease",
+        // Transparent at the top so the hero photograph runs right up under
+        // the bar; condenses into the solid teal bar once you start scrolling.
+        background: scrolled
+          ? "rgba(0,35,51,0.94)"
+          : "linear-gradient(180deg, rgba(0,24,35,0.72) 0%, rgba(0,24,35,0.28) 70%, rgba(0,24,35,0) 100%)",
+        backdropFilter: scrolled ? "blur(16px) saturate(1.2)" : "blur(3px)",
+        WebkitBackdropFilter: scrolled ? "blur(16px) saturate(1.2)" : "blur(3px)",
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(255,255,255,0)",
+        boxShadow: scrolled ? "0 10px 30px rgba(0,18,28,0.28)" : "none",
+        transition: "background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease",
       }}
     >
       <div
