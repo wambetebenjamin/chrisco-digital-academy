@@ -11,7 +11,7 @@ import CoursesExplorer from "./CoursesExplorer"
 export const metadata = {
   title: "Courses",
   description:
-    "Browse 11 practical, income-focused digital courses — graphic design, coding, marketing, writing, video and AI. Beginner-friendly, certificate included, online and in-person in Kenya.",
+    "Browse 19 practical, income-focused digital courses — graphic design, coding, marketing, writing, video and AI. Beginner-friendly, certificate included, online and in-person with youth in Jinja and Buikwe, Uganda.",
 }
 
 const heroPills = [
@@ -29,7 +29,7 @@ export default function Courses() {
       {/* HERO */}
       <PhotoHero
         image="/images/bg-courses.jpg"
-        eyebrow="Course catalogue — 11 courses"
+        eyebrow="Course catalogue — 19 courses"
         title={
           <>
             Learn skills that <span className="accent-bright">actually pay</span>

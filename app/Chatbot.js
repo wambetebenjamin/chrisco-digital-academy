@@ -19,7 +19,7 @@ const menuOptions = [
 ]
 
 const responses = [
-  { keywords: ["1", "courses", "course", "learn", "study", "offer"], reply: "We offer 11 practical courses across 6 tracks:\nDesign · Coding · Marketing\nWriting · Video · Career\n\nType a topic like \"python\" or \"freelancing\" to learn more!" },
+  { keywords: ["1", "courses", "course", "learn", "study", "offer"], reply: "We offer 19 practical courses across 7 tracks:\nBusiness · Design · Coding · Marketing\nWriting · Video · Career\n\nType a topic like \"python\", \"negotiation\" or \"branding\" to learn more!" },
   { keywords: ["graphic", "design", "canva", "adobe"], reply: "Our Graphic Design track covers branding, posters, logos and visual identity using Canva and Adobe tools. Perfect for beginners!" },
   { keywords: ["web", "website", "development", "html", "css", "javascript", "react", "next"], reply: "Our Web Development skills teach HTML, CSS, JavaScript and React — and we have a Python course and an SWE & LLM Mastery course for future developers!" },
   { keywords: ["social media", "marketing", "instagram", "facebook", "tiktok"], reply: "Our Social Media Marketing course teaches you how to grow brands, create content strategies and manage pages professionally!" },
@@ -29,9 +29,9 @@ const responses = [
   { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: shambetz@gmail.com\nPhone: +254112272061" },
   { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course — or contact us directly!\nEmail: shambetz@gmail.com\nPhone: +254112272061\n\nOr type 8 to send us a message right here!" },
   { keywords: ["4", "wambete", "benjamin", "founder", "instructor", "teacher", "who"], reply: "Wambete Benjamin is our founder and lead instructor — a CS Graduate with expertise in graphic design, web development, video editing, animations, social media management and AI!" },
-  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "nairobi"], reply: "Reach us here:\nEmail: shambetz@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Nairobi, Kenya" },
+  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: shambetz@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Jinja, Uganda" },
   { keywords: ["6", "certificate", "certification", "qualify"], reply: "Yes! You receive a certificate upon completing any course. Practical-skills based and recognized!" },
-  { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! We offer both online and in-person classes. Learn from anywhere in Kenya and beyond!" },
+  { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, and in-person with youth in Jinja and Buikwe, Uganda. Learn from anywhere in Uganda and beyond!" },
   { keywords: ["hello", "hi", "hey", "hujambo", "start", "menu"], reply: "SHOW_MENU" },
   { keywords: ["bye", "goodbye", "thank you", "thanks", "asante"], reply: "Thank you for chatting! Feel free to reach out anytime. We look forward to empowering you digitally." },
 ]
