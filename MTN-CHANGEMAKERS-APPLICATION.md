@@ -26,7 +26,7 @@ income-generating digital and business skills to young people in Jinja and Buikw
 | 1 | Project must be **in Uganda**, serving a Ugandan community | ✅ Anchored in **Jinja & Buikwe** youth communities. |
 | 2 | Applicant **18+**, Ugandan, **no criminal record** | ✅ Ugandan contacts provided (0763393021 / 0755467513). |
 | 3 | **In-kind donations only — NO CASH** | ✅ Request equipment (laptops, tablets, router, projector, furniture). |
-| 4 | Implementation value **≤ UGX 20,000,000** | ✅ Draft budget = UGX 19,100,000. |
+| 4 | Implementation value **≤ UGX 20,000,000** | ✅ Draft budget = UGX 19,000,000. |
 | 5 | Implementable in **≤ 3 months** | ✅ Duration set to 3 months. |
 | 6 | Sustainable / lasting impact | ✅ §2.4 — offline app + train-the-trainer + graduate income. |
 | 7 | Addresses a real community/societal need | ✅ Youth unemployment + digital-skills gap. |
@@ -85,7 +85,7 @@ income-generating digital and business skills to young people in Jinja and Buikw
   - **Sub County:** 🔴
   - **Parish:** 🔴
 - **Project Timeline/Duration (in months):** 3
-- **Requested Funding (UGX):** 19,100,000 (in-kind equipment — no cash)
+- **Requested Funding (UGX):** 19,000,000 (in-kind equipment — no cash)
 - **Number of beneficiaries** *(example figures — adjust to your host sites)*
   - **Men:** 90
   - **Women:** 110
@@ -136,7 +136,7 @@ income-generating digital and business skills to young people in Jinja and Buikw
 > women, out-of-school youth and persons with disabilities. Because the platform, curriculum, books and videos already
 > exist, every donated device converts directly into a learner seat and real training days.
 >
-> *Live platform (project evidence): 🔴 [your deployed URL — see Part D].*
+> *Live platform (project evidence): **https://chrisco-digital-academy.vercel.app** — 19 courses, study books and the full delivery model are live now.*
 
 **2.2 Project Objectives — how will this funding improve lives? (Max 250 words)**
 
@@ -193,7 +193,7 @@ income-generating digital and business skills to young people in Jinja and Buikw
 > Upload **`MTN-Changemakers-Project-Evidence.pdf`** (already prepared in this repo). It contains the live website
 > link, screenshots, the 19-course curriculum, and why the project fits Changemakers. After you deploy the site
 > (Part D), regenerate it with your real URL:
-> `LIVE_URL=your-real-url.vercel.app python3 scripts/build_evidence_pdf.py`
+> `LIVE_URL=chrisco-digital-academy.vercel.app python3 scripts/build_evidence_pdf.py`
 > Accepted formats: PDF, JPG, JPEG, PNG only; keep under 5 MB.
 
 ---
@@ -217,8 +217,8 @@ income-generating digital and business skills to young people in Jinja and Buikw
 | 4 | Wi-Fi router + 12 months internet connectivity | 1,200,000 | 1 | 1,200,000 |
 | 5 | UPS / power backup units | 450,000 | 2 | 900,000 |
 | 6 | Study tables & chairs (training furniture set) | 1,000,000 | 1 | 1,000,000 |
-| 7 | Whiteboard + printed course handbooks / starter kits | 500,000 | 1 | 500,000 |
-| | **Total amount (UGX)** | | | **19,100,000** |
+| 7 | Whiteboard + printed course handbooks / starter kits | 400,000 | 1 | 400,000 |
+| | **Total amount (UGX)** | | | **19,000,000** |
 
 > ✅ Under the UGX 20,000,000 cap. All items are **in-kind equipment**, consistent with the "no cash" rule.
 > The **offline study app** and **course books/videos** are built by CHRISCO as its own in-kind contribution; the
@@ -236,11 +236,11 @@ Next.js 16 app; runs cleanly with `npm install && npm run dev`. To give MTN a pu
 **Vercel (free, made for Next.js):**
 1. Push this repo to GitHub (already connected).
 2. vercel.com → **New Project** → import `wambetebenjamin/chrisco-digital-academy`.
-3. Framework auto-detects **Next.js** → **Deploy**. You get `chrisco-digital-academy.vercel.app`.
+3. Framework auto-detects **Next.js** → **Deploy**. Live site: **https://chrisco-digital-academy.vercel.app**.
 4. (Optional) env vars for sign-in/dashboard: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
    and `ANTHROPIC_API_KEY` for the live chatbot. Public pages render **without** any env vars.
 
-Put that URL into §2.1 and regenerate the evidence PDF.
+The live URL (**https://chrisco-digital-academy.vercel.app**) is already in §2.1 and in the evidence PDF.
 
 **Run locally:**
 ```bash
@@ -255,7 +255,7 @@ npm run dev      # http://localhost:3000
 - [ ] 🔴 Confirm a **Jinja/Buikwe host** (church, school or CBO) + a **local co-applicant with a Ugandan number**.
 - [ ] Download MTN's official proposal form (.docx) from the Changemakers page.
 - [ ] Paste Part C answers into the .docx; fill all 🔴 placeholders with real data.
-- [ ] Deploy the website (Part D); copy the live URL into §2.1 and regenerate the evidence PDF.
+- [x] Deploy the website (Part D) — live at **https://chrisco-digital-academy.vercel.app**; URL is in §2.1 and in the evidence PDF.
 - [ ] Attach `MTN-Changemakers-Project-Evidence.pdf` (≤ 5 MB).
 - [ ] Submit the online quick form (Part B) **or** email the .docx to `mtnfoundation.ug@mtn.com` / WhatsApp `0772123100`.
 - [ ] Tick the Terms & Conditions box and complete reCAPTCHA.
