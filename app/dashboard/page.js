@@ -22,7 +22,7 @@ export default function Dashboard() {
   }, [user])
 
   const stats = [
-    { icon: "book", label: "Courses Available", value: "11" },
+    { icon: "book", label: "Courses Available", value: "19" },
     { icon: "checkCircle", label: "Courses Enrolled", value: loading ? "…" : enrollments.length },
     { icon: "trophy", label: "Certificates Earned", value: "0" },
     { icon: "calendar", label: "Member Since", value: user?.created_at ? new Date(user.created_at).toLocaleDateString("en-KE", { month: "short", year: "numeric" }) : "Today" },
@@ -128,7 +128,7 @@ export default function Dashboard() {
                 No courses yet
               </h3>
               <p style={{ color: "var(--muted)", fontSize: 14.5, marginBottom: 26, maxWidth: 420, margin: "0 auto 26px" }}>
-                Browse our 11 practical courses and enroll in one that matches your goals. Your progress will show
+                Browse our 19 practical courses and enroll in one that matches your goals. Your progress will show
                 up here.
               </p>
               <Link href="/courses" className="btn btn-green" style={{ textDecoration: "none" }}>

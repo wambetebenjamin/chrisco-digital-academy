@@ -25,7 +25,7 @@ writing, video and AI. Built for **CHRISCO Youth Aflame** and founded by **Wambe
 - **Home** — editorial hero (category sidebar + image tile + stats), skills marquee, skill tracks, featured
   courses, how-it-works, founder band, CTA, footer, chatbot.
 - **About** — story, stats, mission & vision, values, founder profile.
-- **Courses** — 11 courses across 6 categories with sidebar filters, syllabus modals, download & enrollment
+- **Courses** — 19 courses across 7 categories (incl. Business & economic-empowerment skills) with sidebar filters, syllabus modals, download & enrollment
   (EmailJS → shambetz@gmail.com).
 - **Contact** — info cards, WhatsApp shortcut, EmailJS contact form.
 - **Dashboard** — stats, enrollments, account (Supabase auth, gated).
@@ -59,17 +59,17 @@ Computer Science Graduate | Graphic Designer | Web Developer | Video Editor | An
 
 - 📧 shambetz@gmail.com
 - 📞 +254112272061
-- 📍 Nairobi, Kenya
+- 📍 Jinja & Buikwe, Uganda
 - 🏫 Founder — CHRISCO Youth Aflame
 
 ## 📄 License
 
-This project is built for **CHRISCO Youth Aflame** — a non-profit youth empowerment organisation in Kenya.
+This project is built for **CHRISCO Youth Aflame** — a non-profit youth empowerment organisation serving youth in Uganda.
 
 © 2026 CHRISCO Digital Academy — Founded by Wambete Benjamin
 
 ## 🙏 Acknowledgements
 
 - CHRISCO Youth Aflame community
-- All the youth across Kenya and Africa who inspired this platform
-- Built with love from Nairobi, Kenya 🇰🇪
+- All the youth across Uganda and Africa who inspired this platform
+- Built with love for the youth of Jinja & Buikwe, Uganda 🇺🇬

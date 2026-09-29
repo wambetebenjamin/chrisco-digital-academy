@@ -19,8 +19,8 @@ const skills = [
 
 const stats = [
   { value: "500+", label: "Youth Trained" },
-  { value: "11", label: "Courses" },
-  { value: "5+", label: "Counties" },
+  { value: "19", label: "Courses" },
+  { value: "2", label: "Districts" },
   { value: "100%", label: "Practical" },
 ]
 
@@ -32,7 +32,7 @@ const marqueeItems = [
 ]
 
 const steps = [
-  { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 11 practical courses across design, code, marketing, writing, video and AI." },
+  { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI." },
   { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request — we confirm on WhatsApp or email within a day." },
   { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate — and start earning." },
 ]
@@ -65,7 +65,7 @@ export default function Home() {
               marginBottom: 48,
             }}
           >
-            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy — Nairobi, Kenya</span>
+            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy — Jinja, Uganda</span>
             <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
               Under CHRISCO Youth Aflame
             </span>
@@ -104,7 +104,7 @@ export default function Home() {
                 }}
               >
                 <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", lineHeight: 1 }}>
-                  11<span style={{ color: "var(--green)", fontSize: "1rem" }}> courses</span>
+                  19<span style={{ color: "var(--green)", fontSize: "1rem" }}> courses</span>
                 </div>
                 <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", margin: "8px 0 14px" }}>
                   All built for real income.
@@ -337,7 +337,7 @@ export default function Home() {
               </h2>
             </div>
             <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>
-              View all 11 courses →
+              View all 19 courses →
             </Link>
           </div>
 

@@ -16,8 +16,8 @@ export const metadata = {
 
 const stats = [
   { number: "500+", label: "Youth Trained" },
-  { number: "11", label: "Courses Available" },
-  { number: "5+", label: "Counties Reached" },
+  { number: "19", label: "Courses Available" },
+  { number: "2", label: "Districts (Jinja & Buikwe)" },
   { number: "100%", label: "Practical Skills" },
 ]
 
@@ -143,7 +143,7 @@ export default function About() {
                     gap: 7,
                   }}
                 >
-                  <Icon name="pin" size={13} strokeWidth={2.2} /> Made in Kenya
+                  <Icon name="pin" size={13} strokeWidth={2.2} /> Made in Uganda
                 </span>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function About() {
               <h3 style={{ fontFamily: "var(--font-display)", color: "var(--green)", fontSize: "1.3rem", marginBottom: 16 }}>OUR MISSION</h3>
               <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "1.02rem" }}>
                 To bridge the digital divide by providing accessible, affordable and practical digital education to
-                youth across Kenya and beyond.
+                youth across Uganda and beyond.
               </p>
             </div>
 

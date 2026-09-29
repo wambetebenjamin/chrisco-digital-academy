@@ -102,7 +102,7 @@ export default function Footer() {
                 <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="phone" size={15} /></span> +254 112 272 061
               </li>
               <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="pin" size={15} /></span> Nairobi, Kenya
+                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="pin" size={15} /></span> Jinja, Uganda
               </li>
             </ul>
             <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ marginTop: 22 }}>
@@ -133,7 +133,7 @@ export default function Footer() {
             © 2026 CHRISCO Digital Academy. All Rights Reserved.
           </span>
           <span style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
-            Founded by Wambete Benjamin · Nairobi, Kenya
+            Founded by Wambete Benjamin · Jinja, Uganda
           </span>
         </div>
       </div>
