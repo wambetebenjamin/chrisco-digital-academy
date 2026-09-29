@@ -66,7 +66,7 @@ pdf.set_xy(14, 24.5)
 pdf.cell(180, 5, "Youth digital & economic-empowerment hubs in Jinja & Buikwe, Uganda  -  under CHRISCO Youth Aflame")
 
 # ================= HERO IMAGE =================
-hero = crop_to(os.path.join(IMG, "workspace.jpg"), os.path.join(TMP, "hero.jpg"), 210/58)
+hero = crop_to(os.path.join(IMG, "bg-home.jpg"), os.path.join(TMP, "hero.jpg"), 210/58)
 pdf.image(hero, x=0, y=37.6, w=210, h=52)
 # translucent caption strip
 pdf.set_fill_color(*TEAL)
