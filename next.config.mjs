@@ -4,6 +4,8 @@ const nextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    // Quality levels used across the site (Next 16 requires them declared).
+    qualities: [75, 78, 80, 82, 84],
   },
   // Long-cache the static course handbooks served from /public
   async headers() {

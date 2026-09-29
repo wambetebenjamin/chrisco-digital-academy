@@ -1,20 +1,79 @@
+import Image from "next/image"
+import AccentShapes from "./AccentShapes"
+
 /*
- * PhotoHero renders the hero scrim only. The route-level PageBackdrop paints
- * the photograph across the whole page, so the hero deliberately does NOT
- * render its own <Image> -- that would load the same asset twice and stack two
- * different opacities over each other. `image`/`imagePosition` remain in the
- * signature for call-site compatibility.
+ * PhotoHero — the route hero band.
+ *
+ * It renders its OWN photograph at full strength with a slow Ken-Burns push,
+ * then lays a directional gradient scrim (dark at the text edge, clear at the
+ * far edge) over it — so the headline stays readable while the image itself is
+ * bright, saturated and clearly visible, instead of being buried under a flat
+ * dark panel.
  */
-export default function PhotoHero({ image, eyebrow, title, lead, children, imagePosition = "center 30%", titleStyle }) {
+export default function PhotoHero({
+  image,
+  eyebrow,
+  title,
+  lead,
+  children,
+  imagePosition = "center 35%",
+  titleStyle,
+}) {
   return (
-    <section style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.34)", padding: "158px 0 76px" }}>
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.92) 0%, rgba(0,35,51,0.76) 46%, rgba(1,58,79,0.56) 100%)" }} />
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
-      <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
+    <section
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        background: "var(--navy)",
+        padding: "158px 0 86px",
+      }}
+    >
+      {image && (
+        <div className="kenburns-media" aria-hidden>
+          <div className="kenburns" style={{ position: "absolute", inset: 0 }}>
+            <Image
+              src={image}
+              alt=""
+              fill
+              priority
+              quality={82}
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+                objectPosition: imagePosition,
+                filter: "saturate(1.18) contrast(1.06) brightness(1.04)",
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Readability scrim — a gradient, not a flat dark layer */}
+      <div aria-hidden className="scrim-hero" />
+      <div className="aurora" aria-hidden style={{ opacity: 0.5 }} />
+      <AccentShapes variant="hero" />
+
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         {eyebrow && <span className="eyebrow on-dark fade-up">{eyebrow}</span>}
-        <h1 className="display on-dark fade-up fade-up-1" style={{ marginTop: 20, ...titleStyle }}>{title}</h1>
-        {lead && <p className="lead fade-up fade-up-2" style={{ maxWidth: 620, marginTop: 24, color: "rgba(255,255,255,0.78)" }}>{lead}</p>}
+        <h1
+          className="display on-dark fade-up fade-up-1"
+          style={{ marginTop: 20, textShadow: "0 2px 28px rgba(0,18,28,0.45)", ...titleStyle }}
+        >
+          {title}
+        </h1>
+        {lead && (
+          <p
+            className="lead fade-up fade-up-2"
+            style={{
+              maxWidth: 620,
+              marginTop: 24,
+              color: "rgba(255,255,255,0.92)",
+              textShadow: "0 1px 18px rgba(0,18,28,0.5)",
+            }}
+          >
+            {lead}
+          </p>
+        )}
         {children}
       </div>
     </section>

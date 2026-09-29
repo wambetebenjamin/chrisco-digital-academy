@@ -7,6 +7,8 @@ import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
 import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
+import Reveal from "../components/Reveal"
+import AccentShapes from "../components/AccentShapes"
 
 export const metadata = {
   title: "About Us",
@@ -57,7 +59,7 @@ export default function About() {
       />
 
       {/* STATS */}
-      <section style={{ padding: "72px 0 0" }}>
+      <section className="section-veil" style={{ padding: "56px 0 44px" }}>
         <div className="container">
           <div
             className="fade-up fade-up-3"
@@ -117,13 +119,15 @@ export default function About() {
 
             <div>
               <div style={{ position: "relative" }}>
-                <div style={{ position: "relative", aspectRatio: "4/3.4", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--line)", boxShadow: "var(--shadow-md)" }}>
+                <div className="zoom-media shine" style={{ position: "relative", aspectRatio: "4/3.4", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.6)", boxShadow: "var(--shadow-lg)" }}>
                   <Image
                     src="/images/hero-tile.jpg"
                     alt="Learner at CHRISCO Digital Academy"
                     fill
+                    loading="lazy"
+                    quality={80}
                     sizes="(min-width: 768px) 46vw, 92vw"
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "cover", filter: "saturate(1.15) contrast(1.04)" }}
                   />
                 </div>
                 <span
@@ -199,31 +203,47 @@ export default function About() {
           </div>
           <div className="grid-4">
             {values.map((v, i) => (
-              <div key={i} className="card card-hover" style={{ padding: "30px 26px" }}>
+              <Reveal key={i} variant="up" delay={i * 90} className="card card-hover card-frost shine" style={{ padding: "30px 26px" }}>
                 <span style={{ display: "inline-flex", width: 52, height: 52, borderRadius: 15, background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
                   <Icon name={v.icon} size={24} />
                 </span>
                 <h3 style={{ fontSize: "1.05rem", fontWeight: 800, marginBottom: 8 }}>{v.title}</h3>
                 <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.65 }}>{v.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* FOUNDER */}
-      <section className="section section-navy">
-        <div className="container">
+      <section className="section" style={{ position: "relative", overflow: "hidden", background: "var(--navy)", color: "rgba(255,255,255,0.78)" }}>
+        <div className="kenburns-media" aria-hidden>
+          <div className="kenburns-slow" style={{ position: "absolute", inset: 0 }}>
+            <Image
+              src="/images/bg-courses.jpg"
+              alt=""
+              fill
+              loading="lazy"
+              quality={78}
+              sizes="100vw"
+              style={{ objectFit: "cover", objectPosition: "center 40%", filter: "saturate(1.15) contrast(1.04)" }}
+            />
+          </div>
+        </div>
+        <div aria-hidden className="scrim-band" />
+        <div aria-hidden className="aurora" style={{ opacity: 0.4 }} />
+        <AccentShapes variant="soft" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split" style={{ alignItems: "center" }}>
-            <div>
+            <Reveal variant="left">
               <span className="eyebrow on-dark">Founder & lead instructor</span>
-              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
+              <h2 className="display on-dark" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18, textShadow: "0 2px 24px rgba(0,18,28,0.45)" }}>
                 Wambete <span className="accent-bright">Benjamin</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 22px" }}>
                 CS Graduate · Designer · Developer · AI Expert
               </p>
-              <p className="lead on-dark" style={{ maxWidth: 540 }}>
+              <p className="lead on-dark" style={{ maxWidth: 540, color: "rgba(255,255,255,0.9)", textShadow: "0 1px 16px rgba(0,18,28,0.5)" }}>
                 Passionate about equipping African youth with digital skills that open real doors and transform
                 lives. Founded CHRISCO Digital Academy to make quality digital education accessible to every young
                 person in Africa.
@@ -236,16 +256,18 @@ export default function About() {
               <Link href="/contact" className="btn btn-green" style={{ textDecoration: "none" }}>
                 Get In Touch →
               </Link>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal variant="right" delay={120}>
               <div style={{ position: "relative" }}>
-                <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
+                <div className="zoom-media shine" style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.22)", boxShadow: "0 28px 64px rgba(0,18,28,0.45)" }}>
                   <Image
                     src="/images/workspace.jpg"
                     alt="Wambete Benjamin's creative workspace"
                     fill
+                    loading="lazy"
+                    quality={80}
                     sizes="(min-width: 768px) 46vw, 92vw"
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "cover", filter: "saturate(1.15) contrast(1.04)" }}
                   />
                 </div>
                 <div
@@ -266,7 +288,7 @@ export default function About() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

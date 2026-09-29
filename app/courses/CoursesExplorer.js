@@ -66,20 +66,21 @@ export default function CoursesExplorer() {
   return (
     <>
       {/* BODY */}
-      <section style={{ padding: "0 0 96px" }}>
+      <section className="section-veil" style={{ padding: "48px 0 96px" }}>
         <div className="container">
           <div className="grid-sidebar">
 
             {/* SIDEBAR */}
             <aside>
               <div
+                className="card-frost"
                 style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--line)",
+                  border: "1px solid rgba(255,255,255,0.7)",
                   borderRadius: "var(--radius-lg)",
                   padding: "26px 22px",
                   position: "sticky",
                   top: 92,
+                  boxShadow: "var(--shadow-sm)",
                 }}
               >
                 <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>
@@ -200,20 +201,23 @@ export default function CoursesExplorer() {
                   {filtered.map((course, i) => (
                     <div
                       key={course.id}
-                      className="card card-hover"
-                      style={{ overflow: "hidden", display: "flex", flexDirection: "column", cursor: "pointer", animation: `fadeUp 0.5s ease ${i * 0.05}s both` }}
+                      className="card card-hover card-frost shine"
+                      style={{ overflow: "hidden", display: "flex", flexDirection: "column", cursor: "pointer", animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${Math.min(i, 8) * 0.06}s both` }}
                       onClick={() => openCourse(course)}
                     >
                       {/* Header — photo + course-tone overlay */}
-                      <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                      <div className="zoom-media" style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
                         <Image
                           src={course.img}
                           alt=""
                           fill
+                          loading="lazy"
+                          quality={78}
                           sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
-                          style={{ objectFit: "cover" }}
+                          style={{ objectFit: "cover", filter: "saturate(1.16) contrast(1.04)" }}
                         />
-                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${course.color[0]}DB, ${course.color[1]}A8)` }} />
+                        {/* Tinted gradient, not a solid wash: the photograph stays visible */}
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(150deg, ${course.color[0]}70, ${course.color[1]}33 52%, rgba(0,24,35,0.72) 100%)` }} />
                         <span
                           className="pill pill-sm"
                           style={{ position: "absolute", top: 14, right: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}

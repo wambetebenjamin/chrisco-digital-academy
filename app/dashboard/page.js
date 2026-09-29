@@ -34,9 +34,21 @@ export default function Dashboard() {
 
       {/* Header */}
       <section style={{ background: "var(--navy)", padding: "140px 0 96px", position: "relative", overflow: "hidden" }}>
-        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/bg-cta.jpg" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 35%", opacity: 0.12 }} />
+        <div className="kenburns-media" aria-hidden>
+          <div className="kenburns-slow" style={{ position: "absolute", inset: 0 }}>
+            <Image
+              src="/images/bg-cta.jpg"
+              alt=""
+              fill
+              priority
+              quality={80}
+              sizes="100vw"
+              style={{ objectFit: "cover", objectPosition: "center 35%", filter: "saturate(1.15) contrast(1.04)" }}
+            />
+          </div>
         </div>
+        <div aria-hidden className="scrim-band" />
+        <div aria-hidden className="aurora" style={{ opacity: 0.4 }} />
         <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "rgba(0,255,132,0.1)", top: -160, right: -120, filter: "blur(70px)" }} />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
