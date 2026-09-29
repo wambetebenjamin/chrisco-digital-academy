@@ -20,6 +20,23 @@ writing, video and AI. Built for **CHRISCO Youth Aflame** and founded by **Wambe
   marquee ticker, ghost outline text, green-glow CTAs.
 - **Shape** — rounded cards (20–28px), 999px pill buttons, hairline borders, soft shadows.
 
+### ✨ Photography & motion
+
+Photography is treated as the subject, not wallpaper: heroes and CTA bands run their images at full strength
+with a **directional gradient scrim** (dark where type sits, clear on the photo side) instead of a flat dark
+overlay, and the fixed page backdrop uses only a light paper veil.
+
+| Piece | What it does |
+| --- | --- |
+| `components/Reveal.js` | IntersectionObserver fade/slide/scale reveals on scroll (unobserves after playing) |
+| `components/Parallax.js` | rAF-throttled parallax drift, only while the element is on screen |
+| `components/AccentShapes.js` | Pure-CSS floating brand orbs (`#002333` / `#00FF84`) |
+| `globals.css` motion layer | Ken-Burns zoom, aurora gradient, hover photo zoom + sheen, scroll cue, `.section-veil` |
+| `scripts/optimize_images.py` | Crops, grades (vibrance/contrast) and re-encodes all site photography |
+
+Everything animated is switched off under `prefers-reduced-motion`, the heaviest layer (the fixed backdrop's
+Ken-Burns) is held still below 768px, and all non-hero images are lazy-loaded through `next/image`.
+
 ## 🗺️ Pages
 
 - **Home** — editorial hero (category sidebar + image tile + stats), skills marquee, skill tracks, featured
