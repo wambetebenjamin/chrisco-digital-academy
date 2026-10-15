@@ -9,7 +9,7 @@ import ContactForm from "./ContactForm"
 export const metadata = {
   title: "Contact",
   description:
-    "Get in touch with CHRISCO Digital Academy — ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
+    "Get in touch with CHRISCO Digital Academy - ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
 }
 
 const infoItems = [
@@ -35,14 +35,14 @@ export default function Contact() {
           </>
         }
         titleStyle={{ maxWidth: 820 }}
-        lead="Have a question, want to enroll, or ready to partner? We respond fast — usually the same day on WhatsApp."
+        lead="Have a question, want to enroll, or ready to partner? We respond fast - usually the same day on WhatsApp."
       />
 
       {/* BODY */}
       <section style={{ padding: "0 0 96px" }}>
         <div className="container">
           <div className="split" style={{ alignItems: "start" }}>
-            {/* LEFT — info */}
+            {/* LEFT - info */}
             <div>
               <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "var(--ink)", marginBottom: 22 }}>
                 Contact details
@@ -93,7 +93,7 @@ export default function Contact() {
                   Prefer WhatsApp?
                 </div>
                 <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.6)", marginBottom: 16 }}>
-                  Chat with us directly — we reply fast.
+                  Chat with us directly - we reply fast.
                 </p>
                 <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
                   <Icon name="whatsapp" size={15} /> Chat on WhatsApp
@@ -101,7 +101,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* RIGHT — form (client island) */}
+            {/* RIGHT - form (client island) */}
             <ContactForm />
           </div>
         </div>

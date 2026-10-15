@@ -204,7 +204,7 @@ export default function CoursesExplorer() {
                       style={{ overflow: "hidden", display: "flex", flexDirection: "column", cursor: "pointer", animation: `fadeUp 0.5s ease ${i * 0.05}s both` }}
                       onClick={() => openCourse(course)}
                     >
-                      {/* Header — photo + course-tone overlay */}
+                      {/* Header - photo + course-tone overlay */}
                       <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
                         <Image
                           src={course.img}
@@ -284,7 +284,7 @@ export default function CoursesExplorer() {
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            {/* Header — photo + course-tone overlay */}
+            {/* Header - photo + course-tone overlay */}
             <div style={{ background: `linear-gradient(135deg, ${selected.color[0]}, ${selected.color[1]})`, padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
               <Image
                 src={selected.img}

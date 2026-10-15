@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 /* ============================================================
-   CHRISCO Digital Academy — Design System
+   CHRISCO Digital Academy - Design System
    "Creative studio meets editorial magazine"
    ============================================================ */
 
 :root {
   /* Brand palette */
-  --navy: #002333;          /* dark teal — top nav, dark sections */
+  --navy: #002333;          /* dark teal - top nav, dark sections */
   --navy-2: #013A4F;        /* lighter teal */
   --navy-3: #06506A;        /* hover teal */
-  --green: #00FF84;         /* electric green — primary CTA */
+  --green: #00FF84;         /* electric green - primary CTA */
   --green-deep: #00B865;    /* green for text on light backgrounds */
   --green-tint: #E9FFF4;    /* soft green wash */
   --ink: #06202E;           /* headings */
@@ -24,7 +24,7 @@
   --danger: #E5484D;
   --danger-tint: #FDECEC;
 
-  /* Typography — self-hosted via Fontsource (bundled, no external CSS) */
+  /* Typography - self-hosted via Fontsource (bundled, no external CSS) */
   --font-display: 'Archivo Black', 'Archivo Variable', 'Archivo', sans-serif;
   --font-head: 'Archivo Variable', 'Archivo', sans-serif;
   --font-body: 'Inter Variable', 'Inter', 'Archivo Variable', sans-serif;
@@ -59,7 +59,7 @@ body {
    and cards via .card-frost. */
 .has-backdrop { background: transparent !important; }
 
-/* Frosted section surface — lets the backdrop read through while keeping
+/* Frosted section surface - lets the backdrop read through while keeping
    body copy on a legible base. */
 .section-frost {
   background: rgba(255, 255, 255, 0.62);

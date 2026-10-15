@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 /*
- * PageBackdrop — a per-page photographic backdrop that spans the FULL page.
+ * PageBackdrop - a per-page photographic backdrop that spans the FULL page.
  *
  * The image is pinned to the viewport (position: fixed) and sits behind all
  * page content at z-index -1, so it stays put while the page scrolls and the
@@ -9,7 +9,7 @@ import Image from "next/image"
  * backdrop for the whole route rather than a photo trapped in a hero band.
  *
  * A paper-tinted wash keeps the photo subtle enough that the light editorial
- * sections layered on top stay readable — the photo is texture, not subject.
+ * sections layered on top stay readable - the photo is texture, not subject.
  */
 export default function PageBackdrop({
   image,
@@ -37,7 +37,7 @@ export default function PageBackdrop({
         style={{ objectFit: "cover", objectPosition: position }}
       />
 
-      {/* Paper wash — mutes the photo so frosted sections stay legible */}
+      {/* Paper wash - mutes the photo so frosted sections stay legible */}
       <div
         style={{
           position: "absolute",
@@ -46,7 +46,7 @@ export default function PageBackdrop({
         }}
       />
 
-      {/* Brand tint — a whisper of teal/green so it never reads as grey */}
+      {/* Brand tint - a whisper of teal/green so it never reads as grey */}
       <div
         style={{
           position: "absolute",

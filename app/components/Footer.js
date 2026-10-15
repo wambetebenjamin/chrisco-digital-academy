@@ -55,7 +55,7 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ fontSize: 14, lineHeight: 1.7, marginTop: 20, maxWidth: 300 }}>
-              A youth-focused learning platform under CHRISCO Youth Aflame — equipping young Africans with practical
+              A youth-focused learning platform under CHRISCO Youth Aflame - equipping young Africans with practical
               digital skills that open real doors.
             </p>
             <div style={{ display: "flex", gap: 8, marginTop: 22, flexWrap: "wrap" }}>

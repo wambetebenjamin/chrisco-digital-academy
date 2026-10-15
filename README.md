@@ -1,11 +1,11 @@
 # 🎓 CHRISCO Digital Academy
 
-A modern learning platform equipping African youth with practical digital skills — design, code, marketing,
+A modern learning platform equipping African youth with practical digital skills - design, code, marketing,
 writing, video and AI. Built for **CHRISCO Youth Aflame** and founded by **Wambete Benjamin**.
 
 ## 🎨 Design Language
 
-"Creative studio meets editorial magazine" — bold, editorial, playful yet professional.
+"Creative studio meets editorial magazine" - bold, editorial, playful yet professional.
 
 | Token | Value | Use |
 | --- | --- | --- |
@@ -15,28 +15,28 @@ writing, video and AI. Built for **CHRISCO Youth Aflame** and founded by **Wambe
 | Ink | `#06202E` | Headings & display type |
 | Hairline | `#E3E9E7` | Card borders, dividers |
 
-- **Typography** — Archivo Black (heavy display headlines, uppercase), Archivo (subheads/UI), Inter (body).
-- **Components** — pill-shaped outlined tags, whitespace-heavy card grids, category sidebar + hero image tile,
+- **Typography** - Archivo Black (heavy display headlines, uppercase), Archivo (subheads/UI), Inter (body).
+- **Components** - pill-shaped outlined tags, whitespace-heavy card grids, category sidebar + hero image tile,
   ghost outline text, green-glow CTAs.
-- **Shape** — rounded cards (20–28px), 999px pill buttons, hairline borders, soft shadows.
+- **Shape** - rounded cards (20-28px), 999px pill buttons, hairline borders, soft shadows.
 
 ## 🗺️ Pages
 
-- **Home** — editorial hero (category sidebar + image tile + stats), skill tracks, featured
+- **Home** - editorial hero (category sidebar + image tile + stats), skill tracks, featured
   courses, how-it-works, founder band, CTA, footer, chatbot.
-- **About** — story, stats, mission & vision, values, founder profile.
-- **Courses** — 19 courses across 7 categories (incl. Business & economic-empowerment skills) with sidebar filters, syllabus modals, download & enrollment
+- **About** - story, stats, mission & vision, values, founder profile.
+- **Courses** - 19 courses across 7 categories (incl. Business & economic-empowerment skills) with sidebar filters, syllabus modals, download & enrollment
   (EmailJS → shambetz@gmail.com).
-- **Contact** — info cards, WhatsApp shortcut, EmailJS contact form.
-- **Dashboard** — stats, enrollments, account (Supabase auth, gated).
-- **Sign In / Sign Up** — split editorial auth screens.
+- **Contact** - info cards, WhatsApp shortcut, EmailJS contact form.
+- **Dashboard** - stats, enrollments, account (Supabase auth, gated).
+- **Sign In / Sign Up** - split editorial auth screens.
 
 ## 🧱 Tech
 
 - Next.js 16 (App Router) + React 19 + Tailwind CSS v4
 - Supabase (auth + profiles + enrollments)
 - EmailJS (contact & enrollment forms)
-- Google Fonts — Archivo Black / Archivo / Inter
+- Google Fonts - Archivo Black / Archivo / Inter
 
 ## 🚀 Getting Started
 
@@ -45,7 +45,7 @@ npm install
 npm run dev
 ```
 
-Set environment variables to enable auth (optional — the site renders publicly without them):
+Set environment variables to enable auth (optional - the site renders publicly without them):
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=...
@@ -60,13 +60,13 @@ Computer Science Graduate | Graphic Designer | Web Developer | Video Editor | An
 - 📧 shambetz@gmail.com
 - 📞 +254112272061
 - 📍 Jinja & Buikwe, Uganda
-- 🏫 Founder — CHRISCO Youth Aflame
+- 🏫 Founder - CHRISCO Youth Aflame
 
 ## 📄 License
 
-This project is built for **CHRISCO Youth Aflame** — a non-profit youth empowerment organisation serving youth in Uganda.
+This project is built for **CHRISCO Youth Aflame** - a non-profit youth empowerment organisation serving youth in Uganda.
 
-© 2026 CHRISCO Digital Academy — Founded by Wambete Benjamin
+© 2026 CHRISCO Digital Academy - Founded by Wambete Benjamin
 
 ## 🙏 Acknowledgements
 
