@@ -336,7 +336,7 @@ export const courses = [
   },
   {
     id: 14,
-    icon: "sparkles",
+    icon: "video",
     title: "AI Video Storytelling",
     img: "/images/cat-video.jpg",
     category: "Video",

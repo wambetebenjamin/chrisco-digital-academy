@@ -146,7 +146,7 @@ export default function Chatbot() {
               gap: 7,
             }}
           >
-            <Icon name="sparkles" size={14} style={{ color: "var(--green)" }} /> Ask me anything!
+            <Icon name="chat" size={14} style={{ color: "var(--green)" }} /> Ask me anything!
           </span>
         )}
         <button onClick={() => setOpen(!open)} className="chat-btn" aria-label={open ? "Close chat" : "Open chat"}>

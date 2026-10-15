@@ -39,9 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# python build scratch
-__pycache__/
-*.pyc
-scripts/.tmp_pdf/
-public/images/src/

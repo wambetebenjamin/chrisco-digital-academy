@@ -4,7 +4,6 @@ import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
 import PageBackdrop from "../components/PageBackdrop"
-import Reveal from "../components/Reveal"
 import ContactForm from "./ContactForm"
 
 export const metadata = {
@@ -40,7 +39,7 @@ export default function Contact() {
       />
 
       {/* BODY */}
-      <section className="section-veil" style={{ padding: "48px 0 96px" }}>
+      <section style={{ padding: "0 0 96px" }}>
         <div className="container">
           <div className="split" style={{ alignItems: "start" }}>
             {/* LEFT — info */}
@@ -50,7 +49,7 @@ export default function Contact() {
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {infoItems.map((item, i) => (
-                  <Reveal key={i} variant="left" delay={i * 80} className="card card-hover card-frost shine" style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}>
+                  <div key={i} className="card card-hover" style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}>
                     <span
                       style={{
                         width: 50,
@@ -74,7 +73,7 @@ export default function Contact() {
                         {item.value}
                       </div>
                     </div>
-                  </Reveal>
+                  </div>
                 ))}
               </div>
 
