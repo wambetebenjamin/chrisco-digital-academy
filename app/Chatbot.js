@@ -21,14 +21,14 @@ const menuOptions = [
 const responses = [
   { keywords: ["1", "courses", "course", "learn", "study", "offer"], reply: "We offer 19 practical courses across 7 tracks:\nBusiness · Design · Coding · Marketing\nWriting · Video · Career\n\nType a topic like \"python\", \"negotiation\" or \"branding\" to learn more!" },
   { keywords: ["graphic", "design", "canva", "adobe"], reply: "Our Graphic Design track covers branding, posters, logos and visual identity using Canva and Adobe tools. Perfect for beginners!" },
-  { keywords: ["web", "website", "development", "html", "css", "javascript", "react", "next"], reply: "Our Web Development skills teach HTML, CSS, JavaScript and React — and we have a Python course and an SWE & LLM Mastery course for future developers!" },
+  { keywords: ["web", "website", "development", "html", "css", "javascript", "react", "next"], reply: "Our Web Development skills teach HTML, CSS, JavaScript and React - and we have a Python course and an SWE & LLM Mastery course for future developers!" },
   { keywords: ["social media", "marketing", "instagram", "facebook", "tiktok"], reply: "Our Social Media Marketing course teaches you how to grow brands, create content strategies and manage pages professionally!" },
-  { keywords: ["video", "editing", "youtube", "reels", "film"], reply: "Our Video Editing and YouTube Automation courses cover cinematic edits, channel growth and automation — very in-demand skills!" },
+  { keywords: ["video", "editing", "youtube", "reels", "film"], reply: "Our Video Editing and YouTube Automation courses cover cinematic edits, channel growth and automation - very in-demand skills!" },
   { keywords: ["python", "coding", "programming", "code"], reply: "Our Python Programming course teaches coding fundamentals, and SWE & LLM Mastery takes you into AI-powered app development!" },
   { keywords: ["ai", "artificial intelligence", "chatgpt", "tools"], reply: "Our SWE & LLM Mastery course teaches you to build AI-powered apps and use tools like ChatGPT to boost creativity and productivity!" },
   { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: shambetz@gmail.com\nPhone: +254112272061" },
-  { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course — or contact us directly!\nEmail: shambetz@gmail.com\nPhone: +254112272061\n\nOr type 8 to send us a message right here!" },
-  { keywords: ["4", "wambete", "benjamin", "founder", "instructor", "teacher", "who"], reply: "Wambete Benjamin is our founder and lead instructor — a CS Graduate with expertise in graphic design, web development, video editing, animations, social media management and AI!" },
+  { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course - or contact us directly!\nEmail: shambetz@gmail.com\nPhone: +254112272061\n\nOr type 8 to send us a message right here!" },
+  { keywords: ["4", "wambete", "benjamin", "founder", "instructor", "teacher", "who"], reply: "Wambete Benjamin is our founder and lead instructor - a CS Graduate with expertise in graphic design, web development, video editing, animations, social media management and AI!" },
   { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: shambetz@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Jinja, Uganda" },
   { keywords: ["6", "certificate", "certification", "qualify"], reply: "Yes! You receive a certificate upon completing any course. Practical-skills based and recognized!" },
   { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, and in-person with youth in Jinja and Buikwe, Uganda. Learn from anywhere in Uganda and beyond!" },
@@ -43,7 +43,7 @@ function getReply(input) {
       return item.reply
     }
   }
-  return "I'm not sure about that! Here's what I can help with — type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Founder\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message"
+  return "I'm not sure about that! Here's what I can help with - type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Founder\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message"
 }
 
 export default function Chatbot() {
@@ -78,7 +78,7 @@ export default function Chatbot() {
       setMessages((prev) => [
         ...prev,
         { role: "user", content: userInput },
-        { role: "assistant", content: "Hello! Here's what I can help you with — type a number or click an option:" },
+        { role: "assistant", content: "Hello! Here's what I can help you with - type a number or click an option:" },
       ])
       setInput("")
       return
@@ -146,7 +146,7 @@ export default function Chatbot() {
               gap: 7,
             }}
           >
-            <Icon name="sparkles" size={14} style={{ color: "var(--green)" }} /> Ask me anything!
+            <Icon name="chat" size={14} style={{ color: "var(--green)" }} /> Ask me anything!
           </span>
         )}
         <button onClick={() => setOpen(!open)} className="chat-btn" aria-label={open ? "Close chat" : "Open chat"}>
@@ -185,7 +185,7 @@ export default function Chatbot() {
             </span>
             <div>
               <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 14 }}>CHRISCO Assistant</div>
-              <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>Online — replies instantly</div>
+              <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>Online - replies instantly</div>
             </div>
             <span style={{ marginLeft: "auto", width: 9, height: 9, borderRadius: "50%", background: "var(--green)", display: "inline-block" }} />
           </div>

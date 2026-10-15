@@ -11,32 +11,32 @@ COURSES = [
     {
         "slug": "communicate-like-a-ceo", "title": "Communicate Like a CEO",
         "tag": "Speak like the 1% elite", "cat": "Business", "dur": "6 Weeks", "level": "All Levels",
-        "intro": "Communication is the number-one skill that separates leaders from followers. In this course you learn to speak with the authority, clarity and presence of a top CEO — so people listen, trust and follow you.",
+        "intro": "Communication is the number-one skill that separates leaders from followers. In this course you learn to speak with the authority, clarity and presence of a top CEO - so people listen, trust and follow you.",
         "modules": [
             ("Executive presence & mindset", "Build the inner confidence and self-image of a leader before you say a single word."),
             ("Speaking with clarity & authority", "Structure your thoughts and speak in clear, powerful, concise sentences."),
             ("Body language & vocal power", "Use posture, eye contact, pace and tone to command any room."),
             ("Public speaking & presentations", "Plan and deliver talks and pitches that move people to action."),
-            ("Persuasive, confident messaging", "Frame your ideas so they land — influence without pressure."),
+            ("Persuasive, confident messaging", "Frame your ideas so they land - influence without pressure."),
             ("Handling difficult conversations", "Give feedback, say no, and handle conflict with calm authority."),
             ("Communicating on camera & online", "Show up powerfully on video calls, livestreams and social."),
-            ("Final project — Deliver a CEO-level talk", "Record and deliver a 3-minute leadership talk and get feedback."),
+            ("Final project - Deliver a CEO-level talk", "Record and deliver a 3-minute leadership talk and get feedback."),
         ],
         "outcome": "You will speak, present and lead with the confidence and polish of the top 1%.",
     },
     {
         "slug": "negotiation", "title": "Master Negotiation",
         "tag": "Negotiate like the world's best", "cat": "Business", "dur": "6 Weeks", "level": "All Levels",
-        "intro": "Everything in life is a negotiation — your salary, your rates, your deals, your relationships. Learn the proven strategies of the world's best negotiators to get what you're worth without conflict.",
+        "intro": "Everything in life is a negotiation - your salary, your rates, your deals, your relationships. Learn the proven strategies of the world's best negotiators to get what you're worth without conflict.",
         "modules": [
             ("Negotiation psychology & mindset", "Understand what really drives every negotiation and how to stay in control."),
             ("Preparation & knowing your worth", "Do the homework that wins deals before they begin."),
             ("Anchoring & framing", "Set the terms and shape how the other side sees the deal."),
             ("Tactical empathy & listening", "Use listening as a weapon to uncover what the other side truly wants."),
             ("Handling objections & pushback", "Turn 'no' into 'yes' calmly and confidently."),
-            ("Salary, rates & business deals", "Ask for more money and better terms — and get them."),
+            ("Salary, rates & business deals", "Ask for more money and better terms - and get them."),
             ("Closing win-win agreements", "Lock in deals that both sides feel good about."),
-            ("Final project — Live negotiation simulation", "Run a full negotiation role-play and debrief your wins."),
+            ("Final project - Live negotiation simulation", "Run a full negotiation role-play and debrief your wins."),
         ],
         "outcome": "You will confidently negotiate money, deals and opportunities like a professional.",
     },
@@ -52,13 +52,13 @@ COURSES = [
             ("Editing & short-form formats", "Cut punchy videos for reels, shorts and TikTok."),
             ("Packaging for TikTok, Reels, YouTube & X", "Format, caption and title videos for each platform."),
             ("Storytelling for different audiences", "Adapt one story for youth, business, and general audiences."),
-            ("Final project — Publish an AI story series", "Produce and post a 3-part AI video story."),
+            ("Final project - Publish an AI story series", "Produce and post a 3-part AI video story."),
         ],
         "outcome": "You will create and publish professional AI-powered video stories for any audience.",
     },
     {
         "slug": "personal-branding", "title": "Personal Branding: Visibility Is Currency",
-        "tag": "Stand out — visibility is currency", "cat": "Business", "dur": "6 Weeks", "level": "All Levels",
+        "tag": "Stand out - visibility is currency", "cat": "Business", "dur": "6 Weeks", "level": "All Levels",
         "intro": "In today's world, the people who are seen win. Learn to build a magnetic personal brand that makes you stand out, get remembered, and attract opportunities.",
         "modules": [
             ("Personal brand foundations", "Discover what a personal brand is and why visibility is currency."),
@@ -68,14 +68,14 @@ COURSES = [
             ("Content that grows your authority", "Post content that builds trust and grows your following."),
             ("Networking your brand", "Get your name into the right rooms and conversations."),
             ("Monetizing your personal brand", "Turn visibility into clients, jobs and income."),
-            ("Final project — Launch your brand kit", "Build your bio, profiles and first content plan."),
+            ("Final project - Launch your brand kit", "Build your bio, profiles and first content plan."),
         ],
         "outcome": "You will have a clear, standout personal brand that opens doors.",
     },
     {
         "slug": "ai-literacy", "title": "AI Literacy for Work & Productivity",
         "tag": "AI basics for work & productivity", "cat": "Business", "dur": "5 Weeks", "level": "Beginner",
-        "intro": "AI is the new electricity. This beginner course teaches you to use everyday AI tools to work faster, study smarter and get more done — no tech background needed.",
+        "intro": "AI is the new electricity. This beginner course teaches you to use everyday AI tools to work faster, study smarter and get more done - no tech background needed.",
         "modules": [
             ("What AI is (and isn't)", "Understand AI in plain language and what it can do for you."),
             ("The essential AI toolkit", "The free and low-cost AI tools every young person should know."),
@@ -84,14 +84,14 @@ COURSES = [
             ("AI for images, docs & data", "Create graphics, documents and simple analysis with AI."),
             ("Automating everyday tasks", "Save hours by letting AI handle repetitive work."),
             ("Using AI responsibly & safely", "Stay accurate, ethical and safe with your data."),
-            ("Final project — Your AI productivity workflow", "Build a personal AI routine for work or study."),
+            ("Final project - Your AI productivity workflow", "Build a personal AI routine for work or study."),
         ],
         "outcome": "You will use AI confidently and productively in daily work and study.",
     },
     {
         "slug": "content-creation", "title": "Content Creation Mastery",
         "tag": "Create content that grows brands", "cat": "Marketing", "dur": "6 Weeks", "level": "Beginner",
-        "intro": "Content is how brands and creators grow. Learn to plan and create scroll-stopping photos, videos, captions and carousels consistently — even with just a phone.",
+        "intro": "Content is how brands and creators grow. Learn to plan and create scroll-stopping photos, videos, captions and carousels consistently - even with just a phone.",
         "modules": [
             ("Content strategy & planning", "Decide what to post, why, and for whom."),
             ("Creating with just a phone", "Shoot great content with the device in your pocket."),
@@ -100,7 +100,7 @@ COURSES = [
             ("Design tools & templates", "Create clean graphics fast with free tools."),
             ("Batching & a content calendar", "Create a week of content in one sitting."),
             ("Growing & engaging an audience", "Turn viewers into a loyal community."),
-            ("Final project — A 30-day content plan", "Build a full month of ready-to-post content."),
+            ("Final project - A 30-day content plan", "Build a full month of ready-to-post content."),
         ],
         "outcome": "You will create consistent, high-quality content for yourself or clients.",
     },
@@ -113,17 +113,17 @@ COURSES = [
             ("Understanding your customer", "Know exactly who you serve and what they want."),
             ("Building an irresistible offer", "Package your product so people want to buy."),
             ("Digital marketing channels", "Use social, content and ads to reach customers."),
-            ("The psychology of selling", "Understand why people buy — and how to help them decide."),
+            ("The psychology of selling", "Understand why people buy - and how to help them decide."),
             ("Sales conversations & closing", "Pitch, handle objections and close with confidence."),
             ("Funnels, follow-up & retention", "Keep customers coming back and referring others."),
-            ("Final project — Full go-to-market plan", "Build a complete plan to launch and sell an offer."),
+            ("Final project - Full go-to-market plan", "Build a complete plan to launch and sell an offer."),
         ],
         "outcome": "You will confidently market and sell any product or service.",
     },
     {
         "slug": "networking-secrets", "title": "Networking Like the Top 1%",
         "tag": "Network like the top 1% (even as an introvert)", "cat": "Business", "dur": "5 Weeks", "level": "All Levels",
-        "intro": "Your network is your net worth. Learn to build genuine, powerful relationships that open doors — even if you're shy or introverted.",
+        "intro": "Your network is your net worth. Learn to build genuine, powerful relationships that open doors - even if you're shy or introverted.",
         "modules": [
             ("The networking mindset", "Rethink networking as giving value, not asking favours."),
             ("Networking as an introvert", "Build a strong network without draining yourself."),
@@ -132,7 +132,7 @@ COURSES = [
             ("Adding value first", "Become someone others want to know and help."),
             ("Building real relationships", "Turn contacts into genuine, lasting connections."),
             ("Following up & staying memorable", "Nurture relationships so they pay off over time."),
-            ("Final project — Your 90-day network plan", "Map and start building your key relationships."),
+            ("Final project - Your 90-day network plan", "Map and start building your key relationships."),
         ],
         "outcome": "You will build a powerful network that creates real opportunities.",
     },
@@ -143,7 +143,7 @@ TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>{title} — CHRISCO Digital Academy</title>
+<title>{title} - CHRISCO Digital Academy</title>
 <style>
   :root {{
     --teal:#002333; --green:#00FF84; --green-deep:#00994f;
@@ -210,9 +210,9 @@ TEMPLATE = """<!DOCTYPE html>
     </section>
 
     <footer>
-      <strong>CHRISCO Digital Academy</strong> — under CHRISCO Youth Aflame · Jinja &amp; Buikwe, Uganda<br/>
+      <strong>CHRISCO Digital Academy</strong> - under CHRISCO Youth Aflame · Jinja &amp; Buikwe, Uganda<br/>
       Email: shambetz@gmail.com · WhatsApp: +256 763 393 021 / +256 755 467 513 · Founder: Wambete Benjamin<br/>
-      © 2026 CHRISCO Digital Academy — practical skills that pay for life.
+      © 2026 CHRISCO Digital Academy - practical skills that pay for life.
     </footer>
   </div>
 </body>

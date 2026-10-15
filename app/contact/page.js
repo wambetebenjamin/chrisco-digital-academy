@@ -4,13 +4,12 @@ import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
 import PageBackdrop from "../components/PageBackdrop"
-import Reveal from "../components/Reveal"
 import ContactForm from "./ContactForm"
 
 export const metadata = {
   title: "Contact",
   description:
-    "Get in touch with CHRISCO Digital Academy — ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
+    "Get in touch with CHRISCO Digital Academy - ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
 }
 
 const infoItems = [
@@ -36,21 +35,21 @@ export default function Contact() {
           </>
         }
         titleStyle={{ maxWidth: 820 }}
-        lead="Have a question, want to enroll, or ready to partner? We respond fast — usually the same day on WhatsApp."
+        lead="Have a question, want to enroll, or ready to partner? We respond fast - usually the same day on WhatsApp."
       />
 
       {/* BODY */}
-      <section className="section-veil" style={{ padding: "48px 0 96px" }}>
+      <section style={{ padding: "0 0 96px" }}>
         <div className="container">
           <div className="split" style={{ alignItems: "start" }}>
-            {/* LEFT — info */}
+            {/* LEFT - info */}
             <div>
               <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "var(--ink)", marginBottom: 22 }}>
                 Contact details
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {infoItems.map((item, i) => (
-                  <Reveal key={i} variant="left" delay={i * 80} className="card card-hover card-frost shine" style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}>
+                  <div key={i} className="card card-hover" style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}>
                     <span
                       style={{
                         width: 50,
@@ -74,7 +73,7 @@ export default function Contact() {
                         {item.value}
                       </div>
                     </div>
-                  </Reveal>
+                  </div>
                 ))}
               </div>
 
@@ -94,7 +93,7 @@ export default function Contact() {
                   Prefer WhatsApp?
                 </div>
                 <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.6)", marginBottom: 16 }}>
-                  Chat with us directly — we reply fast.
+                  Chat with us directly - we reply fast.
                 </p>
                 <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
                   <Icon name="whatsapp" size={15} /> Chat on WhatsApp
@@ -102,7 +101,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* RIGHT — form (client island) */}
+            {/* RIGHT - form (client island) */}
             <ContactForm />
           </div>
         </div>

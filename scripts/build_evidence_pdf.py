@@ -66,7 +66,7 @@ pdf.set_xy(14, 24.5)
 pdf.cell(180, 5, "Youth digital & economic-empowerment hubs in Jinja & Buikwe, Uganda  -  under CHRISCO Youth Aflame")
 
 # ================= HERO IMAGE =================
-hero = crop_to(os.path.join(IMG, "bg-home.jpg"), os.path.join(TMP, "hero.jpg"), 210/58)
+hero = crop_to(os.path.join(IMG, "workspace.jpg"), os.path.join(TMP, "hero.jpg"), 210/58)
 pdf.image(hero, x=0, y=37.6, w=210, h=52)
 # translucent caption strip
 pdf.set_fill_color(*TEAL)
@@ -165,7 +165,7 @@ pdf.cell(180, 6, "Why it fits Changemakers")
 y += 6.8
 points = [
     "Education + economic empowerment - skills that create real youth income in Jinja & Buikwe.",
-    "In-kind equipment only (no cash): laptops, tablets, projector, internet - total UGX 19.0M (< 20M).",
+    "In-kind equipment only (no cash): laptops, tablets, projector, internet - total UGX 19.1M (< 20M).",
     "Teaches money management, website-building + an offline study app so no-internet youth keep learning.",
     "Sustainable: existing 19-course curriculum, books & videos + train-the-trainer + graduate mentorship.",
 ]

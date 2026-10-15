@@ -1,9 +1,9 @@
 /**
- * Icon — the academy's natural vector icon set.
+ * Icon - the academy's natural vector icon set.
  *
  * Hand-drawn, stroke-based SVG icons (Lucide/Feather style) that render in
  * `currentColor`, so they inherit any surrounding text colour automatically.
- * Pure server-safe component — no client JS required.
+ * Pure server-safe component - no client JS required.
  *
  * Usage:  <Icon name="rocket" size={18} />
  */
@@ -184,13 +184,6 @@ const paths = {
   flame: (
     <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
   ),
-  sparkles: (
-    <>
-      <path d="M11.5 4.5l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" />
-      <path d="M18.5 3l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" />
-      <path d="M5 15.5l.7 1.8 1.8.7-1.8.7L5 20.5l-.7-1.8-1.8-.7 1.8-.7z" />
-    </>
-  ),
   globe: (
     <>
       <circle cx="12" cy="12" r="9" />
@@ -331,7 +324,7 @@ const paths = {
 }
 
 export default function Icon({ name, size = 18, strokeWidth = 1.9, style, className, ...rest }) {
-  const content = paths[name] || paths.sparkles
+  const content = paths[name] || paths.grid
   return (
     <svg
       viewBox="0 0 24 24"
