@@ -1,20 +1,47 @@
 import Link from "next/link"
 import Icon from "./Icon"
 
+const exploreLinks = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Courses", href: "/courses" },
+  { label: "Contact", href: "/contact" },
+  { label: "Dashboard", href: "/dashboard" },
+]
+
+const popularCourses = [
+  "Freelancing",
+  "YouTube Automation",
+  "Python Programming",
+  "SWE & LLM Mastery",
+  "Social Media Marketing",
+]
+
+const socials = ["Facebook", "Instagram", "YouTube", "LinkedIn"]
+
 export default function Footer() {
   return (
-    <footer style={{ background: "var(--navy)", color: "rgba(255,255,255,0.6)", position: "relative", overflow: "hidden" }}>
+    <footer
+      style={{
+        background: "var(--navy)",
+        color: "rgba(255,255,255,0.6)",
+        position: "relative",
+        overflow: "hidden",
+        borderTop: "3px solid var(--green)",
+      }}
+    >
       {/* Ghost wordmark */}
       <div
         aria-hidden
         style={{
           position: "absolute",
-          bottom: -30,
+          bottom: -42,
           left: "50%",
           transform: "translateX(-50%)",
           fontFamily: "var(--font-display)",
           fontSize: "clamp(5rem, 18vw, 13rem)",
-          color: "rgba(255,255,255,0.03)",
+          lineHeight: 1,
+          color: "rgba(255,255,255,0.025)",
           whiteSpace: "nowrap",
           pointerEvents: "none",
           userSelect: "none",
@@ -23,10 +50,10 @@ export default function Footer() {
         CHRISCO
       </div>
 
-      <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: 72, paddingBottom: 32 }}>
-        <div className="grid" style={{ gridTemplateColumns: "1fr", gap: 40 }}>
+      <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: 80, paddingBottom: 36 }}>
+        <div className="footer-grid">
           {/* Brand */}
-          <div>
+          <div className="footer-col">
             <Link href="/" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 12 }}>
               <span
                 style={{
@@ -41,6 +68,7 @@ export default function Footer() {
                   fontSize: "1.15rem",
                   color: "var(--navy)",
                   transform: "rotate(-4deg)",
+                  flexShrink: 0,
                 }}
               >
                 C
@@ -54,12 +82,12 @@ export default function Footer() {
                 </span>
               </span>
             </Link>
-            <p style={{ fontSize: 14, lineHeight: 1.7, marginTop: 20, maxWidth: 300 }}>
+            <p style={{ fontSize: 14, lineHeight: 1.75, marginTop: 20, maxWidth: 320 }}>
               A youth-focused learning platform under CHRISCO Youth Aflame - equipping young Africans with practical
               digital skills that open real doors.
             </p>
-            <div style={{ display: "flex", gap: 8, marginTop: 22, flexWrap: "wrap" }}>
-              {["Facebook", "Instagram", "YouTube", "LinkedIn"].map((s) => (
+            <div style={{ display: "flex", gap: 8, marginTop: 24, flexWrap: "wrap" }}>
+              {socials.map((s) => (
                 <span key={s} className="pill pill-dark pill-sm" style={{ cursor: "default" }}>
                   {s}
                 </span>
@@ -68,76 +96,69 @@ export default function Footer() {
           </div>
 
           {/* Explore */}
-          <div>
-            <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--green)", marginBottom: 18 }}>
-              Explore
-            </div>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
-              {[
-                { label: "Home", href: "/" },
-                { label: "About Us", href: "/about" },
-                { label: "Courses", href: "/courses" },
-                { label: "Contact", href: "/contact" },
-                { label: "Dashboard", href: "/dashboard" },
-              ].map((l) => (
+          <nav className="footer-col" aria-label="Explore">
+            <h3 className="footer-heading">Explore</h3>
+            <ul className="footer-list">
+              {exploreLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", fontSize: 14, transition: "color 0.2s" }} className="footer-link">
+                  <Link href={l.href} className="footer-link">
                     {l.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Contact */}
-          <div>
-            <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--green)", marginBottom: 18 }}>
-              Contact
-            </div>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12, fontSize: 14 }}>
-              <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="mail" size={15} /></span> shambetz@gmail.com
-              </li>
-              <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="phone" size={15} /></span> +254 112 272 061
-              </li>
-              <li style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <span style={{ color: "var(--green)", display: "inline-flex" }}><Icon name="pin" size={15} /></span> Jinja, Uganda
-              </li>
-            </ul>
-            <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ marginTop: 22 }}>
-              <Icon name="whatsapp" size={15} /> WhatsApp Us
-            </a>
-          </div>
-
-          {/* Courses */}
-          <div>
-            <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--green)", marginBottom: 18 }}>
-              Popular Courses
-            </div>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12, fontSize: 14 }}>
-              {["Freelancing", "YouTube Automation", "Python Programming", "SWE & LLM Mastery", "Social Media Marketing"].map((c) => (
+          {/* Popular courses */}
+          <nav className="footer-col" aria-label="Popular courses">
+            <h3 className="footer-heading">Popular Courses</h3>
+            <ul className="footer-list">
+              {popularCourses.map((c) => (
                 <li key={c}>
-                  <Link href="/courses" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none" }}>
+                  <Link href="/courses" className="footer-link">
                     {c}
                   </Link>
                 </li>
               ))}
             </ul>
+          </nav>
+
+          {/* Contact */}
+          <div className="footer-col">
+            <h3 className="footer-heading">Contact</h3>
+            <ul className="footer-list footer-contact">
+              <li>
+                <span className="footer-contact-icon"><Icon name="mail" size={15} /></span>
+                <a href="mailto:shambetz@gmail.com" className="footer-link" style={{ wordBreak: "break-all" }}>
+                  shambetz@gmail.com
+                </a>
+              </li>
+              <li>
+                <span className="footer-contact-icon"><Icon name="phone" size={15} /></span>
+                <span>+254 112 272 061</span>
+              </li>
+              <li>
+                <span className="footer-contact-icon"><Icon name="pin" size={15} /></span>
+                <span>Jinja, Uganda</span>
+              </li>
+            </ul>
+            <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
+              <Icon name="whatsapp" size={15} /> WhatsApp Us
+            </a>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: 56, paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
-            © 2026 CHRISCO Digital Academy. All Rights Reserved.
-          </span>
-          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
-            Founded by Wambete Benjamin · Jinja, Uganda
+        <div className="footer-bottom">
+          <span>© 2026 CHRISCO Digital Academy. All Rights Reserved.</span>
+          <span className="footer-bottom-right">
+            <span>Founded by Wambete Benjamin · Jinja, Uganda</span>
+            <a href="#" className="footer-top-link">
+              Back to top ↑
+            </a>
           </span>
         </div>
       </div>
-
     </footer>
   )
 }
