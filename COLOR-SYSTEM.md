@@ -1,4 +1,4 @@
-# CHRISCO Digital Academy — Colour System & Navigation Notes
+# CHRISCO Digital Academy, Colour System & Navigation Notes
 
 ## 1. What we took from the reference site
 

@@ -11,7 +11,7 @@ const menuOptions = [
   { number: "1", label: "View Courses" },
   { number: "2", label: "Pricing" },
   { number: "3", label: "Enroll Now" },
-  { number: "4", label: "About Founder" },
+  { number: "4", label: "About Our Tutor" },
   { number: "5", label: "Location & Contact" },
   { number: "6", label: "Certificates" },
   { number: "7", label: "Online Classes" },
@@ -28,7 +28,7 @@ const responses = [
   { keywords: ["ai", "artificial intelligence", "chatgpt", "tools"], reply: "Our SWE & LLM Mastery course teaches you to build AI-powered apps and use tools like ChatGPT to boost creativity and productivity!" },
   { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: shambetz@gmail.com\nPhone: +254112272061" },
   { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly!\nEmail: shambetz@gmail.com\nPhone: +254112272061\n\nOr type 8 to send us a message right here!" },
-  { keywords: ["4", "wambete", "benjamin", "founder", "instructor", "teacher", "who"], reply: "Wambete Benjamin is our founder and lead instructor, a CS Graduate with expertise in graphic design, web development, video editing, animations, social media management and AI!" },
+  { keywords: ["4", "founder", "tutor", "instructor", "teacher", "who", "team"], reply: "Our courses are led by the CHRISCO Youth Aflame tutor team, a lead tutor with a Computer Science background working in design, web development, video editing, animation, social media and AI. CHRISCO Digital Academy is the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International." },
   { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: shambetz@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Jinja, Uganda" },
   { keywords: ["6", "certificate", "certification", "qualify"], reply: "Yes! You receive a certificate upon completing any course. Practical-skills based and recognized!" },
   { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, and in-person with youth in Jinja and Buikwe, Uganda. Learn from anywhere in Uganda and beyond!" },
@@ -43,7 +43,7 @@ function getReply(input) {
       return item.reply
     }
   }
-  return "I'm not sure about that! Here's what I can help with, type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Founder\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message"
+  return "I'm not sure about that! Here's what I can help with, type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Our Tutor\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message"
 }
 
 export default function Chatbot() {
@@ -65,7 +65,7 @@ export default function Chatbot() {
       setMessages((prev) => [
         ...prev,
         { role: "user", content: userInput },
-        { role: "assistant", content: "Sure! Fill in the form below and your message will be sent directly to Wambete!" },
+        { role: "assistant", content: "Sure! Fill in the form below and your message will be sent directly to the CHRISCO Youth Aflame team!" },
       ])
       setShowForm(true)
       setInput("")
@@ -106,7 +106,7 @@ export default function Chatbot() {
       setShowForm(false)
       setMessages((prev) => [...prev, {
         role: "assistant",
-        content: `Message sent successfully! Wambete will get back to you soon. Thank you, ${form.name}!`,
+        content: `Message sent successfully! Our team will get back to you soon. Thank you, ${form.name}!`,
       }])
       setForm({ name: "", email: "", phone: "", message: "" })
     } catch {
@@ -219,7 +219,7 @@ export default function Chatbot() {
           {showForm && (
             <div style={{ padding: "14px 16px", background: "#fff", borderTop: "1px solid var(--line)" }}>
               <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "var(--ink)", fontSize: 13.5, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
-                <Icon name="mail" size={15} style={{ color: "var(--green-deep)" }} /> Send Wambete a message
+                <Icon name="mail" size={15} style={{ color: "var(--green-deep)" }} /> Send the CHRISCO team a message
               </div>
               <input className="input" placeholder="Your Name *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={{ marginBottom: 8, padding: "10px 14px", fontSize: 13 }} />
               <input className="input" placeholder="Your Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} style={{ marginBottom: 8, padding: "10px 14px", fontSize: 13 }} />

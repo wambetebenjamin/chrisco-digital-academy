@@ -19,7 +19,8 @@ import { courses, categories } from "./data/courses"
 const aboutLinks = [
   { label: "Who We Are", desc: "Our story, mission and values", href: "/about", icon: "users" },
   { label: "Our Mission", desc: "Why we bridge the digital divide", href: "/about#mission", icon: "target" },
-  { label: "Meet the Founder", desc: "Wambete Benjamin, lead instructor", href: "/about#founder", icon: "cap" },
+  { label: "Meet Our Tutor", desc: "Who teaches our courses", href: "/about#tutor", icon: "cap" },
+  { label: "Become a Tutor", desc: "Teach a track with us", href: "/become-a-tutor", icon: "send" },
   { label: "Contact Us", desc: "Talk to us on WhatsApp or email", href: "/contact", icon: "mail" },
 ]
 
@@ -28,6 +29,7 @@ const programLinks = [
   { label: "In-Person Classes", desc: "Jinja & Buikwe, Uganda", href: "/contact", icon: "pin" },
   { label: "Youth & Community", desc: "CHRISCO Youth Aflame programmes", href: "/about", icon: "flame" },
   { label: "Corporate Training", desc: "Upskill your team with us", href: "/contact", icon: "briefcase" },
+  { label: "Become a Tutor", desc: "Teach what you already do", href: "/become-a-tutor", icon: "send" },
 ]
 
 const studentLinks = [

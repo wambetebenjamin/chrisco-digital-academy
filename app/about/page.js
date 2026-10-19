@@ -7,11 +7,12 @@ import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
 import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
+import { org, tutor } from "../data/org"
 
 export const metadata = {
   title: "About Us",
   description:
-    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, founded by Wambete Benjamin, bridging the digital divide with practical, affordable digital skills training across Africa.",
+    "CHRISCO Digital Academy is the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International, bridging the digital divide with practical, affordable digital skills training across Africa.",
 }
 
 const stats = [
@@ -21,7 +22,7 @@ const stats = [
   { number: "100%", label: "Practical Skills" },
 ]
 
-const founderTags = [
+const tutorTags = [
   { icon: "cap", label: "CS Graduate" },
   { icon: "palette", label: "Designer" },
   { icon: "code", label: "Developer" },
@@ -32,7 +33,7 @@ const founderTags = [
 const values = [
   { icon: "globe", title: "Accessible", desc: "Affordable, beginner-friendly learning for every young person in Africa." },
   { icon: "wrench", title: "Practical", desc: "Every course ends with a real project you can show, and sell." },
-  { icon: "users", title: "Mentorship", desc: "Learn directly from a founder who works in these fields every day." },
+  { icon: "users", title: "Mentorship", desc: "Learn directly from tutors who work in these fields every day." },
   { icon: "flame", title: "Community", desc: "Join a growing family of young creators, coders and entrepreneurs." },
 ]
 
@@ -102,12 +103,14 @@ export default function About() {
                 practical skills to turn them into income. CHRISCO Digital Academy fixes that.
               </p>
               <p className="lead" style={{ marginTop: 16 }}>
-                Founded by <strong style={{ color: "var(--ink)" }}>Wambete Benjamin</strong>, a Computer Science
-                graduate with hands-on expertise in graphic design, web development, video editing, animation,
+                CHRISCO Digital Academy is the learning platform of{" "}
+                <strong style={{ color: "var(--ink)" }}>CHRISCO Youth Aflame</strong>, operating under{" "}
+                <strong style={{ color: "var(--ink)" }}>CHRISCO Fellowship of Churches International</strong>. Our
+                tutors are working practitioners in graphic design, web development, video editing, animation,
                 social media and AI.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 28 }}>
-                {founderTags.map((t) => (
+                {tutorTags.map((t) => (
                   <span key={t.label} className="pill pill-soft">
                     <Icon name={t.icon} size={14} strokeWidth={2.1} /> {t.label}
                   </span>
@@ -210,22 +213,22 @@ export default function About() {
         </div>
       </section>
 
-      {/* FOUNDER */}
-      <section id="founder" className="section section-navy" style={{ scrollMarginTop: 128 }}>
+      {/* TUTOR */}
+      <section id="tutor" className="section section-navy" style={{ scrollMarginTop: 128 }}>
         <div className="container">
           <div className="split" style={{ alignItems: "center" }}>
             <div>
-              <span className="eyebrow on-dark">Founder & lead instructor</span>
+              <span className="eyebrow on-dark">Meet our tutor</span>
               <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
-                Wambete <span className="accent-bright">Benjamin</span>
+                Taught by people who <span className="accent-bright">do the work.</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 22px" }}>
-                CS Graduate, Designer, Developer, AI Expert
+                {tutor.role}, CHRISCO Youth Aflame
               </p>
               <p className="lead on-dark" style={{ maxWidth: 540 }}>
-                Passionate about equipping African youth with digital skills that open real doors and transform
-                lives. Founded CHRISCO Digital Academy to make quality digital education accessible to every young
-                person in Africa.
+                Our lead tutor is a Computer Science graduate who works daily in design, development, video and AI,
+                and teaches the same practical workflows our learners use on real projects. The academy is run by
+                CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
                 {["Graphic Design", "Web Development", "Video Editing", "Animations", "Social Media", "AI"].map((t) => (
@@ -241,7 +244,7 @@ export default function About() {
                 <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
                   <Image
                     src="/images/workspace.jpg"
-                    alt="Wambete Benjamin's creative workspace"
+                    alt="The CHRISCO tutor workspace"
                     fill
                     sizes="(min-width: 768px) 46vw, 92vw"
                     style={{ objectFit: "cover" }}
@@ -259,11 +262,72 @@ export default function About() {
                     padding: "14px 18px",
                   }}
                 >
-                  <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>Founded under</div>
+                  <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>Operated by</div>
                   <div style={{ fontSize: 11.5, color: "var(--green)", display: "inline-flex", alignItems: "center", gap: 6 }}>
                     <Icon name="flame" size={13} strokeWidth={2.2} /> CHRISCO Youth Aflame
                   </div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", marginTop: 3 }}>
+                    under CHRISCO Fellowship of Churches International
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BECOME A TUTOR */}
+      <section className="section section-frost-alt" style={{ scrollMarginTop: 128 }}>
+        <div className="container">
+          <div className="split" style={{ alignItems: "center" }}>
+            <div>
+              <span className="eyebrow">Teach with us</span>
+              <h2 className="title" style={{ marginTop: 16 }}>
+                Want to become a <span className="accent">tutor?</span>
+              </h2>
+              <p className="lead" style={{ marginTop: 20, maxWidth: 520 }}>
+                CHRISCO Youth Aflame is always looking for practitioners who can teach what they do. If you work in
+                design, development, marketing, video, data or AI, you can lead a course with us.
+              </p>
+              <ul className="tutor-points">
+                {[
+                  "Teach part-time, online or in person in Jinja and Buikwe",
+                  "We help you shape the syllabus, slides and assessments",
+                  "Your classes are delivered under the CHRISCO Youth Aflame brand",
+                  "Every tutor is vetted and approved by the academy",
+                ].map((point) => (
+                  <li key={point}>
+                    <Icon name="checkCircle" size={16} strokeWidth={2} />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 28 }}>
+                <Link href="/become-a-tutor" className="btn btn-green" style={{ textDecoration: "none" }}>
+                  Apply to Teach
+                </Link>
+                <a href="https://wa.me/254112272061" className="btn btn-outline" style={{ textDecoration: "none" }}>
+                  <Icon name="whatsapp" size={16} /> Ask a Question
+                </a>
+              </div>
+            </div>
+            <div className="card" style={{ padding: "30px 28px" }}>
+              <span className="eyebrow" style={{ fontSize: 11 }}>Who we are looking for</span>
+              <div className="tutor-req-grid">
+                {[
+                  { icon: "wrench", title: "Practical skill", desc: "You do the work, not just talk about it." },
+                  { icon: "users", title: "Heart for youth", desc: "Patience and clarity with beginners." },
+                  { icon: "clipboard", title: "Reliable", desc: "You can hold a schedule and follow a syllabus." },
+                  { icon: "shield", title: "Integrity", desc: "You uphold the values of the fellowship." },
+                ].map((r) => (
+                  <div key={r.title} className="tutor-req">
+                    <span className="tutor-req-ico"><Icon name={r.icon} size={17} strokeWidth={1.9} /></span>
+                    <div>
+                      <div className="tutor-req-title">{r.title}</div>
+                      <div className="tutor-req-desc">{r.desc}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

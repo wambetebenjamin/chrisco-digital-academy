@@ -1,7 +1,7 @@
 # 🎓 CHRISCO Digital Academy
 
 A modern learning platform equipping African youth with practical digital skills - design, code, marketing,
-writing, video and AI. Built for **CHRISCO Youth Aflame** and founded by **Wambete Benjamin**.
+writing, video and AI. Built as the learning platform of **CHRISCO Youth Aflame**, operating under **CHRISCO Fellowship of Churches International**.
 
 ## 🎨 Design Language
 
@@ -32,9 +32,10 @@ green stays a signal rather than a surface. Full rationale in
 
 - **Home** - editorial hero (category sidebar + image tile + stats), credentials strip, skill
   tracks, featured courses, founder band, how-it-works, CTA, footer, chatbot.
-- **About** - story, stats, mission & vision, values, founder profile.
+- **About** - story, stats, mission & vision, values, tutor profile, and a "become a tutor" pathway.
 - **Courses** - 19 courses across 7 categories (incl. Business & economic-empowerment skills) with sidebar filters, syllabus modals, download & enrollment
   (EmailJS → shambetz@gmail.com).
+- **Become a Tutor** - open tracks, requirements, what the academy provides, application steps.
 - **Contact** - info cards, WhatsApp shortcut, EmailJS contact form.
 - **Dashboard** - stats, enrollments, account (Supabase auth, gated).
 - **Sign In / Sign Up** - split editorial auth screens.

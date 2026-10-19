@@ -1,9 +1,12 @@
 import Link from "next/link"
 import Icon from "./Icon"
+import { org } from "../data/org"
 
 const exploreLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
+  { label: "Meet Our Tutor", href: "/about#tutor" },
+  { label: "Become a Tutor", href: "/become-a-tutor" },
   { label: "Courses", href: "/courses" },
   { label: "Contact", href: "/contact" },
   { label: "Dashboard", href: "/dashboard" },
@@ -82,8 +85,8 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ fontSize: 14, lineHeight: 1.75, marginTop: 20, maxWidth: 320 }}>
-              A youth-focused learning platform under CHRISCO Youth Aflame, equipping young Africans with practical
-              digital skills that open real doors.
+              The learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches
+              International, equipping young Africans with practical digital skills that open real doors.
             </p>
             <div style={{ display: "flex", gap: 8, marginTop: 24, flexWrap: "wrap" }}>
               {socials.map((s) => (
@@ -149,9 +152,9 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="footer-bottom">
-          <span>© 2026 CHRISCO Digital Academy. All Rights Reserved.</span>
+          <span>© 2026 CHRISCO Youth Aflame. All Rights Reserved.</span>
           <span className="footer-bottom-right">
-            <span>Founded by Wambete Benjamin, Jinja, Uganda</span>
+            <span>{org.ownership}</span>
             <a href="#" className="footer-top-link">
               Back to top ↑
             </a>

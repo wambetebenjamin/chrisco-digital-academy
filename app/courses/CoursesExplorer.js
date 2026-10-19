@@ -4,6 +4,7 @@ import emailjs from "@emailjs/browser"
 import Image from "next/image"
 import Icon from "../components/Icon"
 import { courses, categories, categoryCounts } from "../data/courses"
+import { org } from "../data/org"
 
 const SERVICE_ID = "service_m86zbad"
 const TEMPLATE_ID = "template_i5wg4c8"
@@ -286,7 +287,10 @@ export default function CoursesExplorer() {
 
                       {/* Body */}
                       <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
-                        <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
+                        <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 6 }}>{course.title}</h3>
+                        <p style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                          {org.courseCredit}
+                        </p>
                         <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.65, marginBottom: 18, flex: 1 }}>{course.desc}</p>
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
                           <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
@@ -360,6 +364,9 @@ export default function CoursesExplorer() {
                 </div>
                 <div>
                   <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: "1.4rem" }}>{selected.title}</h2>
+                  <p style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: "0.04em", color: "rgba(255,255,255,0.72)", marginTop: 8 }}>
+                    {org.courseCredit}
+                  </p>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
                     <span className="modal-chip">{selected.level}</span>
                     <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="clock" size={12} strokeWidth={2.2} /> {selected.duration}</span>
@@ -494,7 +501,7 @@ export default function CoursesExplorer() {
                     Enrollment Sent!
                   </h3>
                   <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 20 }}>
-                    Wambete will contact you soon on WhatsApp or Email. Welcome to CHRISCO Digital Academy!
+                    Our team at CHRISCO Youth Aflame will contact you soon on WhatsApp or email. Welcome to CHRISCO Digital Academy!
                   </p>
                   <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
                     Close
