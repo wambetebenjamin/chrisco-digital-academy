@@ -116,7 +116,6 @@ export function AuthProvider({ children }) {
               fontSize: "1.6rem",
               color: "var(--navy)",
               margin: "0 auto 20px",
-              transform: "rotate(-4deg)",
             }}
           >
             C

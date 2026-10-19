@@ -1,6 +1,6 @@
 import "./globals.css"
 /*
- * Self-hosted fonts via Fontsource - bundled at build time and served from
+ * Self-hosted fonts via Fontsource, bundled at build time and served from
  * the same origin. Replaces the render-blocking external Google Fonts CSS
  * (faster first paint, no third-party dependency, CLS-safe).
  */
@@ -11,11 +11,11 @@ import { AuthProvider } from "./AuthProvider"
 
 export const metadata = {
   title: {
-    default: "CHRISCO Digital Academy - Learn Skills That Pay For Life",
+    default: "CHRISCO Digital Academy, Learn Skills That Pay For Life",
     template: "%s | CHRISCO Digital Academy",
   },
   description:
-    "A modern learning platform equipping African youth with practical digital and economic-empowerment skills - communication, negotiation, personal branding, AI literacy, storytelling, sales, coding, marketing and more. Based in Jinja & Buikwe, Uganda. Under CHRISCO Youth Aflame.",
+    "A modern learning platform equipping African youth with practical digital and economic-empowerment skills, communication, negotiation, personal branding, AI literacy, storytelling, sales, coding, marketing and more. Based in Jinja & Buikwe, Uganda. Under CHRISCO Youth Aflame.",
   keywords: [
     "CHRISCO Digital Academy",
     "digital skills Uganda",

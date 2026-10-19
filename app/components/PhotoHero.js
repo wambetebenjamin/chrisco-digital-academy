@@ -7,9 +7,8 @@
  */
 export default function PhotoHero({ image, eyebrow, title, lead, children, imagePosition = "center 30%", titleStyle }) {
   return (
-    <section style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.34)", padding: "172px 0 76px" }}>
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.92) 0%, rgba(0,35,51,0.76) 46%, rgba(1,58,79,0.56) 100%)" }} />
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.09), transparent 62%)" }} />
+    <section style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.18)", padding: "clamp(120px, 16vw, 172px) 0 clamp(56px, 8vw, 76px)" }}>
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.64) 46%, rgba(1,58,79,0.44) 100%)" }} />
       <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         {eyebrow && <span className="eyebrow on-dark fade-up">{eyebrow}</span>}

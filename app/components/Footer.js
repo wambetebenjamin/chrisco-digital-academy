@@ -67,7 +67,6 @@ export default function Footer() {
                   fontFamily: "var(--font-display)",
                   fontSize: "1.15rem",
                   color: "var(--navy)",
-                  transform: "rotate(-4deg)",
                   flexShrink: 0,
                 }}
               >
@@ -83,7 +82,7 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ fontSize: 14, lineHeight: 1.75, marginTop: 20, maxWidth: 320 }}>
-              A youth-focused learning platform under CHRISCO Youth Aflame - equipping young Africans with practical
+              A youth-focused learning platform under CHRISCO Youth Aflame, equipping young Africans with practical
               digital skills that open real doors.
             </p>
             <div style={{ display: "flex", gap: 8, marginTop: 24, flexWrap: "wrap" }}>
@@ -152,7 +151,7 @@ export default function Footer() {
         <div className="footer-bottom">
           <span>© 2026 CHRISCO Digital Academy. All Rights Reserved.</span>
           <span className="footer-bottom-right">
-            <span>Founded by Wambete Benjamin · Jinja, Uganda</span>
+            <span>Founded by Wambete Benjamin, Jinja, Uganda</span>
             <a href="#" className="footer-top-link">
               Back to top ↑
             </a>

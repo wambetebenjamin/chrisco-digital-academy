@@ -242,7 +242,7 @@ export default function CoursesExplorer() {
                       style={{ overflow: "hidden", display: "flex", flexDirection: "column", cursor: "pointer", animation: `fadeUp 0.5s ease ${i * 0.05}s both` }}
                       onClick={() => openCourse(course)}
                     >
-                      {/* Header - photo + course-tone overlay */}
+                      {/* Header, photo + course-tone overlay */}
                       <div style={{ background: "var(--navy)", padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
                         <Image
                           src={course.img}
@@ -251,7 +251,7 @@ export default function CoursesExplorer() {
                           sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
                           style={{ objectFit: "cover" }}
                         />
-                        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.94) 0%, rgba(0,35,51,0.7) 58%, rgba(1,58,79,0.5) 100%)" }} />
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.54) 58%, rgba(1,58,79,0.34) 100%)" }} />
                         <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${course.color[0]}3D, transparent 68%)` }} />
                         <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }} />
                         <span
@@ -324,7 +324,7 @@ export default function CoursesExplorer() {
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            {/* Header - photo + course-tone overlay */}
+            {/* Header, photo + course-tone overlay */}
             <div style={{ background: "var(--navy)", padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
               <Image
                 src={selected.img}
@@ -333,7 +333,7 @@ export default function CoursesExplorer() {
                 sizes="(min-width: 640px) 600px, 92vw"
                 style={{ objectFit: "cover" }}
               />
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.94) 0%, rgba(0,35,51,0.7) 58%, rgba(1,58,79,0.5) 100%)" }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.54) 58%, rgba(1,58,79,0.34) 100%)" }} />
               <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${selected.color[0]}3D, transparent 68%)` }} />
               <span
                 className="pill pill-sm"

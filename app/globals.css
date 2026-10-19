@@ -61,6 +61,10 @@
 
 * { box-sizing: border-box; }
 
+/* Nothing may scroll sideways on small screens. `clip` (unlike `hidden`)
+   does not create a scroll container, so sticky positioning keeps working. */
+body { overflow-x: clip; }
+
 html { scroll-behavior: smooth; scroll-padding-top: 120px; }
 
 body {
@@ -82,8 +86,8 @@ body {
    steps one shade so the page reads as stacked planes, while the photo stays
    a faint texture underneath rather than a colour cast. */
 .section-frost {
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(18px) saturate(1.06);
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(14px) saturate(1.04);
   -webkit-backdrop-filter: blur(18px) saturate(1.06);
   border-top: 1px solid rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid rgba(227, 233, 231, 0.6);
@@ -91,8 +95,8 @@ body {
 
 /* Alternating tone so consecutive frosted bands stay distinguishable. */
 .section-frost-alt {
-  background: rgba(244, 247, 244, 0.82);
-  backdrop-filter: blur(18px) saturate(1.06);
+  background: rgba(244, 247, 244, 0.64);
+  backdrop-filter: blur(14px) saturate(1.04);
   -webkit-backdrop-filter: blur(18px) saturate(1.06);
   border-top: 1px solid rgba(255, 255, 255, 0.45);
   border-bottom: 1px solid rgba(227, 233, 231, 0.5);
@@ -100,8 +104,8 @@ body {
 
 /* A deeper step for third-level bands (never green). */
 .section-frost-deep {
-  background: rgba(235, 240, 237, 0.86);
-  backdrop-filter: blur(18px) saturate(1.06);
+  background: rgba(235, 240, 237, 0.70);
+  backdrop-filter: blur(14px) saturate(1.04);
   -webkit-backdrop-filter: blur(18px) saturate(1.06);
   border-top: 1px solid rgba(255, 255, 255, 0.4);
   border-bottom: 1px solid rgba(203, 214, 211, 0.5);
@@ -109,7 +113,7 @@ body {
 
 /* Cards sitting on a frosted band need a touch more opacity to hold contrast. */
 .card-frost {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-color: rgba(255, 255, 255, 0.7);
@@ -208,15 +212,6 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--green-deep);
-}
-/* A short rule gives the label a place in the layout instead of floating. */
-.eyebrow::before {
-  content: "";
-  width: 18px;
-  height: 1.5px;
-  border-radius: 2px;
-  background: currentColor;
-  opacity: 0.55;
 }
 .eyebrow.on-dark { color: var(--green); }
 .eyebrow.on-green { color: var(--navy); }
@@ -717,7 +712,6 @@ img { display: block; max-width: 100%; }
   font-family: var(--font-display);
   font-size: 1.05rem;
   color: var(--navy);
-  transform: rotate(-4deg);
 }
 .nav-logo-text { display: inline-flex; flex-direction: column; line-height: 1; }
 .nav-logo-word {
@@ -784,7 +778,7 @@ img { display: block; max-width: 100%; }
 .nav-dd { position: relative; }
 .nav-panel {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 10px);
   left: 50%;
   width: 380px;
   max-width: calc(100vw - 40px);
@@ -801,16 +795,20 @@ img { display: block; max-width: 100%; }
   z-index: 210;
   overflow: hidden;
 }
-/* Thin green hairline marks the open layer, without tinting the panel. */
-.nav-panel::before {
+/* An invisible bridge spans the gap between the trigger and the panel so the
+   pointer never falls into dead space on its way to the menu. */
+.nav-dd::after {
   content: "";
   position: absolute;
-  top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--green), rgba(0, 255, 132, 0));
+  top: 100%;
+  height: 16px;
+  display: none;
 }
+.nav-dd.is-open::after { display: block; }
+.nav-dd.is-pinned .nav-trigger { color: #fff; background: rgba(255, 255, 255, 0.06); }
+
 .nav-dd.is-open .nav-panel {
   opacity: 1;
   visibility: visible;
@@ -969,17 +967,6 @@ img { display: block; max-width: 100%; }
   gap: 10px;
   position: relative;
   overflow: hidden;
-}
-.mega-rail::after {
-  content: "";
-  position: absolute;
-  right: -50px;
-  top: -40px;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 255, 132, 0.16), transparent 68%);
-  pointer-events: none;
 }
 .mega-rail-eyebrow {
   font-size: 10.5px;
@@ -1281,4 +1268,26 @@ img { display: block; max-width: 100%; }
 @media (min-width: 900px) {
   .factstrip { grid-template-columns: repeat(4, 1fr); }
   .factstrip-item { padding: 24px 22px; }
+}
+
+/* ---------- Small-screen refinements ---------- */
+@media (max-width: 1023px) {
+  .container, .container-narrow { padding: 0 20px; }
+  .section { padding: 72px 0; }
+  .factstrip-item { padding: 18px 14px; gap: 10px; }
+}
+@media (max-width: 520px) {
+  .container, .container-narrow { padding: 0 16px; }
+  .section { padding: 60px 0; }
+  .section-tight { padding: 44px 0; }
+  .btn { padding: 13px 22px; font-size: 14px; }
+  .btn-lg { padding: 15px 26px; font-size: 15px; }
+  .factstrip-item { padding: 15px 10px; gap: 9px; }
+  .factstrip-ico { width: 32px; height: 32px; border-radius: 9px; }
+  .factstrip-title { font-size: 12px; }
+  .factstrip-desc { font-size: 10.5px; }
+  .nav-logo-word { font-size: 0.92rem; }
+  .nav-logo-sub { font-size: 0.55rem; letter-spacing: 0.16em; }
+  .hero-grid { gap: 30px; }
+  .footer-bottom { font-size: 12px; }
 }

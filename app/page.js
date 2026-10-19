@@ -12,7 +12,7 @@ const skills = [
   { num: "01", icon: "palette", title: "Graphic Design", desc: "Branding, posters and visual identity with Canva and Adobe tools." },
   { num: "02", icon: "code", title: "Web Development", desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js." },
   { num: "03", icon: "smartphone", title: "Social Media", desc: "Strategy, content creation and growth that gets real engagement." },
-  { num: "04", icon: "clapper", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events - a skill in demand." },
+  { num: "04", icon: "clapper", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events, a skill in demand." },
   { num: "05", icon: "layers", title: "Animation", desc: "Motion graphics and animated content that stops the scroll." },
   { num: "06", icon: "robot", title: "AI Expertise", desc: "Leveraging AI tools like ChatGPT for creativity and productivity." },
 ]
@@ -29,8 +29,8 @@ const featured = [courses[4], courses[0], courses[10]] // Freelancing, YouTube A
 
 const steps = [
   { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI." },
-  { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request - we confirm on WhatsApp or email within a day." },
-  { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate - and start earning." },
+  { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request, we confirm on WhatsApp or email within a day." },
+  { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate, and start earning." },
 ]
 
 export default function Home() {
@@ -42,11 +42,10 @@ export default function Home() {
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section style={{ padding: "168px 0 104px", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)" }}>
+      <section style={{ padding: "clamp(116px, 15vw, 168px) 0 clamp(64px, 9vw, 104px)", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.16)" }}>
         {/* The page-wide PageBackdrop supplies the photo; the hero only needs
             its dark scrim so the white display type stays legible. */}
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.90) 0%, rgba(0,35,51,0.72) 50%, rgba(1,58,79,0.50) 100%)" }} />
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.10), transparent 62%)" }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.62) 50%, rgba(1,58,79,0.42) 100%)" }} />
         <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
@@ -61,7 +60,7 @@ export default function Home() {
               marginBottom: 48,
             }}
           >
-            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy - Jinja, Uganda</span>
+            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy, Jinja, Uganda</span>
             <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
               Under CHRISCO Youth Aflame
             </span>
@@ -121,7 +120,7 @@ export default function Home() {
               </h1>
 
               <p className="lead on-dark fade-up fade-up-1" style={{ maxWidth: 560, marginTop: 26 }}>
-                CHRISCO Digital Academy is a modern learning platform for African youth - practical courses in
+                CHRISCO Digital Academy is a modern learning platform for African youth, practical courses in
                 design, code, marketing, writing, video and AI, taught by Wambete Benjamin.
               </p>
 
@@ -166,19 +165,6 @@ export default function Home() {
             {/* Hero image tile */}
             <div className="fade-up fade-up-1" style={{ minWidth: 0 }}>
               <div style={{ position: "relative" }}>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -18,
-                    right: -10,
-                    width: 120,
-                    height: 120,
-                    background: "rgba(0,255,132,0.25)",
-                    borderRadius: "50%",
-                    filter: "blur(50px)",
-                    zIndex: 0,
-                  }}
-                />
                 <div
                   style={{
                     position: "relative",
@@ -352,7 +338,7 @@ export default function Home() {
                 className="card card-hover"
                 style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
               >
-                {/* Card header - photo under a navy wash; course colour survives
+                {/* Card header, photo under a navy wash; course colour survives
                     only as a thin identity rule so the grid stays calm. */}
                 <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", background: "var(--navy)" }}>
                   <Image
@@ -367,7 +353,7 @@ export default function Home() {
                     style={{
                       position: "absolute",
                       inset: 0,
-                      background: "linear-gradient(152deg, rgba(0,35,51,0.88) 0%, rgba(0,35,51,0.58) 58%, rgba(1,58,79,0.42) 100%)",
+                      background: "linear-gradient(152deg, rgba(0,35,51,0.78) 0%, rgba(0,35,51,0.48) 58%, rgba(1,58,79,0.3) 100%)",
                     }}
                   />
                   <span
@@ -433,9 +419,9 @@ export default function Home() {
       </section>
 
       {/* ================= FOUNDER ================= */}
-      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.92)", color: "rgba(255,255,255,0.72)" }}>
+      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.86)", color: "rgba(255,255,255,0.82)" }}>
         <div aria-hidden style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.08 }} />
+          <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.22 }} />
         </div>
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split" style={{ alignItems: "center" }}>
@@ -445,11 +431,11 @@ export default function Home() {
                 Wambete <span className="accent-bright">Benjamin</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
-                CS Graduate · Designer · Developer · Video Editor · AI Expert
+                CS Graduate, Designer, Developer, Video Editor, AI Expert
               </p>
               <p className="lead on-dark" style={{ maxWidth: 520 }}>
                 Founder of CHRISCO Digital Academy under CHRISCO Youth Aflame. He built this platform so that every
-                young person in Africa can learn real, practical digital skills - and turn them into real income.
+                young person in Africa can learn real, practical digital skills, and turn them into real income.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
                 {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t) => (
@@ -468,22 +454,10 @@ export default function Home() {
 
             <div>
               <div style={{ position: "relative" }}>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -20,
-                    left: -20,
-                    width: 140,
-                    height: 140,
-                    borderRadius: "50%",
-                    background: "rgba(0,255,132,0.18)",
-                    filter: "blur(60px)",
-                  }}
-                />
                 <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
                   <Image
                     src="/images/workspace.jpg"
-                    alt="Creative workspace - design, code and video"
+                    alt="Creative workspace, design, code and video"
                     fill
                     sizes="(min-width: 768px) 46vw, 92vw"
                     style={{ objectFit: "cover" }}
@@ -524,7 +498,7 @@ export default function Home() {
           <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
             <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
             <h2 className="title" style={{ marginTop: 16 }}>
-              From zero to earning - <span className="accent">in 3 steps</span>
+              From zero to earning <span className="accent">in 3 steps</span>
             </h2>
           </div>
 

@@ -55,6 +55,20 @@ tonally instead of glowing green.
 - A 2px hairline on open navigation panels and active nav items
 - Hover states in menus and links
 
+### Photography
+
+Photos are texture, not wallpaper. The paper wash dropped from `0.78` to `0.52`,
+frosted bands from `0.86` to `0.70`, and the hero/CTA scrims were lightened so
+every photograph reads clearly while text keeps its contrast.
+
+### Removed decoration
+
+- The short dash before section labels
+- Tilted (diamond) logo marks — the wordmarks are now axis-aligned
+- Radial glow blobs and blurred colour circles
+- Decorative gradient hairlines on menu panels and the courses rail
+- Dash and middot separators in copy (commas instead)
+
 ### Where green was removed or demoted
 
 - Section backgrounds — `.section-green` is now a pale tint with a hairline,
@@ -89,5 +103,14 @@ Menus:
 Courses deep-link into the catalogue with
 `/courses?category=Coding` and `/courses?course=12`.
 
-Purely CSS/JS — no new dependencies. Includes keyboard `Escape`, outside-click
-close, hover-intent grace, route-change close, and a stacked mobile accordion.
+Purely CSS/JS, no new dependencies. Panels stay open on hover with a 400ms grace
+period and an invisible bridge over the gap; clicking a trigger pins the panel
+until you click it again, press `Escape`, or click outside. Also includes
+route-change close and a stacked mobile accordion.
+
+## 5. Responsive notes
+
+- The full menu collapses to the drawer below `1024px` (six groups need room)
+- Hero and photo-band padding scale with `clamp()` instead of fixed offsets
+- `overflow-x: clip` on `body` prevents sideways scroll without breaking sticky
+- Container padding and section rhythm tighten below `520px`

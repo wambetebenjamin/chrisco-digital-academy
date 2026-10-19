@@ -11,7 +11,7 @@ import PhotoBand from "../components/PhotoBand"
 export const metadata = {
   title: "About Us",
   description:
-    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, founded by Wambete Benjamin - bridging the digital divide with practical, affordable digital skills training across Africa.",
+    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, founded by Wambete Benjamin, bridging the digital divide with practical, affordable digital skills training across Africa.",
 }
 
 const stats = [
@@ -31,7 +31,7 @@ const founderTags = [
 
 const values = [
   { icon: "globe", title: "Accessible", desc: "Affordable, beginner-friendly learning for every young person in Africa." },
-  { icon: "wrench", title: "Practical", desc: "Every course ends with a real project you can show - and sell." },
+  { icon: "wrench", title: "Practical", desc: "Every course ends with a real project you can show, and sell." },
   { icon: "users", title: "Mentorship", desc: "Learn directly from a founder who works in these fields every day." },
   { icon: "flame", title: "Community", desc: "Join a growing family of young creators, coders and entrepreneurs." },
 ]
@@ -53,7 +53,7 @@ export default function About() {
           </>
         }
         titleStyle={{ maxWidth: 900 }}
-        lead="CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame - equipping young Africans with practical digital skills that open real doors."
+        lead="CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, equipping young Africans with practical digital skills that open real doors."
       />
 
       {/* STATS */}
@@ -98,11 +98,11 @@ export default function About() {
                 Born from a passion to see <span className="accent">youth thrive</span>
               </h2>
               <p className="lead" style={{ marginTop: 22 }}>
-                We exist to bridge the digital divide. Too many young people have talent and ambition - but not the
+                We exist to bridge the digital divide. Too many young people have talent and ambition, but not the
                 practical skills to turn them into income. CHRISCO Digital Academy fixes that.
               </p>
               <p className="lead" style={{ marginTop: 16 }}>
-                Founded by <strong style={{ color: "var(--ink)" }}>Wambete Benjamin</strong> - a Computer Science
+                Founded by <strong style={{ color: "var(--ink)" }}>Wambete Benjamin</strong>, a Computer Science
                 graduate with hands-on expertise in graphic design, web development, video editing, animation,
                 social media and AI.
               </p>
@@ -163,7 +163,6 @@ export default function About() {
 
           <div className="grid-2" style={{ alignItems: "stretch" }}>
             <div style={{ background: "var(--navy)", borderRadius: "var(--radius-xl)", padding: "48px 40px", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", background: "rgba(0,255,132,0.12)", top: -80, right: -80, filter: "blur(50px)" }} />
               <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: 18, background: "rgba(0,255,132,0.14)", color: "var(--green)", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
                 <Icon name="target" size={30} strokeWidth={1.7} />
               </span>
@@ -221,7 +220,7 @@ export default function About() {
                 Wambete <span className="accent-bright">Benjamin</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 22px" }}>
-                CS Graduate · Designer · Developer · AI Expert
+                CS Graduate, Designer, Developer, AI Expert
               </p>
               <p className="lead on-dark" style={{ maxWidth: 540 }}>
                 Passionate about equipping African youth with digital skills that open real doors and transform

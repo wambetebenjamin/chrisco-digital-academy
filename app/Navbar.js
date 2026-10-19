@@ -11,8 +11,8 @@ import { courses, categories } from "./data/courses"
    ------------------------------------------------------------------
    Mirrors the layered college-site navigation pattern: a slim utility
    strip, a quiet brand bar, and grouped dropdown panels. Everything is
-   expressed with the CHRISCO palette - navy planes, paper panels, a
-   single green accent per surface - so the menus feel layered rather
+   expressed with the CHRISCO palette, navy planes, paper panels, a
+   single green accent per surface, so the menus feel layered rather
    than flooded with brand green.
 ------------------------------------------------------------------- */
 
@@ -63,33 +63,60 @@ function notifyCatalogue(category, courseId) {
 
 /* --------------------------- Desktop bits --------------------------- */
 
-function Dropdown({ id, label, open, setOpen, children, wide = false }) {
+function Dropdown({ id, label, open, setOpen, pinned, setPinned, children, wide = false }) {
   const closeTimer = useRef(null)
+  const isOpen = open === id
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current)
+      closeTimer.current = null
+    }
+  }
 
   const enter = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current)
+    cancelClose()
     setOpen(id)
   }
 
-  // A short grace period keeps the panel alive while the pointer crosses
-  // the gap between the trigger and the panel.
+  /*
+   * Hovering out is forgiving: the panel holds for 400ms and the CSS bridge
+   * covers the gap, so a diagonal move to the menu never closes it. Once a
+   * panel has been clicked open it stays pinned until you click the trigger
+   * again, press Escape, or click outside.
+   */
   const leave = () => {
-    closeTimer.current = setTimeout(() => setOpen(null), 120)
+    if (pinned === id) return
+    cancelClose()
+    closeTimer.current = setTimeout(() => {
+      setOpen((current) => (current === id ? null : current))
+    }, 400)
   }
 
-  useEffect(() => () => closeTimer.current && clearTimeout(closeTimer.current), [])
+  const toggle = () => {
+    cancelClose()
+    if (isOpen && pinned === id) {
+      setPinned(null)
+      setOpen(null)
+    } else {
+      setPinned(id)
+      setOpen(id)
+    }
+  }
+
+  useEffect(() => () => cancelClose(), [])
 
   return (
     <div
-      className={`nav-dd${wide ? " nav-dd--wide" : ""}${open === id ? " is-open" : ""}`}
+      className={`nav-dd${wide ? " nav-dd--wide" : ""}${isOpen ? " is-open" : ""}${pinned === id ? " is-pinned" : ""}`}
       onMouseEnter={enter}
       onMouseLeave={leave}
     >
       <button
         type="button"
         className="nav-trigger"
-        aria-expanded={open === id}
-        onClick={() => setOpen(open === id ? null : id)}
+        aria-expanded={isOpen}
+        onClick={toggle}
         onFocus={enter}
       >
         {label}
@@ -169,7 +196,7 @@ function CoursesMega({ onNavigate, pathname }) {
         ))}
       </div>
 
-      {/* Side rail - the calm, dark plane that anchors the wide panel */}
+      {/* Side rail, the calm, dark plane that anchors the wide panel */}
       <aside className="mega-rail">
         <span className="mega-rail-eyebrow">Start here</span>
         <div className="mega-rail-title">Find your track in minutes</div>
@@ -225,6 +252,7 @@ function MobileSection({ title, icon, items, onNavigate, children }) {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [openMenu, setOpenMenu] = useState(null)
+  const [pinnedMenu, setPinnedMenu] = useState(null)
   const [scrolled, setScrolled] = useState(false)
   const { user, profile, logout } = useAuth()
   const pathname = usePathname()
@@ -241,6 +269,7 @@ export default function Navbar() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpenMenu(null)
+    setPinnedMenu(null)
     setOpen(false)
   }, [pathname])
 
@@ -249,11 +278,15 @@ export default function Navbar() {
     const onKey = (e) => {
       if (e.key === "Escape") {
         setOpenMenu(null)
+        setPinnedMenu(null)
         setOpen(false)
       }
     }
     const onClick = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) setOpenMenu(null)
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setOpenMenu(null)
+        setPinnedMenu(null)
+      }
     }
     document.addEventListener("keydown", onKey)
     document.addEventListener("mousedown", onClick)
@@ -268,12 +301,13 @@ export default function Navbar() {
 
   const closeAll = () => {
     setOpenMenu(null)
+    setPinnedMenu(null)
     setOpen(false)
   }
 
   return (
     <nav ref={navRef} className={`nav-shell${scrolled ? " is-scrolled" : ""}`}>
-      {/* Utility strip - the top, quietest layer */}
+      {/* Utility strip, the top, quietest layer */}
       <div className="nav-utility">
         <div className="container nav-utility-inner">
           <span className="nav-utility-group">
@@ -284,7 +318,7 @@ export default function Navbar() {
               <Icon name="phone" size={12} strokeWidth={2} /> +254 112 272 061
             </span>
             <span className="nav-utility-item nav-utility-hours">
-              <Icon name="clock" size={12} strokeWidth={2} /> Mon–Sat · 8am–6pm
+              <Icon name="clock" size={12} strokeWidth={2} /> Mon to Sat, 8am to 6pm
             </span>
           </span>
           <span className="nav-utility-group">
@@ -316,7 +350,7 @@ export default function Navbar() {
               Home
             </Link>
 
-            <Dropdown id="about" label="About Us" open={openMenu} setOpen={setOpenMenu}>
+            <Dropdown id="about" label="About Us" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
               <div className="nav-panel-head">
                 <span className="nav-panel-eyebrow">The academy</span>
                 <span className="nav-panel-head-title">Who we are</span>
@@ -324,11 +358,11 @@ export default function Navbar() {
               <PanelList items={aboutLinks} onNavigate={closeAll} />
             </Dropdown>
 
-            <Dropdown id="courses" label="Courses" open={openMenu} setOpen={setOpenMenu} wide>
+            <Dropdown id="courses" label="Courses" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu} wide>
               <CoursesMega onNavigate={closeAll} pathname={pathname} />
             </Dropdown>
 
-            <Dropdown id="programs" label="Programs" open={openMenu} setOpen={setOpenMenu}>
+            <Dropdown id="programs" label="Programs" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
               <div className="nav-panel-head">
                 <span className="nav-panel-eyebrow">How you learn</span>
                 <span className="nav-panel-head-title">Programs &amp; pathways</span>
@@ -336,7 +370,7 @@ export default function Navbar() {
               <PanelList items={programLinks} onNavigate={closeAll} />
             </Dropdown>
 
-            <Dropdown id="students" label="Students" open={openMenu} setOpen={setOpenMenu}>
+            <Dropdown id="students" label="Students" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
               <div className="nav-panel-head">
                 <span className="nav-panel-eyebrow">Learner hub</span>
                 <span className="nav-panel-head-title">Your account</span>
@@ -396,7 +430,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu - the same layers, stacked */}
+      {/* Mobile menu, the same layers, stacked */}
       {open && (
         <div className="nav-mobile">
           <div className="nav-mobile-inner">

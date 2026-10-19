@@ -14,7 +14,7 @@ export default function AuthShell({ children, subtitle }) {
 
         <div style={{ position: "relative", zIndex: 1 }}>
           <Link href="/" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 12 }}>
-            <span style={{ width: 44, height: 44, borderRadius: 13, background: "var(--green)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.2rem", color: "var(--navy)", transform: "rotate(-4deg)" }}>
+            <span style={{ width: 44, height: 44, borderRadius: 13, background: "var(--green)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.2rem", color: "var(--navy)" }}>
               C
             </span>
             <span style={{ lineHeight: 1 }}>
@@ -41,7 +41,7 @@ export default function AuthShell({ children, subtitle }) {
         </div>
 
         <div style={{ position: "relative", zIndex: 1, color: "rgba(255,255,255,0.35)", fontSize: 13 }}>
-          © 2026 CHRISCO Digital Academy · Jinja, Uganda
+          © 2026 CHRISCO Digital Academy, Jinja, Uganda
         </div>
       </aside>
 
@@ -51,7 +51,7 @@ export default function AuthShell({ children, subtitle }) {
           {/* Mobile brand */}
           <div className="hide-desktop" style={{ textAlign: "center", marginBottom: 32 }}>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <span style={{ width: 52, height: 52, borderRadius: 15, background: "var(--navy)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.4rem", color: "var(--green)", transform: "rotate(-4deg)" }}>
+              <span style={{ width: 52, height: 52, borderRadius: 15, background: "var(--navy)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.4rem", color: "var(--green)" }}>
                 C
               </span>
             </Link>

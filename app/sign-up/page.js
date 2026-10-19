@@ -37,7 +37,7 @@ export default function SignUp() {
   }
 
   return (
-    <AuthShell subtitle="Join thousands of young Africans building real, practical digital skills - for free, forever.">
+    <AuthShell subtitle="Join thousands of young Africans building real, practical digital skills, for free, forever.">
       {success ? (
         <div style={{ textAlign: "center", padding: "20px 0" }}>
           <span style={{ display: "inline-flex", width: 76, height: 76, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
