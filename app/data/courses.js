@@ -8,6 +8,21 @@ export const categories = [
   { name: "Career", icon: "rocket" },
 ]
 
+/*
+ * One ultrarealistic photograph per track. Courses inherit the photo of the
+ * category they belong to, so the catalogue reads as seven real classrooms
+ * rather than nineteen stock repeats.
+ */
+export const categoryImages = {
+  Business: "/images/cat-business.jpg",
+  Marketing: "/images/cat-marketing.jpg",
+  Coding: "/images/cat-coding.jpg",
+  Writing: "/images/cat-writing.jpg",
+  Design: "/images/cat-design.jpg",
+  Video: "/images/cat-video.jpg",
+  Career: "/images/cat-career.jpg",
+}
+
 export const courses = [
   {
     id: 1,
@@ -20,6 +35,12 @@ export const courses = [
     rating: "4.9",
     students: "50+",
     color: ["#dc2626", "#ea580c"],
+    objectives: [
+      "Set up a faceless channel in a profitable niche",
+      "Script and produce videos with voiceover and stock footage",
+      "Optimise titles, thumbnails and SEO for search",
+      "Reach monetisation and plan a scaling routine",
+    ],
     desc: "Build and grow automated YouTube channels that earn money without showing your face.",
     syllabus: [
       "Introduction to YouTube Automation",
@@ -29,7 +50,7 @@ export const courses = [
       "Uploading and SEO optimization",
       "Monetization strategies",
       "Outsourcing and scaling",
-      "Final project - Launch your channel",
+      "Final project: Launch your channel",
     ],
     for: "Anyone who wants to earn online through YouTube without appearing on camera.",
     download: "/books/youtube-automation.pdf",
@@ -45,6 +66,12 @@ export const courses = [
     rating: "4.8",
     students: "70+",
     color: ["#059669", "#0d9488"],
+    objectives: [
+      "Read and write Python syntax confidently",
+      "Use conditions, loops and functions to solve problems",
+      "Work with files, data and simple APIs",
+      "Ship an automation script as a final project",
+    ],
     desc: "Learn programming fundamentals with Python. Build real projects and problem-solving skills.",
     syllabus: [
       "Introduction to programming",
@@ -54,7 +81,7 @@ export const courses = [
       "Working with files and data",
       "Introduction to APIs",
       "Building automation scripts",
-      "Final project - Python tool",
+      "Final project: Python tool",
     ],
     for: "Anyone who wants to start coding and build a foundation for a tech career.",
     download: "/books/python-programming.pdf",
@@ -70,6 +97,12 @@ export const courses = [
     rating: "4.6",
     students: "40+",
     color: ["#0d9488", "#059669"],
+    objectives: [
+      "Pick a niche that sells without inventory",
+      "Prepare print-ready artwork for products",
+      "Publish listings that convert on print-on-demand platforms",
+      "Market and scale a store to steady sales",
+    ],
     desc: "Sell custom designed products online without holding any inventory.",
     syllabus: [
       "Introduction to print on demand",
@@ -79,7 +112,7 @@ export const courses = [
       "Creating listings that sell",
       "Marketing your store",
       "Scaling your income",
-      "Final project - Live POD store",
+      "Final project: Live POD store",
     ],
     for: "Designers and creatives who want to sell products online passively.",
     download: "/books/print-on-demand.pdf",
@@ -95,7 +128,13 @@ export const courses = [
     rating: "4.9",
     students: "35+",
     color: ["#7c3aed", "#4f46e5"],
-    desc: "Get paid to write content for others - blogs, books, scripts and social media.",
+    objectives: [
+      "Write in a client's voice across formats",
+      "Find and pitch ghostwriting clients",
+      "Price work and handle simple contracts",
+      "Build a portfolio that wins repeat work",
+    ],
+    desc: "Get paid to write content for others, blogs, books, scripts and social media.",
     syllabus: [
       "What is ghostwriting",
       "Finding ghostwriting clients",
@@ -104,7 +143,7 @@ export const courses = [
       "Social media ghostwriting",
       "Scriptwriting for YouTube",
       "Pricing and contracts",
-      "Final project - Full portfolio",
+      "Final project: Full portfolio",
     ],
     for: "Writers who want to earn good money writing content for businesses and influencers.",
     download: "/books/ghostwriting.pdf",
@@ -120,6 +159,12 @@ export const courses = [
     rating: "4.8",
     students: "110+",
     color: ["#d97706", "#ea580c"],
+    objectives: [
+      "Package a service you can sell today",
+      "Price, pitch and close your first clients",
+      "Set up profiles on freelance marketplaces",
+      "Manage delivery, feedback and repeat business",
+    ],
     desc: "Build a freelancing career and earn money online using your digital skills.",
     syllabus: [
       "Introduction to freelancing",
@@ -129,7 +174,7 @@ export const courses = [
       "Pricing your services",
       "Landing your first client",
       "Delivering quality work",
-      "Final project - Live profile",
+      "Final project: Live profile",
     ],
     for: "Anyone who wants to earn money online using their skills from anywhere in Africa.",
     download: "/books/freelancing.pdf",
@@ -145,6 +190,12 @@ export const courses = [
     rating: "4.8",
     students: "60+",
     color: ["#2563eb", "#0891b2"],
+    objectives: [
+      "Build a simple, fast website from scratch",
+      "Structure pages with HTML and style them with CSS",
+      "Add interactivity with modern JavaScript",
+      "Publish a portfolio site you can share",
+    ],
     desc: "Master digital marketing strategies to grow businesses and brands online.",
     syllabus: [
       "Introduction to digital marketing",
@@ -154,7 +205,7 @@ export const courses = [
       "Google Ads basics",
       "Email marketing",
       "Analytics and reporting",
-      "Final project - Full campaign",
+      "Final project: Full campaign",
     ],
     for: "Entrepreneurs, marketers and anyone who wants to grow a business online.",
     download: "/books/digital-marketing.pdf",
@@ -170,6 +221,12 @@ export const courses = [
     rating: "4.8",
     students: "65+",
     color: ["#4f46e5", "#2563eb"],
+    objectives: [
+      "Plan a content calendar that stays consistent",
+      "Create photos, reels and carousels from a phone",
+      "Write captions and hooks that convert",
+      "Read insights and grow an engaged audience",
+    ],
     desc: "Write words that sell. Learn the art of persuasive writing for businesses.",
     syllabus: [
       "What is copywriting",
@@ -179,7 +236,7 @@ export const courses = [
       "Social media copy",
       "Sales page writing",
       "SEO copywriting basics",
-      "Final project - Full portfolio",
+      "Final project: Full portfolio",
     ],
     for: "Anyone who loves writing and wants to get paid for it online.",
     download: "/books/copywriting.pdf",
@@ -195,6 +252,12 @@ export const courses = [
     rating: "4.8",
     students: "55+",
     color: ["#ea580c", "#dc2626"],
+    objectives: [
+      "Understand how digital channels work together",
+      "Build a simple funnel from advert to sale",
+      "Run and read a basic paid campaign",
+      "Report results in numbers a client understands",
+    ],
     desc: "Build email lists and create campaigns that convert subscribers into customers.",
     syllabus: [
       "Introduction to email marketing",
@@ -204,7 +267,7 @@ export const courses = [
       "Automating email sequences",
       "Segmentation and personalization",
       "Analytics and optimization",
-      "Final project - Full campaign",
+      "Final project: Full campaign",
     ],
     for: "Marketers, entrepreneurs and freelancers who want to master email marketing.",
     download: "/books/email-marketing.pdf",
@@ -220,6 +283,12 @@ export const courses = [
     rating: "4.7",
     students: "45+",
     color: ["#16a34a", "#059669"],
+    objectives: [
+      "Build and clean an email list ethically",
+      "Write sequences that welcome and convert",
+      "Set up automation in a standard email tool",
+      "Measure opens, clicks and revenue",
+    ],
     desc: "Learn how to earn commissions by promoting other people's products online.",
     syllabus: [
       "What is affiliate marketing",
@@ -229,7 +298,7 @@ export const courses = [
       "Creating content that converts",
       "SEO for affiliate marketers",
       "Email list building",
-      "Final project - Live campaign",
+      "Final project: Live campaign",
     ],
     for: "Anyone who wants to earn passive income online from anywhere.",
     download: "/books/affiliate-marketing.pdf",
@@ -245,6 +314,12 @@ export const courses = [
     rating: "4.7",
     students: "150+",
     color: ["#db2777", "#7c3aed"],
+    objectives: [
+      "Choose products and platforms that fit your audience",
+      "Create honest, high-converting affiliate content",
+      "Track clicks and commissions",
+      "Scale without spamming your audience",
+    ],
     desc: "Grow brands and businesses using digital platforms. Learn strategy, content and analytics.",
     syllabus: [
       "Social media platforms overview",
@@ -254,7 +329,7 @@ export const courses = [
       "TikTok and YouTube basics",
       "Analytics and insights",
       "Paid advertising basics",
-      "Final project - Social media campaign",
+      "Final project: Social media campaign",
     ],
     for: "Entrepreneurs, business owners and anyone who wants to grow an online presence.",
     download: "/books/social-media-marketing.pdf",
@@ -270,6 +345,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#334155", "#4338ca"],
+    objectives: [
+      "Grow a page with a clear content strategy",
+      "Produce a month of content in one sitting",
+      "Use scheduling and community tools",
+      "Report growth to a client or employer",
+    ],
     desc: "Learn software engineering combined with Large Language Models to build AI-powered applications.",
     syllabus: [
       "Software engineering basics",
@@ -279,7 +360,7 @@ export const courses = [
       "AI-powered app development",
       "Testing and deployment",
       "Real world projects",
-      "Final project - AI app",
+      "Final project: AI app",
     ],
     for: "Developers and tech enthusiasts who want to build AI-powered software.",
     download: "/books/swe-llm-mastery.pdf",
@@ -295,6 +376,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#0f766e", "#0891b2"],
+    objectives: [
+      "Design with type, colour and grid",
+      "Use Canva and Adobe tools for real briefs",
+      "Build a small brand identity system",
+      "Deliver a portfolio-ready project",
+    ],
     desc: "Speak with the authority, clarity and presence of the top 1%. Master executive communication that commands the room.",
     syllabus: [
       "Executive presence and mindset",
@@ -304,7 +391,7 @@ export const courses = [
       "Persuasive, confident messaging",
       "Handling difficult conversations",
       "Communicating on camera and online",
-      "Final project - Deliver a CEO-level talk",
+      "Final project: Deliver a CEO-level talk",
     ],
     for: "Ambitious youth, founders and professionals who want to speak and lead like the elite.",
     download: "/books/communicate-like-a-ceo.pdf",
@@ -320,7 +407,13 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#b45309", "#d97706"],
-    desc: "Negotiate like the world's best - win deals, raise your rates and get what you're worth without conflict.",
+    objectives: [
+      "Write copy for ads, pages and social",
+      "Research an audience and shape an offer",
+      "Edit for clarity and persuasion",
+      "Test and improve copy with data",
+    ],
+    desc: "Negotiate like the world's best, win deals, raise your rates and get what you're worth without conflict.",
     syllabus: [
       "Negotiation psychology and mindset",
       "Preparation and knowing your worth",
@@ -329,7 +422,7 @@ export const courses = [
       "Handling objections and pushback",
       "Salary, rates and business deals",
       "Closing win-win agreements",
-      "Final project - Live negotiation simulation",
+      "Final project: Live negotiation simulation",
     ],
     for: "Anyone who wants to earn more and win better deals in work, business and life.",
     download: "/books/negotiation.pdf",
@@ -345,6 +438,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#7c3aed", "#c026d3"],
+    objectives: [
+      "Write fiction and non-fiction that holds attention",
+      "Shape story structure, voice and pacing",
+      "Edit a draft to a publishable standard",
+      "Publish your own writing online",
+    ],
     desc: "Use AI to create videos and stories, then package them for every audience across social media.",
     syllabus: [
       "Story fundamentals that hook attention",
@@ -354,7 +453,7 @@ export const courses = [
       "Editing and short-form formats",
       "Packaging for TikTok, Reels, YouTube and X",
       "Storytelling for different audiences",
-      "Final project - Publish an AI story series",
+      "Final project: Publish an AI story series",
     ],
     for: "Creators and entrepreneurs who want to tell powerful stories with AI and grow on social.",
     download: "/books/ai-video-storytelling.pdf",
@@ -370,7 +469,13 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#be123c", "#e11d48"],
-    desc: "Stand out and become known. Build a magnetic personal brand - because visibility is currency.",
+    objectives: [
+      "Edit video with clean cuts, sound and colour",
+      "Build a project from raw footage to export",
+      "Create short-form video for social platforms",
+      "Deliver client work on a deadline",
+    ],
+    desc: "Stand out and become known. Build a magnetic personal brand, because visibility is currency.",
     syllabus: [
       "Personal brand foundations",
       "Finding your niche and unique voice",
@@ -379,7 +484,7 @@ export const courses = [
       "Content that grows your authority",
       "Networking your brand",
       "Monetizing your personal brand",
-      "Final project - Launch your brand kit",
+      "Final project: Launch your brand kit",
     ],
     for: "Youth, creators and professionals who want to be seen, trusted and remembered.",
     download: "/books/personal-branding.pdf",
@@ -395,7 +500,13 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#334155", "#0891b2"],
-    desc: "AI basics everyone needs - use AI tools to work faster, smarter and get more done every day.",
+    objectives: [
+      "Speak with structure and confidence",
+      "Handle questions and difficult rooms",
+      "Present numbers and ideas clearly",
+      "Build a personal presence people trust",
+    ],
+    desc: "AI basics everyone needs, use AI tools to work faster, smarter and get more done every day.",
     syllabus: [
       "What AI is (and isn't)",
       "The essential AI toolkit",
@@ -404,7 +515,7 @@ export const courses = [
       "AI for images, docs and data",
       "Automating everyday tasks",
       "Using AI responsibly and safely",
-      "Final project - Build your AI productivity workflow",
+      "Final project: Build your AI productivity workflow",
     ],
     for: "Complete beginners who want to use AI confidently for work, study and business.",
     download: "/books/ai-literacy.pdf",
@@ -420,7 +531,13 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#0d9488", "#059669"],
-    desc: "Create scroll-stopping content consistently - photos, videos, captions and carousels that grow any brand.",
+    objectives: [
+      "Prepare and open a negotiation",
+      "Trade concessions without losing value",
+      "Handle pushback and deadlock",
+      "Close agreements in writing",
+    ],
+    desc: "Create scroll-stopping content consistently, photos, videos, captions and carousels that grow any brand.",
     syllabus: [
       "Content strategy and planning",
       "Creating with just a phone",
@@ -429,7 +546,7 @@ export const courses = [
       "Design tools and templates",
       "Batching and a content calendar",
       "Growing and engaging an audience",
-      "Final project - A 30-day content plan",
+      "Final project: A 30-day content plan",
     ],
     for: "Anyone who wants to create consistent, high-quality content for themselves or clients.",
     download: "/books/content-creation.pdf",
@@ -445,7 +562,13 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#1d4ed8", "#2563eb"],
-    desc: "The complete course on selling and marketing - attract customers, pitch with confidence and close sales.",
+    objectives: [
+      "Define a clear personal brand",
+      "Write a bio, positioning and message",
+      "Publish content that builds authority",
+      "Turn visibility into opportunities",
+    ],
+    desc: "The complete course on selling and marketing, attract customers, pitch with confidence and close sales.",
     syllabus: [
       "Marketing fundamentals",
       "Understanding your customer",
@@ -454,7 +577,7 @@ export const courses = [
       "The psychology of selling",
       "Sales conversations and closing",
       "Funnels, follow-up and retention",
-      "Final project - Full go-to-market plan",
+      "Final project: Full go-to-market plan",
     ],
     for: "Entrepreneurs, freelancers and job seekers who want to sell anything with confidence.",
     download: "/books/sales-and-marketing.pdf",
@@ -470,7 +593,13 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#7c2d12", "#c2410c"],
-    desc: "Build powerful relationships and open doors - network like the top 1%, even if you're an introvert.",
+    objectives: [
+      "Use AI tools safely and effectively at work",
+      "Write prompts that produce usable output",
+      "Automate everyday writing, research and data tasks",
+      "Build a personal AI workflow",
+    ],
+    desc: "Build powerful relationships and open doors, network like the top 1%, even if you're an introvert.",
     syllabus: [
       "The networking mindset",
       "Networking as an introvert",
@@ -479,7 +608,7 @@ export const courses = [
       "Adding value first",
       "Building real relationships",
       "Following up and staying memorable",
-      "Final project - Your 90-day network plan",
+      "Final project: Your 90-day network plan",
     ],
     for: "Introverts and ambitious youth who want to build a network that creates opportunities.",
     download: "/books/networking-secrets.pdf",
@@ -492,4 +621,9 @@ export function categoryCounts() {
     counts[c.category] = (counts[c.category] || 0) + 1
   }
   return counts
+}
+
+// Photo for any course, derived from its track.
+export function imageFor(course) {
+  return categoryImages[course?.category] || course?.img || "/images/workspace.jpg"
 }

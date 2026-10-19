@@ -4,10 +4,9 @@ export default function PhotoBand({ image = "/images/bg-cta.jpg", eyebrow, title
   return (
     <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)", padding: "104px 0" }}>
       <div aria-hidden style={{ position: "absolute", inset: 0 }}>
-        <Image src={image} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.42 }} />
+        <Image src={image} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.62 }} />
       </div>
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(0,35,51,0.95) 8%, rgba(0,35,51,0.82) 55%, rgba(1,58,79,0.74) 100%)" }} />
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(560px 300px at 92% 0%, rgba(0,255,132,0.20), transparent 60%)" }} />
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(0,35,51,0.9) 8%, rgba(0,35,51,0.72) 55%, rgba(1,58,79,0.6) 100%)" }} />
       <div className="container" style={{ position: "relative", zIndex: 1, textAlign: centered ? "center" : "left" }}>
         <div style={centered ? { maxWidth: 660, margin: "0 auto" } : { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 32, flexWrap: "wrap" }}>
           <div style={centered ? {} : { maxWidth: 620 }}>

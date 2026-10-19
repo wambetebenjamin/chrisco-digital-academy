@@ -37,7 +37,6 @@ export default function Dashboard() {
         <div aria-hidden style={{ position: "absolute", inset: 0 }}>
           <Image src="/images/bg-cta.jpg" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 35%", opacity: 0.12 }} />
         </div>
-        <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "rgba(0,255,132,0.1)", top: -160, right: -120, filter: "blur(70px)" }} />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
             <div>

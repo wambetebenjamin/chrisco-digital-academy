@@ -9,13 +9,12 @@ import ContactForm from "./ContactForm"
 export const metadata = {
   title: "Contact",
   description:
-    "Get in touch with CHRISCO Digital Academy - ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
+    "Get in touch with CHRISCO Digital Academy, ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
 }
 
 const infoItems = [
-  { icon: "mail", label: "Email", value: "shambetz@gmail.com" },
-  { icon: "phone", label: "Phone & WhatsApp", value: "+254 112 272 061" },
-  { icon: "pin", label: "Location", value: "Jinja, Uganda" },
+  { icon: "mail", label: "Email", value: "chriscoyouthaflame2025@gmail.com", href: "mailto:chriscoyouthaflame2025@gmail.com" },
+  { icon: "phone", label: "Call or WhatsApp", value: "", href: "tel:+254112272061", iconLabel: "Call us" },
   { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame" },
 ]
 
@@ -35,21 +34,27 @@ export default function Contact() {
           </>
         }
         titleStyle={{ maxWidth: 820 }}
-        lead="Have a question, want to enroll, or ready to partner? We respond fast - usually the same day on WhatsApp."
+        lead="Have a question, want to enroll, or ready to partner? We respond fast, usually the same day on WhatsApp."
       />
 
       {/* BODY */}
-      <section style={{ padding: "0 0 96px" }}>
+      <section className="section-frost" style={{ padding: "56px 0 96px" }}>
         <div className="container">
           <div className="split" style={{ alignItems: "start" }}>
-            {/* LEFT - info */}
+            {/* LEFT, info */}
             <div>
               <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "var(--ink)", marginBottom: 22 }}>
                 Contact details
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {infoItems.map((item, i) => (
-                  <div key={i} className="card card-hover" style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}>
+                  <a
+                    key={i}
+                    href={item.href}
+                    className="card card-hover"
+                    aria-label={item.iconLabel || item.label}
+                    style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}
+                  >
                     <span
                       style={{
                         width: 50,
@@ -69,11 +74,18 @@ export default function Contact() {
                       <div style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 700, marginBottom: 3 }}>
                         {item.label}
                       </div>
-                      <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 15, wordBreak: "break-word" }}>
-                        {item.value}
-                      </div>
+                      {item.value ? (
+                        <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 15, wordBreak: "break-word" }}>
+                          {item.value}
+                        </div>
+                      ) : (
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--ink)" }}>
+                          <Icon name="phone" size={16} strokeWidth={2} />
+                          <span style={{ fontWeight: 700, fontSize: 15 }}>{item.iconLabel}</span>
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
 
@@ -93,7 +105,7 @@ export default function Contact() {
                   Prefer WhatsApp?
                 </div>
                 <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.6)", marginBottom: 16 }}>
-                  Chat with us directly - we reply fast.
+                  Chat with us directly, we reply fast.
                 </p>
                 <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
                   <Icon name="whatsapp" size={15} /> Chat on WhatsApp
@@ -101,7 +113,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* RIGHT - form (client island) */}
+            {/* RIGHT, form (client island) */}
             <ContactForm />
           </div>
         </div>

@@ -1,9 +1,9 @@
 /**
- * Icon - the academy's natural vector icon set.
+ * Icon, the academy's natural vector icon set.
  *
  * Hand-drawn, stroke-based SVG icons (Lucide/Feather style) that render in
  * `currentColor`, so they inherit any surrounding text colour automatically.
- * Pure server-safe component - no client JS required.
+ * Pure server-safe component, no client JS required.
  *
  * Usage:  <Icon name="rocket" size={18} />
  */
@@ -319,6 +319,21 @@ const paths = {
     <>
       <path d="M21 3.5L3 10.8l6.2 2.6 2.6 6.2z" />
       <path d="M21 3.5L9.2 13.4" />
+    </>
+  ),
+  chevron: (
+    <path d="M6 9l6 6 6-6" />
+  ),
+  lock: (
+    <>
+      <rect x="4" y="10.5" width="16" height="10.5" rx="2.5" />
+      <path d="M8 10.5V7.6a4 4 0 0 1 8 0v2.9" />
+    </>
+  ),
+  user: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4.5 21a7.5 7.5 0 0 1 15 0" />
     </>
   ),
 }

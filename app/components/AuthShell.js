@@ -9,12 +9,10 @@ export default function AuthShell({ children, subtitle }) {
         <div aria-hidden style={{ position: "absolute", inset: 0 }}>
           <Image src="/images/bg-home.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.1 }} />
         </div>
-        <div style={{ position: "absolute", width: 480, height: 480, borderRadius: "50%", background: "rgba(0,255,132,0.08)", top: -160, right: -160, filter: "blur(80px)" }} />
-        <div style={{ position: "absolute", width: 320, height: 320, borderRadius: "50%", background: "rgba(0,255,132,0.06)", bottom: -120, left: -120, filter: "blur(70px)" }} />
 
         <div style={{ position: "relative", zIndex: 1 }}>
           <Link href="/" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 12 }}>
-            <span style={{ width: 44, height: 44, borderRadius: 13, background: "var(--green)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.2rem", color: "var(--navy)", transform: "rotate(-4deg)" }}>
+            <span style={{ width: 44, height: 44, borderRadius: 13, background: "var(--green)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.2rem", color: "var(--navy)" }}>
               C
             </span>
             <span style={{ lineHeight: 1 }}>
@@ -41,7 +39,7 @@ export default function AuthShell({ children, subtitle }) {
         </div>
 
         <div style={{ position: "relative", zIndex: 1, color: "rgba(255,255,255,0.35)", fontSize: 13 }}>
-          © 2026 CHRISCO Digital Academy · Jinja, Uganda
+          © 2026 CHRISCO Youth Aflame
         </div>
       </aside>
 
@@ -51,7 +49,7 @@ export default function AuthShell({ children, subtitle }) {
           {/* Mobile brand */}
           <div className="hide-desktop" style={{ textAlign: "center", marginBottom: 32 }}>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <span style={{ width: 52, height: 52, borderRadius: 15, background: "var(--navy)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.4rem", color: "var(--green)", transform: "rotate(-4deg)" }}>
+              <span style={{ width: 52, height: 52, borderRadius: 15, background: "var(--navy)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.4rem", color: "var(--green)" }}>
                 C
               </span>
             </Link>

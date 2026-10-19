@@ -33,4 +33,6 @@ const noopClient = {
   from: () => query,
 }
 
-export const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : noopClient
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey)
+
+export const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseKey) : noopClient

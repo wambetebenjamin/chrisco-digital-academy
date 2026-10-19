@@ -6,13 +6,14 @@ import Chatbot from "./Chatbot"
 import PhotoBand from "./components/PhotoBand"
 import PageBackdrop from "./components/PageBackdrop"
 import Icon from "./components/Icon"
-import { courses, categories, categoryCounts } from "./data/courses"
+import { courses, categories, categoryCounts, imageFor } from "./data/courses"
+import { org, tutor } from "./data/org"
 
 const skills = [
   { num: "01", icon: "palette", title: "Graphic Design", desc: "Branding, posters and visual identity with Canva and Adobe tools." },
   { num: "02", icon: "code", title: "Web Development", desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js." },
   { num: "03", icon: "smartphone", title: "Social Media", desc: "Strategy, content creation and growth that gets real engagement." },
-  { num: "04", icon: "clapper", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events - a skill in demand." },
+  { num: "04", icon: "clapper", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events, a skill in demand." },
   { num: "05", icon: "layers", title: "Animation", desc: "Motion graphics and animated content that stops the scroll." },
   { num: "06", icon: "robot", title: "AI Expertise", desc: "Leveraging AI tools like ChatGPT for creativity and productivity." },
 ]
@@ -29,8 +30,8 @@ const featured = [courses[4], courses[0], courses[10]] // Freelancing, YouTube A
 
 const steps = [
   { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI." },
-  { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request - we confirm on WhatsApp or email within a day." },
-  { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate - and start earning." },
+  { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request, we confirm on WhatsApp or email within a day." },
+  { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate, and start earning." },
 ]
 
 export default function Home() {
@@ -42,11 +43,10 @@ export default function Home() {
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)" }}>
+      <section style={{ padding: "clamp(116px, 15vw, 168px) 0 clamp(64px, 9vw, 104px)", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.16)" }}>
         {/* The page-wide PageBackdrop supplies the photo; the hero only needs
             its dark scrim so the white display type stays legible. */}
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.90) 0%, rgba(0,35,51,0.72) 50%, rgba(1,58,79,0.50) 100%)" }} />
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.62) 50%, rgba(1,58,79,0.42) 100%)" }} />
         <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
@@ -61,7 +61,7 @@ export default function Home() {
               marginBottom: 48,
             }}
           >
-            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy - Jinja, Uganda</span>
+            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy</span>
             <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
               Under CHRISCO Youth Aflame
             </span>
@@ -121,16 +121,16 @@ export default function Home() {
               </h1>
 
               <p className="lead on-dark fade-up fade-up-1" style={{ maxWidth: 560, marginTop: 26 }}>
-                CHRISCO Digital Academy is a modern learning platform for African youth - practical courses in
-                design, code, marketing, writing, video and AI, taught by Wambete Benjamin.
+                CHRISCO Digital Academy is a modern learning platform for African youth, practical courses in
+                design, code, marketing, writing, video and AI, taught by our tutors at CHRISCO Youth Aflame.
               </p>
 
               <div className="fade-up fade-up-2" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 34 }}>
                 <Link href="/courses" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
                   Explore Courses →
                 </Link>
-                <Link href="/about" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
-                  Meet the Founder
+                <Link href="/about#tutor" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
+                  Meet Our Tutor
                 </Link>
               </div>
 
@@ -166,19 +166,6 @@ export default function Home() {
             {/* Hero image tile */}
             <div className="fade-up fade-up-1" style={{ minWidth: 0 }}>
               <div style={{ position: "relative" }}>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -18,
-                    right: -10,
-                    width: 120,
-                    height: 120,
-                    background: "rgba(0,255,132,0.25)",
-                    borderRadius: "50%",
-                    filter: "blur(50px)",
-                    zIndex: 0,
-                  }}
-                />
                 <div
                   style={{
                     position: "relative",
@@ -239,11 +226,11 @@ export default function Home() {
                       flexShrink: 0,
                     }}
                   >
-                    WB
+                    <Icon name="cap" size={22} strokeWidth={1.8} />
                   </span>
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14.5 }}>Wambete Benjamin</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>Founder & Lead Instructor</div>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14.5 }}>CHRISCO Youth Aflame</div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>Our tutors</div>
                   </div>
                   <span
                     style={{
@@ -267,8 +254,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SKILLS ================= */}
-      <section className="section section-frost">
+      {/* ================= WHAT YOU GET (layer 1) ================= */}
+      <section className="section-frost" style={{ padding: "0" }}>
+        <div className="container">
+          <div className="factstrip">
+            {[
+              { icon: "medal", title: "Certificate included", desc: "Every course ends with one" },
+              { icon: "laptop", title: "Online & in-person", desc: "Learn from anywhere" },
+              { icon: "wrench", title: "Project-based", desc: "Learn by building real work" },
+              { icon: "whatsapp", title: "Fast support", desc: "Same-day help on WhatsApp" },
+            ].map((f) => (
+              <div key={f.title} className="factstrip-item">
+                <span className="factstrip-ico"><Icon name={f.icon} size={18} strokeWidth={1.9} /></span>
+                <div>
+                  <div className="factstrip-title">{f.title}</div>
+                  <div className="factstrip-desc">{f.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= SKILLS (layer 2) ================= */}
+      <section className="section section-frost-alt">
         <div className="container">
           <div style={{ maxWidth: 640, marginBottom: 56 }}>
             <span className="eyebrow">What you&apos;ll master</span>
@@ -307,8 +316,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FEATURED COURSES ================= */}
-      <section className="section section-frost-alt">
+      {/* ================= FEATURED COURSES (layer 1) ================= */}
+      <section className="section section-frost">
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 48 }}>
             <div>
@@ -330,34 +339,73 @@ export default function Home() {
                 className="card card-hover"
                 style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
               >
-                {/* Card header */}
-                <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "28px 26px", position: "relative" }}>
+                {/* Card header, photo under a navy wash; course colour survives
+                    only as a thin identity rule so the grid stays calm. */}
+                <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", background: "var(--navy)" }}>
+                  <Image
+                    src={imageFor(course)}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(152deg, rgba(0,35,51,0.62) 0%, rgba(0,35,51,0.34) 58%, rgba(1,58,79,0.16) 100%)",
+                    }}
+                  />
                   <span
                     className="pill pill-sm"
-                    style={{ position: "absolute", top: 16, right: 16, background: "rgba(255,255,255,0.92)", border: "none", color: "var(--ink)" }}
+                    style={{ position: "absolute", top: 14, left: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
                   >
                     {course.category}
                   </span>
                   <div
                     style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 18,
-                      background: "rgba(255,255,255,0.18)",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      color: "#fff",
+                      position: "absolute",
+                      left: 18,
+                      right: 18,
+                      bottom: 16,
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
+                      justifyContent: "space-between",
+                      gap: 12,
                     }}
                   >
-                    <Icon name={course.icon} size={30} strokeWidth={1.7} />
+                    <span
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: 14,
+                        background: "rgba(255,255,255,0.14)",
+                        border: "1px solid rgba(255,255,255,0.26)",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Icon name={course.icon} size={24} strokeWidth={1.7} />
+                    </span>
+                    <span style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.82)" }}>
+                      {course.level}
+                    </span>
                   </div>
+                  <span
+                    aria-hidden
+                    style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }}
+                  />
                 </div>
 
                 {/* Card body */}
                 <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
+                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, marginBottom: 6 }}>{course.title}</h3>
+                  <p style={{ fontFamily: "var(--font-head)", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                    {org.courseCredit}
+                  </p>
                   <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{course.desc}</p>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
                     <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
@@ -374,13 +422,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= HOW IT WORKS ================= */}
-      <section className="section section-frost">
+      {/* ================= TUTOR ================= */}
+      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.86)", color: "rgba(255,255,255,0.82)" }}>
+        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
+          <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.22 }} />
+        </div>
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="split" style={{ alignItems: "center" }}>
+            <div>
+              <span className="eyebrow on-dark">Meet our tutor</span>
+              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
+                Taught by people who <span className="accent-bright">do the work.</span>
+              </h2>
+              <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
+                {tutor.role}, CHRISCO Youth Aflame
+              </p>
+              <p className="lead on-dark" style={{ maxWidth: 520 }}>
+                Every class is led by our lead tutor: a Computer Science graduate who works daily in design,
+                development, video and AI. CHRISCO Digital Academy is a learning platform of CHRISCO Youth Aflame,
+                operating under CHRISCO Fellowship of Churches International.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
+                {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t) => (
+                  <span key={t} className="pill pill-dark pill-sm">{t}</span>
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                <Link href="/contact" className="btn btn-green" style={{ textDecoration: "none" }}>
+                  Get In Touch →
+                </Link>
+                <Link href="/become-a-tutor" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
+                  Become a Tutor
+                </Link>
+              </div>
+            </div>
+
+            <div>
+              <div style={{ position: "relative" }}>
+                <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
+                  <Image
+                    src="/images/workspace.jpg"
+                    alt="Creative workspace, design, code and video"
+                    fill
+                    sizes="(min-width: 768px) 46vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 20,
+                    bottom: 20,
+                    background: "rgba(0,35,51,0.9)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255,255,255,0.14)",
+                    borderRadius: 16,
+                    padding: "14px 18px",
+                    display: "flex",
+                    gap: 14,
+                    alignItems: "center",
+                  }}
+                >
+                  <span style={{ color: "var(--green)" }}>
+                    <Icon name="laptop" size={26} strokeWidth={1.7} />
+                  </span>
+                  <div>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>7+ skill areas</div>
+                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>taught hands-on</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= HOW IT WORKS (layer 2) ================= */}
+      <section className="section section-frost-alt">
         <div className="container">
           <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
             <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
             <h2 className="title" style={{ marginTop: 16 }}>
-              From zero to earning - <span className="accent">in 3 steps</span>
+              From zero to earning <span className="accent">in 3 steps</span>
             </h2>
           </div>
 
@@ -424,92 +547,6 @@ export default function Home() {
                 )}
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= FOUNDER ================= */}
-      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.92)", color: "rgba(255,255,255,0.72)" }}>
-        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.08 }} />
-        </div>
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="split" style={{ alignItems: "center" }}>
-            <div>
-              <span className="eyebrow on-dark">Meet the founder</span>
-              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
-                Wambete <span className="accent-bright">Benjamin</span>
-              </h2>
-              <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
-                CS Graduate · Designer · Developer · Video Editor · AI Expert
-              </p>
-              <p className="lead on-dark" style={{ maxWidth: 520 }}>
-                Founder of CHRISCO Digital Academy under CHRISCO Youth Aflame. He built this platform so that every
-                young person in Africa can learn real, practical digital skills - and turn them into real income.
-              </p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
-                {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t) => (
-                  <span key={t} className="pill pill-dark pill-sm">{t}</span>
-                ))}
-              </div>
-              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <Link href="/contact" className="btn btn-green" style={{ textDecoration: "none" }}>
-                  Get In Touch →
-                </Link>
-                <Link href="/about" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
-                  Read Our Story
-                </Link>
-              </div>
-            </div>
-
-            <div>
-              <div style={{ position: "relative" }}>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -20,
-                    left: -20,
-                    width: 140,
-                    height: 140,
-                    borderRadius: "50%",
-                    background: "rgba(0,255,132,0.18)",
-                    filter: "blur(60px)",
-                  }}
-                />
-                <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
-                  <Image
-                    src="/images/workspace.jpg"
-                    alt="Creative workspace - design, code and video"
-                    fill
-                    sizes="(min-width: 768px) 46vw, 92vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 20,
-                    bottom: 20,
-                    background: "rgba(0,35,51,0.9)",
-                    backdropFilter: "blur(12px)",
-                    border: "1px solid rgba(255,255,255,0.14)",
-                    borderRadius: 16,
-                    padding: "14px 18px",
-                    display: "flex",
-                    gap: 14,
-                    alignItems: "center",
-                  }}
-                >
-                  <span style={{ color: "var(--green)" }}>
-                    <Icon name="laptop" size={26} strokeWidth={1.7} />
-                  </span>
-                  <div>
-                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>7+ skill areas</div>
-                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>taught hands-on</div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
