@@ -666,6 +666,18 @@ img { display: block; max-width: 100%; }
 .nav-utility-group { display: inline-flex; align-items: center; gap: 22px; }
 .nav-utility-item { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .nav-utility-item svg { color: var(--green); opacity: 0.85; }
+.nav-utility-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  color: var(--green);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.nav-utility-icon:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+
 .nav-utility-link {
   display: inline-flex;
   align-items: center;

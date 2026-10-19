@@ -40,6 +40,11 @@ green stays a signal rather than a surface. Full rationale in
 - **Dashboard** - stats, enrollments, account (Supabase auth, gated).
 - **Sign In / Sign Up** - split editorial auth screens.
 
+## 📬 Contact
+
+- Email: chriscoyouthaflame2025@gmail.com
+- Phone and WhatsApp: shown as call/chat icons only, never as printed numbers
+
 ## 🧱 Tech
 
 - Next.js 16 (App Router) + React 19 + Tailwind CSS v4

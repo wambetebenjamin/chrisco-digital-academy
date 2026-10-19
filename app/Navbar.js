@@ -316,16 +316,19 @@ export default function Navbar() {
             <span className="nav-utility-item">
               <Icon name="pin" size={12} strokeWidth={2} /> Jinja &amp; Buikwe, Uganda
             </span>
-            <span className="nav-utility-item">
-              <Icon name="phone" size={12} strokeWidth={2} /> +254 112 272 061
-            </span>
+            <a href="tel:+254112272061" className="nav-utility-icon" aria-label="Call us">
+              <Icon name="phone" size={13} strokeWidth={2} />
+            </a>
+            <a href="mailto:chriscoyouthaflame2025@gmail.com" className="nav-utility-icon" aria-label="Email us">
+              <Icon name="mail" size={13} strokeWidth={2} />
+            </a>
             <span className="nav-utility-item nav-utility-hours">
               <Icon name="clock" size={12} strokeWidth={2} /> Mon to Sat, 8am to 6pm
             </span>
           </span>
           <span className="nav-utility-group">
-            <a href="https://wa.me/254112272061" className="nav-utility-link">
-              <Icon name="whatsapp" size={12} /> Talk to us on WhatsApp
+            <a href="mailto:chriscoyouthaflame2025@gmail.com" className="nav-utility-link">
+              <Icon name="mail" size={12} /> chriscoyouthaflame2025@gmail.com
             </a>
           </span>
         </div>

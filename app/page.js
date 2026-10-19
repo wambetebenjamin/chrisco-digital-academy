@@ -6,7 +6,7 @@ import Chatbot from "./Chatbot"
 import PhotoBand from "./components/PhotoBand"
 import PageBackdrop from "./components/PageBackdrop"
 import Icon from "./components/Icon"
-import { courses, categories, categoryCounts } from "./data/courses"
+import { courses, categories, categoryCounts, imageFor } from "./data/courses"
 import { org, tutor } from "./data/org"
 
 const skills = [
@@ -343,7 +343,7 @@ export default function Home() {
                     only as a thin identity rule so the grid stays calm. */}
                 <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", background: "var(--navy)" }}>
                   <Image
-                    src={course.img}
+                    src={imageFor(course)}
                     alt=""
                     fill
                     sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
@@ -354,7 +354,7 @@ export default function Home() {
                     style={{
                       position: "absolute",
                       inset: 0,
-                      background: "linear-gradient(152deg, rgba(0,35,51,0.78) 0%, rgba(0,35,51,0.48) 58%, rgba(1,58,79,0.3) 100%)",
+                      background: "linear-gradient(152deg, rgba(0,35,51,0.62) 0%, rgba(0,35,51,0.34) 58%, rgba(1,58,79,0.16) 100%)",
                     }}
                   />
                   <span

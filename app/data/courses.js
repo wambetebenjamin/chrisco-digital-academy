@@ -8,6 +8,21 @@ export const categories = [
   { name: "Career", icon: "rocket" },
 ]
 
+/*
+ * One ultrarealistic photograph per track. Courses inherit the photo of the
+ * category they belong to, so the catalogue reads as seven real classrooms
+ * rather than nineteen stock repeats.
+ */
+export const categoryImages = {
+  Business: "/images/cat-business.jpg",
+  Marketing: "/images/cat-marketing.jpg",
+  Coding: "/images/cat-coding.jpg",
+  Writing: "/images/cat-writing.jpg",
+  Design: "/images/cat-design.jpg",
+  Video: "/images/cat-video.jpg",
+  Career: "/images/cat-career.jpg",
+}
+
 export const courses = [
   {
     id: 1,
@@ -492,4 +507,9 @@ export function categoryCounts() {
     counts[c.category] = (counts[c.category] || 0) + 1
   }
   return counts
+}
+
+// Photo for any course, derived from its track.
+export function imageFor(course) {
+  return categoryImages[course?.category] || course?.img || "/images/workspace.jpg"
 }

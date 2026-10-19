@@ -26,10 +26,10 @@ const responses = [
   { keywords: ["video", "editing", "youtube", "reels", "film"], reply: "Our Video Editing and YouTube Automation courses cover cinematic edits, channel growth and automation, very in-demand skills!" },
   { keywords: ["python", "coding", "programming", "code"], reply: "Our Python Programming course teaches coding fundamentals, and SWE & LLM Mastery takes you into AI-powered app development!" },
   { keywords: ["ai", "artificial intelligence", "chatgpt", "tools"], reply: "Our SWE & LLM Mastery course teaches you to build AI-powered apps and use tools like ChatGPT to boost creativity and productivity!" },
-  { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: shambetz@gmail.com\nPhone: +254112272061" },
-  { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly!\nEmail: shambetz@gmail.com\nPhone: +254112272061\n\nOr type 8 to send us a message right here!" },
+  { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: chriscoyouthaflame2025@gmail.com" },
+  { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly!\nEmail: chriscoyouthaflame2025@gmail.com\n\nOr type 8 to send us a message right here!" },
   { keywords: ["4", "founder", "tutor", "instructor", "teacher", "who", "team"], reply: "Our courses are led by the CHRISCO Youth Aflame tutor team, a lead tutor with a Computer Science background working in design, web development, video editing, animation, social media and AI. CHRISCO Digital Academy is the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International." },
-  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: shambetz@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Jinja, Uganda" },
+  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: chriscoyouthaflame2025@gmail.com (WhatsApp)\nLocation: Jinja, Uganda" },
   { keywords: ["6", "certificate", "certification", "qualify"], reply: "Yes! You receive a certificate upon completing any course. Practical-skills based and recognized!" },
   { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, and in-person with youth in Jinja and Buikwe, Uganda. Learn from anywhere in Uganda and beyond!" },
   { keywords: ["hello", "hi", "hey", "hujambo", "start", "menu"], reply: "SHOW_MENU" },
@@ -112,7 +112,7 @@ export default function Chatbot() {
     } catch {
       setMessages((prev) => [...prev, {
         role: "assistant",
-        content: "Sorry, the message failed to send. Please email us directly at shambetz@gmail.com",
+        content: "Sorry, the message failed to send. Please email us directly at chriscoyouthaflame2025@gmail.com",
       }])
     }
     setSending(false)

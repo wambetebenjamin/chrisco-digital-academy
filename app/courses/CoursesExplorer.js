@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import emailjs from "@emailjs/browser"
 import Image from "next/image"
 import Icon from "../components/Icon"
-import { courses, categories, categoryCounts } from "../data/courses"
+import { courses, categories, categoryCounts, imageFor } from "../data/courses"
 import { org } from "../data/org"
 
 const SERVICE_ID = "service_m86zbad"
@@ -80,7 +80,7 @@ export default function CoursesExplorer() {
       setSent(true)
       setForm({ name: "", email: "", phone: "" })
     } catch {
-      alert("Failed to send. Please email shambetz@gmail.com directly.")
+      alert("Failed to send. Please email chriscoyouthaflame2025@gmail.com directly.")
     }
     setSending(false)
   }
@@ -246,13 +246,13 @@ export default function CoursesExplorer() {
                       {/* Header, photo + course-tone overlay */}
                       <div style={{ background: "var(--navy)", padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
                         <Image
-                          src={course.img}
+                          src={imageFor(course)}
                           alt=""
                           fill
                           sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
                           style={{ objectFit: "cover" }}
                         />
-                        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.54) 58%, rgba(1,58,79,0.34) 100%)" }} />
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.68) 0%, rgba(0,35,51,0.38) 58%, rgba(1,58,79,0.2) 100%)" }} />
                         <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${course.color[0]}3D, transparent 68%)` }} />
                         <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }} />
                         <span
@@ -331,13 +331,13 @@ export default function CoursesExplorer() {
             {/* Header, photo + course-tone overlay */}
             <div style={{ background: "var(--navy)", padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
               <Image
-                src={selected.img}
+                src={imageFor(selected)}
                 alt=""
                 fill
                 sizes="(min-width: 640px) 600px, 92vw"
                 style={{ objectFit: "cover" }}
               />
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.54) 58%, rgba(1,58,79,0.34) 100%)" }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.68) 0%, rgba(0,35,51,0.38) 58%, rgba(1,58,79,0.2) 100%)" }} />
               <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${selected.color[0]}3D, transparent 68%)` }} />
               <span
                 className="pill pill-sm"

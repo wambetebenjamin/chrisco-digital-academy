@@ -13,8 +13,8 @@ export const metadata = {
 }
 
 const infoItems = [
-  { icon: "mail", label: "Email", value: "shambetz@gmail.com" },
-  { icon: "phone", label: "Phone & WhatsApp", value: "+254 112 272 061" },
+  { icon: "mail", label: "Email", value: "chriscoyouthaflame2025@gmail.com", href: "mailto:chriscoyouthaflame2025@gmail.com" },
+  { icon: "phone", label: "Call or WhatsApp", value: "", href: "tel:+254112272061", iconLabel: "Call us" },
   { icon: "pin", label: "Location", value: "Jinja, Uganda" },
   { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame" },
 ]
@@ -49,7 +49,13 @@ export default function Contact() {
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {infoItems.map((item, i) => (
-                  <div key={i} className="card card-hover" style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}>
+                  <a
+                    key={i}
+                    href={item.href}
+                    className="card card-hover"
+                    aria-label={item.iconLabel || item.label}
+                    style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}
+                  >
                     <span
                       style={{
                         width: 50,
@@ -69,11 +75,18 @@ export default function Contact() {
                       <div style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 700, marginBottom: 3 }}>
                         {item.label}
                       </div>
-                      <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 15, wordBreak: "break-word" }}>
-                        {item.value}
-                      </div>
+                      {item.value ? (
+                        <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 15, wordBreak: "break-word" }}>
+                          {item.value}
+                        </div>
+                      ) : (
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--ink)" }}>
+                          <Icon name="phone" size={16} strokeWidth={2} />
+                          <span style={{ fontWeight: 700, fontSize: 15 }}>{item.iconLabel}</span>
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
 

@@ -131,20 +131,24 @@ export default function Footer() {
             <ul className="footer-list footer-contact">
               <li>
                 <span className="footer-contact-icon"><Icon name="mail" size={15} /></span>
-                <a href="mailto:shambetz@gmail.com" className="footer-link" style={{ wordBreak: "break-all" }}>
-                  shambetz@gmail.com
+                <a href={`mailto:${org.email}`} className="footer-link" style={{ wordBreak: "break-all" }}>
+                  {org.email}
                 </a>
               </li>
               <li>
-                <span className="footer-contact-icon"><Icon name="phone" size={15} /></span>
-                <span>+254 112 272 061</span>
+                <a href={`tel:${org.phone}`} className="footer-contact-icon" aria-label="Call CHRISCO Digital Academy">
+                  <Icon name="phone" size={15} />
+                </a>
+                <a href={org.whatsapp} className="footer-link" aria-label="Chat with us on WhatsApp">
+                  <Icon name="whatsapp" size={15} />
+                </a>
               </li>
               <li>
                 <span className="footer-contact-icon"><Icon name="pin" size={15} /></span>
                 <span>Jinja, Uganda</span>
               </li>
             </ul>
-            <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
+            <a href={org.whatsapp} className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
               <Icon name="whatsapp" size={15} /> WhatsApp Us
             </a>
           </div>

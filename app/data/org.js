@@ -11,6 +11,10 @@ export const org = {
   umbrella: "CHRISCO Fellowship of Churches International",
   // e.g. "CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International"
   ownership: "CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International",
+  email: "chriscoyouthaflame2025@gmail.com",
+  // Numbers are kept for links only, never printed as visible text.
+  phone: "+254112272061",
+  whatsapp: "https://wa.me/254112272061",
   tutorTitle: "Lead Tutor",
   courseCredit: "Course editor: CHRISCO Youth Aflame",
 }
