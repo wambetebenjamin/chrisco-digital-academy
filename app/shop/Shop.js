@@ -122,49 +122,8 @@ export default function Shop({ initialCode = "" }) {
 
   return (
     <>
-      {/* ---------- design template ---------- */}
-      <section className="section-frost" style={{ padding: "44px 0" }}>
-        <div className="container shop-template">
-          <div className="shop-template-mark">
-            <span className="shop-flame"><Icon name="flame" size={20} strokeWidth={2} /></span>
-            <span className="shop-wordmark">PURSUE</span>
-            <span className="shop-sub">Overtake, recover all</span>
-          </div>
-          <div className="shop-template-art">
-            <Image
-              src="/merch/source/pursue-design.png"
-              alt="The PURSUE design artwork: a warrior at sunrise, a golden arrow, and the words pursue, overtake, recover all, 1 Samuel 30 verse 8"
-              width={400}
-              height={469}
-              sizes="(min-width: 900px) 180px, 60vw"
-            />
-          </div>
-          <div className="shop-template-copy">
-            <span className="eyebrow">The design template</span>
-            <h2 className="shop-template-title">One artwork, carried everywhere</h2>
-            <p className="shop-template-body">
-              Every piece uses the same PURSUE artwork, the sunrise warrior, the golden arrow and 1 Samuel 30:8.
-              Full chest for tees and hoodies, left chest for polos, front panel embroidery for caps, wrap print for
-              mugs and a cover print for notebooks.
-            </p>
-          </div>
-          <div className="shop-template-specs">
-            {[
-              { k: "Artwork", v: "Sunrise warrior, golden arrow" },
-              { k: "Words", v: "Pursue, overtake, recover all" },
-              { k: "Finish", v: "Screen print, embroidery, sublimation" },
-            ].map((s) => (
-              <div key={s.k} className="shop-spec">
-                <span>{s.k}</span>
-                <strong>{s.v}</strong>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ---------- catalogue ---------- */}
-      <section className="section-frost-alt" style={{ padding: "56px 0 84px" }}>
+      <section className="section-frost" style={{ padding: "64px 0 88px" }}>
         <div className="container">
           <div className="shop-head">
             <div>

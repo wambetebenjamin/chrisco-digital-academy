@@ -160,14 +160,19 @@ test("every merchandise item has a unique code, sizes and a price", () => {
   }
   assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 2)
   assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 3)
-  assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 2)
-  assert.equal(shop.merch.length, 11)
+  assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 1)
+  assert.equal(shop.merch.length, 10)
+  // The collection stays in the warm brand palette: brown, cream, black, natural.
+  const allowed = new Set(["Brown", "Cream", "Black", "Natural"])
+  for (const item of shop.merch) {
+    assert.ok(allowed.has(item.colour), `${item.code} uses a brand colour, got ${item.colour}`)
+  }
 })
 
 test("every colourway of each product has its own code", () => {
   const tees = shop.merch.filter((m) => m.category === "T-shirts")
   assert.equal(tees.length, 3)
-  assert.deepEqual(tees.map((t) => t.colour), ["Navy", "White", "Sand"])
+  assert.deepEqual(tees.map((t) => t.colour), ["Brown", "Cream", "Black"])
 })
 
 test("apparel runs from S to XXL", () => {
@@ -189,7 +194,7 @@ test("prices format with the UGX prefix", () => {
 
 // ---------------------------------------------------------------------------
 test("recommendations stay valid for the new colourways", () => {
-  for (const code of ["HD-02", "PL-02"]) {
+  for (const code of ["HD-02", "TS-03"]) {
     const recs = shop.recommendationsFor(code, 3)
     assert.equal(recs.length, 3, `${code} has three recommendations`)
     assert.ok(!recs.some((r) => r.code === code), `${code} is not recommended to itself`)

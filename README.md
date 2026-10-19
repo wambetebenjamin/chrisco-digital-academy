@@ -50,6 +50,9 @@ green stays a signal rather than a surface. Full rationale in
 
 ## 🔐 Accounts, handbooks and referrals
 
+Setup for restoring the database and enabling Google sign-in is documented in
+[docs/SETUP-DATABASE.md](./docs/SETUP-DATABASE.md).
+
 - Sign-in and sign-up run on Supabase when `NEXT_PUBLIC_SUPABASE_URL` and
   `NEXT_PUBLIC_SUPABASE_ANON_KEY` are present.
 - Without those keys the app runs in **preview mode**: accounts, sessions and

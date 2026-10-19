@@ -31,7 +31,7 @@ export default async function ShopPage({ searchParams }) {
           </>
         }
         titleStyle={{ maxWidth: 820 }}
-        lead="The official CHRISCO Youth Aflame merchandise: heavyweight tees, hoodies, polos, caps, bags, drinkware and stationery, all carrying the PURSUE flame mark."
+        lead="The official CHRISCO Youth Aflame merchandise: heavyweight tees, hoodies, polos, caps, bags, drinkware and stationery, all carrying the PURSUE artwork in a warm brown, cream and black palette."
       >
         <div className="fade-up fade-up-2" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 26 }}>
           {["S to XXL", "Screen print and embroidery", "Bulk orders welcome"].map((p) => (

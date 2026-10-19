@@ -11,7 +11,7 @@ export default function SignUp() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { signUp, previewMode } = useAuth()
+  const { signUp, signInWithGoogle, previewMode } = useAuth()
   const [ref, setRef] = useState("")
 
   useEffect(() => {
@@ -36,6 +36,17 @@ export default function SignUp() {
       setSuccess(true)
     } catch (err) {
       setError(err.message || "Something went wrong.")
+      setLoading(false)
+    }
+  }
+
+  async function handleGoogle() {
+    setError("")
+    setLoading(true)
+    try {
+      await signInWithGoogle("/dashboard")
+    } catch (err) {
+      setError(err.message || "Google sign-in is not available right now.")
       setLoading(false)
     }
   }
@@ -99,6 +110,17 @@ export default function SignUp() {
             <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, textAlign: "center" }}>
               {error}
             </div>
+          )}
+
+          {!previewMode && (
+            <>
+              <button type="button" onClick={handleGoogle} disabled={loading} className="btn btn-outline btn-block auth-google">
+                <span className="auth-google-mark">G</span> Continue with Google
+              </button>
+              <div className="auth-or">
+                <span /> or with email <span />
+              </div>
+            </>
           )}
 
           <div className="field">

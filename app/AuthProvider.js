@@ -103,6 +103,27 @@ export function AuthProvider({ children }) {
     return data
   }
 
+  /*
+   * Google sign-in goes through Supabase OAuth. The provider must be enabled
+   * in the Supabase dashboard, and this origin must be listed in the project's
+   * redirect URLs (see docs/SETUP-DATABASE.md).
+   */
+  async function signInWithGoogle(next = "/dashboard") {
+    if (!isSupabaseConfigured) {
+      throw new Error(
+        "Google sign-in needs Supabase. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY, then enable the Google provider."
+      )
+    }
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        queryParams: { access_type: "offline", prompt: "consent" },
+      },
+    })
+    if (error) throw error
+  }
+
   async function logout() {
     if (!isSupabaseConfigured) {
       previewSignOut()
@@ -198,7 +219,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, profile, loading, previewMode: !isSupabaseConfigured, signUp, signIn, logout, enrollCourse, getEnrollments }}
+      value={{ user, profile, loading, previewMode: !isSupabaseConfigured, signUp, signIn, signInWithGoogle, logout, enrollCourse, getEnrollments }}
     >
       {children}
     </AuthContext.Provider>
