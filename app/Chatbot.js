@@ -12,11 +12,15 @@ const menuOptions = [
   { number: "2", label: "Pricing" },
   { number: "3", label: "Enroll Now" },
   { number: "4", label: "About Our Tutor" },
-  { number: "5", label: "Location & Contact" },
+  { number: "5", label: "Contact Us" },
   { number: "6", label: "Certificates" },
   { number: "7", label: "Online Classes" },
   { number: "8", label: "Send us a Message" },
+  { number: "9", label: "Merchandise" },
 ]
+
+const MERCH_REPLY =
+  "We have 29 merchandise designs across three collections: PURSUE, Faith affirmations, and Scripture statements built on 1 Samuel 30:8.\n\nEvery design has a code, like TS-07 or HD-04. Open the Shop page, pick a code, size and quantity, then message us on WhatsApp with that code and we confirm the rest.\n\nShop page: /shop"
 
 const responses = [
   { keywords: ["1", "courses", "course", "learn", "study", "offer"], reply: "We offer 19 practical courses across 7 tracks:\nBusiness, Design, Coding, Marketing\nWriting, Video, Career\n\nType a topic like \"python\", \"negotiation\" or \"branding\" to learn more!" },
@@ -26,6 +30,7 @@ const responses = [
   { keywords: ["video", "editing", "youtube", "reels", "film"], reply: "Our Video Editing and YouTube Automation courses cover cinematic edits, channel growth and automation, very in-demand skills!" },
   { keywords: ["python", "coding", "programming", "code"], reply: "Our Python Programming course teaches coding fundamentals, and SWE & LLM Mastery takes you into AI-powered app development!" },
   { keywords: ["ai", "artificial intelligence", "chatgpt", "tools"], reply: "Our SWE & LLM Mastery course teaches you to build AI-powered apps and use tools like ChatGPT to boost creativity and productivity!" },
+  { keywords: ["9", "merch", "merchandise", "shop", "tshirt", "t-shirt", "tee", "hoodie", "polo", "cap", "mug", "tote", "journal", "design code", "buy merch"], reply: MERCH_REPLY },
   { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: chriscoyouthaflame2025@gmail.com" },
   { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly!\nEmail: chriscoyouthaflame2025@gmail.com\n\nOr type 8 to send us a message right here!" },
   { keywords: ["4", "founder", "tutor", "instructor", "teacher", "who", "team"], reply: "Our courses are led by the CHRISCO Youth Aflame tutor team, a lead tutor with a Computer Science background working in design, web development, video editing, animation, social media and AI. CHRISCO Digital Academy is the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International." },
@@ -43,7 +48,7 @@ function getReply(input) {
       return item.reply
     }
   }
-  return "I'm not sure about that! Here's what I can help with, type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Our Tutor\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message"
+  return "I'm not sure about that! Here's what I can help with, type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Our Tutor\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message\n9. Merchandise"
 }
 
 export default function Chatbot() {

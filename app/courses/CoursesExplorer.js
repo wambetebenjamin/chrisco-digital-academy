@@ -318,8 +318,8 @@ export default function CoursesExplorer() {
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
                             className="btn btn-outline btn-sm"
-                            title={user ? "Download course handbook" : "Sign in to download the handbook"}
-                            aria-label={user ? `Download ${course.title} handbook` : `Sign in to download the ${course.title} handbook`}
+                            title={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
+                            aria-label={user ? `Download ${course.title} handbook` : `Request the ${course.title} handbook on WhatsApp`}
                             style={{ cursor: "pointer", padding: "10px 16px" }}
                           >
                             <Icon name={user ? "download" : "lock"} size={16} />
@@ -340,29 +340,38 @@ export default function CoursesExplorer() {
         <div className="overlay" onClick={() => setLockedCourse(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
             <div style={{ padding: "34px 32px 30px", textAlign: "center" }}>
-              <span className="course-lock-ico"><Icon name="lock" size={26} strokeWidth={1.8} /></span>
+              <span className="course-lock-ico"><Icon name="book" size={26} strokeWidth={1.8} /></span>
               <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "var(--ink)", marginBottom: 8 }}>
-                Sign in to download the handbook
+                The handbook is one message away
               </h3>
               <p style={{ fontSize: 13.5, color: "var(--body)", lineHeight: 1.65, marginBottom: 22 }}>
-                The objectives and full outline of {lockedCourse.title} are free to read. The PDF handbook is
-                reserved for signed-in students, so we know who to support.
+                The objectives and full outline of {lockedCourse.title} are free to read here. Message us on
+                WhatsApp with the course name and we will send the PDF handbook straight back, no account needed.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
-                <Link href="/sign-in" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
-                  Sign in
-                </Link>
-                <Link href="/sign-up" className="btn btn-outline btn-sm" style={{ textDecoration: "none" }}>
-                  Create an account
-                </Link>
+                <a
+                  href={`${org.whatsapp}?text=${encodeURIComponent(
+                    `Hi CHRISCO, please send me the handbook for ${lockedCourse.title}.`
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-green btn-sm"
+                  style={{ textDecoration: "none" }}
+                >
+                  <Icon name="whatsapp" size={15} /> Request on WhatsApp
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setLockedCourse(null)}
+                  className="btn btn-outline btn-sm"
+                  style={{ cursor: "pointer" }}
+                >
+                  Keep reading
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => setLockedCourse(null)}
-                className="course-lock-dismiss"
-              >
-                Keep reading the outline
-              </button>
+              <Link href="/sign-in" className="course-lock-dismiss">
+                I already have an account, sign me in
+              </Link>
             </div>
           </div>
         </div>
@@ -468,16 +477,24 @@ export default function CoursesExplorer() {
               </div>
 
               <div className="course-handbook-note">
-                <Icon name={user ? "book" : "lock"} size={15} strokeWidth={2} />
+                <Icon name="book" size={15} strokeWidth={2} />
                 <span>
                   {user
                     ? "Your handbook PDF is available with the download button below."
-                    : "The full handbook PDF is available to signed-in students."}
+                    : "Want the PDF handbook? Message us on WhatsApp with the course name."}
                 </span>
                 {!user && (
-                  <Link href="/sign-in" className="course-handbook-link">
-                    Sign in
-                  </Link>
+                  <a
+                    href={`${org.whatsapp}?text=${encodeURIComponent(
+                      `Hi CHRISCO, please send me the handbook for ${selected?.title || "this course"}.`
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="course-handbook-link"
+                    style={{ textDecoration: "none" }}
+                  >
+                    Request it
+                  </a>
                 )}
               </div>
 
@@ -511,8 +528,8 @@ export default function CoursesExplorer() {
                   <button
                     onClick={() => handleDownload(selected)}
                     className="btn btn-outline"
-                    title={user ? "Download course handbook" : "Sign in to download the handbook"}
-                    aria-label={user ? "Download course handbook" : "Sign in to download the handbook"}
+                    title={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
+                    aria-label={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
                     style={{ cursor: "pointer", padding: "14px 18px" }}
                   >
                     <Icon name={user ? "download" : "lock"} size={17} />

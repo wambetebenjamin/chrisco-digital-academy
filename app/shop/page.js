@@ -9,9 +9,9 @@ import Link from "next/link"
 import Shop from "./Shop"
 
 export const metadata = {
-  title: "PURSUE Merchandise",
+  title: "CHRISCO Merchandise",
   description:
-    "The PURSUE collection from CHRISCO Youth Aflame: t-shirts, hoodies, polos, caps, tote bags, mugs and notebooks. Choose a code, a size from S to XXL and a quantity, then send your order.",
+    "Scripture merchandise from CHRISCO Youth Aflame: PURSUE artwork, Christian affirmations and 1 Samuel 30:8 statement pieces on t-shirts, hoodies, polos, caps, totes, mugs and journals. Message the design code on WhatsApp to order.",
 }
 
 export default async function ShopPage({ searchParams }) {
@@ -24,17 +24,17 @@ export default async function ShopPage({ searchParams }) {
       <Navbar />
 
       <PhotoHero
-        eyebrow="PURSUE collection"
+        eyebrow="Merchandise"
         title={
           <>
-            Wear the <span className="accent-bright">pursuit.</span>
+            Wear the <span className="accent-bright">word.</span>
           </>
         }
         titleStyle={{ maxWidth: 820 }}
-        lead="Official CHRISCO Youth Aflame merchandise in brown, white, black, cream and natural canvas. Two collections: the PURSUE artwork, and quieter Christian affirmations set in gold type."
+        lead="Official CHRISCO Youth Aflame merchandise in brown, white, black, cream and natural canvas. Three collections: the PURSUE artwork, quieter Christian affirmations set in gold type, and statement pieces built on 1 Samuel 30:8."
       >
         <div className="fade-up fade-up-2" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 26 }}>
-          {["S to XXL", "KSh and UGX pricing", "Bulk orders welcome"].map((p) => (
+          {["S to XXL", "KSh and UGX pricing", "Order by code on WhatsApp"].map((p) => (
             <span key={p} className="pill pill-soft pill-sm">
               <Icon name="checkCircle" size={13} strokeWidth={2.2} /> {p}
             </span>
@@ -47,8 +47,8 @@ export default async function ShopPage({ searchParams }) {
       <PhotoBand
         centered
         eyebrow="Teams and churches"
-        title="Dress your whole team in PURSUE."
-        body="Youth groups, worship teams, schools and fellowships can order in bulk by code and size run. Ask us for a quotation."
+        title="Dress your whole team in the word."
+        body="Youth groups, worship teams, schools and fellowships can order in bulk by code and size run. Message the codes on WhatsApp and we will build the quotation."
       >
         <Link href="/affiliates" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
           Become an Affiliate →

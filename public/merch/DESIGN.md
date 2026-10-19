@@ -1,11 +1,18 @@
 # Merchandise artwork
 
-Two collections share one print system.
+Three collections share one print system.
 
 | Collection | Artwork | Where it lives |
 | --- | --- | --- |
 | PURSUE | Sunrise warrior, golden arrow, "PURSUE / OVERTAKE • RECOVER ALL / 1 Samuel 30:8" | `public/merch/source/pursue-design.png` |
 | Faith affirmations | Type only: Faith Over Fear, Chosen, Be Still, Anchored, Grace, Risen, Wonderfully Made | Generated directly in the mockups |
+| Scripture statements | 1 Samuel 30:8 as the anchor, plus 2 Corinthians 5:7, 2 Corinthians 6:2 and Matthew 4:19 | Generated directly in the mockups |
+
+The supplied reference photos in `public/merch/source/refs/` are the brief for
+the scripture set, not artwork to copy: bold stacked caps, script paired with
+condensed caps, a vintage engraved badge and a heavy brush lettering piece. Each
+one is redrawn in the CHRISCO warm palette so nothing borrows a navy or red
+palette from the references.
 
 ## Palette
 
@@ -43,6 +50,16 @@ white and black for the quieter pieces:
 | MG-02 | Risen Mug, White | Front face, opposite handle | 50% height, type only | Gold print |
 | NB-01 | PURSUE Journal, Brown | Cover centre | Small foil emblem cluster, 30% width | Gold foil |
 | NB-02 | Wonderfully Made Journal, Cream | Cover centre | 45% width, type only | Gold foil |
+| TS-07 | Overtake Tee, Black | Centre chest | 28cm wide, 90mm below collar | Cream and gold screen print |
+| TS-08 | The Presence Tee, Cream | Centre chest | 27cm wide, below collar | Brown and gold screen print |
+| TS-09 | Walk By Faith Tee, White | Centre chest | 25cm wide, below collar | Brown and gold screen print |
+| TS-10 | Now Is The Time Tee, Brown | Centre chest | 26cm wide, below collar | Cream and gold screen print |
+| TS-11 | Fishers Of Men Tee, Cream | Centre chest | 26cm wide, below collar | Sepia and gold badge print |
+| HD-04 | Recover All Hoodie, Cream | Between drawstrings and pocket | 26cm wide | Espresso and gold screen print |
+| PL-03 | PURSUE Crest Polo, Cream | Left chest | 80mm circular crest | Embroidery |
+| CP-03 | Overtake Cap, Black | Front panel centre | Arched, 58mm tall | Cream and gold embroidery |
+| TB-03 | Walk By Faith Tote, Natural | Centre front, all four margins equal | 60% width | Brown screen print |
+| MG-03 | Recover All Mug, Cream | Front face, opposite handle | 55% height | Sublimation |
 
 ## Rules
 
@@ -55,7 +72,20 @@ white and black for the quieter pieces:
 - Journals are typographic, not pictorial. A small foil emblem and/or a short
   line of type, no full-bleed picture.
 - Faith pieces are type only, one accent colour per garment.
+- Scripture statements lead with 1 Samuel 30:8. Other verses are allowed, but
+  keep the reference line small and inside the print block.
+- The reference photos are inspiration only. Redraw the idea in cream, brown
+  and gold on the CHRISCO garments, never on navy or red, and never copy a
+  third party mark such as a church crest.
 - Never knock out the sky to the garment colour on light garments.
+
+## Ordering
+
+The shop does not take payment and does not ask anyone to sign in. Every card
+carries a "Message on WhatsApp" link built by `whatsappInquiry()` in
+`app/data/merch.js`, which opens a prefilled chat with the design code, colour,
+chosen size and quantity. The order tray can send a whole multi item order the
+same way. To change the destination number, edit `org.whatsapp`.
 
 ## Prices
 
@@ -67,4 +97,6 @@ UGX alongside. Update both when a price changes.
 1. Generate or export the mockup as PNG with a light neutral background.
 2. Name it after the garment and idea, for example `tshirt-prayer.png`.
 3. Add an entry to `app/data/merch.js` with the next code in that series and a
-   `collection` of `pursue` or `faith`.
+   `collection` of `pursue`, `faith` or `scripture`.
+4. Nothing else is needed: the card, the product panel, the recommendations and
+   the WhatsApp message all read from that one entry.

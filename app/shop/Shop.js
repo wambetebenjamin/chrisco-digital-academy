@@ -14,6 +14,7 @@ import {
   formatUgx,
   priceKsh,
   priceUgx,
+  whatsappInquiry,
 } from "../data/merch"
 import { readMyCode, buildRefLink } from "../lib/referral"
 import { org } from "../data/org"
@@ -164,6 +165,29 @@ export default function Shop({ initialCode = "" }) {
             </button>
           </div>
 
+          <div className="shop-wa-strip">
+            <div className="shop-wa-copy">
+              <span className="shop-wa-ico">
+                <Icon name="whatsapp" size={18} />
+              </span>
+              <p>
+                <strong>Order straight on WhatsApp.</strong> Pick a design, note its code, and message us with
+                that code. We confirm size, colour, total and delivery in the chat.
+              </p>
+            </div>
+            <a
+              className="btn btn-green btn-sm shop-wa-btn"
+              style={{ textDecoration: "none" }}
+              href={`${org.whatsapp}?text=${encodeURIComponent(
+                "Hi CHRISCO, I would like to order merchandise. Here is the design code: "
+              )}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Icon name="whatsapp" size={15} /> Message on WhatsApp
+            </a>
+          </div>
+
           <div className="shop-filters shop-filters-collection">
             {collections.map((c) => (
               <button
@@ -221,15 +245,28 @@ export default function Shop({ initialCode = "" }) {
                       <span key={s}>{s}</span>
                     ))}
                   </div>
+                  <a
+                    className="merch-wa"
+                    href={`${org.whatsapp}?text=${whatsappInquiry(item, { ref: readMyCode() })}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    aria-label={`Message on WhatsApp about ${item.name} (${item.code})`}
+                  >
+                    <Icon name="whatsapp" size={14} />
+                    <span>Message on WhatsApp</span>
+                    <em>{item.code}</em>
+                  </a>
                 </div>
               </article>
             ))}
           </div>
 
           <p className="shop-note">
-            Prices are shown in KSh with the UGX figure alongside, and are confirmed on order. Delivery is quoted
-            separately. Bulk orders for churches, schools and teams get a discount. Order by code, for example{" "}
-            <strong>TS-01, M, 2 pieces</strong>.
+            Every design carries a code. Message us on WhatsApp with that code and we confirm size, colour, total
+            and delivery in the chat. Prices are shown in KSh with the UGX figure alongside, delivery is quoted
+            separately, and bulk orders for churches, schools and teams get a discount. For example{" "}
+            <strong>TS-07, M, 2 pieces</strong>.
           </p>
         </div>
       </section>
@@ -303,13 +340,33 @@ export default function Shop({ initialCode = "" }) {
                 </div>
 
                 <div className="shop-modal-actions">
-                  <button type="button" className="btn btn-green" onClick={addToOrder} disabled={!size} style={{ cursor: size ? "pointer" : "not-allowed", opacity: size ? 1 : 0.55 }}>
+                  <a
+                    className="btn btn-green"
+                    style={{ textDecoration: "none" }}
+                    href={`${org.whatsapp}?text=${whatsappInquiry(active, { size, qty, ref: readMyCode() })}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Icon name="whatsapp" size={16} /> Send code on WhatsApp
+                  </a>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={addToOrder}
+                    disabled={!size}
+                    style={{ cursor: size ? "pointer" : "not-allowed", opacity: size ? 1 : 0.55 }}
+                  >
                     Add to order
                   </button>
-                  <button type="button" className="btn btn-outline" onClick={() => shareItem(active)}>
-                    <Icon name="send" size={15} /> {copied === active.code ? "Link copied" : "Share"}
+                  <button type="button" className="btn btn-outline shop-modal-share" onClick={() => shareItem(active)} aria-label="Copy share link">
+                    <Icon name="send" size={15} /> {copied === active.code ? "Copied" : "Share"}
                   </button>
                 </div>
+                <p className="shop-modal-hint">
+                  {size
+                    ? `Your message will include ${active.code}, size ${size} and quantity ${qty}.`
+                    : `Pick a size to include it automatically, or send the code ${active.code} and we will confirm sizes in the chat.`}
+                </p>
               </div>
             </div>
 
@@ -438,7 +495,7 @@ export default function Shop({ initialCode = "" }) {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Icon name="whatsapp" size={16} /> Send order on WhatsApp
+                  <Icon name="whatsapp" size={16} /> Send this order on WhatsApp
                 </a>
                 <a
                   className="btn btn-outline btn-block"

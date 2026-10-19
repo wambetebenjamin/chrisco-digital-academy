@@ -512,8 +512,8 @@ export default function Navbar() {
               </>
             ) : (
               <div className="m-auth">
-                <Link href="/sign-in" onClick={closeAll} className="btn btn-outline-light btn-sm" style={{ textDecoration: "none", flex: 1 }}>
-                  Log In
+                <Link href="/shop" onClick={closeAll} className="btn btn-outline-light btn-sm" style={{ textDecoration: "none", flex: 1 }}>
+                  Shop
                 </Link>
                 <Link href="/sign-up" onClick={closeAll} className="btn btn-green btn-sm" style={{ textDecoration: "none", flex: 1 }}>
                   Apply Now

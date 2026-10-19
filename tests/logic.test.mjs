@@ -158,10 +158,10 @@ test("every merchandise item has a unique code, sizes and a price", () => {
     assert.ok(item.price.kes > 0 && item.price.ugx > 0, `${item.code} has a price in both currencies`)
     assert.ok(item.img.startsWith("/merch/"), `${item.code} has a mockup`)
   }
-  assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 3)
-  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 6)
-  assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 2)
-  assert.ok(shop.merch.length >= 19)
+  assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 4)
+  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 11)
+  assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 3)
+  assert.equal(shop.merch.length, 29)
 })
 
 test("every colourway of each product has its own code", () => {
@@ -192,21 +192,52 @@ test("prices carry KSh and UGX", () => {
 
 test("every item lists specifications and a collection", () => {
   for (const item of shop.merch) {
-    assert.ok(["pursue", "faith"].includes(item.collection), `${item.code} has a collection`)
+    assert.ok(["pursue", "faith", "scripture"].includes(item.collection), `${item.code} has a collection`)
     assert.ok(Array.isArray(item.specs) && item.specs.length >= 3, `${item.code} has specs`)
     assert.ok(item.price.kes > 0 && item.price.ugx > 0, `${item.code} has both currencies`)
   }
 })
 
-test("the catalogue spans both collections and a wide colour range", () => {
+test("the catalogue spans every collection and a wide colour range", () => {
   const pursue = shop.merch.filter((m) => m.collection === "pursue")
   const faith = shop.merch.filter((m) => m.collection === "faith")
-  assert.ok(pursue.length >= 10)
-  assert.ok(faith.length >= 7)
+  const scripture = shop.merch.filter((m) => m.collection === "scripture")
+  assert.equal(pursue.length, 12)
+  assert.equal(faith.length, 7)
+  assert.equal(scripture.length, 10)
+  for (const id of shop.collections.map((c) => c.id)) {
+    if (id !== "all") assert.ok(scripture.concat(pursue, faith).some((m) => m.collection === id), `${id} has stock`)
+  }
   const colours = new Set(shop.merch.map((m) => m.colour))
   for (const colour of ["Brown", "White", "Black", "Cream", "Natural"]) {
     assert.ok(colours.has(colour), `${colour} appears in the range`)
   }
+})
+
+test("the WhatsApp message leads with the design code", () => {
+  const item = shop.findMerch("TS-07")
+  const message = decodeURIComponent(shop.whatsappInquiry(item, { size: "L", qty: 2 }))
+  assert.ok(message.includes("Design code: TS-07"))
+  assert.ok(message.includes("Overtake Tee"))
+  assert.ok(message.includes("Size: L"))
+  assert.ok(message.includes("Quantity: 2"))
+  assert.ok(message.includes("KSh 1,600"))
+  assert.ok(message.includes("UGX 45,000"))
+
+  const bare = decodeURIComponent(shop.whatsappInquiry(item))
+  assert.ok(bare.includes("Design code: TS-07"))
+  assert.ok(!bare.includes("Size:"), "no size is invented before the shopper picks one")
+  assert.equal(shop.whatsappInquiry(null), "")
+})
+
+test("the scripture collection is anchored on 1 Samuel 30:8", () => {
+  const verses = shop.merch
+    .filter((m) => m.collection === "scripture")
+    .map((m) => `${m.name} ${m.desc}`)
+    .join(" ")
+  assert.ok(verses.includes("1 Samuel 30:8"))
+  assert.ok(shop.merch.some((m) => m.code === "TS-07" && m.colour === "Black"))
+  assert.ok(shop.merch.some((m) => m.code === "CP-03"))
 })
 
 // ---------------------------------------------------------------------------

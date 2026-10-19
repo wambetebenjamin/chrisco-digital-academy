@@ -24,7 +24,7 @@ describe("course handbooks", () => {
     expect(screen.getByText("Introduction to YouTube Automation")).toBeTruthy()
   })
 
-  it("asks signed-out visitors to sign in before downloading", async () => {
+  it("hands signed-out visitors to WhatsApp instead of a login wall", async () => {
     const user = userEvent.setup()
     const open = vi.spyOn(window, "open").mockImplementation(() => null)
 
@@ -35,10 +35,11 @@ describe("course handbooks", () => {
     )
 
     await user.click(screen.getByText("YouTube Automation"))
-    const gateButtons = screen.getAllByRole("button", { name: /sign in to download/i })
+    const gateButtons = screen.getAllByRole("button", { name: /request the handbook on whatsapp/i })
     await user.click(gateButtons[gateButtons.length - 1])
 
-    expect(await screen.findByText("Sign in to download the handbook")).toBeTruthy()
+    expect(await screen.findByText("The handbook is one message away")).toBeTruthy()
+    expect(screen.getByRole("link", { name: /request on whatsapp/i }).getAttribute("href")).toContain("wa.me")
     expect(open).not.toHaveBeenCalled()
   })
 
@@ -68,6 +69,6 @@ describe("course handbooks", () => {
     await user.click(downloadButtons[downloadButtons.length - 1])
 
     expect(open).toHaveBeenCalledWith("/books/youtube-automation.pdf", "_blank")
-    expect(screen.queryByText("Sign in to download the handbook")).toBeNull()
+    expect(screen.queryByText("The handbook is one message away")).toBeNull()
   })
 })
