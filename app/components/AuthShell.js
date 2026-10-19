@@ -9,8 +9,6 @@ export default function AuthShell({ children, subtitle }) {
         <div aria-hidden style={{ position: "absolute", inset: 0 }}>
           <Image src="/images/bg-home.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.1 }} />
         </div>
-        <div style={{ position: "absolute", width: 480, height: 480, borderRadius: "50%", background: "rgba(0,255,132,0.08)", top: -160, right: -160, filter: "blur(80px)" }} />
-        <div style={{ position: "absolute", width: 320, height: 320, borderRadius: "50%", background: "rgba(0,255,132,0.06)", bottom: -120, left: -120, filter: "blur(70px)" }} />
 
         <div style={{ position: "relative", zIndex: 1 }}>
           <Link href="/" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 12 }}>
