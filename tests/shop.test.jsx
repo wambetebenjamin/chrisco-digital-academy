@@ -6,7 +6,7 @@ import Shop from "../app/shop/Shop"
 describe("PURSUE shop", () => {
   it("lists every product with its code", () => {
     render(<Shop />)
-    for (const code of ["TS-01", "TS-02", "TS-03", "HD-01", "PL-01", "CP-01", "TB-01", "MG-01", "NB-01"]) {
+    for (const code of ["TS-01", "TS-02", "TS-03", "HD-01", "HD-02", "PL-01", "PL-02", "CP-01", "TB-01", "MG-01", "NB-01"]) {
       expect(screen.getAllByText(code).length).toBeGreaterThan(0)
     }
   })

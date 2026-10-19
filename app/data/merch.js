@@ -63,6 +63,16 @@ export const merch = [
     desc: "Brushed fleece hoodie with a kangaroo pocket and the full PURSUE artwork printed between the drawstrings and the pocket.",
   },
   {
+    code: "HD-02",
+    name: "PURSUE Pullover Hoodie",
+    category: "Hoodies",
+    colour: "Sand",
+    price: 95000,
+    img: "/merch/hoodie-sand.png",
+    sizes: sizeSets.apparel,
+    desc: "Brushed fleece hoodie in warm sand, where the sunrise in the artwork blends into the fabric for a quieter, tonal finish.",
+  },
+  {
     code: "PL-01",
     name: "PURSUE Pique Polo",
     category: "Polos",
@@ -71,6 +81,16 @@ export const merch = [
     img: "/merch/polo-navy.png",
     sizes: sizeSets.apparel,
     desc: "Cotton pique polo with a two-button placket and the artwork as a small left-chest print, quietly carried.",
+  },
+  {
+    code: "PL-02",
+    name: "PURSUE Pique Polo",
+    category: "Polos",
+    colour: "White",
+    price: 65000,
+    img: "/merch/polo-white.png",
+    sizes: sizeSets.apparel,
+    desc: "Crisp white pique polo with the artwork as a small left-chest print, the cleanest way to wear the mark to work.",
   },
   {
     code: "CP-01",

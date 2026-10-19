@@ -13,7 +13,9 @@ colour reference, so the sunrise scene, the golden arrow, the word "PURSUE",
 | TS-02 | T-shirt, White | Centre chest | 48% of chest width | Screen print |
 | TS-03 | T-shirt, Sand | Centre chest | 48% of chest width | Screen print |
 | HD-01 | Hoodie, Navy | Centre chest, between drawstrings and pocket | 42% of chest width | Screen print |
+| HD-02 | Hoodie, Sand | Centre chest, between drawstrings and pocket | 42% of chest width | Screen print |
 | PL-01 | Polo, Navy | Left chest | 90mm wide | Screen print |
+| PL-02 | Polo, White | Left chest | 90mm wide | Screen print |
 | CP-01 | Cap, Navy | Front panel, centre | 60mm wide | Embroidery |
 | TB-01 | Tote, Natural | Centre front | 45% of bag width | Screen print |
 | MG-01 | Mug, White | Front face | 55% of mug height | Sublimation |

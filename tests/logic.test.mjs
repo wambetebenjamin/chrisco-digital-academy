@@ -158,9 +158,10 @@ test("every merchandise item has a unique code, sizes and a price", () => {
     assert.ok(item.price > 0, `${item.code} has a price`)
     assert.ok(item.img.startsWith("/merch/"), `${item.code} has a mockup`)
   }
-  assert.ok(shop.merch.some((m) => m.category === "Hoodies"))
-  assert.ok(shop.merch.some((m) => m.category === "T-shirts"))
-  assert.ok(shop.merch.some((m) => m.category === "Polos"))
+  assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 2)
+  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 3)
+  assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 2)
+  assert.equal(shop.merch.length, 11)
 })
 
 test("every colourway of each product has its own code", () => {
@@ -187,6 +188,14 @@ test("prices format with the UGX prefix", () => {
 })
 
 // ---------------------------------------------------------------------------
+test("recommendations stay valid for the new colourways", () => {
+  for (const code of ["HD-02", "PL-02"]) {
+    const recs = shop.recommendationsFor(code, 3)
+    assert.equal(recs.length, 3, `${code} has three recommendations`)
+    assert.ok(!recs.some((r) => r.code === code), `${code} is not recommended to itself`)
+  }
+})
+
 test("all 19 courses publish objectives and a full outline", () => {
   assert.equal(courses.length, 19)
   for (const course of courses) {
