@@ -6,7 +6,7 @@ import Shop from "../app/shop/Shop"
 describe("PURSUE shop", () => {
   it("lists every product with its code", () => {
     render(<Shop />)
-    for (const code of ["TS-01", "TS-02", "HD-01", "PL-01", "CP-01", "TB-01", "MG-01", "NB-01"]) {
+    for (const code of ["TS-01", "TS-02", "TS-03", "HD-01", "PL-01", "CP-01", "TB-01", "MG-01", "NB-01"]) {
       expect(screen.getAllByText(code).length).toBeGreaterThan(0)
     }
   })
@@ -15,7 +15,7 @@ describe("PURSUE shop", () => {
     const user = userEvent.setup()
     render(<Shop />)
 
-    await user.click(screen.getByLabelText("View PURSUE Classic Tee (TS-01)"))
+    await user.click(screen.getByLabelText("View PURSUE Sunrise Tee (TS-01)"))
     for (const size of ["S", "M", "L", "XL", "XXL"]) {
       expect(screen.getByRole("button", { name: size })).toBeTruthy()
     }
@@ -43,10 +43,22 @@ describe("PURSUE shop", () => {
     const user = userEvent.setup()
     render(<Shop />)
 
-    await user.click(screen.getByLabelText("View PURSUE Classic Tee (TS-02)"))
+    await user.click(screen.getByLabelText("View PURSUE Sunrise Tee (TS-02)"))
     const recs = screen.getByText("Recommended").closest(".shop-recs")
     expect(within(recs).queryByText("TS-02")).toBeNull()
     expect(recs.querySelectorAll(".shop-rec").length).toBe(3)
+  })
+
+  it("opens a size guide for apparel", async () => {
+    const user = userEvent.setup()
+    render(<Shop />)
+
+    await user.click(screen.getByLabelText("View PURSUE Sunrise Tee (TS-01)"))
+    await user.click(screen.getByRole("button", { name: /size guide/i }))
+    const table = screen.getByRole("table")
+    expect(table).toBeTruthy()
+    expect(within(table).getByText("XXL")).toBeTruthy()
+    expect(within(table).getByText("120")).toBeTruthy()
   })
 
   it("filters the catalogue by category", async () => {

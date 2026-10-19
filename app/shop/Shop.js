@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Icon from "../components/Icon"
-import { merch, merchCategories, recommendationsFor, formatPrice, findMerch } from "../data/merch"
+import { merch, merchCategories, sizeSets, recommendationsFor, formatPrice, findMerch } from "../data/merch"
 import { readMyCode, buildRefLink } from "../lib/referral"
 import { org } from "../data/org"
 
@@ -41,6 +41,7 @@ export default function Shop({ initialCode = "" }) {
   const [cart, setCart] = useState([])
   const [trayOpen, setTrayOpen] = useState(false)
   const [copied, setCopied] = useState("")
+  const [sizeGuide, setSizeGuide] = useState(false)
 
   useEffect(() => {
     // One-shot hydration of the saved order from localStorage.
@@ -127,21 +128,31 @@ export default function Shop({ initialCode = "" }) {
           <div className="shop-template-mark">
             <span className="shop-flame"><Icon name="flame" size={20} strokeWidth={2} /></span>
             <span className="shop-wordmark">PURSUE</span>
-            <span className="shop-sub">CHRISCO Youth Aflame</span>
+            <span className="shop-sub">Overtake, recover all</span>
+          </div>
+          <div className="shop-template-art">
+            <Image
+              src="/merch/source/pursue-design.png"
+              alt="The PURSUE design artwork: a warrior at sunrise, a golden arrow, and the words pursue, overtake, recover all, 1 Samuel 30 verse 8"
+              width={400}
+              height={469}
+              sizes="(min-width: 900px) 180px, 60vw"
+            />
           </div>
           <div className="shop-template-copy">
             <span className="eyebrow">The design template</span>
-            <h2 className="shop-template-title">One mark, three placements</h2>
+            <h2 className="shop-template-title">One artwork, carried everywhere</h2>
             <p className="shop-template-body">
-              Every piece carries the PURSUE flame mark from the same artwork. Full chest for tees and hoodies,
-              left chest for polos, wrap print for mugs, embroidery for caps.
+              Every piece uses the same PURSUE artwork, the sunrise warrior, the golden arrow and 1 Samuel 30:8.
+              Full chest for tees and hoodies, left chest for polos, front panel embroidery for caps, wrap print for
+              mugs and a cover print for notebooks.
             </p>
           </div>
           <div className="shop-template-specs">
             {[
-              { k: "Ink", v: "Mint on navy, navy on white" },
-              { k: "Mark", v: "PURSUE flame, condensed caps" },
-              { k: "Finish", v: "Screen print, embroidery, foil" },
+              { k: "Artwork", v: "Sunrise warrior, golden arrow" },
+              { k: "Words", v: "Pursue, overtake, recover all" },
+              { k: "Finish", v: "Screen print, embroidery, sublimation" },
             ].map((s) => (
               <div key={s.k} className="shop-spec">
                 <span>{s.k}</span>
@@ -257,11 +268,17 @@ export default function Shop({ initialCode = "" }) {
                         type="button"
                         onClick={() => setSize(s)}
                         className={`shop-size${size === s ? " is-active" : ""}`}
+                        aria-pressed={size === s}
                       >
                         {s}
                       </button>
                     ))}
                   </div>
+                  {active.sizes === sizeSets.apparel && (
+                    <button type="button" className="shop-size-guide-btn" onClick={() => setSizeGuide(true)}>
+                      Size guide
+                    </button>
+                  )}
                 </div>
 
                 <div className="shop-field">
@@ -307,6 +324,52 @@ export default function Shop({ initialCode = "" }) {
         </div>
       )}
 
+      {/* ---------- size guide ---------- */}
+      {sizeGuide && (
+        <div className="overlay" onClick={() => setSizeGuide(false)}>
+          <div className="shop-guide" onClick={(e) => e.stopPropagation()}>
+            <div className="shop-tray-head">
+              <div>
+                <span className="eyebrow" style={{ fontSize: 11 }}>Fit</span>
+                <h3>Size guide</h3>
+              </div>
+              <button type="button" className="shop-modal-close static" onClick={() => setSizeGuide(false)} aria-label="Close size guide">
+                <Icon name="x" size={18} strokeWidth={2.2} />
+              </button>
+            </div>
+            <table className="shop-guide-table">
+              <thead>
+                <tr>
+                  <th>Size</th>
+                  <th>Chest (cm)</th>
+                  <th>Length (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["S", "96", "68"],
+                  ["M", "102", "71"],
+                  ["L", "108", "74"],
+                  ["XL", "114", "77"],
+                  ["XXL", "120", "80"],
+                ].map((row) => (
+                  <tr key={row[0]}>
+                    {row.map((cell) => (
+                      <td key={cell}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="shop-guide-note">
+              Measured flat across the chest on a relaxed fit. If you are between sizes, take the larger one. Bulk
+              size runs can be mixed per code.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ---------- order tray ---------- */}
       {/* ---------- order tray ---------- */}
       {trayOpen && (
         <div className="overlay" onClick={() => setTrayOpen(false)}>

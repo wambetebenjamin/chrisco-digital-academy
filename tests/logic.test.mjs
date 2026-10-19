@@ -163,6 +163,12 @@ test("every merchandise item has a unique code, sizes and a price", () => {
   assert.ok(shop.merch.some((m) => m.category === "Polos"))
 })
 
+test("every colourway of each product has its own code", () => {
+  const tees = shop.merch.filter((m) => m.category === "T-shirts")
+  assert.equal(tees.length, 3)
+  assert.deepEqual(tees.map((t) => t.colour), ["Navy", "White", "Sand"])
+})
+
 test("apparel runs from S to XXL", () => {
   assert.deepEqual(shop.sizeSets.apparel, ["S", "M", "L", "XL", "XXL"])
   const tee = shop.findMerch("TS-01")
