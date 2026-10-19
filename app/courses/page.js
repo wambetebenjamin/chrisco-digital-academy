@@ -11,7 +11,7 @@ import CoursesExplorer from "./CoursesExplorer"
 export const metadata = {
   title: "Courses",
   description:
-    "Browse 19 practical, income-focused digital courses, graphic design, coding, marketing, writing, video and AI. Beginner-friendly, certificate included, online and in-person with youth in Jinja and Buikwe, Uganda.",
+    "Browse 19 practical, income-focused digital courses, graphic design, coding, marketing, writing, video and AI. Beginner-friendly, certificate included, available online and in person.",
 }
 
 const heroPills = [

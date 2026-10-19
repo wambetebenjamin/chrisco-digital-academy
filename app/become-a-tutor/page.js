@@ -11,7 +11,7 @@ import { org, tutor } from "../data/org"
 export const metadata = {
   title: "Become a Tutor",
   description:
-    "Teach with CHRISCO Digital Academy, the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International. Share your practical digital skill with young people in Jinja, Buikwe and across Africa.",
+    "Teach with CHRISCO Digital Academy, the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International. Share your practical digital skill with young people across Africa.",
 }
 
 const openings = [
@@ -41,7 +41,7 @@ const support = [
 
 const steps = [
   { num: "01", icon: "send", title: "Apply", desc: "Send a short message with the skill you want to teach and your experience." },
-  { num: "02", icon: "users", title: "A short conversation", desc: "We meet online or in Jinja to talk through your track and availability." },
+  { num: "02", icon: "users", title: "A short conversation", desc: "We meet online to talk through your track and availability." },
   { num: "03", icon: "play", title: "Teach a sample class", desc: "Deliver one 30 minute session so we can see you teach, not just your CV." },
   { num: "04", icon: "checkCircle", title: "Get onboarded", desc: "Sign the tutor agreement, receive your materials and start with a cohort." },
 ]

@@ -145,10 +145,6 @@ export default function Footer() {
                   <Icon name="whatsapp" size={15} />
                 </a>
               </li>
-              <li>
-                <span className="footer-contact-icon"><Icon name="pin" size={15} /></span>
-                <span>Jinja, Uganda</span>
-              </li>
             </ul>
             <a href={org.whatsapp} className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
               <Icon name="whatsapp" size={15} /> WhatsApp Us

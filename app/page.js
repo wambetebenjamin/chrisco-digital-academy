@@ -61,7 +61,7 @@ export default function Home() {
               marginBottom: 48,
             }}
           >
-            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy, Jinja, Uganda</span>
+            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy</span>
             <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
               Under CHRISCO Youth Aflame
             </span>
@@ -260,7 +260,7 @@ export default function Home() {
           <div className="factstrip">
             {[
               { icon: "medal", title: "Certificate included", desc: "Every course ends with one" },
-              { icon: "laptop", title: "Online & in-person", desc: "Jinja, Buikwe and from anywhere" },
+              { icon: "laptop", title: "Online & in-person", desc: "Learn from anywhere" },
               { icon: "wrench", title: "Project-based", desc: "Learn by building real work" },
               { icon: "whatsapp", title: "Fast support", desc: "Same-day help on WhatsApp" },
             ].map((f) => (

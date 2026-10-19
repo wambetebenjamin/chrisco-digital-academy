@@ -15,16 +15,15 @@ export const metadata = {
     template: "%s | CHRISCO Digital Academy",
   },
   description:
-    "A modern learning platform equipping African youth with practical digital and economic-empowerment skills, communication, negotiation, personal branding, AI literacy, storytelling, sales, coding, marketing and more. Based in Jinja & Buikwe, Uganda. Under CHRISCO Youth Aflame.",
+    "A modern learning platform equipping African youth with practical digital and economic-empowerment skills, communication, negotiation, personal branding, AI literacy, storytelling, sales, coding, marketing and more. Under CHRISCO Youth Aflame.",
   keywords: [
     "CHRISCO Digital Academy",
-    "digital skills Uganda",
-    "youth empowerment Uganda",
+    "digital skills Africa",
+    "youth empowerment",
     "economic empowerment",
     "personal branding",
     "AI literacy",
     "online courses Africa",
-    "Jinja Buikwe",
   ],
 }
 

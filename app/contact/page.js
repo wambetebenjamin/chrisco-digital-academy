@@ -15,7 +15,6 @@ export const metadata = {
 const infoItems = [
   { icon: "mail", label: "Email", value: "chriscoyouthaflame2025@gmail.com", href: "mailto:chriscoyouthaflame2025@gmail.com" },
   { icon: "phone", label: "Call or WhatsApp", value: "", href: "tel:+254112272061", iconLabel: "Call us" },
-  { icon: "pin", label: "Location", value: "Jinja, Uganda" },
   { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame" },
 ]
 

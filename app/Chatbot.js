@@ -29,9 +29,9 @@ const responses = [
   { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: chriscoyouthaflame2025@gmail.com" },
   { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly!\nEmail: chriscoyouthaflame2025@gmail.com\n\nOr type 8 to send us a message right here!" },
   { keywords: ["4", "founder", "tutor", "instructor", "teacher", "who", "team"], reply: "Our courses are led by the CHRISCO Youth Aflame tutor team, a lead tutor with a Computer Science background working in design, web development, video editing, animation, social media and AI. CHRISCO Digital Academy is the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International." },
-  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: chriscoyouthaflame2025@gmail.com (WhatsApp)\nLocation: Jinja, Uganda" },
+  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: chriscoyouthaflame2025@gmail.com\nWe reply fastest on email and WhatsApp." },
   { keywords: ["6", "certificate", "certification", "qualify"], reply: "Yes! You receive a certificate upon completing any course. Practical-skills based and recognized!" },
-  { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, and in-person with youth in Jinja and Buikwe, Uganda. Learn from anywhere in Uganda and beyond!" },
+  { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, with in-person cohorts scheduled through the year. Learn from anywhere in Africa and beyond!" },
   { keywords: ["hello", "hi", "hey", "hujambo", "start", "menu"], reply: "SHOW_MENU" },
   { keywords: ["bye", "goodbye", "thank you", "thanks", "asante"], reply: "Thank you for chatting! Feel free to reach out anytime. We look forward to empowering you digitally." },
 ]

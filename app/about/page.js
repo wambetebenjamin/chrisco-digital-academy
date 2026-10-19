@@ -18,7 +18,7 @@ export const metadata = {
 const stats = [
   { number: "500+", label: "Youth Trained" },
   { number: "19", label: "Courses Available" },
-  { number: "2", label: "Districts (Jinja & Buikwe)" },
+  { number: "7", label: "Skill Tracks" },
   { number: "100%", label: "Practical Skills" },
 ]
 
@@ -146,7 +146,7 @@ export default function About() {
                     gap: 7,
                   }}
                 >
-                  <Icon name="pin" size={13} strokeWidth={2.2} /> Made in Uganda
+                  <Icon name="pin" size={13} strokeWidth={2.2} /> African built
                 </span>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function About() {
               <h3 style={{ fontFamily: "var(--font-display)", color: "var(--green)", fontSize: "1.3rem", marginBottom: 16 }}>OUR MISSION</h3>
               <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "1.02rem" }}>
                 To bridge the digital divide by providing accessible, affordable and practical digital education to
-                youth across Uganda and beyond.
+                youth across Africa and beyond.
               </p>
             </div>
 
@@ -291,7 +291,7 @@ export default function About() {
               </p>
               <ul className="tutor-points">
                 {[
-                  "Teach part-time, online or in person in Jinja and Buikwe",
+                  "Teach part-time, online or in person",
                   "We help you shape the syllabus, slides and assessments",
                   "Your classes are delivered under the CHRISCO Youth Aflame brand",
                   "Every tutor is vetted and approved by the academy",

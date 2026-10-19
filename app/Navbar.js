@@ -26,7 +26,7 @@ const aboutLinks = [
 
 const programLinks = [
   { label: "Online Learning", desc: "Study from anywhere in Africa", href: "/courses", icon: "laptop" },
-  { label: "In-Person Classes", desc: "Jinja & Buikwe, Uganda", href: "/contact", icon: "pin" },
+  { label: "In-Person Classes", desc: "Classroom cohorts, scheduled monthly", href: "/contact", icon: "pin" },
   { label: "Youth & Community", desc: "CHRISCO Youth Aflame programmes", href: "/about", icon: "flame" },
   { label: "Corporate Training", desc: "Upskill your team with us", href: "/contact", icon: "briefcase" },
   { label: "Become a Tutor", desc: "Teach what you already do", href: "/become-a-tutor", icon: "send" },
@@ -314,9 +314,6 @@ export default function Navbar() {
       <div className="nav-utility">
         <div className="container nav-utility-inner">
           <span className="nav-utility-group">
-            <span className="nav-utility-item">
-              <Icon name="pin" size={12} strokeWidth={2} /> Jinja &amp; Buikwe, Uganda
-            </span>
             <a href="tel:+254112272061" className="nav-utility-icon" aria-label="Call us">
               <Icon name="phone" size={13} strokeWidth={2} />
             </a>

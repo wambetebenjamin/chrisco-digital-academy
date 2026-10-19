@@ -155,24 +155,18 @@ test("every merchandise item has a unique code, sizes and a price", () => {
     assert.ok(!codes.has(item.code), `${item.code} is unique`)
     codes.add(item.code)
     assert.ok(item.sizes.length > 0, `${item.code} has sizes`)
-    assert.ok(item.price > 0, `${item.code} has a price`)
+    assert.ok(item.price.kes > 0 && item.price.ugx > 0, `${item.code} has a price in both currencies`)
     assert.ok(item.img.startsWith("/merch/"), `${item.code} has a mockup`)
   }
-  assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 2)
-  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 3)
-  assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 1)
-  assert.equal(shop.merch.length, 10)
-  // The collection stays in the warm brand palette: brown, cream, black, natural.
-  const allowed = new Set(["Brown", "Cream", "Black", "Natural"])
-  for (const item of shop.merch) {
-    assert.ok(allowed.has(item.colour), `${item.code} uses a brand colour, got ${item.colour}`)
-  }
+  assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 3)
+  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 6)
+  assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 2)
+  assert.ok(shop.merch.length >= 19)
 })
 
 test("every colourway of each product has its own code", () => {
-  const tees = shop.merch.filter((m) => m.category === "T-shirts")
-  assert.equal(tees.length, 3)
-  assert.deepEqual(tees.map((t) => t.colour), ["Brown", "Cream", "Black"])
+  const pursueTees = shop.merch.filter((m) => m.category === "T-shirts" && m.collection === "pursue")
+  assert.deepEqual(pursueTees.map((t) => t.colour), ["Brown", "Cream", "Black", "White"])
 })
 
 test("apparel runs from S to XXL", () => {
@@ -188,8 +182,31 @@ test("recommendations exclude the viewed item and never repeat", () => {
   assert.equal(new Set(recs.map((r) => r.code)).size, 3)
 })
 
-test("prices format with the UGX prefix", () => {
-  assert.equal(shop.formatPrice(45000), "UGX 45,000")
+test("prices carry KSh and UGX", () => {
+  const tee = shop.findMerch("TS-01")
+  assert.equal(shop.formatKsh(shop.priceKsh(tee)), "KSh 1,600")
+  assert.equal(shop.formatUgx(shop.priceUgx(tee)), "UGX 45,000")
+  const pair = shop.formatPricePair(tee)
+  assert.deepEqual(pair, { primary: "KSh 1,600", secondary: "UGX 45,000" })
+})
+
+test("every item lists specifications and a collection", () => {
+  for (const item of shop.merch) {
+    assert.ok(["pursue", "faith"].includes(item.collection), `${item.code} has a collection`)
+    assert.ok(Array.isArray(item.specs) && item.specs.length >= 3, `${item.code} has specs`)
+    assert.ok(item.price.kes > 0 && item.price.ugx > 0, `${item.code} has both currencies`)
+  }
+})
+
+test("the catalogue spans both collections and a wide colour range", () => {
+  const pursue = shop.merch.filter((m) => m.collection === "pursue")
+  const faith = shop.merch.filter((m) => m.collection === "faith")
+  assert.ok(pursue.length >= 10)
+  assert.ok(faith.length >= 7)
+  const colours = new Set(shop.merch.map((m) => m.colour))
+  for (const colour of ["Brown", "White", "Black", "Cream", "Natural"]) {
+    assert.ok(colours.has(colour), `${colour} appears in the range`)
+  }
 })
 
 // ---------------------------------------------------------------------------

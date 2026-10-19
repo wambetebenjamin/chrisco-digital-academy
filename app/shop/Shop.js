@@ -3,7 +3,18 @@ import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Icon from "../components/Icon"
-import { merch, merchCategories, sizeSets, recommendationsFor, formatPrice, findMerch } from "../data/merch"
+import {
+  merch,
+  merchCategories,
+  collections,
+  sizeSets,
+  recommendationsFor,
+  findMerch,
+  formatKsh,
+  formatUgx,
+  priceKsh,
+  priceUgx,
+} from "../data/merch"
 import { readMyCode, buildRefLink } from "../lib/referral"
 import { org } from "../data/org"
 
@@ -26,14 +37,17 @@ function saveCart(items) {
   }
 }
 
-function orderMessage(items) {
+function orderMessage(items, ref) {
   const lines = items.map(
-    (line) => `${line.qty} x ${line.code} ${line.name} (${line.colour}) size ${line.size}`
+    (line) =>
+      `${line.qty} x ${line.code} ${line.name} (${line.colour}) size ${line.size} - ${formatKsh(priceKsh(line) * line.qty)} / ${formatUgx(priceUgx(line) * line.qty)}`
   )
-  return `Hello CHRISCO Youth Aflame, I would like to order:%0A${encodeURIComponent(lines.join("\n"))}`
+  if (ref) lines.push(`Referred by: ${ref}`)
+  return encodeURIComponent(lines.join("\n"))
 }
 
 export default function Shop({ initialCode = "" }) {
+  const [collection, setCollection] = useState("all")
   const [category, setCategory] = useState("All")
   const [activeCode, setActiveCode] = useState(initialCode || "")
   const [size, setSize] = useState("")
@@ -56,11 +70,17 @@ export default function Shop({ initialCode = "" }) {
   )
 
   const filtered = useMemo(
-    () => (category === "All" ? merch : merch.filter((m) => m.category === category)),
-    [category]
+    () =>
+      merch.filter(
+        (m) =>
+          (collection === "all" || m.collection === collection) &&
+          (category === "All" || m.category === category)
+      ),
+    [collection, category]
   )
 
-  const total = cart.reduce((sum, line) => sum + line.price * line.qty, 0)
+  const totalKes = cart.reduce((sum, line) => sum + priceKsh(line) * line.qty, 0)
+  const totalUgx = cart.reduce((sum, line) => sum + priceUgx(line) * line.qty, 0)
   const count = cart.reduce((sum, line) => sum + line.qty, 0)
 
   function openItem(item) {
@@ -89,6 +109,7 @@ export default function Shop({ initialCode = "" }) {
         colour: active.colour,
         img: active.img,
         price: active.price,
+        collection: active.collection,
         size,
         qty,
       })
@@ -143,6 +164,19 @@ export default function Shop({ initialCode = "" }) {
             </button>
           </div>
 
+          <div className="shop-filters shop-filters-collection">
+            {collections.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => setCollection(c.id)}
+                className={`pill pill-sm${collection === c.id ? " is-active" : ""}`}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+
           <div className="shop-filters">
             {["All", ...merchCategories.map((c) => c.name)].map((name) => (
               <button
@@ -174,11 +208,14 @@ export default function Shop({ initialCode = "" }) {
                 <div className="merch-body">
                   <div className="merch-row">
                     <h3>{item.name}</h3>
-                    <span className="merch-price">{formatPrice(item.price)}</span>
                   </div>
                   <p className="merch-meta">
                     {item.colour} · {item.category}
                   </p>
+                  <div className="merch-price-row">
+                    <span className="merch-price">{formatKsh(priceKsh(item))}</span>
+                    <span className="merch-price-alt">{formatUgx(priceUgx(item))}</span>
+                  </div>
                   <div className="merch-sizes">
                     {item.sizes.map((s) => (
                       <span key={s}>{s}</span>
@@ -190,8 +227,9 @@ export default function Shop({ initialCode = "" }) {
           </div>
 
           <p className="shop-note">
-            Prices are indicative and confirmed on order. Bulk orders for churches, schools and teams get a
-            discount. Order by code, for example <strong>TS-01, M, 2 pieces</strong>.
+            Prices are shown in KSh with the UGX figure alongside, and are confirmed on order. Delivery is quoted
+            separately. Bulk orders for churches, schools and teams get a discount. Order by code, for example{" "}
+            <strong>TS-01, M, 2 pieces</strong>.
           </p>
         </div>
       </section>
@@ -213,8 +251,19 @@ export default function Shop({ initialCode = "" }) {
               <div className="shop-modal-body">
                 <span className="eyebrow" style={{ fontSize: 11 }}>{active.category}</span>
                 <h3 className="shop-modal-title">{active.name}</h3>
-                <p className="shop-modal-price">{formatPrice(active.price)} <span>· {active.colour}</span></p>
+                <p className="shop-modal-price">
+                  {formatKsh(priceKsh(active))} <span>· {formatUgx(priceUgx(active))} · {active.colour}</span>
+                </p>
                 <p className="shop-modal-desc">{active.desc}</p>
+
+                <ul className="shop-specs">
+                  {(active.specs || []).map((spec) => (
+                    <li key={spec}>
+                      <Icon name="checkCircle" size={13} strokeWidth={2.2} />
+                      {spec}
+                    </li>
+                  ))}
+                </ul>
 
                 <div className="shop-field">
                   <span className="shop-label">
@@ -246,7 +295,10 @@ export default function Shop({ initialCode = "" }) {
                     <button type="button" onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Decrease quantity">−</button>
                     <span>{qty}</span>
                     <button type="button" onClick={() => setQty(Math.min(99, qty + 1))} aria-label="Increase quantity">+</button>
-                    <span className="shop-line-total">{formatPrice(active.price * qty)}</span>
+                    <span className="shop-line-total">
+                      {formatKsh(priceKsh(active) * qty)}
+                      <em>{formatUgx(priceUgx(active) * qty)}</em>
+                    </span>
                   </div>
                 </div>
 
@@ -273,7 +325,7 @@ export default function Shop({ initialCode = "" }) {
                       <Image src={rec.img} alt={rec.name} width={160} height={200} sizes="120px" />
                       <span className="shop-rec-code">{rec.code}</span>
                       <span className="shop-rec-name">{rec.name}</span>
-                      <span className="shop-rec-price">{formatPrice(rec.price)}</span>
+                      <span className="shop-rec-price">{formatKsh(priceKsh(rec))}</span>
                     </button>
                   ))}
                 </div>
@@ -363,20 +415,26 @@ export default function Shop({ initialCode = "" }) {
                           <button type="button" onClick={() => changeQty(line.key, 1)} aria-label={`Add one ${line.code}`}>+</button>
                         </div>
                       </div>
-                      <span className="shop-line-price">{formatPrice(line.price * line.qty)}</span>
+                      <span className="shop-line-price">
+                        {formatKsh(priceKsh(line) * line.qty)}
+                        <em>{formatUgx(priceUgx(line) * line.qty)}</em>
+                      </span>
                     </li>
                   ))}
                 </ul>
 
                 <div className="shop-total">
                   <span>Estimated total</span>
-                  <strong>{formatPrice(total)}</strong>
+                  <strong>
+                    {formatKsh(totalKes)}
+                    <em>{formatUgx(totalUgx)}</em>
+                  </strong>
                 </div>
 
                 <a
                   className="btn btn-green btn-block"
                   style={{ textDecoration: "none" }}
-                  href={`${org.whatsapp}?text=${orderMessage(cart)}`}
+                  href={`${org.whatsapp}?text=${orderMessage(cart, readMyCode())}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -385,7 +443,7 @@ export default function Shop({ initialCode = "" }) {
                 <a
                   className="btn btn-outline btn-block"
                   style={{ textDecoration: "none", marginTop: 10 }}
-                  href={`mailto:${org.email}?subject=${encodeURIComponent("Merchandise order")}&body=${orderMessage(cart).replace(/%0A/g, "%0D%0A").replace("Hello CHRISCO Youth Aflame, I would like to order:", "Hello CHRISCO Youth Aflame, I would like to order:")}`}
+                  href={`mailto:${org.email}?subject=${encodeURIComponent("Merchandise order")}&body=${orderMessage(cart, readMyCode()).replace(/%0A/g, "%0D%0A")}`}
                 >
                   <Icon name="mail" size={15} /> Order by email
                 </a>

@@ -6,7 +6,7 @@ import Shop from "../app/shop/Shop"
 describe("PURSUE shop", () => {
   it("lists every product with its code", () => {
     render(<Shop />)
-    for (const code of ["TS-01", "TS-02", "TS-03", "HD-01", "HD-02", "PL-01", "CP-01", "TB-01", "MG-01", "NB-01"]) {
+    for (const code of ["TS-01", "TS-02", "TS-03", "TS-04", "HD-01", "HD-02", "HD-03", "PL-01", "PL-02", "CP-01", "CP-02", "TB-01", "TB-02", "MG-01", "MG-02", "NB-01", "NB-02", "TS-05", "TS-06"]) {
       expect(screen.getAllByText(code).length).toBeGreaterThan(0)
     }
   })
@@ -22,7 +22,8 @@ describe("PURSUE shop", () => {
 
     await user.click(screen.getByRole("button", { name: "L" }))
     await user.click(screen.getByRole("button", { name: /increase quantity/i }))
-    expect(screen.getByText("UGX 90,000")).toBeTruthy()
+    expect(screen.getAllByText("KSh 3,200").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("UGX 90,000").length).toBeGreaterThan(0)
   })
 
   it("adds the chosen size and quantity to the order tray", async () => {
@@ -36,7 +37,8 @@ describe("PURSUE shop", () => {
     const tray = await screen.findByLabelText("My order")
     expect(within(tray).getByText(/HD-01/)).toBeTruthy()
     expect(within(tray).getByText(/size M/)).toBeTruthy()
-    expect(within(tray).getAllByText("UGX 95,000").length).toBeGreaterThan(0)
+    expect(within(tray).getAllByText(/UGX 95,000/).length).toBeGreaterThan(0)
+    expect(within(tray).getAllByText(/KSh 3,400/).length).toBeGreaterThan(0)
   })
 
   it("shows recommendations that exclude the item being viewed", async () => {
@@ -59,6 +61,19 @@ describe("PURSUE shop", () => {
     expect(table).toBeTruthy()
     expect(within(table).getByText("XXL")).toBeTruthy()
     expect(within(table).getByText("120")).toBeTruthy()
+  })
+
+  it("filters by collection", async () => {
+    const user = userEvent.setup()
+    render(<Shop />)
+
+    await user.click(screen.getByRole("button", { name: "Faith affirmations" }))
+    expect(screen.getAllByText("TS-05").length).toBeGreaterThan(0)
+    expect(screen.queryByText("PL-01")).toBeNull()
+
+    await user.click(screen.getByRole("button", { name: "PURSUE" }))
+    expect(screen.getAllByText("PL-01").length).toBeGreaterThan(0)
+    expect(screen.queryByText("TS-05")).toBeNull()
   })
 
   it("filters the catalogue by category", async () => {
