@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import emailjs from "@emailjs/browser"
 import Image from "next/image"
 import Icon from "../components/Icon"
@@ -21,6 +21,44 @@ export default function CoursesExplorer() {
   const [level, setLevel] = useState("All")
 
   const counts = categoryCounts()
+
+  // Deep links from the navigation mega-menu: /courses?category=Coding
+  // and /courses?course=12 (opens that course's detail panel directly).
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const params = new URLSearchParams(window.location.search)
+    const cat = params.get("category")
+    const courseId = params.get("course")
+    if (cat && (cat === "All" || categories.some((c) => c.name === cat))) {
+      // One-shot read of the URL on mount; the router is the external store.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCategory(cat)
+    }
+    if (courseId) {
+      const match = courses.find((c) => String(c.id) === courseId)
+      if (match) setSelected(match)
+    }
+  }, [])
+
+  // Live hand-off from the navigation mega-menu when this page is already open.
+  useEffect(() => {
+    const onCatalogueNav = (event) => {
+      const { category: cat, courseId } = event.detail || {}
+      if (cat) setCategory(cat)
+      if (courseId) {
+        const match = courses.find((c) => String(c.id) === String(courseId))
+        if (match) {
+          setSelected(match)
+          setEnrolling(null)
+          setSent(false)
+        }
+      } else if (cat) {
+        setSelected(null)
+      }
+    }
+    window.addEventListener("chrisco:catalogue", onCatalogueNav)
+    return () => window.removeEventListener("chrisco:catalogue", onCatalogueNav)
+  }, [])
 
   const filtered = courses.filter((c) => {
     const catOk = category === "All" || c.category === category
@@ -66,7 +104,7 @@ export default function CoursesExplorer() {
   return (
     <>
       {/* BODY */}
-      <section style={{ padding: "0 0 96px" }}>
+      <section className="section-frost" style={{ padding: "56px 0 96px" }}>
         <div className="container">
           <div className="grid-sidebar">
 
@@ -79,7 +117,7 @@ export default function CoursesExplorer() {
                   borderRadius: "var(--radius-lg)",
                   padding: "26px 22px",
                   position: "sticky",
-                  top: 92,
+                  top: 126,
                 }}
               >
                 <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>
@@ -205,7 +243,7 @@ export default function CoursesExplorer() {
                       onClick={() => openCourse(course)}
                     >
                       {/* Header - photo + course-tone overlay */}
-                      <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                      <div style={{ background: "var(--navy)", padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
                         <Image
                           src={course.img}
                           alt=""
@@ -213,7 +251,9 @@ export default function CoursesExplorer() {
                           sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
                           style={{ objectFit: "cover" }}
                         />
-                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${course.color[0]}DB, ${course.color[1]}A8)` }} />
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.94) 0%, rgba(0,35,51,0.7) 58%, rgba(1,58,79,0.5) 100%)" }} />
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${course.color[0]}3D, transparent 68%)` }} />
+                        <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }} />
                         <span
                           className="pill pill-sm"
                           style={{ position: "absolute", top: 14, right: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
@@ -285,7 +325,7 @@ export default function CoursesExplorer() {
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             {/* Header - photo + course-tone overlay */}
-            <div style={{ background: `linear-gradient(135deg, ${selected.color[0]}, ${selected.color[1]})`, padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
+            <div style={{ background: "var(--navy)", padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
               <Image
                 src={selected.img}
                 alt=""
@@ -293,7 +333,8 @@ export default function CoursesExplorer() {
                 sizes="(min-width: 640px) 600px, 92vw"
                 style={{ objectFit: "cover" }}
               />
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${selected.color[0]}DB, ${selected.color[1]}A8)` }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.94) 0%, rgba(0,35,51,0.7) 58%, rgba(1,58,79,0.5) 100%)" }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${selected.color[0]}3D, transparent 68%)` }} />
               <span
                 className="pill pill-sm"
                 style={{ position: "absolute", top: 18, right: 18, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
@@ -367,8 +408,17 @@ export default function CoursesExplorer() {
               <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 10, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
                 <Icon name="target" size={18} style={{ color: "var(--green-deep)" }} /> Who Is This For?
               </h3>
-              <div style={{ background: "var(--green-tint)", borderRadius: 14, padding: "16px 18px", marginBottom: 26 }}>
-                <p style={{ color: "var(--green-deep)", fontSize: 14, lineHeight: 1.65, fontWeight: 500 }}>{selected.for}</p>
+              <div
+                style={{
+                  background: "var(--layer-1)",
+                  border: "1px solid var(--line)",
+                  borderLeft: "3px solid var(--green-deep)",
+                  borderRadius: 14,
+                  padding: "16px 18px",
+                  marginBottom: 26,
+                }}
+              >
+                <p style={{ color: "var(--body)", fontSize: 14, lineHeight: 1.65, fontWeight: 500 }}>{selected.for}</p>
               </div>
 
               {/* Actions */}
@@ -436,14 +486,14 @@ export default function CoursesExplorer() {
 
               {/* Success */}
               {sent && (
-                <div style={{ textAlign: "center", background: "var(--green-tint)", border: "1.5px solid rgba(0,255,132,0.6)", borderRadius: 20, padding: "40px 24px" }}>
+                <div style={{ textAlign: "center", background: "var(--layer-1)", border: "1px solid var(--line)", borderRadius: 20, padding: "40px 24px" }}>
                   <span style={{ display: "inline-flex", width: 72, height: 72, borderRadius: "50%", background: "#fff", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "var(--shadow-sm)" }}>
                     <Icon name="checkCircle" size={38} strokeWidth={1.6} />
                   </span>
-                  <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.3rem", fontWeight: 800, color: "var(--green-deep)", marginBottom: 8 }}>
+                  <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.3rem", fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>
                     Enrollment Sent!
                   </h3>
-                  <p style={{ color: "var(--green-deep)", fontSize: 14, marginBottom: 20 }}>
+                  <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 20 }}>
                     Wambete will contact you soon on WhatsApp or Email. Welcome to CHRISCO Digital Academy!
                   </p>
                   <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>

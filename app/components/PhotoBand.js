@@ -7,7 +7,7 @@ export default function PhotoBand({ image = "/images/bg-cta.jpg", eyebrow, title
         <Image src={image} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.42 }} />
       </div>
       <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(0,35,51,0.95) 8%, rgba(0,35,51,0.82) 55%, rgba(1,58,79,0.74) 100%)" }} />
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(560px 300px at 92% 0%, rgba(0,255,132,0.20), transparent 60%)" }} />
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(560px 300px at 92% 0%, rgba(0,255,132,0.12), transparent 60%)" }} />
       <div className="container" style={{ position: "relative", zIndex: 1, textAlign: centered ? "center" : "left" }}>
         <div style={centered ? { maxWidth: 660, margin: "0 auto" } : { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 32, flexWrap: "wrap" }}>
           <div style={centered ? {} : { maxWidth: 620 }}>

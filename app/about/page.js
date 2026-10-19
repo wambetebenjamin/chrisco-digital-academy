@@ -78,7 +78,7 @@ export default function About() {
                   borderBottom: i < 2 ? "1px solid var(--line)" : "none",
                 }}
               >
-                <div className="stat-num" style={{ color: "var(--green-deep)" }}>{s.number}</div>
+                <div className="stat-num" style={{ color: "var(--ink)" }}>{s.number}</div>
                 <div style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 600, marginTop: 4 }}>
                   {s.label}
                 </div>
@@ -152,7 +152,7 @@ export default function About() {
       </section>
 
       {/* MISSION & VISION */}
-      <section className="section section-frost-alt">
+      <section id="mission" className="section section-frost-alt" style={{ scrollMarginTop: 128 }}>
         <div className="container">
           <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
             <span className="eyebrow" style={{ justifyContent: "center" }}>Our purpose</span>
@@ -212,7 +212,7 @@ export default function About() {
       </section>
 
       {/* FOUNDER */}
-      <section className="section section-navy">
+      <section id="founder" className="section section-navy" style={{ scrollMarginTop: 128 }}>
         <div className="container">
           <div className="split" style={{ alignItems: "center" }}>
             <div>

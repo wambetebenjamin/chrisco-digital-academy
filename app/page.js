@@ -42,11 +42,11 @@ export default function Home() {
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)" }}>
+      <section style={{ padding: "168px 0 104px", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)" }}>
         {/* The page-wide PageBackdrop supplies the photo; the hero only needs
             its dark scrim so the white display type stays legible. */}
         <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.90) 0%, rgba(0,35,51,0.72) 50%, rgba(1,58,79,0.50) 100%)" }} />
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.10), transparent 62%)" }} />
         <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
@@ -267,8 +267,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SKILLS ================= */}
-      <section className="section section-frost">
+      {/* ================= WHAT YOU GET (layer 1) ================= */}
+      <section className="section-frost" style={{ padding: "0" }}>
+        <div className="container">
+          <div className="factstrip">
+            {[
+              { icon: "medal", title: "Certificate included", desc: "Every course ends with one" },
+              { icon: "laptop", title: "Online & in-person", desc: "Jinja, Buikwe and from anywhere" },
+              { icon: "wrench", title: "Project-based", desc: "Learn by building real work" },
+              { icon: "whatsapp", title: "Fast support", desc: "Same-day help on WhatsApp" },
+            ].map((f) => (
+              <div key={f.title} className="factstrip-item">
+                <span className="factstrip-ico"><Icon name={f.icon} size={18} strokeWidth={1.9} /></span>
+                <div>
+                  <div className="factstrip-title">{f.title}</div>
+                  <div className="factstrip-desc">{f.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= SKILLS (layer 2) ================= */}
+      <section className="section section-frost-alt">
         <div className="container">
           <div style={{ maxWidth: 640, marginBottom: 56 }}>
             <span className="eyebrow">What you&apos;ll master</span>
@@ -307,8 +329,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FEATURED COURSES ================= */}
-      <section className="section section-frost-alt">
+      {/* ================= FEATURED COURSES (layer 1) ================= */}
+      <section className="section section-frost">
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 48 }}>
             <div>
@@ -330,29 +352,65 @@ export default function Home() {
                 className="card card-hover"
                 style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
               >
-                {/* Card header */}
-                <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "28px 26px", position: "relative" }}>
+                {/* Card header - photo under a navy wash; course colour survives
+                    only as a thin identity rule so the grid stays calm. */}
+                <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", background: "var(--navy)" }}>
+                  <Image
+                    src={course.img}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(152deg, rgba(0,35,51,0.88) 0%, rgba(0,35,51,0.58) 58%, rgba(1,58,79,0.42) 100%)",
+                    }}
+                  />
                   <span
                     className="pill pill-sm"
-                    style={{ position: "absolute", top: 16, right: 16, background: "rgba(255,255,255,0.92)", border: "none", color: "var(--ink)" }}
+                    style={{ position: "absolute", top: 14, left: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
                   >
                     {course.category}
                   </span>
                   <div
                     style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 18,
-                      background: "rgba(255,255,255,0.18)",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      color: "#fff",
+                      position: "absolute",
+                      left: 18,
+                      right: 18,
+                      bottom: 16,
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
+                      justifyContent: "space-between",
+                      gap: 12,
                     }}
                   >
-                    <Icon name={course.icon} size={30} strokeWidth={1.7} />
+                    <span
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: 14,
+                        background: "rgba(255,255,255,0.14)",
+                        border: "1px solid rgba(255,255,255,0.26)",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Icon name={course.icon} size={24} strokeWidth={1.7} />
+                    </span>
+                    <span style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.82)" }}>
+                      {course.level}
+                    </span>
                   </div>
+                  <span
+                    aria-hidden
+                    style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }}
+                  />
                 </div>
 
                 {/* Card body */}
@@ -369,60 +427,6 @@ export default function Home() {
                   </span>
                 </div>
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= HOW IT WORKS ================= */}
-      <section className="section section-frost">
-        <div className="container">
-          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
-            <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
-            <h2 className="title" style={{ marginTop: 16 }}>
-              From zero to earning - <span className="accent">in 3 steps</span>
-            </h2>
-          </div>
-
-          <div className="grid-3" style={{ alignItems: "stretch" }}>
-            {steps.map((step, i) => (
-              <div key={i} style={{ position: "relative" }}>
-                <div className="card card-hover" style={{ padding: "34px 30px", height: "100%" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontSize: "2.2rem",
-                        color: "var(--green-deep)",
-                      }}
-                    >
-                      {step.num}
-                    </span>
-                    <span style={{ color: "var(--ink)" }}>
-                      <Icon name={step.icon} size={30} strokeWidth={1.6} />
-                    </span>
-                  </div>
-                  <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 10 }}>{step.title}</h3>
-                  <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7 }}>{step.desc}</p>
-                </div>
-                {i < steps.length - 1 && (
-                  <span
-                    className="hide-mobile"
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      right: -34,
-                      zIndex: 2,
-                      fontFamily: "var(--font-display)",
-                      color: "var(--line-strong)",
-                      fontSize: "1.4rem",
-                      transform: "translateY(-50%)",
-                    }}
-                  >
-                    →
-                  </span>
-                )}
-              </div>
             ))}
           </div>
         </div>
@@ -510,6 +514,60 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= HOW IT WORKS (layer 2) ================= */}
+      <section className="section section-frost-alt">
+        <div className="container">
+          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
+            <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
+            <h2 className="title" style={{ marginTop: 16 }}>
+              From zero to earning - <span className="accent">in 3 steps</span>
+            </h2>
+          </div>
+
+          <div className="grid-3" style={{ alignItems: "stretch" }}>
+            {steps.map((step, i) => (
+              <div key={i} style={{ position: "relative" }}>
+                <div className="card card-hover" style={{ padding: "34px 30px", height: "100%" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "2.2rem",
+                        color: "var(--green-deep)",
+                      }}
+                    >
+                      {step.num}
+                    </span>
+                    <span style={{ color: "var(--ink)" }}>
+                      <Icon name={step.icon} size={30} strokeWidth={1.6} />
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 10 }}>{step.title}</h3>
+                  <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7 }}>{step.desc}</p>
+                </div>
+                {i < steps.length - 1 && (
+                  <span
+                    className="hide-mobile"
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: -34,
+                      zIndex: 2,
+                      fontFamily: "var(--font-display)",
+                      color: "var(--line-strong)",
+                      fontSize: "1.4rem",
+                      transform: "translateY(-50%)",
+                    }}
+                  >
+                    →
+                  </span>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>

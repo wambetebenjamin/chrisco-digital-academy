@@ -27,7 +27,7 @@ export default function Footer() {
         color: "rgba(255,255,255,0.6)",
         position: "relative",
         overflow: "hidden",
-        borderTop: "3px solid var(--green)",
+        borderTop: "1px solid rgba(255,255,255,0.1)",
       }}
     >
       {/* Ghost wordmark */}

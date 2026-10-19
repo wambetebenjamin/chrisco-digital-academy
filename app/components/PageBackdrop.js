@@ -52,7 +52,7 @@ export default function PageBackdrop({
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(900px 520px at 88% 4%, rgba(0,255,132,0.09), transparent 60%), radial-gradient(760px 620px at 4% 96%, rgba(1,58,79,0.10), transparent 62%)",
+            "radial-gradient(900px 520px at 88% 4%, rgba(0,255,132,0.04), transparent 60%), radial-gradient(760px 620px at 4% 96%, rgba(1,58,79,0.07), transparent 62%)",
         }}
       />
     </div>

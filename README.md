@@ -7,23 +7,31 @@ writing, video and AI. Built for **CHRISCO Youth Aflame** and founded by **Wambe
 
 "Creative studio meets editorial magazine" - bold, editorial, playful yet professional.
 
+The brand palette is unchanged; it is organised over a neutral surface ladder so
+green stays a signal rather than a surface. Full rationale in
+[COLOR-SYSTEM.md](./COLOR-SYSTEM.md).
+
 | Token | Value | Use |
 | --- | --- | --- |
-| Dark teal | `#002333` | Top nav, dark sections, footer, chat |
-| Electric green | `#00FF84` | Primary CTAs, accents, highlights |
-| Paper | `#FAFAF6` | Editorial off-white page base |
+| Dark teal | `#002333` | Top nav, contrast bands, footer, chat |
+| Electric green | `#00FF84` | Primary CTAs, active nav marks, small signals |
+| Green deep | `#00B865` | Green text/icons on light paper |
+| Paper | `#FAFAF6` | Layer 0 page base |
+| Mist / slate | `#F4F7F4` / `#EBF0ED` | Layers 1–2 alternating section bands |
 | Ink | `#06202E` | Headings & display type |
 | Hairline | `#E3E9E7` | Card borders, dividers |
 
 - **Typography** - Archivo Black (heavy display headlines, uppercase), Archivo (subheads/UI), Inter (body).
 - **Components** - pill-shaped outlined tags, whitespace-heavy card grids, category sidebar + hero image tile,
-  ghost outline text, green-glow CTAs.
+  ghost outline text, restrained green CTAs.
+- **Navigation** - three-layer bar (utility strip, brand bar, grouped dropdowns) with a full-width
+  courses mega-menu, keyboard/escape support and a stacked mobile accordion.
 - **Shape** - rounded cards (20-28px), 999px pill buttons, hairline borders, soft shadows.
 
 ## 🗺️ Pages
 
-- **Home** - editorial hero (category sidebar + image tile + stats), skill tracks, featured
-  courses, how-it-works, founder band, CTA, footer, chatbot.
+- **Home** - editorial hero (category sidebar + image tile + stats), credentials strip, skill
+  tracks, featured courses, founder band, how-it-works, CTA, footer, chatbot.
 - **About** - story, stats, mission & vision, values, founder profile.
 - **Courses** - 19 courses across 7 categories (incl. Business & economic-empowerment skills) with sidebar filters, syllabus modals, download & enrollment
   (EmailJS → shambetz@gmail.com).

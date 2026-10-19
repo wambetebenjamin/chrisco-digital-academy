@@ -39,7 +39,7 @@ export default function Contact() {
       />
 
       {/* BODY */}
-      <section style={{ padding: "0 0 96px" }}>
+      <section className="section-frost" style={{ padding: "56px 0 96px" }}>
         <div className="container">
           <div className="split" style={{ alignItems: "start" }}>
             {/* LEFT - info */}

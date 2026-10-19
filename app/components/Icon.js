@@ -321,6 +321,21 @@ const paths = {
       <path d="M21 3.5L9.2 13.4" />
     </>
   ),
+  chevron: (
+    <path d="M6 9l6 6 6-6" />
+  ),
+  lock: (
+    <>
+      <rect x="4" y="10.5" width="16" height="10.5" rx="2.5" />
+      <path d="M8 10.5V7.6a4 4 0 0 1 8 0v2.9" />
+    </>
+  ),
+  user: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4.5 21a7.5 7.5 0 0 1 15 0" />
+    </>
+  ),
 }
 
 export default function Icon({ name, size = 18, strokeWidth = 1.9, style, className, ...rest }) {
