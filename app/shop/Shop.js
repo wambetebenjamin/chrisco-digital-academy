@@ -188,6 +188,7 @@ export default function Shop({ initialCode = "" }) {
             </a>
           </div>
 
+          <div className="shop-filters-wrap">
           <div className="shop-filters shop-filters-collection">
             {collections.map((c) => (
               <button
@@ -213,6 +214,7 @@ export default function Shop({ initialCode = "" }) {
               </button>
             ))}
           </div>
+          </div>
 
           <div className="merch-grid">
             {filtered.map((item) => (
@@ -221,13 +223,13 @@ export default function Shop({ initialCode = "" }) {
                   <span className="merch-code">{item.code}</span>
                   <Image
                     src={item.img}
-                    alt={`${item.name} in ${item.colour} with the PURSUE flame mark`}
+                    alt={`${item.name}, ${item.colour} colourway`}
                     width={640}
                     height={800}
                     className="merch-img"
                     sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 90vw"
                   />
-                  <span className="merch-quick">Choose size &amp; quantity</span>
+                  <span className="merch-view">View &amp; order</span>
                 </button>
                 <div className="merch-body">
                   <div className="merch-row">
@@ -271,9 +273,17 @@ export default function Shop({ initialCode = "" }) {
         </div>
       </section>
 
+      {/* ---------- sticky order pill (phones) ---------- */}
+      {count > 0 && (
+        <button type="button" className="shop-mobile-cta" onClick={() => setTrayOpen(true)}>
+          <Icon name="clipboard" size={15} strokeWidth={2} />
+          {count} item{count > 1 ? "s" : ""} · {formatKsh(totalKes)}
+        </button>
+      )}
+
       {/* ---------- product modal ---------- */}
       {active && (
-        <div className="overlay" onClick={closeItem}>
+        <div className="overlay overlay-sheet" onClick={closeItem}>
           <div className="shop-modal" onClick={(e) => e.stopPropagation()}>
             <button type="button" className="shop-modal-close" onClick={closeItem} aria-label="Close">
               <Icon name="x" size={18} strokeWidth={2.2} />

@@ -31,7 +31,7 @@ export default async function ShopPage({ searchParams }) {
           </>
         }
         titleStyle={{ maxWidth: 820 }}
-        lead="Official CHRISCO Youth Aflame merchandise in brown, white, black, cream and natural canvas. Three collections: the PURSUE artwork, quieter Christian affirmations set in gold type, and statement pieces built on 1 Samuel 30:8."
+        lead="Official CHRISCO Youth Aflame merchandise in cocoa, cream, ink, chalk, sand and deep teal, one harmonious family of colourways. Four collections: the PURSUE artwork, quieter Christian affirmations, statement pieces built on 1 Samuel 30:8, and the supplied design drops printed exactly as drawn."
       >
         <div className="fade-up fade-up-2" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 26 }}>
           {["S to XXL", "KSh and UGX pricing", "Order by code on WhatsApp"].map((p) => (

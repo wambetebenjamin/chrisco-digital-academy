@@ -159,14 +159,34 @@ test("every merchandise item has a unique code, sizes and a price", () => {
     assert.ok(item.img.startsWith("/merch/"), `${item.code} has a mockup`)
   }
   assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 4)
-  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 11)
+  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 17)
   assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 3)
-  assert.equal(shop.merch.length, 29)
+  assert.equal(shop.merch.length, 35)
+})
+
+test("every mockup exists on disk and stays inside the garment palette", async () => {
+  const fs = await import("node:fs")
+  const path = await import("node:path")
+  const palette = ["Cocoa", "Cream", "Ink", "Chalk", "Sand", "Deep teal"]
+  for (const item of shop.merch) {
+    const file = path.join(process.cwd(), "public", item.img)
+    assert.ok(fs.existsSync(file), `${item.code} mockup ${item.img} exists`)
+    assert.ok(palette.includes(item.colour), `${item.code} colour ${item.colour} is in the palette`)
+  }
+})
+
+test("no product copy promises rule lines or bars", () => {
+  for (const item of shop.merch) {
+    const copy = `${item.desc} ${item.specs.join(" ")}`.toLowerCase()
+    assert.ok(!copy.includes("hairline"), `${item.code} copy is line free`)
+    assert.ok(!copy.includes("gold rule"), `${item.code} copy is line free`)
+    assert.ok(!copy.includes("elastic"), `${item.code} copy is line free`)
+  }
 })
 
 test("every colourway of each product has its own code", () => {
   const pursueTees = shop.merch.filter((m) => m.category === "T-shirts" && m.collection === "pursue")
-  assert.deepEqual(pursueTees.map((t) => t.colour), ["Brown", "Cream", "Black", "White"])
+  assert.deepEqual(pursueTees.map((t) => t.colour), ["Cocoa", "Cream", "Ink", "Chalk"])
 })
 
 test("apparel runs from S to XXL", () => {
@@ -192,7 +212,7 @@ test("prices carry KSh and UGX", () => {
 
 test("every item lists specifications and a collection", () => {
   for (const item of shop.merch) {
-    assert.ok(["pursue", "faith", "scripture"].includes(item.collection), `${item.code} has a collection`)
+    assert.ok(["pursue", "faith", "scripture", "drops"].includes(item.collection), `${item.code} has a collection`)
     assert.ok(Array.isArray(item.specs) && item.specs.length >= 3, `${item.code} has specs`)
     assert.ok(item.price.kes > 0 && item.price.ugx > 0, `${item.code} has both currencies`)
   }
@@ -202,14 +222,16 @@ test("the catalogue spans every collection and a wide colour range", () => {
   const pursue = shop.merch.filter((m) => m.collection === "pursue")
   const faith = shop.merch.filter((m) => m.collection === "faith")
   const scripture = shop.merch.filter((m) => m.collection === "scripture")
+  const drops = shop.merch.filter((m) => m.collection === "drops")
   assert.equal(pursue.length, 12)
   assert.equal(faith.length, 7)
   assert.equal(scripture.length, 10)
+  assert.equal(drops.length, 6)
   for (const id of shop.collections.map((c) => c.id)) {
-    if (id !== "all") assert.ok(scripture.concat(pursue, faith).some((m) => m.collection === id), `${id} has stock`)
+    if (id !== "all") assert.ok(scripture.concat(pursue, faith, drops).some((m) => m.collection === id), `${id} has stock`)
   }
   const colours = new Set(shop.merch.map((m) => m.colour))
-  for (const colour of ["Brown", "White", "Black", "Cream", "Natural"]) {
+  for (const colour of ["Cocoa", "Chalk", "Ink", "Cream", "Sand", "Deep teal"]) {
     assert.ok(colours.has(colour), `${colour} appears in the range`)
   }
 })
@@ -236,7 +258,7 @@ test("the scripture collection is anchored on 1 Samuel 30:8", () => {
     .map((m) => `${m.name} ${m.desc}`)
     .join(" ")
   assert.ok(verses.includes("1 Samuel 30:8"))
-  assert.ok(shop.merch.some((m) => m.code === "TS-07" && m.colour === "Black"))
+  assert.ok(shop.merch.some((m) => m.code === "TS-07" && m.colour === "Ink"))
   assert.ok(shop.merch.some((m) => m.code === "CP-03"))
 })
 
