@@ -8,7 +8,7 @@ export default function SignIn() {
   const [form, setForm] = useState({ email: "", password: "" })
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const { signIn } = useAuth()
+  const { signIn, previewMode } = useAuth()
 
   async function handleLogin() {
     if (!form.email || !form.password) {
@@ -41,6 +41,13 @@ export default function SignIn() {
           Create one free →
         </Link>
       </p>
+
+      {previewMode && (
+        <div className="auth-preview-note">
+          <strong>Preview mode.</strong> Supabase keys are not set, so accounts are stored in this browser only.
+          Sign up once, then sign in with the same details.
+        </div>
+      )}
 
       {error && (
         <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, textAlign: "center" }}>

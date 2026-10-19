@@ -1,16 +1,24 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useAuth } from "../AuthProvider"
 import AuthShell from "../components/AuthShell"
 import Icon from "../components/Icon"
+import { readRef } from "../lib/referral"
 
 export default function SignUp() {
   const [form, setForm] = useState({ name: "", email: "", password: "" })
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { signUp } = useAuth()
+  const { signUp, previewMode } = useAuth()
+  const [ref, setRef] = useState("")
+
+  useEffect(() => {
+    // One-shot read of the stored referral code.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRef(readRef())
+  }, [])
 
   async function handleSignUp() {
     if (!form.name || !form.email || !form.password) {
@@ -44,20 +52,39 @@ export default function SignUp() {
             <Icon name="mail" size={36} strokeWidth={1.6} />
           </span>
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.9rem", color: "var(--ink)", textTransform: "uppercase", marginBottom: 12 }}>
-            Check your email!
+            {previewMode ? "You are in." : "Check your email!"}
           </h1>
           <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.7, marginBottom: 26 }}>
-            We sent a confirmation link to{" "}
-            <strong style={{ color: "var(--green-deep)" }}>{form.email}</strong>. Click it to activate your account,
-            then sign in.
+            {previewMode ? (
+              <>
+                Your preview account for <strong style={{ color: "var(--green-deep)" }}>{form.email}</strong> was
+                created in this browser. Open your dashboard to continue.
+              </>
+            ) : (
+              <>
+                We sent a confirmation link to{" "}
+                <strong style={{ color: "var(--green-deep)" }}>{form.email}</strong>. Click it to activate your
+                account, then sign in.
+              </>
+            )}
           </p>
-          <Link href="/sign-in" className="btn btn-green" style={{ textDecoration: "none" }}>
-            Go to Sign In →
+          <Link href={previewMode ? "/dashboard" : "/sign-in"} className="btn btn-green" style={{ textDecoration: "none" }}>
+            {previewMode ? "Open Dashboard →" : "Go to Sign In →"}
           </Link>
         </div>
       ) : (
         <>
           <span className="eyebrow">Join the academy</span>
+          {previewMode && (
+            <div className="auth-preview-note">
+              <strong>Preview mode.</strong> Accounts are stored in this browser until Supabase keys are added.
+            </div>
+          )}
+          {ref && (
+            <div className="auth-ref-note">
+              <Icon name="users" size={14} strokeWidth={2} /> Referred by <strong>{ref}</strong>
+            </div>
+          )}
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4vw, 2.6rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14 }}>
             Create account
           </h1>

@@ -34,6 +34,7 @@ const programLinks = [
 
 const studentLinks = [
   { label: "Student Dashboard", desc: "Your courses and progress", href: "/dashboard", icon: "grid" },
+  { label: "Affiliate Programme", desc: "Share your link and earn", href: "/affiliates", icon: "cash" },
   { label: "Log In", desc: "Pick up where you left off", href: "/sign-in", icon: "lock" },
   { label: "Create Account", desc: "Join the academy in minutes", href: "/sign-up", icon: "user" },
   { label: "Course Guidance", desc: "Not sure what to study? Ask us", href: "/contact", icon: "chat" },
@@ -384,6 +385,13 @@ export default function Navbar() {
             </Dropdown>
 
             <Link
+              href="/shop"
+              className={`nav-link${isActive("/shop") ? " is-active" : ""}`}
+            >
+              Shop
+            </Link>
+
+            <Link
               href="/contact"
               className={`nav-link${isActive("/contact") ? " is-active" : ""}`}
             >
@@ -486,6 +494,9 @@ export default function Navbar() {
                 Browse all courses →
               </Link>
             </MobileSection>
+            <Link href="/shop" onClick={closeAll} className={`m-link${isActive("/shop") ? " is-active" : ""}`}>
+              Shop
+            </Link>
             <MobileSection title="Programs" icon="rocket" items={programLinks} onNavigate={closeAll} />
             <MobileSection title="Students" icon="cap" items={studentLinks} onNavigate={closeAll} />
 

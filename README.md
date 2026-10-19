@@ -36,6 +36,9 @@ green stays a signal rather than a surface. Full rationale in
 - **Courses** - 19 courses across 7 categories (incl. Business & economic-empowerment skills) with sidebar filters, syllabus modals, download & enrollment
   (EmailJS → shambetz@gmail.com).
 - **Become a Tutor** - open tracks, requirements, what the academy provides, application steps.
+- **PURSUE Shop** - merchandise mockups with codes, S to XXL sizes, quantity picker, order tray,
+  recommendations and share links.
+- **Affiliates** - referral code and link builder, per-course links, referral tracking.
 - **Contact** - info cards, WhatsApp shortcut, EmailJS contact form.
 - **Dashboard** - stats, enrollments, account (Supabase auth, gated).
 - **Sign In / Sign Up** - split editorial auth screens.
@@ -44,6 +47,24 @@ green stays a signal rather than a surface. Full rationale in
 
 - Email: chriscoyouthaflame2025@gmail.com
 - Phone and WhatsApp: shown as call/chat icons only, never as printed numbers
+
+## 🔐 Accounts, handbooks and referrals
+
+- Sign-in and sign-up run on Supabase when `NEXT_PUBLIC_SUPABASE_URL` and
+  `NEXT_PUBLIC_SUPABASE_ANON_KEY` are present.
+- Without those keys the app runs in **preview mode**: accounts, sessions and
+  enrolments are kept in `localStorage` so every screen remains testable.
+- Course objectives and the full outline are public. The handbook PDF needs a
+  signed-in account; signed-out visitors get a sign-in prompt instead.
+- Referral links look like `/?ref=YOURCODE`. The code is stored for 60 days,
+  attached to sign-ups, and summarised on the Affiliates page.
+
+## 🧪 Tests
+
+```bash
+npm test          # node:test logic suite + Vitest component suite
+npx vitest run    # component tests only
+```
 
 ## 🧱 Tech
 

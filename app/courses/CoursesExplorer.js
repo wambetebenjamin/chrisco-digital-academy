@@ -2,9 +2,11 @@
 import { useState, useEffect } from "react"
 import emailjs from "@emailjs/browser"
 import Image from "next/image"
+import Link from "next/link"
 import Icon from "../components/Icon"
 import { courses, categories, categoryCounts, imageFor } from "../data/courses"
 import { org } from "../data/org"
+import { useAuth } from "../AuthProvider"
 
 const SERVICE_ID = "service_m86zbad"
 const TEMPLATE_ID = "template_i5wg4c8"
@@ -20,6 +22,8 @@ export default function CoursesExplorer() {
   const [sent, setSent] = useState(false)
   const [category, setCategory] = useState("All")
   const [level, setLevel] = useState("All")
+  const [lockedCourse, setLockedCourse] = useState(null)
+  const { user } = useAuth()
 
   const counts = categoryCounts()
 
@@ -85,10 +89,17 @@ export default function CoursesExplorer() {
     setSending(false)
   }
 
+  /*
+   * Handbooks are members-only: objectives and the full outline are public,
+   * the PDF itself needs a signed-in account.
+   */
   function handleDownload(course) {
-    if (course.download) {
-      window.open(course.download, "_blank")
+    if (!course.download) return
+    if (!user) {
+      setLockedCourse(course)
+      return
     }
+    window.open(course.download, "_blank")
   }
 
   function openCourse(course) {
@@ -307,11 +318,11 @@ export default function CoursesExplorer() {
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
                             className="btn btn-outline btn-sm"
-                            title="Download course details"
-                            aria-label={`Download ${course.title} details`}
+                            title={user ? "Download course handbook" : "Sign in to download the handbook"}
+                            aria-label={user ? `Download ${course.title} handbook` : `Sign in to download the ${course.title} handbook`}
                             style={{ cursor: "pointer", padding: "10px 16px" }}
                           >
-                            <Icon name="download" size={16} />
+                            <Icon name={user ? "download" : "lock"} size={16} />
                           </button>
                         </div>
                       </div>
@@ -325,6 +336,38 @@ export default function CoursesExplorer() {
       </section>
 
       {/* MODAL */}
+      {lockedCourse && (
+        <div className="overlay" onClick={() => setLockedCourse(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+            <div style={{ padding: "34px 32px 30px", textAlign: "center" }}>
+              <span className="course-lock-ico"><Icon name="lock" size={26} strokeWidth={1.8} /></span>
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "var(--ink)", marginBottom: 8 }}>
+                Sign in to download the handbook
+              </h3>
+              <p style={{ fontSize: 13.5, color: "var(--body)", lineHeight: 1.65, marginBottom: 22 }}>
+                The objectives and full outline of {lockedCourse.title} are free to read. The PDF handbook is
+                reserved for signed-in students, so we know who to support.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+                <Link href="/sign-in" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
+                  Sign in
+                </Link>
+                <Link href="/sign-up" className="btn btn-outline btn-sm" style={{ textDecoration: "none" }}>
+                  Create an account
+                </Link>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLockedCourse(null)}
+                className="course-lock-dismiss"
+              >
+                Keep reading the outline
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -380,9 +423,22 @@ export default function CoursesExplorer() {
             <div style={{ padding: "28px 32px 32px" }}>
               <p style={{ color: "var(--body)", lineHeight: 1.7, marginBottom: 24 }}>{selected.desc}</p>
 
-              {/* Syllabus */}
+              {/* Objectives */}
               <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
-                <Icon name="clipboard" size={18} style={{ color: "var(--green-deep)" }} /> Course Syllabus
+                <Icon name="target" size={18} style={{ color: "var(--green-deep)" }} /> Course Objectives
+              </h3>
+              <ul className="course-objectives">
+                {(selected.objectives || []).map((objective) => (
+                  <li key={objective}>
+                    <Icon name="checkCircle" size={15} strokeWidth={2.1} />
+                    <span>{objective}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Outline */}
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
+                <Icon name="clipboard" size={18} style={{ color: "var(--green-deep)" }} /> Course Outline
               </h3>
               <div style={{ background: "#F4F6F4", borderRadius: 16, padding: "6px 18px", marginBottom: 24 }}>
                 {selected.syllabus.map((item, i) => (
@@ -409,6 +465,20 @@ export default function CoursesExplorer() {
                     <p style={{ color: "var(--ink)", fontSize: 14, lineHeight: 1.5 }}>{item}</p>
                   </div>
                 ))}
+              </div>
+
+              <div className="course-handbook-note">
+                <Icon name={user ? "book" : "lock"} size={15} strokeWidth={2} />
+                <span>
+                  {user
+                    ? "Your handbook PDF is available with the download button below."
+                    : "The full handbook PDF is available to signed-in students."}
+                </span>
+                {!user && (
+                  <Link href="/sign-in" className="course-handbook-link">
+                    Sign in
+                  </Link>
+                )}
               </div>
 
               {/* Who for */}
@@ -441,11 +511,11 @@ export default function CoursesExplorer() {
                   <button
                     onClick={() => handleDownload(selected)}
                     className="btn btn-outline"
-                    title="Download course details"
-                    aria-label="Download course details"
+                    title={user ? "Download course handbook" : "Sign in to download the handbook"}
+                    aria-label={user ? "Download course handbook" : "Sign in to download the handbook"}
                     style={{ cursor: "pointer", padding: "14px 18px" }}
                   >
-                    <Icon name="download" size={17} />
+                    <Icon name={user ? "download" : "lock"} size={17} />
                   </button>
                   <button
                     onClick={() => setSelected(null)}

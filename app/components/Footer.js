@@ -7,6 +7,8 @@ const exploreLinks = [
   { label: "About Us", href: "/about" },
   { label: "Meet Our Tutor", href: "/about#tutor" },
   { label: "Become a Tutor", href: "/become-a-tutor" },
+  { label: "PURSUE Shop", href: "/shop" },
+  { label: "Affiliate Programme", href: "/affiliates" },
   { label: "Courses", href: "/courses" },
   { label: "Contact", href: "/contact" },
   { label: "Dashboard", href: "/dashboard" },

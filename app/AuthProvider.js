@@ -1,7 +1,14 @@
 "use client"
 import { createContext, useContext, useEffect, useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import { supabase } from "./supabase"
+import { supabase, isSupabaseConfigured } from "./supabase"
+import {
+  previewSignUp,
+  previewSignIn,
+  previewSession,
+  previewSignOut,
+} from "./lib/previewAuth"
+import { captureRefFromLocation, readRef } from "./lib/referral"
 
 const AuthContext = createContext(null)
 const PUBLIC_ROUTES = ["/sign-in", "/sign-up"]
@@ -28,6 +35,19 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
+    // Capture any ?ref= code the visitor arrived with, whatever the page.
+    captureRefFromLocation()
+
+    if (!isSupabaseConfigured) {
+      // Preview mode: accounts live in localStorage (see lib/previewAuth).
+      const session = previewSession()
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUser(session ?? null)
+      setProfile(session ? { name: session.name, email: session.email } : null)
+      setLoading(false)
+      return undefined
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
       if (session?.user) fetchProfile(session.user.id)
@@ -52,22 +72,45 @@ export function AuthProvider({ children }) {
   }, [user, loading, pathname])
 
   async function signUp(name, email, password) {
+    if (!isSupabaseConfigured) {
+      const result = previewSignUp({ name, email, password, ref: readRef() })
+      if (result.error) throw new Error(result.error.message)
+      setUser(result.data.user)
+      setProfile({ name: result.data.user.name, email: result.data.user.email })
+      return result.data
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } }
+      options: { data: { name, ref: readRef() } }
     })
     if (error) throw error
     return data
   }
 
   async function signIn(email, password) {
+    if (!isSupabaseConfigured) {
+      const result = previewSignIn({ email, password })
+      if (result.error) throw new Error(result.error.message)
+      setUser(result.data.user)
+      setProfile({ name: result.data.user.name, email: result.data.user.email })
+      return result.data
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw error
     return data
   }
 
   async function logout() {
+    if (!isSupabaseConfigured) {
+      previewSignOut()
+      setUser(null)
+      setProfile(null)
+      router.push("/")
+      return
+    }
     await supabase.auth.signOut()
     setUser(null)
     setProfile(null)
@@ -76,6 +119,20 @@ export function AuthProvider({ children }) {
 
   async function enrollCourse(courseTitle) {
     if (!user) return
+    if (!isSupabaseConfigured) {
+      // Preview mode keeps enrolments in localStorage so the dashboard works.
+      try {
+        const key = "chrisco:preview-enrollments"
+        const existing = JSON.parse(window.localStorage.getItem(key) || "[]")
+        window.localStorage.setItem(
+          key,
+          JSON.stringify([...existing.filter((e) => e.course_title !== courseTitle), { user_id: user.id, course_title: courseTitle, created_at: new Date().toISOString() }])
+        )
+      } catch {
+        /* storage unavailable, nothing to persist */
+      }
+      return
+    }
     const { error } = await supabase
       .from("enrollments")
       .insert({ user_id: user.id, course_title: courseTitle })
@@ -84,6 +141,14 @@ export function AuthProvider({ children }) {
 
   async function getEnrollments() {
     if (!user) return []
+    if (!isSupabaseConfigured) {
+      try {
+        const existing = JSON.parse(window.localStorage.getItem("chrisco:preview-enrollments") || "[]")
+        return existing.filter((e) => e.user_id === user.id)
+      } catch {
+        return []
+      }
+    }
     const { data } = await supabase
       .from("enrollments")
       .select("*")
@@ -132,7 +197,9 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, signUp, signIn, logout, enrollCourse, getEnrollments }}>
+    <AuthContext.Provider
+      value={{ user, profile, loading, previewMode: !isSupabaseConfigured, signUp, signIn, logout, enrollCourse, getEnrollments }}
+    >
       {children}
     </AuthContext.Provider>
   )

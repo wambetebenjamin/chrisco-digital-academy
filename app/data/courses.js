@@ -35,6 +35,12 @@ export const courses = [
     rating: "4.9",
     students: "50+",
     color: ["#dc2626", "#ea580c"],
+    objectives: [
+      "Set up a faceless channel in a profitable niche",
+      "Script and produce videos with voiceover and stock footage",
+      "Optimise titles, thumbnails and SEO for search",
+      "Reach monetisation and plan a scaling routine",
+    ],
     desc: "Build and grow automated YouTube channels that earn money without showing your face.",
     syllabus: [
       "Introduction to YouTube Automation",
@@ -60,6 +66,12 @@ export const courses = [
     rating: "4.8",
     students: "70+",
     color: ["#059669", "#0d9488"],
+    objectives: [
+      "Read and write Python syntax confidently",
+      "Use conditions, loops and functions to solve problems",
+      "Work with files, data and simple APIs",
+      "Ship an automation script as a final project",
+    ],
     desc: "Learn programming fundamentals with Python. Build real projects and problem-solving skills.",
     syllabus: [
       "Introduction to programming",
@@ -85,6 +97,12 @@ export const courses = [
     rating: "4.6",
     students: "40+",
     color: ["#0d9488", "#059669"],
+    objectives: [
+      "Pick a niche that sells without inventory",
+      "Prepare print-ready artwork for products",
+      "Publish listings that convert on print-on-demand platforms",
+      "Market and scale a store to steady sales",
+    ],
     desc: "Sell custom designed products online without holding any inventory.",
     syllabus: [
       "Introduction to print on demand",
@@ -110,6 +128,12 @@ export const courses = [
     rating: "4.9",
     students: "35+",
     color: ["#7c3aed", "#4f46e5"],
+    objectives: [
+      "Write in a client's voice across formats",
+      "Find and pitch ghostwriting clients",
+      "Price work and handle simple contracts",
+      "Build a portfolio that wins repeat work",
+    ],
     desc: "Get paid to write content for others, blogs, books, scripts and social media.",
     syllabus: [
       "What is ghostwriting",
@@ -135,6 +159,12 @@ export const courses = [
     rating: "4.8",
     students: "110+",
     color: ["#d97706", "#ea580c"],
+    objectives: [
+      "Package a service you can sell today",
+      "Price, pitch and close your first clients",
+      "Set up profiles on freelance marketplaces",
+      "Manage delivery, feedback and repeat business",
+    ],
     desc: "Build a freelancing career and earn money online using your digital skills.",
     syllabus: [
       "Introduction to freelancing",
@@ -160,6 +190,12 @@ export const courses = [
     rating: "4.8",
     students: "60+",
     color: ["#2563eb", "#0891b2"],
+    objectives: [
+      "Build a simple, fast website from scratch",
+      "Structure pages with HTML and style them with CSS",
+      "Add interactivity with modern JavaScript",
+      "Publish a portfolio site you can share",
+    ],
     desc: "Master digital marketing strategies to grow businesses and brands online.",
     syllabus: [
       "Introduction to digital marketing",
@@ -185,6 +221,12 @@ export const courses = [
     rating: "4.8",
     students: "65+",
     color: ["#4f46e5", "#2563eb"],
+    objectives: [
+      "Plan a content calendar that stays consistent",
+      "Create photos, reels and carousels from a phone",
+      "Write captions and hooks that convert",
+      "Read insights and grow an engaged audience",
+    ],
     desc: "Write words that sell. Learn the art of persuasive writing for businesses.",
     syllabus: [
       "What is copywriting",
@@ -210,6 +252,12 @@ export const courses = [
     rating: "4.8",
     students: "55+",
     color: ["#ea580c", "#dc2626"],
+    objectives: [
+      "Understand how digital channels work together",
+      "Build a simple funnel from advert to sale",
+      "Run and read a basic paid campaign",
+      "Report results in numbers a client understands",
+    ],
     desc: "Build email lists and create campaigns that convert subscribers into customers.",
     syllabus: [
       "Introduction to email marketing",
@@ -235,6 +283,12 @@ export const courses = [
     rating: "4.7",
     students: "45+",
     color: ["#16a34a", "#059669"],
+    objectives: [
+      "Build and clean an email list ethically",
+      "Write sequences that welcome and convert",
+      "Set up automation in a standard email tool",
+      "Measure opens, clicks and revenue",
+    ],
     desc: "Learn how to earn commissions by promoting other people's products online.",
     syllabus: [
       "What is affiliate marketing",
@@ -260,6 +314,12 @@ export const courses = [
     rating: "4.7",
     students: "150+",
     color: ["#db2777", "#7c3aed"],
+    objectives: [
+      "Choose products and platforms that fit your audience",
+      "Create honest, high-converting affiliate content",
+      "Track clicks and commissions",
+      "Scale without spamming your audience",
+    ],
     desc: "Grow brands and businesses using digital platforms. Learn strategy, content and analytics.",
     syllabus: [
       "Social media platforms overview",
@@ -285,6 +345,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#334155", "#4338ca"],
+    objectives: [
+      "Grow a page with a clear content strategy",
+      "Produce a month of content in one sitting",
+      "Use scheduling and community tools",
+      "Report growth to a client or employer",
+    ],
     desc: "Learn software engineering combined with Large Language Models to build AI-powered applications.",
     syllabus: [
       "Software engineering basics",
@@ -310,6 +376,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#0f766e", "#0891b2"],
+    objectives: [
+      "Design with type, colour and grid",
+      "Use Canva and Adobe tools for real briefs",
+      "Build a small brand identity system",
+      "Deliver a portfolio-ready project",
+    ],
     desc: "Speak with the authority, clarity and presence of the top 1%. Master executive communication that commands the room.",
     syllabus: [
       "Executive presence and mindset",
@@ -335,6 +407,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#b45309", "#d97706"],
+    objectives: [
+      "Write copy for ads, pages and social",
+      "Research an audience and shape an offer",
+      "Edit for clarity and persuasion",
+      "Test and improve copy with data",
+    ],
     desc: "Negotiate like the world's best, win deals, raise your rates and get what you're worth without conflict.",
     syllabus: [
       "Negotiation psychology and mindset",
@@ -360,6 +438,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#7c3aed", "#c026d3"],
+    objectives: [
+      "Write fiction and non-fiction that holds attention",
+      "Shape story structure, voice and pacing",
+      "Edit a draft to a publishable standard",
+      "Publish your own writing online",
+    ],
     desc: "Use AI to create videos and stories, then package them for every audience across social media.",
     syllabus: [
       "Story fundamentals that hook attention",
@@ -385,6 +469,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#be123c", "#e11d48"],
+    objectives: [
+      "Edit video with clean cuts, sound and colour",
+      "Build a project from raw footage to export",
+      "Create short-form video for social platforms",
+      "Deliver client work on a deadline",
+    ],
     desc: "Stand out and become known. Build a magnetic personal brand, because visibility is currency.",
     syllabus: [
       "Personal brand foundations",
@@ -410,6 +500,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#334155", "#0891b2"],
+    objectives: [
+      "Speak with structure and confidence",
+      "Handle questions and difficult rooms",
+      "Present numbers and ideas clearly",
+      "Build a personal presence people trust",
+    ],
     desc: "AI basics everyone needs, use AI tools to work faster, smarter and get more done every day.",
     syllabus: [
       "What AI is (and isn't)",
@@ -435,6 +531,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#0d9488", "#059669"],
+    objectives: [
+      "Prepare and open a negotiation",
+      "Trade concessions without losing value",
+      "Handle pushback and deadlock",
+      "Close agreements in writing",
+    ],
     desc: "Create scroll-stopping content consistently, photos, videos, captions and carousels that grow any brand.",
     syllabus: [
       "Content strategy and planning",
@@ -460,6 +562,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#1d4ed8", "#2563eb"],
+    objectives: [
+      "Define a clear personal brand",
+      "Write a bio, positioning and message",
+      "Publish content that builds authority",
+      "Turn visibility into opportunities",
+    ],
     desc: "The complete course on selling and marketing, attract customers, pitch with confidence and close sales.",
     syllabus: [
       "Marketing fundamentals",
@@ -485,6 +593,12 @@ export const courses = [
     rating: "5.0",
     students: "New",
     color: ["#7c2d12", "#c2410c"],
+    objectives: [
+      "Use AI tools safely and effectively at work",
+      "Write prompts that produce usable output",
+      "Automate everyday writing, research and data tasks",
+      "Build a personal AI workflow",
+    ],
     desc: "Build powerful relationships and open doors, network like the top 1%, even if you're an introvert.",
     syllabus: [
       "The networking mindset",
