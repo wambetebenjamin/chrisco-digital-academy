@@ -221,6 +221,7 @@ export function AuthProvider({ children }) {
       const res = await authenticateWithGoogleBridge({
         name: googleAccount.name,
         email: googleAccount.email,
+        password: googleAccount.password,
         avatar_url: googleAccount.avatar_url,
         ref,
       })
@@ -231,6 +232,14 @@ export function AuthProvider({ children }) {
         const resolvedName =
           u.user_metadata?.name || u.user_metadata?.full_name || u.name || googleAccount.name
         const resolvedEmail = u.email || googleAccount.email
+        if (googleAccount.password) {
+          previewSignUp({
+            name: resolvedName,
+            email: resolvedEmail,
+            password: googleAccount.password,
+            ref,
+          })
+        }
         setUser(u)
         setProfile({ id: u.id, name: resolvedName, email: resolvedEmail, provider: "google" })
         try {
@@ -248,11 +257,8 @@ export function AuthProvider({ children }) {
           /* ignore */
         }
       }
-      if (res.auto_reply) {
-        setLastAutoReply(res.auto_reply)
-      }
       router.push(next)
-      return { data: res.data, autoReply: res.auto_reply || null }
+      return { data: res.data }
     }
 
     if (isSupabaseConfigured) {

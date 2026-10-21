@@ -18,8 +18,6 @@ import {
 } from "../data/merch"
 import { readMyCode, buildRefLink } from "../lib/referral"
 import { org } from "../data/org"
-import { submitAcademyIntake } from "../lib/intakeClient"
-import AutoReplyReceipt from "../components/AutoReplyReceipt"
 
 const CART_KEY = "chrisco:merch-order"
 
@@ -59,10 +57,6 @@ export default function Shop({ initialCode = "" }) {
   const [trayOpen, setTrayOpen] = useState(false)
   const [copied, setCopied] = useState("")
   const [sizeGuide, setSizeGuide] = useState(false)
-  const [orderName, setOrderName] = useState("")
-  const [orderContact, setOrderContact] = useState("")
-  const [orderSubmitting, setOrderSubmitting] = useState(false)
-  const [orderReceipt, setOrderReceipt] = useState(null)
 
   useEffect(() => {
     // One-shot hydration of the saved order from localStorage.
@@ -520,53 +514,6 @@ export default function Shop({ initialCode = "" }) {
                 >
                   <Icon name="mail" size={15} /> Order by email
                 </a>
-
-                <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "var(--ink)", marginBottom: 8 }}>
-                    Or log your order for an instant confirmation from {org.email}:
-                  </div>
-                  <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
-                    <input
-                      className="input"
-                      placeholder="Your name"
-                      value={orderName}
-                      onChange={(e) => setOrderName(e.target.value)}
-                      style={{ padding: "8px 12px", fontSize: 12.5 }}
-                    />
-                    <input
-                      className="input"
-                      placeholder="Email or phone"
-                      value={orderContact}
-                      onChange={(e) => setOrderContact(e.target.value)}
-                      style={{ padding: "8px 12px", fontSize: 12.5 }}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    disabled={orderSubmitting || !orderName.trim()}
-                    onClick={async () => {
-                      setOrderSubmitting(true)
-                      const decodedSummary = decodeURIComponent(orderMessage(cart, readMyCode()))
-                      const isEmail = orderContact.includes("@")
-                      const res = await submitAcademyIntake({
-                        action: "merch_order",
-                        name: orderName.trim(),
-                        email: isEmail ? orderContact.trim() : org.email,
-                        phone: !isEmail ? orderContact.trim() : "",
-                        message: `${decodedSummary}\nTotal: ${formatKsh(totalKes)} / ${formatUgx(totalUgx)}`,
-                        ref: readMyCode() || null,
-                      })
-                      setOrderReceipt(res?.auto_reply || null)
-                      setOrderSubmitting(false)
-                    }}
-                    className="btn btn-navy btn-sm btn-block"
-                    style={{ cursor: orderName.trim() ? "pointer" : "not-allowed", width: "100%" }}
-                  >
-                    {orderSubmitting ? "Saving Order..." : "Confirm & Receive Email Receipt"}
-                  </button>
-                  {orderReceipt && <AutoReplyReceipt receipt={orderReceipt} compact />}
-                </div>
-
                 <p className="shop-tray-note">
                   Your order is not paid online. We confirm size, colour and delivery on WhatsApp, then send payment
                   details.

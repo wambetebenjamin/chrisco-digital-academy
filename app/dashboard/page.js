@@ -9,12 +9,7 @@ import { useAuth } from "../AuthProvider"
 import { courses } from "../data/courses"
 import { org } from "../data/org"
 import { CONNECTED_RESOURCES, CONNECTED_APPS_SUMMARY } from "../data/connectedResources"
-import {
-  fetchAcademyOverview,
-  submitAcademyIntake,
-  buildAutoReplyReceipt,
-} from "../lib/intakeClient"
-import AutoReplyReceipt from "../components/AutoReplyReceipt"
+import { submitAcademyIntake } from "../lib/intakeClient"
 
 export default function Dashboard() {
   const {
@@ -24,19 +19,15 @@ export default function Dashboard() {
     getEnrollments,
     enrollCourse,
     updateCourseProgress,
-    lastAutoReply,
-    setLastAutoReply,
   } = useAuth()
 
   const [enrollments, setEnrollments] = useState([])
   const [loading, setLoading] = useState(true)
-  const [notifications, setNotifications] = useState([])
   const [expandedCourse, setExpandedCourse] = useState(null)
   const [quickCourseTitle, setQuickCourseTitle] = useState(courses[0]?.title || "")
   const [enrollingQuick, setEnrollingQuick] = useState(false)
   const [activeCertificate, setActiveCertificate] = useState(null)
   const [showSlidesEmbed, setShowSlidesEmbed] = useState(true)
-  const [selectedNotification, setSelectedNotification] = useState(null)
 
   const displayName =
     profile?.name ||
@@ -47,33 +38,11 @@ export default function Dashboard() {
     "Student"
 
   const slidesRes = CONNECTED_RESOURCES.find((r) => r.connector === "google_slides")
-  const dropboxRes = CONNECTED_RESOURCES.find((r) => r.connector === "dropbox")
-  const notionRes = CONNECTED_RESOURCES.find((r) => r.connector === "notion")
-  const sheetsRes = CONNECTED_RESOURCES.find((r) => r.connector === "google_sheets")
 
   useEffect(() => {
     async function load() {
-      const [enrolledData, overview] = await Promise.all([
-        getEnrollments(),
-        fetchAcademyOverview({
-          user_id: user?.id,
-          email: user?.email,
-        }),
-      ])
+      const enrolledData = await getEnrollments()
       setEnrollments(enrolledData || [])
-
-      let inbox = overview?.notifications || []
-      if (inbox.length === 0 && user?.email) {
-        inbox = [
-          buildAutoReplyReceipt({
-            action: "signup_welcome",
-            name: displayName,
-            email: user.email,
-            refCode: `WEL-${String(user.id || "CDA001").slice(0, 6).toUpperCase()}`,
-          }),
-        ]
-      }
-      setNotifications(inbox)
       setLoading(false)
     }
     if (user) load()
@@ -90,10 +59,10 @@ export default function Dashboard() {
         category: courseObj?.category,
         level: courseObj?.level,
       })
-      const intake = await submitAcademyIntake({
+      await submitAcademyIntake({
         action: "course_application",
         name: displayName,
-        email: user.email || org.email,
+        email: user.email || "",
         course_title: quickCourseTitle,
         course_id: courseObj?.id,
         category: courseObj?.category,
@@ -101,10 +70,6 @@ export default function Dashboard() {
         user_id: user.id,
         message: `Dashboard Quick Enrollment in ${quickCourseTitle}`,
       })
-      if (intake?.auto_reply) {
-        setLastAutoReply(intake.auto_reply)
-        setNotifications((prev) => [intake.auto_reply, ...prev])
-      }
       const updated = await getEnrollments()
       setEnrollments(updated)
     } finally {
@@ -137,11 +102,7 @@ export default function Dashboard() {
     { icon: "book", label: "Courses Available", value: "19" },
     { icon: "checkCircle", label: "Courses Enrolled", value: loading ? "…" : enrollments.length },
     { icon: "trophy", label: "Certificates Earned", value: loading ? "…" : String(completedCount) },
-    {
-      icon: "mail",
-      label: `Receipts (${org.email.split("@")[0]})`,
-      value: loading ? "…" : String(notifications.length || 1),
-    },
+    { icon: "flame", label: "Learning Progress", value: "Active" },
   ]
 
   return (
@@ -166,7 +127,7 @@ export default function Dashboard() {
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "14px 20px" }}>
-              <span style={{ width: 46, height: 46, borderRadius: "50%", background: "var(--green)", color: "var(--navy)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.1rem", flexShrink: 0 }}>
+              <span style={{ width: 46, height: 46, borderRadius: "50%", background: "var(--cta-primary)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.1rem", flexShrink: 0 }}>
                 {displayName[0]?.toUpperCase() || "U"}
               </span>
               <div>
@@ -194,16 +155,6 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-
-          {lastAutoReply && (
-            <div style={{ marginTop: 20 }}>
-              <AutoReplyReceipt
-                receipt={lastAutoReply}
-                showDashboardLink={false}
-                onClose={() => setLastAutoReply(null)}
-              />
-            </div>
-          )}
         </div>
       </section>
 
@@ -299,7 +250,7 @@ export default function Dashboard() {
                         style={{
                           height: "100%",
                           width: `${pct}%`,
-                          background: "linear-gradient(90deg, var(--green-deep), var(--green))",
+                          background: "linear-gradient(90deg, var(--green-deep), var(--cta-primary))",
                           borderRadius: 999,
                           transition: "width 0.25s ease",
                         }}
@@ -444,7 +395,7 @@ export default function Dashboard() {
                 No courses enrolled yet
               </h3>
               <p style={{ color: "var(--muted)", fontSize: 14.5, maxWidth: 460, margin: "0 auto 24px" }}>
-                Pick any of our 19 practical digital skills courses using the quick selector above or browse the full catalogue. You will receive an immediate confirmation from <strong>{org.email}</strong>.
+                Pick any of our 19 practical digital skills courses using the quick selector above or browse the full catalogue.
               </p>
               <Link href="/courses" className="btn btn-green" style={{ textDecoration: "none" }}>
                 Browse All 19 Courses →
@@ -455,7 +406,7 @@ export default function Dashboard() {
       </section>
 
       {/* Connected Learning Ecosystem Hub */}
-      <section style={{ padding: "24px 0 36px" }}>
+      <section style={{ padding: "24px 0 40px" }}>
         <div className="container">
           <div style={{ marginBottom: 24 }}>
             <span className="eyebrow" style={{ fontSize: 11 }}>Connected Learning Ecosystem</span>
@@ -463,7 +414,7 @@ export default function Dashboard() {
               Live study vault, orientation slides, Notion hub &amp; admissions tracker
             </h2>
             <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 6 }}>
-              Your account is connected to our live workspace across Google Slides, Dropbox, Notion, Google Sheets, and Supabase.
+              Access our connected study materials across Google Slides, Dropbox, Notion, and Google Sheets.
             </p>
           </div>
 
@@ -554,97 +505,6 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* Official Inbox from chriscoyouthaflame2025@gmail.com */}
-      <section style={{ padding: "12px 0 40px" }}>
-        <div className="container">
-          <div className="card" style={{ padding: "28px 28px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 18 }}>
-              <div>
-                <span className="eyebrow" style={{ fontSize: 11 }}>Official Academy Communications</span>
-                <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.3rem", color: "var(--ink)", marginTop: 4 }}>
-                  Automated Responses &amp; Receipts from {org.email}
-                </h2>
-              </div>
-              <span className="pill pill-soft pill-sm" style={{ fontSize: 11.5 }}>
-                Sender: {org.email}
-              </span>
-            </div>
-
-            {notifications.length === 0 ? (
-              <p style={{ color: "var(--muted)", fontSize: 14 }}>
-                Your automated confirmations from <strong>{org.email}</strong> will appear here whenever you sign up, enrol in a course, or send us a message.
-              </p>
-            ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {notifications.slice(0, 6).map((item, idx) => {
-                  const isOpen = selectedNotification === (item.reference_code || idx)
-                  return (
-                    <div
-                      key={item.reference_code || idx}
-                      style={{
-                        border: "1px solid var(--line)",
-                        borderRadius: 14,
-                        padding: "16px 18px",
-                        background: isOpen ? "#F4F6F4" : "#fff",
-                      }}
-                    >
-                      <div
-                        onClick={() =>
-                          setSelectedNotification(isOpen ? null : item.reference_code || idx)
-                        }
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          gap: 12,
-                          flexWrap: "wrap",
-                          cursor: "pointer",
-                        }}
-                      >
-                        <div>
-                          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                            <span style={{ fontSize: 11, fontWeight: 800, color: "var(--green-deep)", textTransform: "uppercase" }}>
-                              ✓ Sent from {item.from || org.email}
-                            </span>
-                            {item.reference_code && (
-                              <span style={{ fontSize: 11, fontFamily: "monospace", background: "rgba(0,35,51,0.08)", padding: "2px 7px", borderRadius: 5, fontWeight: 700 }}>
-                                {item.reference_code}
-                              </span>
-                            )}
-                          </div>
-                          <div style={{ fontWeight: 800, color: "var(--ink)", fontSize: 14.5, marginTop: 4 }}>
-                            {item.subject}
-                          </div>
-                        </div>
-                        <span style={{ fontSize: 12, color: "var(--green-deep)", fontWeight: 700 }}>
-                          {isOpen ? "Hide receipt ▲" : "Read receipt ▼"}
-                        </span>
-                      </div>
-
-                      {isOpen && (
-                        <div
-                          style={{
-                            marginTop: 12,
-                            paddingTop: 12,
-                            borderTop: "1px solid var(--line)",
-                            whiteSpace: "pre-line",
-                            fontSize: 13.5,
-                            lineHeight: 1.65,
-                            color: "var(--ink)",
-                          }}
-                        >
-                          {item.body}
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Account */}
       <section style={{ padding: "0 0 80px" }}>
         <div className="container">
@@ -689,9 +549,6 @@ export default function Dashboard() {
               </div>
               <div>
                 <strong>Certificate ID:</strong> <code>{activeCertificate.code}</code>
-              </div>
-              <div>
-                <strong>Verified By:</strong> {org.email}
               </div>
             </div>
             <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>

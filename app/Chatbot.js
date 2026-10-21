@@ -98,21 +98,20 @@ export default function Chatbot() {
     if (!form.name || !form.message) return
     setSending(true)
     try {
-      const res = await submitAcademyIntake({
+      await submitAcademyIntake({
         action: "contact",
         name: form.name,
-        email: form.email || org.email,
+        email: form.email,
         phone: form.phone,
         message: form.message,
       })
-      const refCode = res?.reference_code || "MSG-OK"
       setSent(true)
       setShowForm(false)
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: `We have received your message (Ref: ${refCode})! An automated confirmation from ${org.email} has been logged for ${form.name}. Our team will get back to you shortly.`,
+          content: `Message sent successfully! Our team will get back to you soon. Thank you, ${form.name}!`,
         },
       ])
       setForm({ name: "", email: "", phone: "", message: "" })

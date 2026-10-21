@@ -129,6 +129,9 @@ export default function Home() {
                 <Link href="/courses" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
                   Explore Courses →
                 </Link>
+                <Link href="/sign-up" className="btn btn-amber btn-lg" style={{ textDecoration: "none" }}>
+                  Apply Free →
+                </Link>
                 <Link href="/about#tutor" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
                   Meet Our Tutor
                 </Link>
@@ -557,6 +560,9 @@ export default function Home() {
         title="Ready to build your digital career?"
         body="Real skills. Real income. Real future. Join CHRISCO Digital Academy and start learning this week."
       >
+        <Link href="/sign-up" className="btn btn-amber btn-lg" style={{ textDecoration: "none" }}>
+          Create Free Account →
+        </Link>
         <a href="https://wa.me/254112272061" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
           <Icon name="whatsapp" size={17} /> WhatsApp Us
         </a>

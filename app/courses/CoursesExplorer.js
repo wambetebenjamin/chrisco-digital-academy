@@ -10,7 +10,11 @@ import { CONNECTED_RESOURCES } from "../data/connectedResources"
 import { useAuth } from "../AuthProvider"
 import { readRef } from "../lib/referral"
 import { submitAcademyIntake } from "../lib/intakeClient"
-import AutoReplyReceipt from "../components/AutoReplyReceipt"
+import RecaptchaCheck from "../components/RecaptchaCheck"
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim())
+}
 
 const SERVICE_ID = "service_m86zbad"
 const TEMPLATE_ID = "template_i5wg4c8"
@@ -27,7 +31,8 @@ export default function CoursesExplorer() {
   const [category, setCategory] = useState("All")
   const [level, setLevel] = useState("All")
   const [lockedCourse, setLockedCourse] = useState(null)
-  const [enrollReceipt, setEnrollReceipt] = useState(null)
+  const [notRobot, setNotRobot] = useState(false)
+  const [enrollError, setEnrollError] = useState("")
   const { user, profile, enrollCourse } = useAuth() || {}
 
   const slidesDeck = CONNECTED_RESOURCES.find((r) => r.connector === "google_slides")
@@ -91,7 +96,19 @@ export default function CoursesExplorer() {
   })
 
   async function handleEnroll(course) {
-    if (!form.name || !form.phone) return
+    setEnrollError("")
+    if (!form.name.trim() || !form.phone.trim()) {
+      setEnrollError("Please fill in your full name and phone number.")
+      return
+    }
+    if (!isValidEmail(form.email)) {
+      setEnrollError("Please enter a valid email address.")
+      return
+    }
+    if (!notRobot) {
+      setEnrollError("Please complete the reCAPTCHA check to prove you are not a bot.")
+      return
+    }
     setSending(true)
     try {
       if (user && enrollCourse) {
@@ -99,26 +116,26 @@ export default function CoursesExplorer() {
           id: course.id,
           category: course.category,
           level: course.level,
-          phone: form.phone,
+          phone: form.phone.trim(),
         })
       }
-      const res = await submitAcademyIntake({
+      await submitAcademyIntake({
         action: "course_application",
-        name: form.name,
-        email: form.email || user?.email || org.email,
-        phone: form.phone,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
         course_title: course.title,
         course_id: course.id,
         category: course.category,
         level: course.level,
         user_id: user?.id || null,
         ref: readRef() || null,
-        message: `Enrollment Request for: ${course.title}\nLevel: ${course.level}\nDuration: ${course.duration}\nPhone: ${form.phone}`,
+        message: `Enrollment Request for: ${course.title}\nLevel: ${course.level}\nDuration: ${course.duration}\nPhone: ${form.phone.trim()}`,
       })
-      setEnrollReceipt(res?.auto_reply || null)
       setSent(true)
+      setNotRobot(false)
     } catch {
-      alert(`Failed to send. Please email ${org.email} directly.`)
+      setEnrollError(`Failed to send. Please email ${org.email} directly.`)
     }
     setSending(false)
   }
@@ -140,7 +157,8 @@ export default function CoursesExplorer() {
     setSelected(course)
     setEnrolling(null)
     setSent(false)
-    setEnrollReceipt(null)
+    setEnrollError("")
+    setNotRobot(false)
   }
 
   function clearFilters() {
@@ -625,18 +643,29 @@ export default function CoursesExplorer() {
                   <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem", color: "var(--ink)", marginBottom: 18, display: "flex", alignItems: "center", gap: 9 }}>
                     <Icon name="pen" size={17} style={{ color: "var(--green-deep)" }} /> Enroll in {enrolling.title}
                   </h3>
+                  {enrollError && (
+                    <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "10px 14px", borderRadius: 10, fontSize: 13, marginBottom: 14 }}>
+                      {enrollError}
+                    </div>
+                  )}
                   <div className="field">
                     <label>Full name *</label>
                     <input className="input" placeholder="e.g. Amani Mwangi" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                   </div>
                   <div className="field">
-                    <label>Email</label>
+                    <label>Email *</label>
                     <input className="input" type="email" placeholder="you@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                   </div>
                   <div className="field">
                     <label>Phone / WhatsApp *</label>
                     <input className="input" placeholder="+254 7xx xxx xxx" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
                   </div>
+
+                  <RecaptchaCheck
+                    verified={notRobot}
+                    onChange={setNotRobot}
+                  />
+
                   <div style={{ display: "flex", gap: 12 }}>
                     <button
                       onClick={() => handleEnroll(enrolling)}
@@ -655,22 +684,19 @@ export default function CoursesExplorer() {
 
               {/* Success */}
               {sent && (
-                <div style={{ textAlign: "center", background: "var(--layer-1)", border: "1px solid var(--line)", borderRadius: 20, padding: "32px 24px" }}>
+                <div style={{ textAlign: "center", background: "var(--layer-1)", border: "1px solid var(--line)", borderRadius: 20, padding: "40px 24px" }}>
                   <span style={{ display: "inline-flex", width: 72, height: 72, borderRadius: "50%", background: "#fff", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "var(--shadow-sm)" }}>
                     <Icon name="checkCircle" size={38} strokeWidth={1.6} />
                   </span>
                   <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.3rem", fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>
-                    We Have Received Your Application!
+                    Enrollment Sent!
                   </h3>
-                  <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 16 }}>
-                    Your application for <strong>{selected.title}</strong> has been saved to our database and an automated confirmation from <strong>{org.email}</strong> is below.
+                  <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 20 }}>
+                    Our team at CHRISCO Youth Aflame will contact you soon on WhatsApp or email. Welcome to CHRISCO Digital Academy!
                   </p>
-                  {enrollReceipt && <AutoReplyReceipt receipt={enrollReceipt} />}
-                  <div style={{ marginTop: 18 }}>
-                    <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
-                      Close
-                    </button>
-                  </div>
+                  <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
+                    Close
+                  </button>
                 </div>
               )}
             </div>
