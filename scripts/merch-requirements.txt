@@ -1,0 +1,7 @@
+# Build-time dependencies for scripts/build_merch_mockups.py.
+# Install into a throwaway venv, e.g.
+#   python3 -m venv .venv-merch && .venv-merch/bin/pip install -r scripts/merch-requirements.txt
+pillow>=10
+numpy>=1.26
+fonttools>=4.50
+brotli>=1.1

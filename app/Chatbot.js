@@ -1,37 +1,39 @@
 "use client"
 import { useState } from "react"
-import emailjs from "@emailjs/browser"
 import Icon from "./components/Icon"
-
-const SERVICE_ID = "service_m86zbad"
-const TEMPLATE_ID = "template_i5wg4c8"
-const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
+import { org } from "./data/org"
+import { submitAcademyIntake } from "./lib/intakeClient"
 
 const menuOptions = [
   { number: "1", label: "View Courses" },
   { number: "2", label: "Pricing" },
   { number: "3", label: "Enroll Now" },
-  { number: "4", label: "About Founder" },
-  { number: "5", label: "Location & Contact" },
+  { number: "4", label: "About Our Tutor" },
+  { number: "5", label: "Contact Us" },
   { number: "6", label: "Certificates" },
   { number: "7", label: "Online Classes" },
   { number: "8", label: "Send us a Message" },
+  { number: "9", label: "Merchandise" },
 ]
 
+const MERCH_REPLY =
+  "We have 29 merchandise designs across three collections: PURSUE, Faith affirmations, and Scripture statements built on 1 Samuel 30:8.\n\nEvery design has a code, like TS-07 or HD-04. Open the Shop page, pick a code, size and quantity, then message us on WhatsApp with that code and we confirm the rest.\n\nShop page: /shop"
+
 const responses = [
-  { keywords: ["1", "courses", "course", "learn", "study", "offer"], reply: "We offer 19 practical courses across 7 tracks:\nBusiness · Design · Coding · Marketing\nWriting · Video · Career\n\nType a topic like \"python\", \"negotiation\" or \"branding\" to learn more!" },
+  { keywords: ["1", "courses", "course", "learn", "study", "offer"], reply: "We offer 19 practical courses across 7 tracks:\nBusiness, Design, Coding, Marketing\nWriting, Video, Career\n\nType a topic like \"python\", \"negotiation\" or \"branding\" to learn more!" },
   { keywords: ["graphic", "design", "canva", "adobe"], reply: "Our Graphic Design track covers branding, posters, logos and visual identity using Canva and Adobe tools. Perfect for beginners!" },
-  { keywords: ["web", "website", "development", "html", "css", "javascript", "react", "next"], reply: "Our Web Development skills teach HTML, CSS, JavaScript and React - and we have a Python course and an SWE & LLM Mastery course for future developers!" },
+  { keywords: ["web", "website", "development", "html", "css", "javascript", "react", "next"], reply: "Our Web Development skills teach HTML, CSS, JavaScript and React, and we have a Python course and an SWE & LLM Mastery course for future developers!" },
   { keywords: ["social media", "marketing", "instagram", "facebook", "tiktok"], reply: "Our Social Media Marketing course teaches you how to grow brands, create content strategies and manage pages professionally!" },
-  { keywords: ["video", "editing", "youtube", "reels", "film"], reply: "Our Video Editing and YouTube Automation courses cover cinematic edits, channel growth and automation - very in-demand skills!" },
+  { keywords: ["video", "editing", "youtube", "reels", "film"], reply: "Our Video Editing and YouTube Automation courses cover cinematic edits, channel growth and automation, very in-demand skills!" },
   { keywords: ["python", "coding", "programming", "code"], reply: "Our Python Programming course teaches coding fundamentals, and SWE & LLM Mastery takes you into AI-powered app development!" },
   { keywords: ["ai", "artificial intelligence", "chatgpt", "tools"], reply: "Our SWE & LLM Mastery course teaches you to build AI-powered apps and use tools like ChatGPT to boost creativity and productivity!" },
-  { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: shambetz@gmail.com\nPhone: +254112272061" },
-  { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course - or contact us directly!\nEmail: shambetz@gmail.com\nPhone: +254112272061\n\nOr type 8 to send us a message right here!" },
-  { keywords: ["4", "wambete", "benjamin", "founder", "instructor", "teacher", "who"], reply: "Wambete Benjamin is our founder and lead instructor - a CS Graduate with expertise in graphic design, web development, video editing, animations, social media management and AI!" },
-  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: shambetz@gmail.com\nPhone: +254112272061 (WhatsApp)\nLocation: Jinja, Uganda" },
+  { keywords: ["9", "merch", "merchandise", "shop", "tshirt", "t-shirt", "tee", "hoodie", "polo", "cap", "mug", "tote", "journal", "design code", "buy merch"], reply: MERCH_REPLY },
+  { keywords: ["2", "price", "cost", "fee", "how much", "payment", "pay"], reply: "Our courses are very affordable and accessible to all youth. Contact us for current pricing:\nEmail: chriscoyouthaflame2025@gmail.com" },
+  { keywords: ["3", "enroll", "join", "register", "sign up"], reply: "To enroll, open the Courses page and pick a course, or contact us directly!\nEmail: chriscoyouthaflame2025@gmail.com\n\nOr type 8 to send us a message right here!" },
+  { keywords: ["4", "founder", "tutor", "instructor", "teacher", "who", "team"], reply: "Our courses are led by the CHRISCO Youth Aflame tutor team, a lead tutor with a Computer Science background working in design, web development, video editing, animation, social media and AI. CHRISCO Digital Academy is the learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches International." },
+  { keywords: ["5", "contact", "reach", "email", "phone", "whatsapp", "location", "where", "jinja", "uganda"], reply: "Reach us here:\nEmail: chriscoyouthaflame2025@gmail.com\nWe reply fastest on email and WhatsApp." },
   { keywords: ["6", "certificate", "certification", "qualify"], reply: "Yes! You receive a certificate upon completing any course. Practical-skills based and recognized!" },
-  { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, and in-person with youth in Jinja and Buikwe, Uganda. Learn from anywhere in Uganda and beyond!" },
+  { keywords: ["7", "online", "remote", "zoom", "virtual"], reply: "Yes! Classes are taught online, with in-person cohorts scheduled through the year. Learn from anywhere in Africa and beyond!" },
   { keywords: ["hello", "hi", "hey", "hujambo", "start", "menu"], reply: "SHOW_MENU" },
   { keywords: ["bye", "goodbye", "thank you", "thanks", "asante"], reply: "Thank you for chatting! Feel free to reach out anytime. We look forward to empowering you digitally." },
 ]
@@ -43,7 +45,7 @@ function getReply(input) {
       return item.reply
     }
   }
-  return "I'm not sure about that! Here's what I can help with - type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Founder\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message"
+  return "I'm not sure about that! Here's what I can help with, type a number:\n\n1. Courses\n2. Pricing\n3. Enroll\n4. About Our Tutor\n5. Contact\n6. Certificates\n7. Online Classes\n8. Send a Message\n9. Merchandise"
 }
 
 export default function Chatbot() {
@@ -65,7 +67,7 @@ export default function Chatbot() {
       setMessages((prev) => [
         ...prev,
         { role: "user", content: userInput },
-        { role: "assistant", content: "Sure! Fill in the form below and your message will be sent directly to Wambete!" },
+        { role: "assistant", content: "Sure! Fill in the form below and your message will be sent directly to the CHRISCO Youth Aflame team!" },
       ])
       setShowForm(true)
       setInput("")
@@ -78,7 +80,7 @@ export default function Chatbot() {
       setMessages((prev) => [
         ...prev,
         { role: "user", content: userInput },
-        { role: "assistant", content: "Hello! Here's what I can help you with - type a number or click an option:" },
+        { role: "assistant", content: "Hello! Here's what I can help you with, type a number or click an option:" },
       ])
       setInput("")
       return
@@ -96,24 +98,32 @@ export default function Chatbot() {
     if (!form.name || !form.message) return
     setSending(true)
     try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: form.email,
+      const res = await submitAcademyIntake({
+        action: "contact",
+        name: form.name,
+        email: form.email || org.email,
         phone: form.phone,
         message: form.message,
-      }, PUBLIC_KEY)
+      })
+      const refCode = res?.reference_code || "MSG-OK"
       setSent(true)
       setShowForm(false)
-      setMessages((prev) => [...prev, {
-        role: "assistant",
-        content: `Message sent successfully! Wambete will get back to you soon. Thank you, ${form.name}!`,
-      }])
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `We have received your message (Ref: ${refCode})! An automated confirmation from ${org.email} has been logged for ${form.name}. Our team will get back to you shortly.`,
+        },
+      ])
       setForm({ name: "", email: "", phone: "", message: "" })
     } catch {
-      setMessages((prev) => [...prev, {
-        role: "assistant",
-        content: "Sorry, the message failed to send. Please email us directly at shambetz@gmail.com",
-      }])
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `Sorry, the message failed to send. Please email us directly at ${org.email}`,
+        },
+      ])
     }
     setSending(false)
   }
@@ -219,7 +229,7 @@ export default function Chatbot() {
           {showForm && (
             <div style={{ padding: "14px 16px", background: "#fff", borderTop: "1px solid var(--line)" }}>
               <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "var(--ink)", fontSize: 13.5, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
-                <Icon name="mail" size={15} style={{ color: "var(--green-deep)" }} /> Send Wambete a message
+                <Icon name="mail" size={15} style={{ color: "var(--green-deep)" }} /> Send the CHRISCO team a message
               </div>
               <input className="input" placeholder="Your Name *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={{ marginBottom: 8, padding: "10px 14px", fontSize: 13 }} />
               <input className="input" placeholder="Your Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} style={{ marginBottom: 8, padding: "10px 14px", fontSize: 13 }} />

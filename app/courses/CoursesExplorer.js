@@ -1,9 +1,16 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import emailjs from "@emailjs/browser"
 import Image from "next/image"
+import Link from "next/link"
 import Icon from "../components/Icon"
-import { courses, categories, categoryCounts } from "../data/courses"
+import { courses, categories, categoryCounts, imageFor } from "../data/courses"
+import { org } from "../data/org"
+import { CONNECTED_RESOURCES } from "../data/connectedResources"
+import { useAuth } from "../AuthProvider"
+import { readRef } from "../lib/referral"
+import { submitAcademyIntake } from "../lib/intakeClient"
+import AutoReplyReceipt from "../components/AutoReplyReceipt"
 
 const SERVICE_ID = "service_m86zbad"
 const TEMPLATE_ID = "template_i5wg4c8"
@@ -19,8 +26,63 @@ export default function CoursesExplorer() {
   const [sent, setSent] = useState(false)
   const [category, setCategory] = useState("All")
   const [level, setLevel] = useState("All")
+  const [lockedCourse, setLockedCourse] = useState(null)
+  const [enrollReceipt, setEnrollReceipt] = useState(null)
+  const { user, profile, enrollCourse } = useAuth() || {}
+
+  const slidesDeck = CONNECTED_RESOURCES.find((r) => r.connector === "google_slides")
+  const dropboxVault = CONNECTED_RESOURCES.find((r) => r.connector === "dropbox")
+  const notionHub = CONNECTED_RESOURCES.find((r) => r.connector === "notion")
+
+  useEffect(() => {
+    if (user || profile) {
+      setForm((prev) => ({
+        ...prev,
+        name: prev.name || profile?.name || user?.user_metadata?.name || user?.name || "",
+        email: prev.email || user?.email || profile?.email || "",
+      }))
+    }
+  }, [user, profile])
 
   const counts = categoryCounts()
+
+  // Deep links from the navigation mega-menu: /courses?category=Coding
+  // and /courses?course=12 (opens that course's detail panel directly).
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const params = new URLSearchParams(window.location.search)
+    const cat = params.get("category")
+    const courseId = params.get("course")
+    if (cat && (cat === "All" || categories.some((c) => c.name === cat))) {
+      // One-shot read of the URL on mount; the router is the external store.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCategory(cat)
+    }
+    if (courseId) {
+      const match = courses.find((c) => String(c.id) === courseId)
+      if (match) setSelected(match)
+    }
+  }, [])
+
+  // Live hand-off from the navigation mega-menu when this page is already open.
+  useEffect(() => {
+    const onCatalogueNav = (event) => {
+      const { category: cat, courseId } = event.detail || {}
+      if (cat) setCategory(cat)
+      if (courseId) {
+        const match = courses.find((c) => String(c.id) === String(courseId))
+        if (match) {
+          setSelected(match)
+          setEnrolling(null)
+          setSent(false)
+        }
+      } else if (cat) {
+        setSelected(null)
+      }
+    }
+    window.addEventListener("chrisco:catalogue", onCatalogueNav)
+    return () => window.removeEventListener("chrisco:catalogue", onCatalogueNav)
+  }, [])
 
   const filtered = courses.filter((c) => {
     const catOk = category === "All" || c.category === category
@@ -32,30 +94,53 @@ export default function CoursesExplorer() {
     if (!form.name || !form.phone) return
     setSending(true)
     try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: form.email,
+      if (user && enrollCourse) {
+        await enrollCourse(course.title, {
+          id: course.id,
+          category: course.category,
+          level: course.level,
+          phone: form.phone,
+        })
+      }
+      const res = await submitAcademyIntake({
+        action: "course_application",
+        name: form.name,
+        email: form.email || user?.email || org.email,
         phone: form.phone,
-        message: `Enrollment Request for: ${course.title}\nLevel: ${course.level}\nDuration: ${course.duration}`,
-      }, PUBLIC_KEY)
+        course_title: course.title,
+        course_id: course.id,
+        category: course.category,
+        level: course.level,
+        user_id: user?.id || null,
+        ref: readRef() || null,
+        message: `Enrollment Request for: ${course.title}\nLevel: ${course.level}\nDuration: ${course.duration}\nPhone: ${form.phone}`,
+      })
+      setEnrollReceipt(res?.auto_reply || null)
       setSent(true)
-      setForm({ name: "", email: "", phone: "" })
     } catch {
-      alert("Failed to send. Please email shambetz@gmail.com directly.")
+      alert(`Failed to send. Please email ${org.email} directly.`)
     }
     setSending(false)
   }
 
+  /*
+   * Handbooks are members-only: objectives and the full outline are public,
+   * the PDF itself needs a signed-in account.
+   */
   function handleDownload(course) {
-    if (course.download) {
-      window.open(course.download, "_blank")
+    if (!course.download) return
+    if (!user) {
+      setLockedCourse(course)
+      return
     }
+    window.open(course.download, "_blank")
   }
 
   function openCourse(course) {
     setSelected(course)
     setEnrolling(null)
     setSent(false)
+    setEnrollReceipt(null)
   }
 
   function clearFilters() {
@@ -66,7 +151,7 @@ export default function CoursesExplorer() {
   return (
     <>
       {/* BODY */}
-      <section style={{ padding: "0 0 96px" }}>
+      <section className="section-frost" style={{ padding: "56px 0 96px" }}>
         <div className="container">
           <div className="grid-sidebar">
 
@@ -79,7 +164,7 @@ export default function CoursesExplorer() {
                   borderRadius: "var(--radius-lg)",
                   padding: "26px 22px",
                   position: "sticky",
-                  top: 92,
+                  top: 126,
                 }}
               >
                 <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>
@@ -164,6 +249,46 @@ export default function CoursesExplorer() {
                     <Icon name="whatsapp" size={15} /> WhatsApp Us
                   </a>
                 </div>
+
+                <div style={{ borderTop: "1px solid var(--line)", margin: "22px 0 14px" }} />
+                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                  Connected Study Hub
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {slidesDeck && (
+                    <a
+                      href={slidesDeck.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pill pill-sm"
+                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                    >
+                      <Icon name="play" size={13} /> Google Slides Track Guide
+                    </a>
+                  )}
+                  {dropboxVault && (
+                    <a
+                      href={dropboxVault.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pill pill-sm"
+                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                    >
+                      <Icon name="download" size={13} /> Dropbox Vault (19 PDFs)
+                    </a>
+                  )}
+                  {notionHub && (
+                    <a
+                      href={notionHub.curriculum_url || notionHub.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pill pill-sm"
+                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                    >
+                      <Icon name="book" size={13} /> Notion Curriculum Guide
+                    </a>
+                  )}
+                </div>
               </div>
             </aside>
 
@@ -204,16 +329,18 @@ export default function CoursesExplorer() {
                       style={{ overflow: "hidden", display: "flex", flexDirection: "column", cursor: "pointer", animation: `fadeUp 0.5s ease ${i * 0.05}s both` }}
                       onClick={() => openCourse(course)}
                     >
-                      {/* Header - photo + course-tone overlay */}
-                      <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                      {/* Header, photo + course-tone overlay */}
+                      <div style={{ background: "var(--navy)", padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
                         <Image
-                          src={course.img}
+                          src={imageFor(course)}
                           alt=""
                           fill
                           sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
                           style={{ objectFit: "cover" }}
                         />
-                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${course.color[0]}DB, ${course.color[1]}A8)` }} />
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.68) 0%, rgba(0,35,51,0.38) 58%, rgba(1,58,79,0.2) 100%)" }} />
+                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${course.color[0]}3D, transparent 68%)` }} />
+                        <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }} />
                         <span
                           className="pill pill-sm"
                           style={{ position: "absolute", top: 14, right: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
@@ -246,7 +373,10 @@ export default function CoursesExplorer() {
 
                       {/* Body */}
                       <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
-                        <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
+                        <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 6 }}>{course.title}</h3>
+                        <p style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                          {org.courseCredit}
+                        </p>
                         <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.65, marginBottom: 18, flex: 1 }}>{course.desc}</p>
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
                           <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
@@ -263,11 +393,11 @@ export default function CoursesExplorer() {
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
                             className="btn btn-outline btn-sm"
-                            title="Download course details"
-                            aria-label={`Download ${course.title} details`}
+                            title={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
+                            aria-label={user ? `Download ${course.title} handbook` : `Request the ${course.title} handbook on WhatsApp`}
                             style={{ cursor: "pointer", padding: "10px 16px" }}
                           >
-                            <Icon name="download" size={16} />
+                            <Icon name={user ? "download" : "lock"} size={16} />
                           </button>
                         </div>
                       </div>
@@ -281,19 +411,61 @@ export default function CoursesExplorer() {
       </section>
 
       {/* MODAL */}
+      {lockedCourse && (
+        <div className="overlay" onClick={() => setLockedCourse(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+            <div style={{ padding: "34px 32px 30px", textAlign: "center" }}>
+              <span className="course-lock-ico"><Icon name="book" size={26} strokeWidth={1.8} /></span>
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "var(--ink)", marginBottom: 8 }}>
+                The handbook is one message away
+              </h3>
+              <p style={{ fontSize: 13.5, color: "var(--body)", lineHeight: 1.65, marginBottom: 22 }}>
+                The objectives and full outline of {lockedCourse.title} are free to read here. Message us on
+                WhatsApp with the course name and we will send the PDF handbook straight back, no account needed.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+                <a
+                  href={`${org.whatsapp}?text=${encodeURIComponent(
+                    `Hi CHRISCO, please send me the handbook for ${lockedCourse.title}.`
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-green btn-sm"
+                  style={{ textDecoration: "none" }}
+                >
+                  <Icon name="whatsapp" size={15} /> Request on WhatsApp
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setLockedCourse(null)}
+                  className="btn btn-outline btn-sm"
+                  style={{ cursor: "pointer" }}
+                >
+                  Keep reading
+                </button>
+              </div>
+              <Link href="/sign-in" className="course-lock-dismiss">
+                I already have an account, sign me in
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            {/* Header - photo + course-tone overlay */}
-            <div style={{ background: `linear-gradient(135deg, ${selected.color[0]}, ${selected.color[1]})`, padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
+            {/* Header, photo + course-tone overlay */}
+            <div style={{ background: "var(--navy)", padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
               <Image
-                src={selected.img}
+                src={imageFor(selected)}
                 alt=""
                 fill
                 sizes="(min-width: 640px) 600px, 92vw"
                 style={{ objectFit: "cover" }}
               />
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${selected.color[0]}DB, ${selected.color[1]}A8)` }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.68) 0%, rgba(0,35,51,0.38) 58%, rgba(1,58,79,0.2) 100%)" }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${selected.color[0]}3D, transparent 68%)` }} />
               <span
                 className="pill pill-sm"
                 style={{ position: "absolute", top: 18, right: 18, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
@@ -319,6 +491,9 @@ export default function CoursesExplorer() {
                 </div>
                 <div>
                   <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: "1.4rem" }}>{selected.title}</h2>
+                  <p style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: "0.04em", color: "rgba(255,255,255,0.72)", marginTop: 8 }}>
+                    {org.courseCredit}
+                  </p>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
                     <span className="modal-chip">{selected.level}</span>
                     <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="clock" size={12} strokeWidth={2.2} /> {selected.duration}</span>
@@ -332,9 +507,22 @@ export default function CoursesExplorer() {
             <div style={{ padding: "28px 32px 32px" }}>
               <p style={{ color: "var(--body)", lineHeight: 1.7, marginBottom: 24 }}>{selected.desc}</p>
 
-              {/* Syllabus */}
+              {/* Objectives */}
               <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
-                <Icon name="clipboard" size={18} style={{ color: "var(--green-deep)" }} /> Course Syllabus
+                <Icon name="target" size={18} style={{ color: "var(--green-deep)" }} /> Course Objectives
+              </h3>
+              <ul className="course-objectives">
+                {(selected.objectives || []).map((objective) => (
+                  <li key={objective}>
+                    <Icon name="checkCircle" size={15} strokeWidth={2.1} />
+                    <span>{objective}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Outline */}
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
+                <Icon name="clipboard" size={18} style={{ color: "var(--green-deep)" }} /> Course Outline
               </h3>
               <div style={{ background: "#F4F6F4", borderRadius: 16, padding: "6px 18px", marginBottom: 24 }}>
                 {selected.syllabus.map((item, i) => (
@@ -363,12 +551,43 @@ export default function CoursesExplorer() {
                 ))}
               </div>
 
+              <div className="course-handbook-note">
+                <Icon name="book" size={15} strokeWidth={2} />
+                <span>
+                  {user
+                    ? "Your handbook PDF is available with the download button below."
+                    : "Want the PDF handbook? Message us on WhatsApp with the course name."}
+                </span>
+                {!user && (
+                  <a
+                    href={`${org.whatsapp}?text=${encodeURIComponent(
+                      `Hi CHRISCO, please send me the handbook for ${selected?.title || "this course"}.`
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="course-handbook-link"
+                    style={{ textDecoration: "none" }}
+                  >
+                    Request it
+                  </a>
+                )}
+              </div>
+
               {/* Who for */}
               <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 10, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
                 <Icon name="target" size={18} style={{ color: "var(--green-deep)" }} /> Who Is This For?
               </h3>
-              <div style={{ background: "var(--green-tint)", borderRadius: 14, padding: "16px 18px", marginBottom: 26 }}>
-                <p style={{ color: "var(--green-deep)", fontSize: 14, lineHeight: 1.65, fontWeight: 500 }}>{selected.for}</p>
+              <div
+                style={{
+                  background: "var(--layer-1)",
+                  border: "1px solid var(--line)",
+                  borderLeft: "3px solid var(--green-deep)",
+                  borderRadius: 14,
+                  padding: "16px 18px",
+                  marginBottom: 26,
+                }}
+              >
+                <p style={{ color: "var(--body)", fontSize: 14, lineHeight: 1.65, fontWeight: 500 }}>{selected.for}</p>
               </div>
 
               {/* Actions */}
@@ -384,11 +603,11 @@ export default function CoursesExplorer() {
                   <button
                     onClick={() => handleDownload(selected)}
                     className="btn btn-outline"
-                    title="Download course details"
-                    aria-label="Download course details"
+                    title={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
+                    aria-label={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
                     style={{ cursor: "pointer", padding: "14px 18px" }}
                   >
-                    <Icon name="download" size={17} />
+                    <Icon name={user ? "download" : "lock"} size={17} />
                   </button>
                   <button
                     onClick={() => setSelected(null)}
@@ -436,19 +655,22 @@ export default function CoursesExplorer() {
 
               {/* Success */}
               {sent && (
-                <div style={{ textAlign: "center", background: "var(--green-tint)", border: "1.5px solid rgba(0,255,132,0.6)", borderRadius: 20, padding: "40px 24px" }}>
+                <div style={{ textAlign: "center", background: "var(--layer-1)", border: "1px solid var(--line)", borderRadius: 20, padding: "32px 24px" }}>
                   <span style={{ display: "inline-flex", width: 72, height: 72, borderRadius: "50%", background: "#fff", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "var(--shadow-sm)" }}>
                     <Icon name="checkCircle" size={38} strokeWidth={1.6} />
                   </span>
-                  <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.3rem", fontWeight: 800, color: "var(--green-deep)", marginBottom: 8 }}>
-                    Enrollment Sent!
+                  <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.3rem", fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>
+                    We Have Received Your Application!
                   </h3>
-                  <p style={{ color: "var(--green-deep)", fontSize: 14, marginBottom: 20 }}>
-                    Wambete will contact you soon on WhatsApp or Email. Welcome to CHRISCO Digital Academy!
+                  <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 16 }}>
+                    Your application for <strong>{selected.title}</strong> has been saved to our database and an automated confirmation from <strong>{org.email}</strong> is below.
                   </p>
-                  <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
-                    Close
-                  </button>
+                  {enrollReceipt && <AutoReplyReceipt receipt={enrollReceipt} />}
+                  <div style={{ marginTop: 18 }}>
+                    <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
+                      Close
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

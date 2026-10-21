@@ -3,12 +3,14 @@ import { useState } from "react"
 import Link from "next/link"
 import { useAuth } from "../AuthProvider"
 import AuthShell from "../components/AuthShell"
+import GoogleAuthModal from "../components/GoogleAuthModal"
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: "", password: "" })
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const { signIn } = useAuth()
+  const [googleModalOpen, setGoogleModalOpen] = useState(false)
+  const { signIn, signInWithGoogle, previewMode } = useAuth()
 
   async function handleLogin() {
     if (!form.email || !form.password) {
@@ -23,6 +25,26 @@ export default function SignIn() {
       setError(err.message || "Invalid email or password.")
       setLoading(false)
     }
+  }
+
+  async function handleGoogle() {
+    setError("")
+    setLoading(true)
+    try {
+      const res = await signInWithGoogle("/dashboard")
+      if (res?.openModal) {
+        setLoading(false)
+        setGoogleModalOpen(true)
+      }
+    } catch (err) {
+      setError(err.message || "Google sign-in is not available right now.")
+      setLoading(false)
+    }
+  }
+
+  async function handleGoogleModalComplete(account) {
+    await signInWithGoogle("/dashboard", account)
+    setGoogleModalOpen(false)
   }
 
   function handleKey(e) {
@@ -42,11 +64,25 @@ export default function SignIn() {
         </Link>
       </p>
 
+      {previewMode && (
+        <div className="auth-preview-note">
+          <strong>Preview mode.</strong> Supabase keys are not set, so accounts are stored in this browser only.
+          Sign up once, then sign in with the same details.
+        </div>
+      )}
+
       {error && (
         <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, textAlign: "center" }}>
           {error}
         </div>
       )}
+
+      <button type="button" onClick={handleGoogle} disabled={loading} className="btn btn-outline btn-block auth-google">
+        <span className="auth-google-mark">G</span> Continue with Google
+      </button>
+      <div className="auth-or">
+        <span /> or with email <span />
+      </div>
 
       <div className="field">
         <label>Email address</label>
@@ -70,6 +106,13 @@ export default function SignIn() {
       <Link href="/" className="btn btn-outline btn-block" style={{ textDecoration: "none" }}>
         ← Back to homepage
       </Link>
+
+      <GoogleAuthModal
+        open={googleModalOpen}
+        onClose={() => setGoogleModalOpen(false)}
+        onComplete={handleGoogleModalComplete}
+        mode="signin"
+      />
     </AuthShell>
   )
 }

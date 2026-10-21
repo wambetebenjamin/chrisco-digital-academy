@@ -1,9 +1,14 @@
 import Link from "next/link"
 import Icon from "./Icon"
+import { org } from "../data/org"
 
 const exploreLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
+  { label: "Meet Our Tutor", href: "/about#tutor" },
+  { label: "Become a Tutor", href: "/become-a-tutor" },
+  { label: "PURSUE Shop", href: "/shop" },
+  { label: "Affiliate Programme", href: "/affiliates" },
   { label: "Courses", href: "/courses" },
   { label: "Contact", href: "/contact" },
   { label: "Dashboard", href: "/dashboard" },
@@ -27,7 +32,7 @@ export default function Footer() {
         color: "rgba(255,255,255,0.6)",
         position: "relative",
         overflow: "hidden",
-        borderTop: "3px solid var(--green)",
+        borderTop: "1px solid rgba(255,255,255,0.1)",
       }}
     >
       {/* Ghost wordmark */}
@@ -67,7 +72,6 @@ export default function Footer() {
                   fontFamily: "var(--font-display)",
                   fontSize: "1.15rem",
                   color: "var(--navy)",
-                  transform: "rotate(-4deg)",
                   flexShrink: 0,
                 }}
               >
@@ -83,8 +87,8 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ fontSize: 14, lineHeight: 1.75, marginTop: 20, maxWidth: 320 }}>
-              A youth-focused learning platform under CHRISCO Youth Aflame - equipping young Africans with practical
-              digital skills that open real doors.
+              The learning platform of CHRISCO Youth Aflame, operating under CHRISCO Fellowship of Churches
+              International, equipping young Africans with practical digital skills that open real doors.
             </p>
             <div style={{ display: "flex", gap: 8, marginTop: 24, flexWrap: "wrap" }}>
               {socials.map((s) => (
@@ -129,20 +133,20 @@ export default function Footer() {
             <ul className="footer-list footer-contact">
               <li>
                 <span className="footer-contact-icon"><Icon name="mail" size={15} /></span>
-                <a href="mailto:shambetz@gmail.com" className="footer-link" style={{ wordBreak: "break-all" }}>
-                  shambetz@gmail.com
+                <a href={`mailto:${org.email}`} className="footer-link" style={{ wordBreak: "break-all" }}>
+                  {org.email}
                 </a>
               </li>
               <li>
-                <span className="footer-contact-icon"><Icon name="phone" size={15} /></span>
-                <span>+254 112 272 061</span>
-              </li>
-              <li>
-                <span className="footer-contact-icon"><Icon name="pin" size={15} /></span>
-                <span>Jinja, Uganda</span>
+                <a href={`tel:${org.phone}`} className="footer-contact-icon" aria-label="Call CHRISCO Digital Academy">
+                  <Icon name="phone" size={15} />
+                </a>
+                <a href={org.whatsapp} className="footer-link" aria-label="Chat with us on WhatsApp">
+                  <Icon name="whatsapp" size={15} />
+                </a>
               </li>
             </ul>
-            <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
+            <a href={org.whatsapp} className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
               <Icon name="whatsapp" size={15} /> WhatsApp Us
             </a>
           </div>
@@ -150,9 +154,9 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="footer-bottom">
-          <span>© 2026 CHRISCO Digital Academy. All Rights Reserved.</span>
+          <span>© 2026 CHRISCO Youth Aflame. All Rights Reserved.</span>
           <span className="footer-bottom-right">
-            <span>Founded by Wambete Benjamin · Jinja, Uganda</span>
+            <span>{org.ownership}</span>
             <a href="#" className="footer-top-link">
               Back to top ↑
             </a>
