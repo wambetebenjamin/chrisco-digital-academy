@@ -6,7 +6,11 @@ import Link from "next/link"
 import Icon from "../components/Icon"
 import { courses, categories, categoryCounts, imageFor } from "../data/courses"
 import { org } from "../data/org"
+import { CONNECTED_RESOURCES } from "../data/connectedResources"
 import { useAuth } from "../AuthProvider"
+import { readRef } from "../lib/referral"
+import { submitAcademyIntake } from "../lib/intakeClient"
+import AutoReplyReceipt from "../components/AutoReplyReceipt"
 
 const SERVICE_ID = "service_m86zbad"
 const TEMPLATE_ID = "template_i5wg4c8"
@@ -23,7 +27,22 @@ export default function CoursesExplorer() {
   const [category, setCategory] = useState("All")
   const [level, setLevel] = useState("All")
   const [lockedCourse, setLockedCourse] = useState(null)
-  const { user } = useAuth()
+  const [enrollReceipt, setEnrollReceipt] = useState(null)
+  const { user, profile, enrollCourse } = useAuth() || {}
+
+  const slidesDeck = CONNECTED_RESOURCES.find((r) => r.connector === "google_slides")
+  const dropboxVault = CONNECTED_RESOURCES.find((r) => r.connector === "dropbox")
+  const notionHub = CONNECTED_RESOURCES.find((r) => r.connector === "notion")
+
+  useEffect(() => {
+    if (user || profile) {
+      setForm((prev) => ({
+        ...prev,
+        name: prev.name || profile?.name || user?.user_metadata?.name || user?.name || "",
+        email: prev.email || user?.email || profile?.email || "",
+      }))
+    }
+  }, [user, profile])
 
   const counts = categoryCounts()
 
@@ -75,16 +94,31 @@ export default function CoursesExplorer() {
     if (!form.name || !form.phone) return
     setSending(true)
     try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: form.email,
+      if (user && enrollCourse) {
+        await enrollCourse(course.title, {
+          id: course.id,
+          category: course.category,
+          level: course.level,
+          phone: form.phone,
+        })
+      }
+      const res = await submitAcademyIntake({
+        action: "course_application",
+        name: form.name,
+        email: form.email || user?.email || org.email,
         phone: form.phone,
-        message: `Enrollment Request for: ${course.title}\nLevel: ${course.level}\nDuration: ${course.duration}`,
-      }, PUBLIC_KEY)
+        course_title: course.title,
+        course_id: course.id,
+        category: course.category,
+        level: course.level,
+        user_id: user?.id || null,
+        ref: readRef() || null,
+        message: `Enrollment Request for: ${course.title}\nLevel: ${course.level}\nDuration: ${course.duration}\nPhone: ${form.phone}`,
+      })
+      setEnrollReceipt(res?.auto_reply || null)
       setSent(true)
-      setForm({ name: "", email: "", phone: "" })
     } catch {
-      alert("Failed to send. Please email chriscoyouthaflame2025@gmail.com directly.")
+      alert(`Failed to send. Please email ${org.email} directly.`)
     }
     setSending(false)
   }
@@ -106,6 +140,7 @@ export default function CoursesExplorer() {
     setSelected(course)
     setEnrolling(null)
     setSent(false)
+    setEnrollReceipt(null)
   }
 
   function clearFilters() {
@@ -213,6 +248,46 @@ export default function CoursesExplorer() {
                   <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ textDecoration: "none", width: "100%" }}>
                     <Icon name="whatsapp" size={15} /> WhatsApp Us
                   </a>
+                </div>
+
+                <div style={{ borderTop: "1px solid var(--line)", margin: "22px 0 14px" }} />
+                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                  Connected Study Hub
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {slidesDeck && (
+                    <a
+                      href={slidesDeck.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pill pill-sm"
+                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                    >
+                      <Icon name="play" size={13} /> Google Slides Track Guide
+                    </a>
+                  )}
+                  {dropboxVault && (
+                    <a
+                      href={dropboxVault.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pill pill-sm"
+                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                    >
+                      <Icon name="download" size={13} /> Dropbox Vault (19 PDFs)
+                    </a>
+                  )}
+                  {notionHub && (
+                    <a
+                      href={notionHub.curriculum_url || notionHub.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pill pill-sm"
+                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                    >
+                      <Icon name="book" size={13} /> Notion Curriculum Guide
+                    </a>
+                  )}
                 </div>
               </div>
             </aside>
@@ -580,19 +655,22 @@ export default function CoursesExplorer() {
 
               {/* Success */}
               {sent && (
-                <div style={{ textAlign: "center", background: "var(--layer-1)", border: "1px solid var(--line)", borderRadius: 20, padding: "40px 24px" }}>
+                <div style={{ textAlign: "center", background: "var(--layer-1)", border: "1px solid var(--line)", borderRadius: 20, padding: "32px 24px" }}>
                   <span style={{ display: "inline-flex", width: 72, height: 72, borderRadius: "50%", background: "#fff", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "var(--shadow-sm)" }}>
                     <Icon name="checkCircle" size={38} strokeWidth={1.6} />
                   </span>
                   <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.3rem", fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>
-                    Enrollment Sent!
+                    We Have Received Your Application!
                   </h3>
-                  <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 20 }}>
-                    Our team at CHRISCO Youth Aflame will contact you soon on WhatsApp or email. Welcome to CHRISCO Digital Academy!
+                  <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 16 }}>
+                    Your application for <strong>{selected.title}</strong> has been saved to our database and an automated confirmation from <strong>{org.email}</strong> is below.
                   </p>
-                  <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
-                    Close
-                  </button>
+                  {enrollReceipt && <AutoReplyReceipt receipt={enrollReceipt} />}
+                  <div style={{ marginTop: 18 }}>
+                    <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
+                      Close
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

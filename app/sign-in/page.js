@@ -3,11 +3,13 @@ import { useState } from "react"
 import Link from "next/link"
 import { useAuth } from "../AuthProvider"
 import AuthShell from "../components/AuthShell"
+import GoogleAuthModal from "../components/GoogleAuthModal"
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: "", password: "" })
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [googleModalOpen, setGoogleModalOpen] = useState(false)
   const { signIn, signInWithGoogle, previewMode } = useAuth()
 
   async function handleLogin() {
@@ -29,11 +31,20 @@ export default function SignIn() {
     setError("")
     setLoading(true)
     try {
-      await signInWithGoogle("/dashboard")
+      const res = await signInWithGoogle("/dashboard")
+      if (res?.openModal) {
+        setLoading(false)
+        setGoogleModalOpen(true)
+      }
     } catch (err) {
       setError(err.message || "Google sign-in is not available right now.")
       setLoading(false)
     }
+  }
+
+  async function handleGoogleModalComplete(account) {
+    await signInWithGoogle("/dashboard", account)
+    setGoogleModalOpen(false)
   }
 
   function handleKey(e) {
@@ -66,16 +77,12 @@ export default function SignIn() {
         </div>
       )}
 
-      {!previewMode && (
-        <>
-          <button type="button" onClick={handleGoogle} disabled={loading} className="btn btn-outline btn-block auth-google">
-            <span className="auth-google-mark">G</span> Continue with Google
-          </button>
-          <div className="auth-or">
-            <span /> or with email <span />
-          </div>
-        </>
-      )}
+      <button type="button" onClick={handleGoogle} disabled={loading} className="btn btn-outline btn-block auth-google">
+        <span className="auth-google-mark">G</span> Continue with Google
+      </button>
+      <div className="auth-or">
+        <span /> or with email <span />
+      </div>
 
       <div className="field">
         <label>Email address</label>
@@ -99,6 +106,13 @@ export default function SignIn() {
       <Link href="/" className="btn btn-outline btn-block" style={{ textDecoration: "none" }}>
         ← Back to homepage
       </Link>
+
+      <GoogleAuthModal
+        open={googleModalOpen}
+        onClose={() => setGoogleModalOpen(false)}
+        onComplete={handleGoogleModalComplete}
+        mode="signin"
+      />
     </AuthShell>
   )
 }

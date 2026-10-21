@@ -5,6 +5,7 @@ import Icon from "../components/Icon"
 import { readMyCode, saveMyCode, codeFromName, buildRefLink, normaliseCode, readRef, COMMISSION_RATE } from "../lib/referral"
 import { readUsers } from "../lib/previewAuth"
 import { courses } from "../data/courses"
+import { registerAffiliateInBackend, fetchAcademyOverview } from "../lib/intakeClient"
 
 const DESTINATIONS = [
   { label: "Homepage", path: "/" },
@@ -35,6 +36,22 @@ export default function AffiliatesClient() {
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [])
 
+  useEffect(() => {
+    if (!code) return
+    fetchAcademyOverview({ affiliate_code: code })
+      .then((res) => {
+        const remoteRefs = res?.affiliateStats?.referrals || []
+        if (remoteRefs.length > 0) {
+          setReferrals((prev) => {
+            const seen = new Set(prev.map((p) => p.email || p.id))
+            const extra = remoteRefs.filter((r) => !seen.has(r.email || r.id))
+            return [...prev, ...extra]
+          })
+        }
+      })
+      .catch(() => {})
+  }, [code])
+
   const link = useMemo(
     () => (code ? buildRefLink(code, destination) : ""),
     [code, destination]
@@ -42,12 +59,18 @@ export default function AffiliatesClient() {
 
   function generate() {
     const generated = codeFromName(name || "chrisco")
-    setCode(saveMyCode(generated))
+    const saved = saveMyCode(generated)
+    setCode(saved)
+    registerAffiliateInBackend({ code: saved, name: name || "CHRISCO Affiliate" }).catch(() => {})
   }
 
   function applyCustom(value) {
     const clean = normaliseCode(value)
-    setCode(saveMyCode(clean))
+    const saved = saveMyCode(clean)
+    setCode(saved)
+    if (saved.length >= 3) {
+      registerAffiliateInBackend({ code: saved, name: name || saved }).catch(() => {})
+    }
   }
 
   async function copy(text, key) {

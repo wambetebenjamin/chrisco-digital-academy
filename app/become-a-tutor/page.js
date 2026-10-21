@@ -7,6 +7,7 @@ import PhotoHero from "../components/PhotoHero"
 import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 import { org, tutor } from "../data/org"
+import TutorApplicationForm from "./TutorApplicationForm"
 
 export const metadata = {
   title: "Become a Tutor",
@@ -167,10 +168,10 @@ export default function BecomeATutor() {
         </div>
       </section>
 
-      {/* ORGANISATION NOTE */}
+      {/* ORGANISATION NOTE & DIRECT APPLICATION */}
       <section className="section-tight section-frost-deep">
         <div className="container">
-          <div className="tutor-org">
+          <div className="tutor-org" style={{ marginBottom: 36 }}>
             <span className="tutor-req-ico"><Icon name="flame" size={18} strokeWidth={1.9} /></span>
             <div>
               <div className="tutor-org-title">Who you would be teaching with</div>
@@ -181,6 +182,8 @@ export default function BecomeATutor() {
               </p>
             </div>
           </div>
+
+          <TutorApplicationForm />
         </div>
       </section>
 

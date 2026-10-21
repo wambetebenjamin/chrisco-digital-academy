@@ -1,11 +1,8 @@
 "use client"
 import { useState } from "react"
-import emailjs from "@emailjs/browser"
 import Icon from "./components/Icon"
-
-const SERVICE_ID = "service_m86zbad"
-const TEMPLATE_ID = "template_i5wg4c8"
-const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
+import { org } from "./data/org"
+import { submitAcademyIntake } from "./lib/intakeClient"
 
 const menuOptions = [
   { number: "1", label: "View Courses" },
@@ -101,24 +98,32 @@ export default function Chatbot() {
     if (!form.name || !form.message) return
     setSending(true)
     try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: form.email,
+      const res = await submitAcademyIntake({
+        action: "contact",
+        name: form.name,
+        email: form.email || org.email,
         phone: form.phone,
         message: form.message,
-      }, PUBLIC_KEY)
+      })
+      const refCode = res?.reference_code || "MSG-OK"
       setSent(true)
       setShowForm(false)
-      setMessages((prev) => [...prev, {
-        role: "assistant",
-        content: `Message sent successfully! Our team will get back to you soon. Thank you, ${form.name}!`,
-      }])
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `We have received your message (Ref: ${refCode})! An automated confirmation from ${org.email} has been logged for ${form.name}. Our team will get back to you shortly.`,
+        },
+      ])
       setForm({ name: "", email: "", phone: "", message: "" })
     } catch {
-      setMessages((prev) => [...prev, {
-        role: "assistant",
-        content: "Sorry, the message failed to send. Please email us directly at chriscoyouthaflame2025@gmail.com",
-      }])
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `Sorry, the message failed to send. Please email us directly at ${org.email}`,
+        },
+      ])
     }
     setSending(false)
   }

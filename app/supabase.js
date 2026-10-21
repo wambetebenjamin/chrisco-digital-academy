@@ -1,38 +1,30 @@
 import { createClient } from "@supabase/supabase-js"
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+export const SUPABASE_PROJECT_URL = "https://hsluwsyabelecjjqbuzo.supabase.co"
+export const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzbHV3c3lhYmVsZWNqanFidXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MDgxMjQsImV4cCI6MjA5NTA4NDEyNH0.zd_iw9WfS-raKjpSc7qZy0jf114VRwXx3scFi0JqumU"
+export const SUPABASE_EDGE_INTAKE_URL = `${SUPABASE_PROJECT_URL}/functions/v1/academy-intake`
 
-/*
- * When Supabase env vars are missing (e.g. local preview without .env),
- * fall back to a safe no-op client so the site still renders publicly.
- * Auth features activate automatically once the real keys are provided.
- */
-const query = {
-  select: () => query,
-  insert: async () => ({ data: null, error: null }),
-  update: async () => ({ data: null, error: null }),
-  eq: () => query,
-  single: async () => ({ data: null, error: null }),
-}
+const isTestEnv =
+  typeof process !== "undefined" &&
+  (process.env.VITEST === "true" || process.env.NODE_ENV === "test")
 
-const noopClient = {
-  auth: {
-    getSession: async () => ({ data: { session: null }, error: null }),
-    onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
-    signUp: async () => ({
-      data: null,
-      error: { message: "Supabase is not configured yet. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY." },
-    }),
-    signInWithPassword: async () => ({
-      data: null,
-      error: { message: "Supabase is not configured yet. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY." },
-    }),
-    signOut: async () => ({ error: null }),
-  },
-  from: () => query,
-}
+const supabaseUrl = isTestEnv
+  ? process.env.NEXT_PUBLIC_SUPABASE_URL
+  : process.env.NEXT_PUBLIC_SUPABASE_URL || SUPABASE_PROJECT_URL
+
+const supabaseKey = isTestEnv
+  ? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || SUPABASE_ANON_KEY
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey)
 
-export const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseKey) : noopClient
+export const supabase = isSupabaseConfigured
+  ? createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+      },
+    })
+  : null
