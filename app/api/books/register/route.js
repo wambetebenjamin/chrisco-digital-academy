@@ -16,7 +16,7 @@ export async function GET() {
   const verified = verifyBookAccessToken(raw)
   if (!verified) {
     return NextResponse.json(
-      { ok: true, registered: false },
+      { ok: true, registered: false, authenticated: false },
       { headers: { "Cache-Control": "private, no-store" } }
     )
   }
@@ -24,6 +24,7 @@ export async function GET() {
     {
       ok: true,
       registered: true,
+      authenticated: true,
       maskedEmail: verified.me || "",
       consentVersion: verified.cv || CONSENT_POLICY_VERSION,
     },
@@ -47,34 +48,29 @@ export async function POST(request) {
 
     const body = await request.json()
 
-    // Anti-bot honeypot check
     if (body?.website && String(body.website).trim() !== "") {
       return NextResponse.json({ ok: false, error: "Invalid submission." }, { status: 400 })
     }
 
     const email = String(body?.email || "").trim().toLowerCase()
-    if (!isValidReaderEmail(email)) {
-      return NextResponse.json(
-        { ok: false, error: "Please enter a valid email address to unlock book downloads." },
-        { status: 400 }
-      )
-    }
+    const userId = String(body?.userId || "").trim()
+    const authenticatedAccount = Boolean(body?.authenticatedAccount)
 
-    // Enforce explicit Privacy & Data Protection consent unless syncing an already signed-in account
-    const autoSessionSync = Boolean(body?.autoSessionSync)
-    const privacyConsent = Boolean(body?.privacyConsent)
-    if (!autoSessionSync && !privacyConsent) {
+    // Strict Account-Only Download Gate:
+    // Visitors must create an account and sign in (no guest email-only downloads).
+    if (!authenticatedAccount || !userId || !isValidReaderEmail(email)) {
       return NextResponse.json(
         {
           ok: false,
           error:
-            "Please confirm that you agree to our Privacy & Data Protection Policy before registering.",
+            "Please create an account and sign in to download Christian books and course handbooks.",
         },
-        { status: 400 }
+        { status: 401 }
       )
     }
 
     const token = signBookAccessToken({
+      userId,
       email,
       consentVersion: CONSENT_POLICY_VERSION,
     })
@@ -83,6 +79,7 @@ export async function POST(request) {
       {
         ok: true,
         registered: true,
+        authenticated: true,
         maskedEmail: maskEmail(email),
         consentVersion: CONSENT_POLICY_VERSION,
         registeredAt: new Date().toISOString(),
@@ -102,7 +99,7 @@ export async function POST(request) {
     return res
   } catch {
     return NextResponse.json(
-      { ok: false, error: "Invalid registration request." },
+      { ok: false, error: "Invalid session sync request." },
       { status: 400 }
     )
   }
@@ -111,7 +108,7 @@ export async function POST(request) {
 export async function DELETE(request) {
   const opts = buildAccessCookieOptions(request)
   const res = NextResponse.json(
-    { ok: true, registered: false, message: "Your saved reader cookie has been cleared." },
+    { ok: true, registered: false, authenticated: false, message: "Your book session cookie has been cleared." },
     { headers: { "Cache-Control": "private, no-store" } }
   )
   res.cookies.set(BOOK_ACCESS_COOKIE, "", {

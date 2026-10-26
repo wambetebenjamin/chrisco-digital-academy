@@ -7,11 +7,40 @@ import PhotoHero from "../components/PhotoHero"
 import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 import CoursesExplorer from "./CoursesExplorer"
+import { courses } from "../data/courses"
+import { getBookByCourse } from "../data/booksCatalogue"
+import { resolveServerOrigin, buildSocialMetadata } from "../lib/siteOrigin"
 
-export const metadata = {
-  title: "Courses",
-  description:
-    "Browse 19 practical, income-focused digital courses, graphic design, coding, marketing, writing, video and AI. Beginner-friendly, certificate included, available online and in person.",
+export const dynamic = "force-dynamic"
+
+export async function generateMetadata({ searchParams }) {
+  const origin = await resolveServerOrigin()
+  const sp = (await searchParams) || {}
+  const courseId = sp.course ? String(sp.course) : ""
+  const matchedCourse = courseId
+    ? courses.find((c) => String(c.id) === courseId)
+    : null
+  const matchedBook = matchedCourse ? getBookByCourse(matchedCourse) : null
+
+  if (matchedCourse && matchedBook) {
+    return buildSocialMetadata({
+      origin,
+      title: `${matchedCourse.title} Course & 28-Page Handbook`,
+      description: `${matchedCourse.desc} Enroll free or sign in with Google/Email to download & save the 28-page illustrated handbook.`,
+      path: `/courses?course=${matchedCourse.id}`,
+      bannerPath: matchedBook.ogImage,
+      squarePath: matchedBook.ogSquareImage,
+    })
+  }
+
+  return buildSocialMetadata({
+    origin,
+    title: "19 Practical Digital Skills Courses | CHRISCO Digital Academy",
+    description:
+      "Browse 19 practical, income-focused digital courses in coding, AI literacy, marketing, writing, video, and leadership. Beginner-friendly, certificate included.",
+    path: "/courses",
+    bannerPath: "/og/courses.jpg",
+  })
 }
 
 const heroPills = [

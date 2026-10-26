@@ -65,7 +65,7 @@ export function buildAutoReplyReceipt({
       sender_name: `${ORG.academy} (${ORG.programme})`,
       to: email || phone || cleanName,
       recipient_name: cleanName,
-      subject: `We Have Received Your Application: ${courseName} — ${ORG.academy} (${code})`,
+      subject: `We Have Received Your Application: ${courseName} | ${ORG.academy} (${code})`,
       body:
         `Dear ${cleanName},\n\n` +
         `Thank you for applying to "${courseName}" at ${ORG.academy}, the learning platform of ${ORG.programme} (operating under ${ORG.umbrella}).\n\n` +
@@ -95,11 +95,11 @@ export function buildAutoReplyReceipt({
       sender_name: `${ORG.academy} (${ORG.programme})`,
       to: email || phone || cleanName,
       recipient_name: cleanName,
-      subject: `We Have Received Your Tutor Application (${trackName}) — ${ORG.academy} (${code})`,
+      subject: `We Have Received Your Tutor Application (${trackName}) | ${ORG.academy} (${code})`,
       body:
         `Dear ${cleanName},\n\n` +
         `Thank you for applying to become a tutor with ${ORG.academy} for the "${trackName}" track! We have received your application under reference ${code}.\n\n` +
-        `Our Lead Tutor at ${ORG.programme} reviews every application personally and will contact you at ${email || phone || "your contact details"} within 2–3 business days to arrange a short online conversation and a 30-minute sample class.\n\n` +
+        `Our Lead Tutor at ${ORG.programme} reviews every application personally and will contact you at ${email || phone || "your contact details"} within 2 to 3 business days to arrange a short online conversation and a 30-minute sample class.\n\n` +
         `If you would like to share additional portfolio links, reply to ${ORG.email} quoting Reference ${code}.\n\n` +
         `Warm regards,\n` +
         `Tutor Onboarding Team\n` +
@@ -117,13 +117,13 @@ export function buildAutoReplyReceipt({
       sender_name: `${ORG.academy} (${ORG.programme})`,
       to: email || cleanName,
       recipient_name: cleanName,
-      subject: `Thank You for Signing Up — Welcome to ${ORG.academy}! (${code})`,
+      subject: `Thank You for Signing Up: Welcome to ${ORG.academy}! (${code})`,
       body:
         `Dear ${cleanName},\n\n` +
         `Thank you for signing up with ${ORG.academy}, the learning platform of ${ORG.programme}, operating under ${ORG.umbrella}!\n\n` +
         `We have received your registration (${email || cleanName}) under reference ${code}. Your account now unlocks:\n` +
-        `• All 19 Practical Digital Skills Courses across 7 tracks\n` +
-        `• All 19 Downloadable PDF Course Handbooks & Dropbox Study Vault\n` +
+        `• Dedicated Christian & Faith E-Books plus all 19 Practical Digital Skills Courses\n` +
+        `• All 20 Downloadable 28-Page PDF E-Books & Handbooks inside your Student Dashboard\n` +
         `• Interactive Google Slides Orientation & Track Guide\n` +
         `• Notion Learner Hub & 7-Track Operations Portal\n` +
         `• Module Progress & Certificate Generator in your Dashboard\n\n` +
@@ -143,7 +143,7 @@ export function buildAutoReplyReceipt({
       sender_name: `${ORG.academy} (${ORG.programme})`,
       to: email || phone || cleanName,
       recipient_name: cleanName,
-      subject: `We Have Received Your PURSUE Merchandise Order — ${ORG.academy} (${code})`,
+      subject: `We Have Received Your PURSUE Merchandise Order | ${ORG.academy} (${code})`,
       body:
         `Dear ${cleanName},\n\n` +
         `Thank you for ordering from the ${ORG.programme} PURSUE collection! We have received your order request under reference ${code}.\n\n` +
@@ -165,14 +165,14 @@ export function buildAutoReplyReceipt({
       sender_name: `${ORG.programme} Library`,
       to: email || cleanName,
       recipient_name: cleanName,
-      subject: `Your Online Book Access Is Verified — ${ORG.programme} (${bookName})`,
+      subject: `Your Online Book Access Is Verified | ${ORG.programme} (${bookName})`,
       body:
         `Dear ${cleanName},\n\n` +
-        `Thank you for registering with your email to access "${bookName}" from ${ORG.programme} (under ${ORG.umbrella}).\n\n` +
-        `• Registered Email: ${email || cleanName}\n` +
-        `• Access Status: Verified for Christian Books & Digital Skill Handbooks\n` +
+        `Thank you for signing in with your account to access "${bookName}" from ${ORG.programme} (under ${ORG.umbrella}).\n\n` +
+        `• Account Email: ${email || cleanName}\n` +
+        `• Access Status: Verified for Christian Books & Digital Skill Handbooks (also saved in your Dashboard)\n` +
         `• Privacy Protection: Handled strictly under our Privacy & Data Protection Policy (/privacy)\n\n` +
-        `You can share any book page from /library so friends and fellowship members can visit the site, register by email, and download their own copy.\n\n` +
+        `You can share any book page from /library so friends and fellowship members can visit the site, create an account, sign in, and download their own copy.\n\n` +
         `Warm regards,\n` +
         `${ORG.programme} Editorial & Mentorship Desk\n` +
         `Email: ${ORG.email}`,
@@ -187,7 +187,7 @@ export function buildAutoReplyReceipt({
     sender_name: `${ORG.academy} (${ORG.programme})`,
     to: email || phone || cleanName,
     recipient_name: cleanName,
-    subject: `We Have Received Your Message — ${ORG.academy} (${code})`,
+    subject: `We Have Received Your Message | ${ORG.academy} (${code})`,
     body:
       `Dear ${cleanName},\n\n` +
       `Thank you for reaching out to ${ORG.academy} (${ORG.programme}). We have received your message under reference ${code}:\n\n` +

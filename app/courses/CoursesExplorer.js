@@ -14,10 +14,6 @@ import RecaptchaCheck from "../components/RecaptchaCheck"
 import BookGateModal from "../components/BookGateModal"
 import ShareBookBar from "../components/ShareBookBar"
 import { getBookByCourse } from "../data/booksCatalogue"
-import {
-  fetchServerBookAccessStatus,
-  readLocalBookReader,
-} from "../lib/bookGateClient"
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim())
@@ -38,22 +34,11 @@ export default function CoursesExplorer() {
   const [category, setCategory] = useState("All")
   const [level, setLevel] = useState("All")
   const [lockedCourse, setLockedCourse] = useState(null)
-  const [bookReader, setBookReader] = useState(null)
   const [notRobot, setNotRobot] = useState(false)
   const [enrollError, setEnrollError] = useState("")
   const { user, profile, enrollCourse } = useAuth() || {}
 
-  useEffect(() => {
-    setBookReader(readLocalBookReader())
-    if (!user?.email) {
-      fetchServerBookAccessStatus().then((st) => setBookReader(st))
-    }
-    const onReader = (e) => setBookReader(e.detail || readLocalBookReader())
-    window.addEventListener("chrisco:book-reader-updated", onReader)
-    return () => window.removeEventListener("chrisco:book-reader-updated", onReader)
-  }, [user])
-
-  const hasBookAccess = Boolean(user?.email || bookReader?.registered)
+  const hasBookAccess = Boolean(user?.email)
 
   const slidesDeck = CONNECTED_RESOURCES.find((r) => r.connector === "google_slides")
   const dropboxVault = CONNECTED_RESOURCES.find((r) => r.connector === "dropbox")
@@ -430,8 +415,8 @@ export default function CoursesExplorer() {
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
                             className="btn btn-outline btn-sm"
-                            title={hasBookAccess ? "Download course handbook" : "Register by email to download handbook"}
-                            aria-label={hasBookAccess ? `Download ${course.title} handbook` : `Register by email to download ${course.title} handbook`}
+                            title={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
+                            aria-label={hasBookAccess ? `Download ${course.title} handbook` : `Sign in to your account to download ${course.title} handbook`}
                             style={{ cursor: "pointer", padding: "10px 16px" }}
                           >
                             <Icon name={hasBookAccess ? "download" : "lock"} size={16} />
@@ -447,12 +432,11 @@ export default function CoursesExplorer() {
         </div>
       </section>
 
-      {/* EMAIL-GATED BOOK DOWNLOAD MODAL */}
+      {/* ACCOUNT-GATED BOOK DOWNLOAD MODAL */}
       {lockedCourse && (
         <BookGateModal
           book={getBookByCourse(lockedCourse)}
           onClose={() => setLockedCourse(null)}
-          onUnlocked={(newReader) => setBookReader(newReader)}
         />
       )}
 
@@ -559,8 +543,8 @@ export default function CoursesExplorer() {
                 <Icon name="book" size={15} strokeWidth={2} />
                 <span>
                   {hasBookAccess
-                    ? "Your 28-page illustrated handbook PDF is unlocked — use the download button below."
-                    : "Register once with your email to download the 28-page illustrated PDF handbook online."}
+                    ? "PDF handbook unlocked in your account and Dashboard."
+                    : "Sign in to download the PDF handbook."}
                 </span>
                 {!hasBookAccess && (
                   <button
@@ -569,7 +553,7 @@ export default function CoursesExplorer() {
                     className="course-handbook-link"
                     style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
                   >
-                    Register by email
+                    Sign in
                   </button>
                 )}
               </div>
@@ -608,8 +592,8 @@ export default function CoursesExplorer() {
                   <button
                     onClick={() => handleDownload(selected)}
                     className="btn btn-outline"
-                    title={hasBookAccess ? "Download course handbook" : "Register by email to download handbook"}
-                    aria-label={hasBookAccess ? "Download course handbook" : "Register by email to download handbook"}
+                    title={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
+                    aria-label={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
                     style={{ cursor: "pointer", padding: "14px 18px" }}
                   >
                     <Icon name={hasBookAccess ? "download" : "lock"} size={17} />

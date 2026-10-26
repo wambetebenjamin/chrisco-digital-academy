@@ -356,6 +356,9 @@ const paths = {
       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
     </>
   ),
+  bookmark: (
+    <path d="M6 3.5h12a1.5 1.5 0 0 1 1.5 1.5v16l-7.5-4.4L4.5 21V5A1.5 1.5 0 0 1 6 3.5z" />
+  ),
 }
 
 export default function Icon({ name, size = 18, strokeWidth = 1.9, style, className, ...rest }) {

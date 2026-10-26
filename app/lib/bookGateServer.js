@@ -4,12 +4,11 @@ import { CONSENT_POLICY_VERSION, maskEmail } from "../data/booksCatalogue"
 export const BOOK_ACCESS_COOKIE = "chrisco_book_access"
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 90 // 90 days
 
-// Deterministic HMAC signing key (uses env secret in production when set, with safe fallback)
 function getSigningKey() {
   return (
     process.env.BOOK_GATE_SECRET ||
     process.env.NEXTAUTH_SECRET ||
-    "chrisco-youth-aflame-book-gate-v1-hmac-2026"
+    "chrisco-youth-aflame-account-book-gate-v2-hmac-2026"
   )
 }
 
@@ -19,20 +18,30 @@ export function isValidReaderEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clean)
 }
 
-export function hashReaderEmail(email) {
-  const clean = String(email || "").trim().toLowerCase()
+export function hashIdentifier(prefix, value) {
+  const clean = String(value || "").trim().toLowerCase()
   return crypto
     .createHmac("sha256", getSigningKey())
-    .update(`email:${clean}`)
+    .update(`${prefix}:${clean}`)
     .digest("hex")
     .slice(0, 32)
 }
 
-export function signBookAccessToken({ email, consentVersion = CONSENT_POLICY_VERSION }) {
+export function signBookAccessToken({
+  userId,
+  email,
+  consentVersion = CONSENT_POLICY_VERSION,
+}) {
+  const cleanUid = String(userId || "").trim()
+  if (!cleanUid || !isValidReaderEmail(email)) {
+    throw new Error("Authenticated account userId and valid email are required.")
+  }
   const nowSec = Math.floor(Date.now() / 1000)
   const payload = {
-    v: 1,
-    eh: hashReaderEmail(email),
+    v: 2,
+    auth: 1,
+    uid: hashIdentifier("uid", cleanUid),
+    eh: hashIdentifier("email", email),
     me: maskEmail(email),
     cv: consentVersion,
     iat: nowSec,
@@ -65,7 +74,10 @@ export function verifyBookAccessToken(token) {
   try {
     const parsed = JSON.parse(Buffer.from(encoded, "base64url").toString("utf8"))
     const nowSec = Math.floor(Date.now() / 1000)
-    if (!parsed?.eh || !parsed?.exp || parsed.exp < nowSec) return null
+    // Require v2 authenticated account session (auth === 1 && uid && eh)
+    if (parsed?.auth !== 1 || !parsed?.uid || !parsed?.eh || !parsed?.exp || parsed.exp < nowSec) {
+      return null
+    }
     return parsed
   } catch {
     return null
@@ -87,12 +99,11 @@ export function buildAccessCookieOptions(request = null) {
   }
 }
 
-// Lightweight sliding-window rate limiter per IP (privacy-safe hashed IP in memory)
 const rateBuckets = new Map()
 export function checkRegistrationRateLimit(ipHeader = "unknown") {
   const now = Date.now()
   const windowMs = 10 * 60 * 1000
-  const maxReqs = 20
+  const maxReqs = 30
   const ipKey = crypto.createHash("sha256").update(String(ipHeader)).digest("hex").slice(0, 16)
   const prev = (rateBuckets.get(ipKey) || []).filter((ts) => now - ts < windowMs)
   if (prev.length >= maxReqs) {

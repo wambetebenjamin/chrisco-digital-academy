@@ -24,6 +24,25 @@ const PUBLIC_ROUTES = ["/sign-in", "/sign-up"]
 const PROTECTED_ROUTES = ["/dashboard"]
 const AUTH_GATED_ROUTES = [...PROTECTED_ROUTES, ...PUBLIC_ROUTES]
 const PROGRESS_STORAGE_KEY = "chrisco:course-progress"
+const SAVED_BOOKS_STORAGE_KEY = "chrisco:saved-books"
+
+function readSavedBooksMap() {
+  if (typeof window === "undefined") return {}
+  try {
+    return JSON.parse(window.localStorage.getItem(SAVED_BOOKS_STORAGE_KEY) || "{}")
+  } catch {
+    return {}
+  }
+}
+
+function writeSavedBooksMap(map) {
+  if (typeof window === "undefined") return
+  try {
+    window.localStorage.setItem(SAVED_BOOKS_STORAGE_KEY, JSON.stringify(map))
+  } catch {
+    /* ignore */
+  }
+}
 
 function isUuid(value) {
   return (
@@ -53,10 +72,26 @@ function writeLocalProgressMap(map) {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
+  const [savedBooks, setSavedBooks] = useState([])
   const [loading, setLoading] = useState(true)
   const [lastAutoReply, setLastAutoReply] = useState(null)
   const router = useRouter()
   const pathname = usePathname()
+
+  useEffect(() => {
+    const emailKey = String(user?.email || "").trim().toLowerCase()
+    if (!emailKey) {
+      setSavedBooks([])
+      return
+    }
+    const allSaved = readSavedBooksMap()
+    const localList = Array.isArray(allSaved[emailKey]) ? allSaved[emailKey] : []
+    const metaList = Array.isArray(user?.user_metadata?.saved_books)
+      ? user.user_metadata.saved_books
+      : []
+    const merged = Array.from(new Set([...localList, ...metaList]))
+    setSavedBooks(merged)
+  }, [user?.email])
 
   async function fetchProfile(userId, fallbackUser = null) {
     if (!isSupabaseConfigured || !supabase) return
@@ -148,7 +183,16 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (loading) return
     if (PROTECTED_ROUTES.includes(pathname) && !user) router.push("/sign-in")
-    if (user && PUBLIC_ROUTES.includes(pathname)) router.push("/dashboard")
+    if (user && PUBLIC_ROUTES.includes(pathname)) {
+      let nextDest = "/dashboard"
+      if (typeof window !== "undefined") {
+        const rawNext = new URLSearchParams(window.location.search).get("next") || ""
+        if (rawNext.startsWith("/") && !rawNext.startsWith("//")) {
+          nextDest = rawNext
+        }
+      }
+      router.push(nextDest)
+    }
   }, [user, loading, pathname])
 
   async function signUp(name, email, password) {
@@ -158,6 +202,7 @@ export function AuthProvider({ children }) {
       if (result.error) throw new Error(result.error.message)
       setUser(result.data.user)
       setProfile({ name: result.data.user.name, email: result.data.user.email })
+      await syncAuthenticatedUserBookAccess(result.data.user)
       const intake = await submitAcademyIntake({
         action: "signup_welcome",
         name,
@@ -186,6 +231,7 @@ export function AuthProvider({ children }) {
         name: name || data.user.email?.split("@")[0] || "Student",
         email: data.user.email || email,
       })
+      await syncAuthenticatedUserBookAccess(data.user)
     }
 
     const intake = await submitAcademyIntake({
@@ -206,6 +252,7 @@ export function AuthProvider({ children }) {
       if (result.error) throw new Error(result.error.message)
       setUser(result.data.user)
       setProfile({ name: result.data.user.name, email: result.data.user.email })
+      await syncAuthenticatedUserBookAccess(result.data.user)
       return result.data
     }
 
@@ -213,6 +260,7 @@ export function AuthProvider({ children }) {
     if (!error && data?.user) {
       setUser(data.user)
       fetchProfile(data.user.id, data.user)
+      await syncAuthenticatedUserBookAccess(data.user)
       return data
     }
 
@@ -221,6 +269,7 @@ export function AuthProvider({ children }) {
     if (!localAttempt.error && localAttempt.data?.user) {
       setUser(localAttempt.data.user)
       setProfile({ name: localAttempt.data.user.name, email: localAttempt.data.user.email })
+      await syncAuthenticatedUserBookAccess(localAttempt.data.user)
       return localAttempt.data
     }
 
@@ -256,6 +305,7 @@ export function AuthProvider({ children }) {
         }
         setUser(u)
         setProfile({ id: u.id, name: resolvedName, email: resolvedEmail, provider: "google" })
+        await syncAuthenticatedUserBookAccess({ id: u.id, email: resolvedEmail })
         try {
           window.localStorage.setItem(
             "chrisco:preview-session",
@@ -271,7 +321,7 @@ export function AuthProvider({ children }) {
           /* ignore */
         }
       }
-      router.push(next)
+      if (next) router.push(next)
       return { data: res.data }
     }
 
@@ -493,6 +543,45 @@ export function AuthProvider({ children }) {
     }
   }
 
+  function persistSavedBooksForEmail(emailKey, nextList) {
+    if (!emailKey) return
+    const map = readSavedBooksMap()
+    map[emailKey] = nextList
+    writeSavedBooksMap(map)
+    setSavedBooks(nextList)
+    if (isSupabaseConfigured && supabase) {
+      supabase.auth.updateUser({ data: { saved_books: nextList } }).catch(() => {})
+    }
+  }
+
+  function saveBook(slug, explicitEmail = "") {
+    const cleanSlug = String(slug || "").trim().toLowerCase()
+    const emailKey = String(explicitEmail || user?.email || "").trim().toLowerCase()
+    if (!cleanSlug || !emailKey) return false
+    const map = readSavedBooksMap()
+    const current = Array.isArray(map[emailKey]) ? map[emailKey] : savedBooks
+    const nextList = Array.from(new Set([cleanSlug, ...current]))
+    persistSavedBooksForEmail(emailKey, nextList)
+    return true
+  }
+
+  function toggleSavedBook(slug) {
+    const cleanSlug = String(slug || "").trim().toLowerCase()
+    const emailKey = String(user?.email || "").trim().toLowerCase()
+    if (!cleanSlug || !emailKey) return false
+    const exists = savedBooks.includes(cleanSlug)
+    const nextList = exists
+      ? savedBooks.filter((s) => s !== cleanSlug)
+      : [cleanSlug, ...savedBooks]
+    persistSavedBooksForEmail(emailKey, nextList)
+    return !exists
+  }
+
+  function isBookSaved(slug) {
+    const cleanSlug = String(slug || "").trim().toLowerCase()
+    return Boolean(cleanSlug && savedBooks.includes(cleanSlug))
+  }
+
   if (loading && AUTH_GATED_ROUTES.includes(pathname)) {
     return (
       <div
@@ -549,6 +638,10 @@ export function AuthProvider({ children }) {
         enrollCourse,
         getEnrollments,
         updateCourseProgress,
+        savedBooks,
+        saveBook,
+        toggleSavedBook,
+        isBookSaved,
       }}
     >
       {children}
