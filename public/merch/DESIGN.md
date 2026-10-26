@@ -1,116 +1,83 @@
 # Merchandise artwork
 
-Four collections share one print system.
+Three collections share one print system.
 
 | Collection | Artwork | Where it lives |
 | --- | --- | --- |
-| PURSUE | Sunrise warrior, golden arrow, "PURSUE / OVERTAKE RECOVER ALL / 1 Samuel 30:8" | `public/merch/source/pursue-design.png` |
-| Faith affirmations | Type only: Faith Over Fear, Chosen, Be Still, Anchored, Grace, Risen, Wonderfully Made | Set from the brand fonts by `scripts/build_merch_mockups.py` |
-| Scripture statements | 1 Samuel 30:8 as the anchor, plus 2 Corinthians 5:7, 2 Corinthians 6:2 and Matthew 4:19 | Supplied artwork in `public/merch/source/art/` plus type set by the renderer |
-| Design drops | The supplied design artwork, printed exactly as drawn (Confess & Believe, Christ Fest, Media, Be The Church, Jesus Made Us, Walk By Faith script) | `public/merch/source/art/` |
+| PURSUE | Sunrise warrior, golden arrow, "PURSUE / OVERTAKE • RECOVER ALL / 1 Samuel 30:8" | `public/merch/source/pursue-design.png` |
+| Faith affirmations | Type only: Faith Over Fear, Chosen, Be Still, Anchored, Grace, Risen, Wonderfully Made | Generated directly in the mockups |
+| Scripture statements | 1 Samuel 30:8 as the anchor, plus 2 Corinthians 5:7, 2 Corinthians 6:2 and Matthew 4:19 | Generated directly in the mockups |
 
-The supplied reference photos in `public/merch/source/refs/` are the original
-drops as the owner drew them. `public/merch/source/art/` holds the same
-artwork lifted off those photos as flat ink, so the garments print the real
-design instead of an interpretation of it.
-
-## The no-lines rule
-
-Nothing in this range carries a line. No rule lines, no underlines, no
-divider bars, no outline strokes, no engraved hatching, no badge rings, no
-hanger wires, no drawstring cords, no seam stitches and no card bars. Prints
-are solid shapes and type only; garments are shaded with soft gradients so
-edges read as fabric, not as drawing. `scripts/build_merch_mockups.py` owns
-every pixel of every mockup, which is how the rule is enforced: the renderer
-has no stroke primitive at all.
-
-If a supplied design arrives with a rule line in it, the line is dropped when
-the artwork is prepared, and `tighten()` in the renderer collapses any stray
-vertical air so a reference never floats away from its lockup.
+The supplied reference photos in `public/merch/source/refs/` are the brief for
+the scripture set, not artwork to copy: bold stacked caps, script paired with
+condensed caps, a vintage engraved badge and a heavy brush lettering piece. Each
+one is redrawn in the CHRISCO warm palette so nothing borrows a navy or red
+palette from the references.
 
 ## Palette
 
-One harmonious family of garment colours, so the whole wall of cards rhymes.
-Warm neutrals carry the gold artwork; the brand ink and deep teal carry the
-quieter pieces.
+The garments are deliberately warm so the gold artwork sits naturally, with
+white and black for the quieter pieces:
 
 | Token | Hex | Used on |
 | --- | --- | --- |
-| Cocoa | `#5A4232` | Tee, hoodie, polo, cap, journal |
-| Cream | `#EFE6D4` | Tee, hoodie, polo, mug, journal |
-| Ink | `#191A1C` | Tee, hoodie, cap |
-| Chalk | `#F6F4EF` | Tee, polo, cap, mug |
-| Sand | `#D8CCB2` | Totes, tee |
-| Deep teal | `#0E2A38` | Tote |
-
-Inks: gold `#CEA052` on dark garments, deep gold `#B08034` and espresso
-`#563C29` on light garments, cream `#F3E9D3` and charcoal `#2B2D30` where the
-supplied artwork calls for them.
-
-Card and modal surfaces stay on the site's neutral ladder (white cards, cool
-grey media wells). No brown washes, no accent bars, no hairlines on cards:
-the mockup is the only colour in a card.
-
-## Rendering mockups
-
-    .venv-merch/bin/pip install -r scripts/merch-requirements.txt
-    .venv-merch/bin/python scripts/build_merch_mockups.py
-
-The renderer draws each garment (tee, hoodie, polo, cap, tote, mug, journal)
-as filled shapes with soft shading, keys the flat backdrop out of each
-artwork, and prints the artwork into the placement box below. Output is
-1200x1500 (4:5) to match the shop cards. Adding a product is: drop the
-artwork in `public/merch/source/art/`, add a job line to `JOBS`, add the
-catalogue entry in `app/data/merch.js`.
+| Cocoa brown | `#4A342A` | Tee, hoodie, polo, cap, journal |
+| Warm cream | `#EFE3CE` | Tee, hoodie, mug, journal |
+| Black | `#111111` | Tee, hoodie |
+| White | `#FFFFFF` | Tee, polo, cap, mug |
+| Natural canvas | `#D9CDB4` | Totes |
 
 ## Placement template
 
 | Code | Product | Placement | Size on garment | Technique |
 | --- | --- | --- | --- | --- |
-| TS-01..04 | PURSUE Tee, Cocoa / Cream / Ink / Chalk | Centre chest | 430px box | Screen print |
-| TS-05 | Faith Over Fear Tee, Chalk | Centre chest | 80% box | Gold screen print |
-| TS-06 | Chosen Tee, Ink | Centre chest | 45% box | Gold screen print |
-| TS-07 | Overtake Tee, Ink | Centre chest | 86% box | Cream and gold print |
-| TS-08 | The Presence Tee, Cocoa | Centre chest | 90% box | Supplied artwork |
-| TS-09 | Walk By Faith Tee, Cocoa | Centre chest | 90% box | Supplied artwork |
-| TS-10 | Now Is The Time Tee, Cocoa | Centre chest | 90% box | Supplied artwork |
-| TS-11 | Fishers Of Men Tee, Cocoa | Centre chest | 90% box | Supplied artwork |
-| TS-12 | Confess & Believe Tee, Chalk | Centre chest | 90% box | Supplied artwork |
-| TS-13 | Christ Fest Tee, Chalk | Centre chest | 92% box | Supplied artwork |
-| TS-14 | Media Team Tee, Chalk | Centre chest | 90% box | Supplied artwork |
-| TS-15 | Be The Church Tee, Chalk | Centre chest | 90% box | Supplied artwork |
-| TS-16 | Jesus Made Us Tee, Chalk | Centre chest | 86% box | Supplied artwork |
-| TS-17 | Walk By Faith Script Tee, Sand | Centre chest | 86% box | Supplied artwork |
-| HD-01..02 | PURSUE Hoodie, Cocoa / Cream | Between hood and pocket | 92% box | Screen print |
-| HD-03 | Be Still Hoodie, Ink | Between hood and pocket | 86% box | Cream and gold print |
-| HD-04 | Recover All Hoodie, Cream | Between hood and pocket | 86% box | Espresso and gold print |
-| PL-01..02 | PURSUE Polo, Cocoa / Chalk | Centre chest | 62% box | Screen print |
-| PL-03 | PURSUE Crest Polo, Cream | Centre chest | 60% filled disc crest | Embroidery |
-| CP-01 | PURSUE Cap, Cocoa | Front panel | 78% box | Embroidery |
-| CP-02 | Anchored Cap, Chalk | Front panel | 78% box | Embroidery |
-| CP-03 | Overtake Cap, Ink | Front panel | 78% box | Embroidery |
-| TB-01 | PURSUE Tote, Sand | Centre front | 100% box | Screen print |
-| TB-02 | Grace Tote, Sand | Centre front | 90% box | Espresso print |
-| TB-03 | Walk By Faith Tote, Deep teal | Centre front | 95% box | Supplied artwork |
-| MG-01 | PURSUE Mug, Cream | Front face | 100% box | Sublimation |
-| MG-02 | Risen Mug, Chalk | Front face | 90% box | Deep gold print |
-| MG-03 | Recover All Mug, Cream | Front face | 100% box | Sublimation |
-| NB-01 | PURSUE Journal, Cocoa | Cover centre | 80% box | Gold foil |
-| NB-02 | Wonderfully Made Journal, Cream | Cover centre | 85% box | Foil block |
+| TS-01 | Tee, Brown | Centre chest | 44% width, 90mm below collar | Screen print |
+| TS-02 | Tee, Cream | Centre chest | 44% width, 90mm below collar | Screen print |
+| TS-03 | Tee, Black | Centre chest | 44% width, 90mm below collar | Screen print |
+| TS-04 | Tee, White | Centre chest | 44% width, 90mm below collar | Screen print |
+| TS-05 | Faith Over Fear Tee, White | Centre chest | 34% width, type only | Gold screen print |
+| TS-06 | Chosen Tee, Black | Left chest | 75mm wide, type only | Gold screen print |
+| HD-01 | Hoodie, Brown | Below drawstrings, above pocket | 38% width | Screen print |
+| HD-02 | Hoodie, Cream | Below drawstrings, above pocket | 38% width | Screen print |
+| HD-03 | Be Still Hoodie, Black | Below drawstrings, above pocket | 32% width, type only | Cream and gold print |
+| PL-01 | Polo, Brown | Left chest | 85mm wide | Screen print |
+| PL-02 | Polo, White | Left chest | 85mm wide | Screen print |
+| CP-01 | Cap, Brown | Front panel centre | 58mm wide | Embroidery |
+| CP-02 | Anchored Cap, White | Front panel centre | 58mm wide | Embroidery |
+| TB-01 | Tote, Natural | Centre front, all four margins equal | 42% width | Screen print |
+| TB-02 | Grace Tote, Natural | Centre front, all four margins equal | 45% width, type only | Brown screen print |
+| MG-01 | Mug, Cream | Front face, opposite handle | 55% height | Sublimation |
+| MG-02 | Risen Mug, White | Front face, opposite handle | 50% height, type only | Gold print |
+| NB-01 | PURSUE Journal, Brown | Cover centre | Small foil emblem cluster, 30% width | Gold foil |
+| NB-02 | Wonderfully Made Journal, Cream | Cover centre | 45% width, type only | Gold foil |
+| TS-07 | Overtake Tee, Black | Centre chest | 28cm wide, 90mm below collar | Cream and gold screen print |
+| TS-08 | The Presence Tee, Cream | Centre chest | 27cm wide, below collar | Brown and gold screen print |
+| TS-09 | Walk By Faith Tee, White | Centre chest | 25cm wide, below collar | Brown and gold screen print |
+| TS-10 | Now Is The Time Tee, Brown | Centre chest | 26cm wide, below collar | Cream and gold screen print |
+| TS-11 | Fishers Of Men Tee, Cream | Centre chest | 26cm wide, below collar | Sepia and gold badge print |
+| HD-04 | Recover All Hoodie, Cream | Between drawstrings and pocket | 26cm wide | Espresso and gold screen print |
+| PL-03 | PURSUE Crest Polo, Cream | Left chest | 80mm circular crest | Embroidery |
+| CP-03 | Overtake Cap, Black | Front panel centre | Arched, 58mm tall | Cream and gold embroidery |
+| TB-03 | Walk By Faith Tote, Natural | Centre front, all four margins equal | 60% width | Brown screen print |
+| MG-03 | Recover All Mug, Cream | Front face, opposite handle | 55% height | Sublimation |
 
 ## Rules
 
-- Centre first: equal left and right margins. Totes keep equal margins on all
+- Centre first: equal left and right margins. Totes need equal margins on all
   four sides.
-- Never crop: the arrow head and the "1 Samuel 30:8" line stay visible.
-- Journals are typographic, not pictorial.
-- Faith pieces are type only, one accent ink per garment.
-- Scripture statements lead with 1 Samuel 30:8; keep the reference small and
-  inside the print block.
-- Garment colour must rhyme with the artwork ink: light inks sit on cocoa,
-  ink or teal; dark inks sit on chalk, cream or sand.
-- The reference photos are the owner's artwork. Print them as drawn, minus
-  any rule lines; never redraw a third party mark.
+- Minimum 60mm clear below the collar, 50mm clear of each sleeve seam.
+- Hoodies: print sits below the drawstring tips and above the pocket. Nothing
+  crosses the artwork.
+- Never crop: arrow head and the "1 Samuel 30:8" line must stay visible.
+- Journals are typographic, not pictorial. A small foil emblem and/or a short
+  line of type, no full-bleed picture.
+- Faith pieces are type only, one accent colour per garment.
+- Scripture statements lead with 1 Samuel 30:8. Other verses are allowed, but
+  keep the reference line small and inside the print block.
+- The reference photos are inspiration only. Redraw the idea in cream, brown
+  and gold on the CHRISCO garments, never on navy or red, and never copy a
+  third party mark such as a church crest.
+- Never knock out the sky to the garment colour on light garments.
 
 ## Ordering
 
@@ -118,8 +85,7 @@ The shop does not take payment and does not ask anyone to sign in. Every card
 carries a "Message on WhatsApp" link built by `whatsappInquiry()` in
 `app/data/merch.js`, which opens a prefilled chat with the design code, colour,
 chosen size and quantity. The order tray can send a whole multi item order the
-same way, and on phones a floating order pill follows the shopper until the
-tray is opened. To change the destination number, edit `org.whatsapp`.
+same way. To change the destination number, edit `org.whatsapp`.
 
 ## Prices
 
@@ -128,10 +94,9 @@ UGX alongside. Update both when a price changes.
 
 ## Adding a design
 
-1. Put the flat artwork in `public/merch/source/art/` (white or flat backdrop;
-   the renderer keys it out).
-2. Add a job line to `JOBS` in `scripts/build_merch_mockups.py` and run it.
+1. Generate or export the mockup as PNG with a light neutral background.
+2. Name it after the garment and idea, for example `tshirt-prayer.png`.
 3. Add an entry to `app/data/merch.js` with the next code in that series and a
-   `collection` of `pursue`, `faith`, `scripture` or `drops`.
-4. Nothing else is needed: the card, the product panel, the recommendations
-   and the WhatsApp message all read from that one entry.
+   `collection` of `pursue`, `faith` or `scripture`.
+4. Nothing else is needed: the card, the product panel, the recommendations and
+   the WhatsApp message all read from that one entry.

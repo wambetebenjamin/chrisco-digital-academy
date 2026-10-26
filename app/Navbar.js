@@ -420,9 +420,11 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link href="/sign-in" className="nav-login">Log In</Link>
-                <Link href="/sign-up" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
-                  Apply Now
+                <Link href="/sign-in" className="btn btn-outline-light btn-sm" style={{ textDecoration: "none" }}>
+                  Log In
+                </Link>
+                <Link href="/sign-up" className="btn btn-amber btn-sm" style={{ textDecoration: "none" }}>
+                  Apply Now →
                 </Link>
               </>
             )}

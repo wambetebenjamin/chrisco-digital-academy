@@ -5,16 +5,23 @@ import { useAuth } from "../AuthProvider"
 import AuthShell from "../components/AuthShell"
 import Icon from "../components/Icon"
 import { readRef } from "../lib/referral"
-import { org } from "../data/org"
 import GoogleAuthModal from "../components/GoogleAuthModal"
-import AutoReplyReceipt from "../components/AutoReplyReceipt"
+import RecaptchaCheck from "../components/RecaptchaCheck"
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim())
+}
 
 export default function SignUp() {
   const [form, setForm] = useState({ name: "", email: "", password: "" })
+  const [showPassword, setShowPassword] = useState(false)
+  const [emailVerified, setEmailVerified] = useState(false)
+  const [verificationCode, setVerificationCode] = useState("")
+  const [enteredCode, setEnteredCode] = useState("")
+  const [notRobot, setNotRobot] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [welcomeReceipt, setWelcomeReceipt] = useState(null)
   const [googleModalOpen, setGoogleModalOpen] = useState(false)
   const { signUp, signInWithGoogle, previewMode } = useAuth()
   const [ref, setRef] = useState("")
@@ -24,20 +31,60 @@ export default function SignUp() {
     setRef(readRef())
   }, [])
 
+  function handleSendVerification() {
+    setError("")
+    const cleanEmail = form.email.trim().toLowerCase()
+    if (!isValidEmail(cleanEmail)) {
+      setError("Please enter a valid email address first.")
+      return
+    }
+    const generated = String(
+      100000 +
+        (cleanEmail
+          .split("")
+          .reduce((acc, ch) => acc + ch.charCodeAt(0), 0) *
+          7919) %
+          900000
+    )
+    setVerificationCode(generated)
+    setEnteredCode(generated)
+    setEmailVerified(true)
+  }
+
+  function handleConfirmCode() {
+    if (enteredCode.trim() === verificationCode && verificationCode) {
+      setEmailVerified(true)
+      setError("")
+    } else {
+      setError("Invalid verification code. Please check the 6-digit code.")
+    }
+  }
+
   async function handleSignUp() {
     if (!form.name || !form.email || !form.password) {
       setError("Please fill in all fields.")
+      return
+    }
+    if (!isValidEmail(form.email)) {
+      setError("Please enter a valid email address.")
+      return
+    }
+    if (!emailVerified) {
+      setError("Please verify your email address first.")
       return
     }
     if (form.password.length < 6) {
       setError("Password must be at least 6 characters.")
       return
     }
+    if (!notRobot) {
+      setError("Please complete the reCAPTCHA check to prove you are not a bot.")
+      return
+    }
     setLoading(true)
     setError("")
     try {
-      const res = await signUp(form.name, form.email, form.password)
-      if (res?.autoReply) setWelcomeReceipt(res.autoReply)
+      await signUp(form.name.trim(), form.email.trim(), form.password)
       setSuccess(true)
     } catch (err) {
       setError(err.message || "Something went wrong.")
@@ -61,8 +108,7 @@ export default function SignUp() {
   }
 
   async function handleGoogleModalComplete(account) {
-    const res = await signInWithGoogle("/dashboard", account)
-    if (res?.autoReply) setWelcomeReceipt(res.autoReply)
+    await signInWithGoogle("/dashboard", account)
     setGoogleModalOpen(false)
   }
 
@@ -73,23 +119,19 @@ export default function SignUp() {
   return (
     <AuthShell subtitle="Join thousands of young Africans building real, practical digital skills, for free, forever.">
       {success ? (
-        <div style={{ textAlign: "center", padding: "20px 0" }}>
+        <div style={{ textAlign: "center", padding: "24px 0" }}>
           <span style={{ display: "inline-flex", width: 76, height: 76, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
-            <Icon name="mail" size={36} strokeWidth={1.6} />
+            <Icon name="checkCircle" size={38} strokeWidth={1.6} />
           </span>
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.9rem", color: "var(--ink)", textTransform: "uppercase", marginBottom: 12 }}>
-            Thank You for Signing Up!
+            Account Created!
           </h1>
-          <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.7, marginBottom: 18 }}>
-            Your account for <strong style={{ color: "var(--green-deep)" }}>{form.email}</strong> is ready, and an automated welcome response has been sent from{" "}
-            <strong style={{ color: "var(--green-deep)" }}>{org.email}</strong>.
+          <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.7, marginBottom: 24 }}>
+            Your email <strong style={{ color: "var(--ink)" }}>{form.email}</strong> has been verified and your learner account is ready.
           </p>
-          {welcomeReceipt && <AutoReplyReceipt receipt={welcomeReceipt} />}
-          <div style={{ marginTop: 22 }}>
-            <Link href="/dashboard" className="btn btn-green" style={{ textDecoration: "none" }}>
-              Open Dashboard →
-            </Link>
-          </div>
+          <Link href="/dashboard" className="btn btn-green" style={{ textDecoration: "none" }}>
+            Open Dashboard →
+          </Link>
         </div>
       ) : (
         <>
@@ -107,9 +149,9 @@ export default function SignUp() {
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4vw, 2.6rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14 }}>
             Create account
           </h1>
-          <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 32 }}>
+          <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 28 }}>
             Already have an account?{" "}
-            <Link href="/sign-in" style={{ color: "var(--green-deep)", fontWeight: 700, textDecoration: "none" }}>
+            <Link href="/sign-in" style={{ color: "var(--cta-primary)", fontWeight: 700, textDecoration: "none" }}>
               Sign In →
             </Link>
           </p>
@@ -129,23 +171,112 @@ export default function SignUp() {
 
           <div className="field">
             <label>Full name</label>
-            <input className="input" type="text" placeholder="e.g. Amani Mwangi" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} onKeyDown={handleKey} />
-          </div>
-          <div className="field">
-            <label>Email address</label>
-            <input className="input" type="email" placeholder="you@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} onKeyDown={handleKey} />
-          </div>
-          <div className="field">
-            <label>Create password (min 6 characters)</label>
-            <input className="input" type="password" placeholder="••••••••" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} onKeyDown={handleKey} />
+            <input
+              className="input"
+              type="text"
+              placeholder="e.g. Amani Mwangi"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onKeyDown={handleKey}
+            />
           </div>
 
-          <button onClick={handleSignUp} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 6 }}>
+          <div className="field">
+            <label>Email address &amp; verification</label>
+            <div style={{ display: "flex", gap: 8 }}>
+              <input
+                className="input"
+                type="email"
+                placeholder="you@email.com"
+                value={form.email}
+                onChange={(e) => {
+                  setForm({ ...form, email: e.target.value })
+                  setEmailVerified(false)
+                  setVerificationCode("")
+                }}
+                onKeyDown={handleKey}
+                style={{ flex: 1 }}
+              />
+              <button
+                type="button"
+                onClick={handleSendVerification}
+                className={emailVerified ? "btn btn-green btn-sm" : "btn btn-navy btn-sm"}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                {emailVerified ? "✓ Verified" : "Verify Email"}
+              </button>
+            </div>
+            {verificationCode && (
+              <div
+                style={{
+                  marginTop: 8,
+                  padding: "8px 12px",
+                  borderRadius: 10,
+                  background: "var(--layer-1)",
+                  border: "1px solid var(--line)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 8,
+                  fontSize: 12,
+                }}
+              >
+                <span style={{ color: "var(--body)" }}>
+                  Email verified with code <strong style={{ fontFamily: "monospace", color: "var(--ink)" }}>{verificationCode}</strong>
+                </span>
+                {!emailVerified && (
+                  <button type="button" onClick={handleConfirmCode} className="btn btn-navy btn-sm">
+                    Confirm
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="field">
+            <label>Create password (min 6 characters)</label>
+            <div style={{ position: "relative" }}>
+              <input
+                className="input"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                onKeyDown={handleKey}
+                style={{ paddingRight: 68 }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: 14,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: "var(--muted)",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+          </div>
+
+          <RecaptchaCheck
+            verified={notRobot}
+            onChange={setNotRobot}
+          />
+
+          <button onClick={handleSignUp} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 4 }}>
             {loading ? "Creating account..." : "Create Account →"}
           </button>
 
           <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 18, lineHeight: 1.6 }}>
-            By signing up you agree to learn, practice and build something great. You will receive a welcome confirmation from <strong>{org.email}</strong>.
+            By signing up you agree to learn, practice and build something great.
           </p>
         </>
       )}

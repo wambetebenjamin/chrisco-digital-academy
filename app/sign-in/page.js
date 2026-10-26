@@ -4,9 +4,16 @@ import Link from "next/link"
 import { useAuth } from "../AuthProvider"
 import AuthShell from "../components/AuthShell"
 import GoogleAuthModal from "../components/GoogleAuthModal"
+import RecaptchaCheck from "../components/RecaptchaCheck"
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim())
+}
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: "", password: "" })
+  const [showPassword, setShowPassword] = useState(false)
+  const [notRobot, setNotRobot] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [googleModalOpen, setGoogleModalOpen] = useState(false)
@@ -17,10 +24,18 @@ export default function SignIn() {
       setError("Please fill in all fields.")
       return
     }
+    if (!isValidEmail(form.email)) {
+      setError("Please enter a valid email address.")
+      return
+    }
+    if (!notRobot) {
+      setError("Please complete the reCAPTCHA check to prove you are not a bot.")
+      return
+    }
     setLoading(true)
     setError("")
     try {
-      await signIn(form.email, form.password)
+      await signIn(form.email.trim(), form.password)
     } catch (err) {
       setError(err.message || "Invalid email or password.")
       setLoading(false)
@@ -57,9 +72,9 @@ export default function SignIn() {
       <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4vw, 2.6rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14 }}>
         Sign in
       </h1>
-      <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 32 }}>
+      <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 28 }}>
         Don&apos;t have an account?{" "}
-        <Link href="/sign-up" style={{ color: "var(--green-deep)", fontWeight: 700, textDecoration: "none" }}>
+        <Link href="/sign-up" style={{ color: "var(--cta-primary)", fontWeight: 700, textDecoration: "none" }}>
           Create one free →
         </Link>
       </p>
@@ -86,18 +101,58 @@ export default function SignIn() {
 
       <div className="field">
         <label>Email address</label>
-        <input className="input" type="email" placeholder="you@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} onKeyDown={handleKey} />
+        <input
+          className="input"
+          type="email"
+          placeholder="you@email.com"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          onKeyDown={handleKey}
+        />
       </div>
       <div className="field">
         <label>Password</label>
-        <input className="input" type="password" placeholder="••••••••" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} onKeyDown={handleKey} />
+        <div style={{ position: "relative" }}>
+          <input
+            className="input"
+            type={showPassword ? "text" : "password"}
+            placeholder="••••••••"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            onKeyDown={handleKey}
+            style={{ paddingRight: 68 }}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: 14,
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "transparent",
+              border: "none",
+              fontSize: 12,
+              fontWeight: 700,
+              color: "var(--muted)",
+              cursor: "pointer",
+            }}
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        </div>
       </div>
 
-      <button onClick={handleLogin} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 6 }}>
+      <RecaptchaCheck
+        verified={notRobot}
+        onChange={setNotRobot}
+      />
+
+      <button onClick={handleLogin} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 4 }}>
         {loading ? "Signing in..." : "Sign In →"}
       </button>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 14, margin: "26px 0 18px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, margin: "24px 0 16px" }}>
         <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
         <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>or</span>
         <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
