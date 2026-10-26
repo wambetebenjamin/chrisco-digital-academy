@@ -156,6 +156,30 @@ export function buildAutoReplyReceipt({
     }
   }
 
+  if (action === "book_download_registration") {
+    const bookName = course_title || "CHRISCO Library E-Books"
+    return {
+      reference_code: makeRefCode("LIB"),
+      template_type: "book_registration_verified",
+      from: ORG.email,
+      sender_name: `${ORG.programme} Library`,
+      to: email || cleanName,
+      recipient_name: cleanName,
+      subject: `Your Online Book Access Is Verified — ${ORG.programme} (${bookName})`,
+      body:
+        `Dear ${cleanName},\n\n` +
+        `Thank you for registering with your email to access "${bookName}" from ${ORG.programme} (under ${ORG.umbrella}).\n\n` +
+        `• Registered Email: ${email || cleanName}\n` +
+        `• Access Status: Verified for Christian Books & Digital Skill Handbooks\n` +
+        `• Privacy Protection: Handled strictly under our Privacy & Data Protection Policy (/privacy)\n\n` +
+        `You can share any book page from /library so friends and fellowship members can visit the site, register by email, and download their own copy.\n\n` +
+        `Warm regards,\n` +
+        `${ORG.programme} Editorial & Mentorship Desk\n` +
+        `Email: ${ORG.email}`,
+      sent_at: new Date().toISOString(),
+    }
+  }
+
   return {
     reference_code: code,
     template_type: "contact_received",

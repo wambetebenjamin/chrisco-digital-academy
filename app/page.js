@@ -425,6 +425,121 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= TWO DEDICATED BOOK SHELVES (CHRISTIAN BESIDE LEARNING) ================= */}
+      <section className="section" style={{ background: "#fff", borderTop: "1px solid var(--line)" }}>
+        <div className="container">
+          <div style={{ maxWidth: 720, marginBottom: 38 }}>
+            <span className="eyebrow">CHRISCO Online Library</span>
+            <h2 className="display" style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", color: "var(--ink)", marginTop: 14 }}>
+              Two dedicated shelves: <span style={{ color: "#010C80" }}>Christian Books</span> beside{" "}
+              <span style={{ color: "var(--green-deep)" }}>Learning Handbooks.</span>
+            </h2>
+            <p style={{ color: "var(--muted)", fontSize: 15.5, lineHeight: 1.7, marginTop: 12 }}>
+              Every e-book spans 28 spacious pages with detailed explanations and custom visual diagrams. Register once
+              by email under our{" "}
+              <Link href="/privacy" style={{ color: "var(--green-deep)", fontWeight: 700 }}>
+                Privacy &amp; Data Protection Policy
+              </Link>{" "}
+              to download online, or share any book link so others can visit and download.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: 28,
+            }}
+          >
+            {/* Shelf A: Christian & Faith Books */}
+            <div
+              className="card"
+              style={{
+                padding: "32px",
+                background: "linear-gradient(150deg, #010C80 0%, #122191 100%)",
+                color: "#fff",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                <span className="pill pill-sm" style={{ background: "#FA3F26", color: "#fff", border: "none", marginBottom: 16 }}>
+                  <Icon name="flame" size={13} /> Christian &amp; Faith Shelf
+                </span>
+                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.45rem", marginBottom: 10 }}>
+                  Joseph: 7 Lessons Every Emerging Seer Prophet Must Learn
+                </h3>
+                <p style={{ fontSize: 14.2, color: "rgba(255,255,255,0.82)", lineHeight: 1.7, marginBottom: 22 }}>
+                  Set apart in our dedicated Christian &amp; Faith Library under CHRISCO Youth Aflame (CHRISCO
+                  Fellowship of Churches) — 28 spacious pages with 8 prophetic framework diagrams, Scripture exposition,
+                  and personal prayer reflections.
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <Link
+                  href="/library/joseph-7-lessons-emerging-seer-prophet"
+                  className="btn btn-green btn-sm"
+                  style={{ textDecoration: "none" }}
+                >
+                  Open &amp; Share Christian Book →
+                </Link>
+                <Link
+                  href="/library?shelf=christian"
+                  className="btn btn-outline-light btn-sm"
+                  style={{ textDecoration: "none" }}
+                >
+                  Christian Shelf
+                </Link>
+              </div>
+            </div>
+
+            {/* Shelf B: Digital Skill & Learning Books */}
+            <div
+              className="card"
+              style={{
+                padding: "32px",
+                background: "var(--layer-1)",
+                border: "1px solid var(--line)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                <span className="pill pill-sm" style={{ background: "#E0E4FF", color: "#1D2EA8", border: "none", marginBottom: 16 }}>
+                  <Icon name="cap" size={13} /> Skill &amp; Learning Shelf
+                </span>
+                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.45rem", color: "var(--ink)", marginBottom: 10 }}>
+                  19 Illustrated Digital Skill Course Handbooks
+                </h3>
+                <p style={{ fontSize: 14.2, color: "var(--body)", lineHeight: 1.7, marginBottom: 22 }}>
+                  Beside our Christian shelf sit all 19 practical course handbooks — Python, AI &amp; LLMs, YouTube
+                  Automation, Executive Communication, Copywriting, Print on Demand, and more — each expanded to 28
+                  illustrated pages.
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <Link
+                  href="/library?shelf=learning"
+                  className="btn btn-navy btn-sm"
+                  style={{ textDecoration: "none" }}
+                >
+                  Browse All 19 Learning Books →
+                </Link>
+                <Link
+                  href="/library"
+                  className="btn btn-outline btn-sm"
+                  style={{ textDecoration: "none" }}
+                >
+                  Full Library
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ================= TUTOR ================= */}
       <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.86)", color: "rgba(255,255,255,0.82)" }}>
         <div aria-hidden style={{ position: "absolute", inset: 0 }}>
