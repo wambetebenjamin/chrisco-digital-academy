@@ -44,14 +44,14 @@ PAGE_01_COVER = {
 PAGE_02_TOC = {
     "entries": [
         ("01", "After The Dream", "Prologue & The Four Chambers", "p. 03"),
-        ("02", "Lesson 1: Sight Before Capacity", "Destination Revealed Before Maturity", "p. 05"),
-        ("03", "Lesson 2: Solitude of Sight", "When Revelation Separates Before It Establishes", "p. 07"),
-        ("04", "Lesson 3: Faithful in the Pit", "Why Painful Process Is Not Abandonment", "p. 09"),
-        ("05", "Lesson 4: Private Integrity", "Hidden Restraint Protecting Public Destiny", "p. 11"),
-        ("06", "Lesson 5: Forged for Government", "How Delay Constructs the Prophetic Vessel", "p. 13"),
-        ("07", "Lesson 6: Revelation & Wisdom", "Joining Spiritual Sight to Strategy", "p. 15"),
-        ("08", "Lesson 7: Preserved for Many", "Why the Dream Extends Beyond Yourself", "p. 17"),
-        ("09", "The Dream Survives", "Benediction & CHRISCO Youth Aflame", "p. 19"),
+        ("02", "Lesson 1: Sight Before Capacity", "Exposition, Timeline Diagram & Study", "p. 05"),
+        ("03", "Lesson 2: Solitude of Sight", "Consecration vs Isolation Illustrated", "p. 08"),
+        ("04", "Lesson 3: Faithful in the Pit", "The Refining Furnace of Psalm 105:19", "p. 11"),
+        ("05", "Lesson 4: Private Integrity", "Hidden Roots & Secret Altar Diagram", "p. 14"),
+        ("06", "Lesson 5: Forged for Government", "How Delay Constructs Capacity", "p. 17"),
+        ("07", "Lesson 6: Revelation & Wisdom", "Two-Winged Prophetic Stewardship", "p. 20"),
+        ("08", "Lesson 7: Preserved for Many", "Generational Ripples & Deliverance", "p. 23"),
+        ("09", "The Dream Survives", "Epilogue, Daily Rhythm & Contact", "p. 26"),
     ]
 }
 

@@ -34,10 +34,17 @@ const programLinks = [
 
 const studentLinks = [
   { label: "Student Dashboard", desc: "Your courses and progress", href: "/dashboard", icon: "grid" },
+  { label: "Christian & Faith Books", desc: "Prophetic & spiritual formation shelf", href: "/library?shelf=christian", icon: "flame" },
+  { label: "Skill & Learning Books", desc: "All 19 illustrated course handbooks", href: "/library?shelf=learning", icon: "book" },
   { label: "Affiliate Programme", desc: "Share your link and earn", href: "/affiliates", icon: "cash" },
-  { label: "Log In", desc: "Pick up where you left off", href: "/sign-in", icon: "lock" },
-  { label: "Create Account", desc: "Join the academy in minutes", href: "/sign-up", icon: "user" },
-  { label: "Course Guidance", desc: "Not sure what to study? Ask us", href: "/contact", icon: "chat" },
+  { label: "Privacy & Data Policy", desc: "How we safeguard your email & data", href: "/privacy", icon: "shield" },
+]
+
+const libraryLinks = [
+  { label: "All Books & Handbooks", desc: "Browse both dedicated library shelves", href: "/library", icon: "book" },
+  { label: "Christian & Faith Shelf", desc: "Joseph: 7 Lessons for Seers & faith titles", href: "/library?shelf=christian", icon: "flame" },
+  { label: "Skill & Learning Shelf", desc: "19 28-page illustrated course books", href: "/library?shelf=learning", icon: "cap" },
+  { label: "Privacy & Data Protection", desc: "Reader consent & self-service controls", href: "/privacy", icon: "shield" },
 ]
 
 // Grouped the way a catalogue reads: earn, market, build.
@@ -365,6 +372,14 @@ export default function Navbar() {
               <CoursesMega onNavigate={closeAll} pathname={pathname} />
             </Dropdown>
 
+            <Dropdown id="library" label="Books" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
+              <div className="nav-panel-head">
+                <span className="nav-panel-eyebrow">Two Dedicated Shelves</span>
+                <span className="nav-panel-head-title">Christian &amp; Learning Books</span>
+              </div>
+              <PanelList items={libraryLinks} onNavigate={closeAll} />
+            </Dropdown>
+
             <Dropdown id="programs" label="Programs" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
               <div className="nav-panel-head">
                 <span className="nav-panel-eyebrow">How you learn</span>
@@ -493,6 +508,7 @@ export default function Navbar() {
                 Browse all courses →
               </Link>
             </MobileSection>
+            <MobileSection title="Books & Library" icon="book" items={libraryLinks} onNavigate={closeAll} />
             <Link href="/shop" onClick={closeAll} className={`m-link${isActive("/shop") ? " is-active" : ""}`}>
               Shop
             </Link>

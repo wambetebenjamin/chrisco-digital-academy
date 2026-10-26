@@ -14,6 +14,10 @@ import {
   authenticateWithGoogleBridge,
   updateCourseProgressInBackend,
 } from "./lib/intakeClient"
+import {
+  syncAuthenticatedUserBookAccess,
+  revokeBookRegistration,
+} from "./lib/bookGateClient"
 
 const AuthContext = createContext(null)
 const PUBLIC_ROUTES = ["/sign-in", "/sign-up"]
@@ -98,6 +102,7 @@ export function AuthProvider({ children }) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUser(localSession ?? null)
       setProfile(localSession ? { name: localSession.name, email: localSession.email } : null)
+      if (localSession?.email) syncAuthenticatedUserBookAccess(localSession)
       setLoading(false)
       return undefined
     }
@@ -105,6 +110,7 @@ export function AuthProvider({ children }) {
     if (localSession) {
       setUser(localSession)
       setProfile({ name: localSession.name, email: localSession.email })
+      if (localSession.email) syncAuthenticatedUserBookAccess(localSession)
     }
 
     supabase.auth
@@ -113,6 +119,7 @@ export function AuthProvider({ children }) {
         if (session?.user) {
           setUser(session.user)
           fetchProfile(session.user.id, session.user)
+          syncAuthenticatedUserBookAccess(session.user)
         }
         setLoading(false)
       })
@@ -297,6 +304,7 @@ export function AuthProvider({ children }) {
 
   async function logout() {
     previewSignOut()
+    revokeBookRegistration()
     if (isSupabaseConfigured && supabase) {
       try {
         await supabase.auth.signOut()

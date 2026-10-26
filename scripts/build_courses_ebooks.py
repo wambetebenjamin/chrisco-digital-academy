@@ -1,24 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Build all 19 CHRISCO Digital Academy / CHRISCO Youth Aflame Course E-Books (`public/books/<slug>.pdf`)
-replicating the exact layout, Montserrat typography, cobalt-indigo split panels, cyan-lime ribbons,
-3D frosted-glass section dividers, lavender tables, and card systems of `COURSES PDF.pdf`.
+"""Build all 19 CHRISCO Digital Academy / CHRISCO Youth Aflame Course E-Books
+(`content/books/<slug>.pdf`) as spacious, deeply explained, 28-page Illustrated
+Course Handbooks replicating `COURSES PDF.pdf`.
 
-Rules enforced across every book:
+Key guarantees:
+- 28 spacious pages per book (2 full pages for EVERY one of the 8 chapters — NEVER squeezed!).
+- Detailed plain-English explanations + 8 custom vector explanatory diagrams per book
+  + 100% real, non-AI, watermark-free Pexels photographs of modestly dressed Africans.
 - Brand: CHRISCO Youth Aflame (CHRISCO Digital Academy) under CHRISCO FELLOWSHIP OF CHURCHES.
 - Contacts: Gmail only (chriscoyouthaflame2025@gmail.com & shambetz@gmail.com) — ZERO phone numbers.
-- Photos: 100% real, non-AI, watermark-free Pexels photographs of modestly dressed African learners & practitioners.
 """
 
 import hashlib
 import os
-import re
 import sys
 from xml.sax.saxutils import escape
 
 from PIL import Image, ImageOps
 from reportlab.lib.colors import HexColor
-from reportlab.lib.enums import TA_LEFT, TA_JUSTIFY
+from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_JUSTIFY
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -36,8 +37,8 @@ ASSET_DIR = os.path.join(SCRIPT_DIR, "courses_ebook_assets")
 FONT_DIR = os.path.join(ASSET_DIR, "fonts")
 GRAPHICS_DIR = os.path.join(ASSET_DIR, "graphics")
 IMAGES_DIR = os.path.join(ASSET_DIR, "images")
-OUT_DIR = os.path.join(REPO_ROOT, "public", "books")
-CACHE_DIR = "/tmp/chrisco_courses_pdf_cache"
+OUT_DIR = os.path.join(REPO_ROOT, "content", "books")
+CACHE_DIR = "/tmp/chrisco_courses_pdf_cache_28p"
 os.makedirs(OUT_DIR, exist_ok=True)
 os.makedirs(CACHE_DIR, exist_ok=True)
 
@@ -50,7 +51,8 @@ COBALT_DEEP = "#152888"
 COBALT_PANEL = "#1D2EA8"
 LAVENDER_TH = "#D0D3FF"
 LAVENDER_CARD = "#EEF0FF"
-GRAY_CARD = "#F3F4F8"
+LAVENDER_BORDER = "#B6BEF2"
+GRAY_CARD = "#F4F5FA"
 CYAN_ACCENT = "#25D0C6"
 LIME_ACCENT = "#7CE393"
 GOLD_RULE = "#F2C94C"
@@ -60,6 +62,340 @@ WHITE = "#FFFFFF"
 
 PRIMARY_EMAIL = "chriscoyouthaflame2025@gmail.com"
 SECONDARY_EMAIL = "shambetz@gmail.com"
+
+PHOTO_FOCUS = {
+    "real_quiet_desk_notes.jpg": (0.5, 0.58),
+    "course_woman_desk_notes.jpg": (0.5, 0.44),
+    "course_woman_white_blouse_laptop.jpg": (0.5, 0.36),
+    "course_podcast_creator.jpg": (0.55, 0.35),
+    "course_camera_creator.jpg": (0.5, 0.34),
+    "course_abuja_photographer.jpg": (0.5, 0.28),
+    "course_pod_apparel.jpg": (0.5, 0.26),
+    "course_coding_dual_screen.jpg": (0.5, 0.38),
+    "course_coding_developer.jpg": (0.5, 0.32),
+    "course_whiteboard_trainer.jpg": (0.5, 0.34),
+    "course_exec_pitch_call.jpg": (0.5, 0.36),
+    "course_exec_outdoor_laptop.jpg": (0.5, 0.36),
+    "real_blazer_journaling.jpg": (0.5, 0.40),
+    "real_modest_prayer_journal.jpg": (0.5, 0.48),
+    "lesson2_contemplation.jpg": (0.5, 0.34),
+    "real_study_pair_side.jpg": (0.5, 0.36),
+    "real_lagos_boardroom.jpg": (0.5, 0.35),
+    "real_council_sisters.jpg": (0.5, 0.34),
+    "real_lagos_celebration_group.jpg": (0.5, 0.34),
+    "real_joyful_fellowship_group.jpg": (0.5, 0.35),
+    "real_plaid_suit_side.jpg": (0.5, 0.28),
+    "real_overcoat_side.jpg": (0.5, 0.42),
+    "real_seminar_side.jpg": (0.5, 0.34),
+    "real_suited_window_side.jpg": (0.5, 0.32),
+}
+
+TRACK_META = {
+    "youtube-automation": {
+        "track": "Video & Creator Economy Track",
+        "duration": "8 Weeks",
+        "level": "Beginner to Pro",
+        "domain_noun": "channel system",
+        "photos": [
+            "course_podcast_creator.jpg",
+            "course_camera_creator.jpg",
+            "course_abuja_photographer.jpg",
+            "course_woman_desk_notes.jpg",
+            "real_study_pair_side.jpg",
+            "real_joyful_fellowship_group.jpg",
+            "real_blazer_journaling.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+        ],
+    },
+    "ai-video-storytelling": {
+        "track": "Video & Creative AI Track",
+        "duration": "6 Weeks",
+        "level": "Beginner",
+        "domain_noun": "visual story",
+        "photos": [
+            "course_camera_creator.jpg",
+            "course_abuja_photographer.jpg",
+            "course_podcast_creator.jpg",
+            "real_study_pair_side.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_lagos_celebration_group.jpg",
+            "real_quiet_desk_notes.jpg",
+            "real_blazer_journaling.jpg",
+        ],
+    },
+    "python-programming": {
+        "track": "Coding & Software Engineering Track",
+        "duration": "8 Weeks",
+        "level": "Beginner",
+        "domain_noun": "Python program",
+        "photos": [
+            "course_coding_dual_screen.jpg",
+            "course_coding_developer.jpg",
+            "real_study_pair_side.jpg",
+            "course_woman_desk_notes.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_seminar_side.jpg",
+            "course_exec_outdoor_laptop.jpg",
+        ],
+    },
+    "swe-llm-mastery": {
+        "track": "Software Engineering & AI Systems Track",
+        "duration": "10 Weeks",
+        "level": "Intermediate",
+        "domain_noun": "production AI feature",
+        "photos": [
+            "course_coding_developer.jpg",
+            "course_coding_dual_screen.jpg",
+            "course_woman_desk_notes.jpg",
+            "real_study_pair_side.jpg",
+            "course_exec_outdoor_laptop.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_overcoat_side.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+        ],
+    },
+    "ai-literacy": {
+        "track": "AI & Workplace Productivity Track",
+        "duration": "5 Weeks",
+        "level": "Beginner",
+        "domain_noun": "AI workflow",
+        "photos": [
+            "course_woman_white_blouse_laptop.jpg",
+            "course_coding_dual_screen.jpg",
+            "real_study_pair_side.jpg",
+            "course_woman_desk_notes.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_blazer_journaling.jpg",
+            "real_seminar_side.jpg",
+            "course_exec_outdoor_laptop.jpg",
+        ],
+    },
+    "print-on-demand": {
+        "track": "Design & Digital Commerce Track",
+        "duration": "8 Weeks",
+        "level": "Beginner",
+        "domain_noun": "merchandise storefront",
+        "photos": [
+            "course_pod_apparel.jpg",
+            "real_blazer_journaling.jpg",
+            "course_woman_desk_notes.jpg",
+            "course_abuja_photographer.jpg",
+            "real_lagos_celebration_group.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_quiet_desk_notes.jpg",
+            "real_study_pair_side.jpg",
+        ],
+    },
+    "communicate-like-a-ceo": {
+        "track": "Executive Leadership & Communication Track",
+        "duration": "6 Weeks",
+        "level": "All Levels",
+        "domain_noun": "executive message",
+        "photos": [
+            "course_exec_pitch_call.jpg",
+            "real_seminar_side.jpg",
+            "real_council_sisters.jpg",
+            "course_whiteboard_trainer.jpg",
+            "real_plaid_suit_side.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_overcoat_side.jpg",
+            "real_suited_window_side.jpg",
+        ],
+    },
+    "negotiation": {
+        "track": "Business Strategy & Deal-Making Track",
+        "duration": "6 Weeks",
+        "level": "All Levels",
+        "domain_noun": "negotiation agreement",
+        "photos": [
+            "real_council_sisters.jpg",
+            "real_plaid_suit_side.jpg",
+            "course_exec_pitch_call.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_suited_window_side.jpg",
+            "real_joyful_fellowship_group.jpg",
+            "real_blazer_journaling.jpg",
+            "real_seminar_side.jpg",
+        ],
+    },
+    "personal-branding": {
+        "track": "Leadership & Authority Positioning Track",
+        "duration": "6 Weeks",
+        "level": "All Levels",
+        "domain_noun": "authority reputation",
+        "photos": [
+            "course_exec_outdoor_laptop.jpg",
+            "course_podcast_creator.jpg",
+            "real_plaid_suit_side.jpg",
+            "course_abuja_photographer.jpg",
+            "real_blazer_journaling.jpg",
+            "real_lagos_celebration_group.jpg",
+            "real_seminar_side.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+        ],
+    },
+    "networking-secrets": {
+        "track": "Leadership & Relationship Capital Track",
+        "duration": "5 Weeks",
+        "level": "All Levels",
+        "domain_noun": "trusted relationship network",
+        "photos": [
+            "real_joyful_fellowship_group.jpg",
+            "real_seminar_side.jpg",
+            "real_lagos_celebration_group.jpg",
+            "real_council_sisters.jpg",
+            "course_exec_outdoor_laptop.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_overcoat_side.jpg",
+            "real_plaid_suit_side.jpg",
+        ],
+    },
+    "ghostwriting": {
+        "track": "Editorial Writing & Publishing Track",
+        "duration": "8 Weeks",
+        "level": "All Levels",
+        "domain_noun": "client manuscript",
+        "photos": [
+            "real_modest_prayer_journal.jpg",
+            "real_blazer_journaling.jpg",
+            "lesson2_contemplation.jpg",
+            "real_quiet_desk_notes.jpg",
+            "course_woman_desk_notes.jpg",
+            "course_exec_outdoor_laptop.jpg",
+            "real_seminar_side.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+        ],
+    },
+    "copywriting": {
+        "track": "Persuasive Writing & Conversion Track",
+        "duration": "8 Weeks",
+        "level": "Beginner to Pro",
+        "domain_noun": "conversion copy asset",
+        "photos": [
+            "real_blazer_journaling.jpg",
+            "real_quiet_desk_notes.jpg",
+            "course_woman_desk_notes.jpg",
+            "real_modest_prayer_journal.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_lagos_boardroom.jpg",
+            "lesson2_contemplation.jpg",
+            "course_exec_outdoor_laptop.jpg",
+        ],
+    },
+    "freelancing": {
+        "track": "Independent Consulting & Remote Work Track",
+        "duration": "8 Weeks",
+        "level": "All Levels",
+        "domain_noun": "client service practice",
+        "photos": [
+            "real_overcoat_side.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "course_exec_outdoor_laptop.jpg",
+            "course_exec_pitch_call.jpg",
+            "real_blazer_journaling.jpg",
+            "real_lagos_celebration_group.jpg",
+            "course_woman_desk_notes.jpg",
+            "real_council_sisters.jpg",
+        ],
+    },
+    "content-creation": {
+        "track": "Digital Media & Audience Growth Track",
+        "duration": "6 Weeks",
+        "level": "Beginner",
+        "domain_noun": "content engine",
+        "photos": [
+            "course_podcast_creator.jpg",
+            "course_abuja_photographer.jpg",
+            "course_camera_creator.jpg",
+            "real_blazer_journaling.jpg",
+            "real_lagos_celebration_group.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_study_pair_side.jpg",
+            "course_woman_desk_notes.jpg",
+        ],
+    },
+    "sales-and-marketing": {
+        "track": "Revenue Growth & Go-To-Market Track",
+        "duration": "8 Weeks",
+        "level": "All Levels",
+        "domain_noun": "customer acquisition system",
+        "photos": [
+            "course_whiteboard_trainer.jpg",
+            "course_exec_pitch_call.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_council_sisters.jpg",
+            "real_joyful_fellowship_group.jpg",
+            "real_plaid_suit_side.jpg",
+            "course_woman_desk_notes.jpg",
+            "course_exec_outdoor_laptop.jpg",
+        ],
+    },
+    "digital-marketing": {
+        "track": "Growth Marketing & Analytics Track",
+        "duration": "8 Weeks",
+        "level": "All Levels",
+        "domain_noun": "digital campaign",
+        "photos": [
+            "real_lagos_boardroom.jpg",
+            "course_woman_desk_notes.jpg",
+            "course_whiteboard_trainer.jpg",
+            "real_study_pair_side.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_council_sisters.jpg",
+            "real_blazer_journaling.jpg",
+            "course_exec_pitch_call.jpg",
+        ],
+    },
+    "email-marketing": {
+        "track": "Retention & Direct Response Track",
+        "duration": "6 Weeks",
+        "level": "All Levels",
+        "domain_noun": "subscriber sequence",
+        "photos": [
+            "course_woman_desk_notes.jpg",
+            "real_quiet_desk_notes.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_blazer_journaling.jpg",
+            "course_exec_outdoor_laptop.jpg",
+            "real_lagos_boardroom.jpg",
+            "real_modest_prayer_journal.jpg",
+            "real_study_pair_side.jpg",
+        ],
+    },
+    "affiliate-marketing": {
+        "track": "Partner Commerce & Digital Funnels Track",
+        "duration": "8 Weeks",
+        "level": "Beginner to Pro",
+        "domain_noun": "recommendation funnel",
+        "photos": [
+            "real_study_pair_side.jpg",
+            "course_exec_outdoor_laptop.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "course_podcast_creator.jpg",
+            "real_lagos_celebration_group.jpg",
+            "course_woman_desk_notes.jpg",
+            "real_overcoat_side.jpg",
+            "real_blazer_journaling.jpg",
+        ],
+    },
+    "social-media-marketing": {
+        "track": "Brand Community & Social Strategy Track",
+        "duration": "8 Weeks",
+        "level": "All Levels",
+        "domain_noun": "community growth calendar",
+        "photos": [
+            "real_lagos_celebration_group.jpg",
+            "course_podcast_creator.jpg",
+            "real_joyful_fellowship_group.jpg",
+            "course_camera_creator.jpg",
+            "real_council_sisters.jpg",
+            "course_woman_white_blouse_laptop.jpg",
+            "real_blazer_journaling.jpg",
+            "course_abuja_photographer.jpg",
+        ],
+    },
+}
 
 
 def Y(y_top: float) -> float:
@@ -101,7 +437,7 @@ def clean_text(s: str) -> str:
     return escape(s)
 
 
-def crop_cached(img_path: str, w_pt: float, h_pt: float, focus=(0.5, 0.35), dpi_scale=2.0) -> str:
+def crop_cached(img_path: str, w_pt: float, h_pt: float, focus=(0.5, 0.35), dpi_scale=1.9) -> str:
     mtime = os.path.getmtime(img_path)
     key = f"{os.path.abspath(img_path)}_{mtime:.2f}_{w_pt:.1f}_{h_pt:.1f}_{focus[0]:.2f}_{focus[1]:.2f}_{dpi_scale:.1f}"
     digest = hashlib.md5(key.encode("utf-8")).hexdigest()[:14]
@@ -111,7 +447,7 @@ def crop_cached(img_path: str, w_pt: float, h_pt: float, focus=(0.5, 0.35), dpi_
         tw = max(100, int(round(w_pt * dpi_scale)))
         th = max(100, int(round(h_pt * dpi_scale)))
         fitted = ImageOps.fit(im, (tw, th), method=Image.Resampling.LANCZOS, centering=focus)
-        fitted.save(out_p, "JPEG", quality=85, optimize=True)
+        fitted.save(out_p, "JPEG", quality=84, optimize=True)
     return out_p
 
 
@@ -123,42 +459,20 @@ def plate_cached(plate_name: str) -> str:
     out_p = os.path.join(CACHE_DIR, f"p_{digest}.jpg")
     if not os.path.exists(out_p):
         im = Image.open(src).convert("RGB")
-        im = im.resize((int(W * 1.85), int(H * 1.85)), Image.Resampling.LANCZOS)
+        im = im.resize((int(W * 1.8), int(H * 1.8)), Image.Resampling.LANCZOS)
         im.save(out_p, "JPEG", quality=84, optimize=True)
     return out_p
 
 
+def fill_white(c: canvas.Canvas) -> None:
+    c.saveState()
+    c.setFillColor(HexColor(WHITE))
+    c.rect(0, 0, W, H, stroke=0, fill=1)
+    c.restoreState()
+
+
 def draw_plate(c: canvas.Canvas, plate_name: str) -> None:
-    p = plate_cached(plate_name)
-    c.drawImage(p, 0, 0, width=W, height=H, mask=None)
-
-
-PHOTO_FOCUS = {
-    "real_quiet_desk_notes.jpg": (0.5, 0.58),
-    "course_woman_desk_notes.jpg": (0.5, 0.44),
-    "course_woman_white_blouse_laptop.jpg": (0.5, 0.36),
-    "course_podcast_creator.jpg": (0.55, 0.35),
-    "course_camera_creator.jpg": (0.5, 0.34),
-    "course_abuja_photographer.jpg": (0.5, 0.28),
-    "course_pod_apparel.jpg": (0.5, 0.26),
-    "course_coding_dual_screen.jpg": (0.5, 0.38),
-    "course_coding_developer.jpg": (0.5, 0.32),
-    "course_whiteboard_trainer.jpg": (0.5, 0.34),
-    "course_exec_pitch_call.jpg": (0.5, 0.36),
-    "course_exec_outdoor_laptop.jpg": (0.5, 0.36),
-    "real_blazer_journaling.jpg": (0.5, 0.40),
-    "real_modest_prayer_journal.jpg": (0.5, 0.48),
-    "lesson2_contemplation.jpg": (0.5, 0.34),
-    "real_study_pair_side.jpg": (0.5, 0.36),
-    "real_lagos_boardroom.jpg": (0.5, 0.35),
-    "real_council_sisters.jpg": (0.5, 0.34),
-    "real_lagos_celebration_group.jpg": (0.5, 0.34),
-    "real_joyful_fellowship_group.jpg": (0.5, 0.35),
-    "real_plaid_suit_side.jpg": (0.5, 0.28),
-    "real_overcoat_side.jpg": (0.5, 0.42),
-    "real_seminar_side.jpg": (0.5, 0.34),
-    "real_suited_window_side.jpg": (0.5, 0.32),
-}
+    c.drawImage(plate_cached(plate_name), 0, 0, width=W, height=H, mask=None)
 
 
 def draw_photo(c: canvas.Canvas, img_name: str, x: float, y_top: float, w: float, h: float, focus=None, radius: float = 0.0) -> None:
@@ -174,11 +488,9 @@ def draw_photo(c: canvas.Canvas, img_name: str, x: float, y_top: float, w: float
 
 
 def draw_brand_lockup(c: canvas.Canvas, x: float = 52.0, y_top: float = 56.0, dark_bg: bool = True) -> None:
-    """Crisp vector CHRISCO Youth Aflame / CHRISCO Digital Academy emblem matching COURSES PDF.pdf top-left."""
     c.saveState()
     fg = WHITE if dark_bg else COBALT_HEAD
     sub = "#B9D4FF" if dark_bg else COBALT_DEEP
-    # Double geometric ring emblem (modeled on COURSES PDF.pdf top-left G-ring icon)
     cx, cy = x + 13.0, Y(y_top + 11.0)
     c.setStrokeColor(HexColor(CYAN_ACCENT))
     c.setLineWidth(2.4)
@@ -195,8 +507,7 @@ def draw_brand_lockup(c: canvas.Canvas, x: float = 52.0, y_top: float = 56.0, da
     c.restoreState()
 
 
-def draw_accent_bar(c: canvas.Canvas, x: float, y_top: float, w: float = 48.0, h: float = 2.4) -> None:
-    """Signature cyan-to-lime two-tone accent bar under numbered headings in COURSES PDF.pdf."""
+def draw_accent_bar(c: canvas.Canvas, x: float, y_top: float, w: float = 48.0, h: float = 2.5) -> None:
     c.saveState()
     c.setFillColor(HexColor(CYAN_ACCENT))
     c.rect(x, Y(y_top + h), w * 0.62, h, stroke=0, fill=1)
@@ -211,20 +522,20 @@ def draw_page_num(c: canvas.Canvas, pno: int, side: str = "right", on_dark: bool
     c.setFillColor(HexColor(WHITE if on_dark else COBALT_HEAD))
     label = f"{pno:02d}"
     if side == "left":
-        c.drawString(48.0, Y(808.0), label)
+        c.drawString(52.0, Y(808.0), label)
     else:
-        c.drawRightString(548.0, Y(808.0), label)
+        c.drawRightString(543.5, Y(808.0), label)
     if not on_dark:
-        c.setFont("Montserrat-Medium", 7.4)
+        c.setFont("Montserrat-Medium", 7.5)
         c.setFillColor(HexColor("#7B839E"))
         if side == "left":
-            c.drawRightString(548.0, Y(808.0), f"CHRISCO Youth Aflame  |  {PRIMARY_EMAIL}")
+            c.drawRightString(543.5, Y(808.0), f"CHRISCO Youth Aflame  |  {PRIMARY_EMAIL}")
         else:
-            c.drawString(48.0, Y(808.0), f"CHRISCO Youth Aflame  |  {PRIMARY_EMAIL}")
+            c.drawString(52.0, Y(808.0), f"CHRISCO Youth Aflame  |  {PRIMARY_EMAIL}")
     c.restoreState()
 
 
-def style(name: str, font="Montserrat", size=9.6, leading=14.2, color=INK, align=TA_LEFT, after=5.0) -> ParagraphStyle:
+def style(name: str, font="Montserrat", size=10.0, leading=15.6, color=INK, align=TA_LEFT, after=6.0) -> ParagraphStyle:
     return ParagraphStyle(
         name=name,
         fontName=font,
@@ -236,16 +547,15 @@ def style(name: str, font="Montserrat", size=9.6, leading=14.2, color=INK, align
     )
 
 
-def draw_para(c: canvas.Canvas, html: str, st: ParagraphStyle, x: float, y_top: float, w: float, max_h: float = 400.0) -> float:
+def draw_para(c: canvas.Canvas, html: str, st: ParagraphStyle, x: float, y_top: float, w: float, max_h: float = 420.0) -> float:
     p = Paragraph(html, st)
     _, h = p.wrap(w, max_h)
     if h > max_h:
-        # Auto-tighten slightly so zero text ever clips or overlaps
         tight = ParagraphStyle(
             name=st.name + "_t",
             parent=st,
-            fontSize=max(7.8, st.fontSize - 0.8),
-            leading=max(10.8, st.leading - 1.3),
+            fontSize=max(8.4, st.fontSize - 0.8),
+            leading=max(12.2, st.leading - 1.4),
         )
         p = Paragraph(html, tight)
         _, h = p.wrap(w, max_h)
@@ -253,388 +563,264 @@ def draw_para(c: canvas.Canvas, html: str, st: ParagraphStyle, x: float, y_top: 
     return h
 
 
-def draw_method_icon(c: canvas.Canvas, kind: str, x: float, y_top: float) -> None:
-    """Clean cobalt-and-cyan vector icon matching Page 10 of COURSES PDF.pdf."""
+def draw_arrow_right(c: canvas.Canvas, x1: float, x2: float, y_top: float, color: str = CYAN_ACCENT) -> None:
     c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setStrokeColor(HexColor(COBALT_HEAD))
-    c.setLineWidth(1.8)
-    bx, by = x, Y(y_top + 28.0)
-    if kind == "principle":
-        c.roundRect(bx, by + 4, 26, 20, 3, stroke=1, fill=0)
-        c.setFillColor(HexColor(CYAN_ACCENT))
-        c.circle(bx + 13, by + 14, 4.5, stroke=0, fill=1)
-    elif kind == "case":
-        c.circle(bx + 9, by + 18, 4.5, stroke=0, fill=1)
-        c.circle(bx + 20, by + 18, 4.5, stroke=0, fill=1)
-        c.roundRect(bx + 3, by + 4, 12, 9, 3, stroke=0, fill=1)
-        c.setFillColor(HexColor(CYAN_ACCENT))
-        c.roundRect(bx + 15, by + 4, 12, 9, 3, stroke=0, fill=1)
-    elif kind == "drill":
-        c.roundRect(bx + 2, by + 3, 24, 22, 3, stroke=1, fill=0)
-        c.line(bx + 7, by + 17, bx + 21, by + 17)
-        c.line(bx + 7, by + 12, bx + 21, by + 12)
-        c.setStrokeColor(HexColor(CYAN_ACCENT))
-        c.line(bx + 7, by + 7, bx + 16, by + 7)
-    else:
-        c.circle(bx + 13, by + 14, 11, stroke=1, fill=0)
-        c.setStrokeColor(HexColor(CYAN_ACCENT))
-        c.circle(bx + 13, by + 14, 6, stroke=1, fill=0)
-        c.setFillColor(HexColor(COBALT_HEAD))
-        c.circle(bx + 13, by + 14, 2.5, stroke=0, fill=1)
+    c.setStrokeColor(HexColor(color))
+    c.setFillColor(HexColor(color))
+    c.setLineWidth(2.2)
+    yy = Y(y_top)
+    c.line(x1, yy, x2 - 6, yy)
+    path = c.beginPath()
+    path.moveTo(x2, yy)
+    path.lineTo(x2 - 8, yy + 4.5)
+    path.lineTo(x2 - 8, yy - 4.5)
+    path.close()
+    c.drawPath(path, stroke=0, fill=1)
     c.restoreState()
 
 
-def draw_lavender_table(c: canvas.Canvas, x: float, y_top: float, col_widths, headers, rows, row_h: float = 24.5) -> float:
-    """Signature COURSES PDF.pdf table (#D0D3FF header fill, #9BA3EB grid lines, centered/clean Montserrat cells)."""
+def draw_chapter_vector_illustration(
+    c: canvas.Canvas,
+    mod_idx: int,
+    ch: dict,
+    course_title: str,
+    domain_noun: str,
+    x: float,
+    y_top: float,
+    w: float,
+    h: float,
+) -> None:
+    """Draw a spacious, custom vector explanatory diagram illustrating the chapter's mental model."""
+    c.saveState()
+    c.setFillColor(HexColor(LAVENDER_CARD))
+    c.roundRect(x, Y(y_top + h), w, h, 12.0, stroke=0, fill=1)
+    c.setStrokeColor(HexColor(LAVENDER_BORDER))
+    c.setLineWidth(1.0)
+    c.roundRect(x, Y(y_top + h), w, h, 12.0, stroke=1, fill=0)
+
+    # Top label inside diagram frame
+    c.setFillColor(HexColor(COBALT_HEAD))
+    c.setFont("Montserrat-Bold", 8.5)
+    c.drawString(x + 18.0, Y(y_top + 22.0), f"VISUAL CONCEPT DIAGRAM  •  MODULE 0{mod_idx}: {ch['title'].upper()[:46]}")
+    c.restoreState()
+    draw_accent_bar(c, x + 18.0, y_top + 28.0, 62.0, 2.2)
+
+    tks = ch.get("takeaways", [])
+    t0 = tks[0] if len(tks) > 0 else ch["title"]
+    t1 = tks[1] if len(tks) > 1 else "Apply structured daily practice"
+    t2 = tks[2] if len(tks) > 2 else "Verify output against real user value"
+
+    kind = (mod_idx - 1) % 4
+
+    if kind == 0:
+        # ARCHETYPE 0: 3-Stage Process Architecture Pipeline (Understand -> Build -> Verify)
+        bw = (w - 64.0) / 3.0
+        bh = h - 58.0
+        by = y_top + 42.0
+        stages = [
+            ("STAGE 01  •  INPUT", "Clarify Principle", t0, WHITE, INK),
+            ("STAGE 02  •  PROCESS", "Deliberate Execution", t1, WHITE, INK),
+            ("STAGE 03  •  OUTPUT", f"Working {domain_noun.title()}", t2, COBALT_PANEL, WHITE),
+        ]
+        for i, (tag, head, desc, bg, fg) in enumerate(stages):
+            bx = x + 18.0 + i * (bw + 14.0)
+            c.saveState()
+            c.setFillColor(HexColor(bg))
+            c.roundRect(bx, Y(by + bh), bw, bh, 10.0, stroke=0, fill=1)
+            if bg == WHITE:
+                c.setStrokeColor(HexColor(COBALT_HEAD))
+                c.setLineWidth(1.0)
+                c.roundRect(bx, Y(by + bh), bw, bh, 10.0, stroke=1, fill=0)
+            c.setFillColor(HexColor(CYAN_ACCENT if i < 2 else LIME_ACCENT))
+            c.roundRect(bx + 10.0, Y(by + 26.0), bw - 20.0, 16.0, 8.0, stroke=0, fill=1)
+            c.setFillColor(HexColor(COBALT_DEEP))
+            c.setFont("Montserrat-Bold", 7.2)
+            c.drawCentredString(bx + bw / 2.0, Y(by + 20.5), tag)
+            c.restoreState()
+
+            st_h = style(f"dh0_{i}", "Montserrat-Bold", 9.2, 12.5, fg if bg != WHITE else COBALT_HEAD, TA_CENTER, 4)
+            st_d = style(f"dd0_{i}", "Montserrat", 8.3, 12.2, fg, TA_CENTER, 0)
+            yh = draw_para(c, clean_text(head), st_h, bx + 8.0, by + 35.0, bw - 16.0, 30.0)
+            draw_para(c, clean_text(desc), st_d, bx + 8.0, by + 39.0 + yh, bw - 16.0, bh - 48.0 - yh)
+            if i < 2:
+                draw_arrow_right(c, bx + bw + 2.0, bx + bw + 12.0, by + bh / 2.0, COBALT_HEAD)
+
+    elif kind == 1:
+        # ARCHETYPE 1: 3-Tier Mastery Pyramid (Foundation -> Repeatable System -> Compounding Result)
+        tiers = [
+            ("TIER 03  •  MASTERY", t2, 250.0, COBALT_PANEL, WHITE),
+            ("TIER 02  •  CONSISTENCY", t1, 345.0, "#DDE2FF", INK),
+            ("TIER 01  •  FOUNDATION", t0, w - 40.0, WHITE, INK),
+        ]
+        ty = y_top + 42.0
+        th = (h - 62.0) / 3.0 - 5.0
+        for i, (tag, txt, tw, bg, fg) in enumerate(tiers):
+            tx = x + (w - tw) / 2.0
+            c.saveState()
+            c.setFillColor(HexColor(bg))
+            c.roundRect(tx, Y(ty + th), tw, th, 8.0, stroke=0, fill=1)
+            if bg != COBALT_PANEL:
+                c.setStrokeColor(HexColor(COBALT_HEAD))
+                c.setLineWidth(1.0)
+                c.roundRect(tx, Y(ty + th), tw, th, 8.0, stroke=1, fill=0)
+            c.restoreState()
+            tag_col = LIME_ACCENT if bg == COBALT_PANEL else COBALT_HEAD
+            st_t = style(f"pyr_{i}", "Montserrat", 8.5, 12.2, fg, TA_CENTER, 0)
+            draw_para(
+                c,
+                f"<b><font color='{tag_col}'>{tag}:</font></b>  {clean_text(txt)}",
+                st_t,
+                tx + 12.0,
+                ty + 9.0,
+                tw - 24.0,
+                th - 12.0,
+            )
+            ty += th + 7.0
+
+    elif kind == 2:
+        # ARCHETYPE 2: Common Beginner Trap vs Practitioner Standard (Side-by-Side Visual Contrast)
+        cw = (w - 52.0) / 2.0
+        ch_h = h - 56.0
+        cy = y_top + 42.0
+        cols = [
+            (
+                "COMMON BEGINNER MISTAKE",
+                "Rushing without structure, copying surface trends blindly, and skipping hands-on testing before moving to the next topic.",
+                f"Outcome: Fragile {domain_noun} that stalls under real conditions.",
+                WHITE,
+                INK,
+                "#E05252",
+            ),
+            (
+                "PRACTITIONER STANDARD",
+                f"{t0} Paired with {t1.lower() if len(t1) > 3 else t1}",
+                f"Outcome: Reliable {domain_noun} ready for real clients & growth.",
+                COBALT_PANEL,
+                WHITE,
+                CYAN_ACCENT,
+            ),
+        ]
+        for i, (head, main_txt, foot_txt, bg, fg, badge) in enumerate(cols):
+            cx = x + 18.0 + i * (cw + 16.0)
+            c.saveState()
+            c.setFillColor(HexColor(bg))
+            c.roundRect(cx, Y(cy + ch_h), cw, ch_h, 10.0, stroke=0, fill=1)
+            if bg == WHITE:
+                c.setStrokeColor(HexColor("#D9DCEB"))
+                c.setLineWidth(1.1)
+                c.roundRect(cx, Y(cy + ch_h), cw, ch_h, 10.0, stroke=1, fill=0)
+            c.setFillColor(HexColor(badge))
+            c.roundRect(cx + 12.0, Y(cy + 28.0), cw - 24.0, 18.0, 9.0, stroke=0, fill=1)
+            c.setFillColor(HexColor(WHITE if i == 0 else COBALT_DEEP))
+            c.setFont("Montserrat-Bold", 7.4)
+            c.drawCentredString(cx + cw / 2.0, Y(cy + 21.8), head)
+            c.restoreState()
+
+            st_m = style(f"cm_{i}", "Montserrat", 8.5, 12.6, fg, TA_LEFT, 6)
+            st_f = style(f"cf_{i}", "Montserrat-Bold", 8.2, 11.8, LIME_ACCENT if i == 1 else "#B43C3C", TA_LEFT, 0)
+            uh = draw_para(c, clean_text(main_txt), st_m, cx + 14.0, cy + 36.0, cw - 28.0, ch_h - 68.0)
+            draw_para(c, clean_text(foot_txt), st_f, cx + 14.0, cy + 42.0 + uh, cw - 28.0, 32.0)
+
+    else:
+        # ARCHETYPE 3: 4-Step Continuous Feedback & Mastery Loop
+        bw = (w - 54.0) / 2.0
+        bh = (h - 64.0) / 2.0
+        quads = [
+            ("01  •  FRAME", t0),
+            ("02  •  EXECUTE", ch["practice"]),
+            ("03  •  MEASURE", t1),
+            ("04  •  REFINE", t2),
+        ]
+        for i, (q_tag, q_txt) in enumerate(quads):
+            qx = x + 18.0 + (i % 2) * (bw + 18.0)
+            qy = y_top + 42.0 + (i // 2) * (bh + 10.0)
+            is_hi = i in (1, 3)
+            c.saveState()
+            c.setFillColor(HexColor(COBALT_PANEL if is_hi else WHITE))
+            c.roundRect(qx, Y(qy + bh), bw, bh, 9.0, stroke=0, fill=1)
+            if not is_hi:
+                c.setStrokeColor(HexColor(COBALT_HEAD))
+                c.setLineWidth(1.0)
+                c.roundRect(qx, Y(qy + bh), bw, bh, 9.0, stroke=1, fill=0)
+            c.restoreState()
+            fg = WHITE if is_hi else INK
+            tag_c = LIME_ACCENT if is_hi else COBALT_HEAD
+            st_q = style(f"fq_{i}", "Montserrat", 8.1, 11.6, fg, TA_LEFT, 0)
+            draw_para(
+                c,
+                f"<b><font color='{tag_c}'>{q_tag}</font></b><br/>{clean_text(q_txt)}",
+                st_q,
+                qx + 12.0,
+                qy + 8.0,
+                bw - 24.0,
+                bh - 14.0,
+            )
+
+
+def draw_lavender_table(c: canvas.Canvas, x: float, y_top: float, col_widths, headers, rows, row_h: float = 26.0) -> float:
     total_w = sum(col_widths)
     c.saveState()
-    # Header background
     c.setFillColor(HexColor(LAVENDER_TH))
     c.rect(x, Y(y_top + row_h), total_w, row_h, stroke=0, fill=1)
 
-    # Header labels
     cx = x
     for idx, h_txt in enumerate(headers):
         cw = col_widths[idx]
-        st_h = style(f"th_{idx}", "Montserrat-Bold", 8.5, 11.0, INK, align=1)
+        st_h = style(f"th_{idx}", "Montserrat-Bold", 8.8, 11.5, INK, align=TA_CENTER)
         p = Paragraph(clean_text(h_txt), st_h)
         _, ph = p.wrap(cw - 10, row_h)
         p.drawOn(c, cx + 5, Y(y_top + (row_h + ph) / 2.0 - 1.5))
         cx += cw
 
     cur_y = y_top + row_h
+    row_heights = []
     for r_idx, row in enumerate(rows):
-        # Measure max cell height
         cell_paras = []
         actual_h = row_h
         for c_idx, val in enumerate(row):
             cw = col_widths[c_idx]
-            align = 0 if c_idx in (0, 1) and len(str(val)) > 24 else 1
+            align = TA_LEFT if c_idx in (0, 1) and len(str(val)) > 22 else TA_CENTER
             font = "Montserrat-SemiBold" if c_idx == 0 else "Montserrat"
-            st_c = style(f"tc_{r_idx}_{c_idx}", font, 8.2, 11.2, INK, align=align)
+            st_c = style(f"tc_{r_idx}_{c_idx}", font, 8.6, 12.2, INK, align=align)
             p = Paragraph(clean_text(str(val)), st_c)
-            _, ph = p.wrap(cw - 12, 80)
-            actual_h = max(actual_h, ph + 9.0)
+            _, ph = p.wrap(cw - 14, 95)
+            actual_h = max(actual_h, ph + 11.0)
             cell_paras.append((p, ph, cw))
+        row_heights.append(actual_h)
 
         if r_idx % 2 == 1:
-            c.setFillColor(HexColor("#FAFbff"))
+            c.setFillColor(HexColor("#FAFBFF"))
             c.rect(x, Y(cur_y + actual_h), total_w, actual_h, stroke=0, fill=1)
 
         cx = x
         for p, ph, cw in cell_paras:
-            p.drawOn(c, cx + 6, Y(cur_y + (actual_h + ph) / 2.0 - 1.2))
+            p.drawOn(c, cx + 7, Y(cur_y + (actual_h + ph) / 2.0 - 1.4))
             cx += cw
         cur_y += actual_h
 
-    # Grid borders
     total_h = cur_y - y_top
     c.setStrokeColor(HexColor("#AEB6F0"))
-    c.setLineWidth(0.75)
+    c.setLineWidth(0.8)
     c.rect(x, Y(cur_y), total_w, total_h, stroke=1, fill=0)
 
-    # Vertical column lines
     vx = x
     for cw in col_widths[:-1]:
         vx += cw
         c.line(vx, Y(y_top), vx, Y(cur_y))
 
-    # Horizontal row lines (re-trace cleanly)
     hy = y_top + row_h
     c.line(x, Y(hy), x + total_w, Y(hy))
-    cur_check = y_top + row_h
-    for r_idx, row in enumerate(rows[:-1]):
-        actual_h = row_h
-        for c_idx, val in enumerate(row):
-            cw = col_widths[c_idx]
-            st_c = style("tmp", "Montserrat-SemiBold" if c_idx == 0 else "Montserrat", 8.2, 11.2, INK)
-            _, ph = Paragraph(clean_text(str(val)), st_c).wrap(cw - 12, 80)
-            actual_h = max(actual_h, ph + 9.0)
-        cur_check += actual_h
-        c.line(x, Y(cur_check), x + total_w, Y(cur_check))
+    for rh in row_heights[:-1]:
+        hy += rh
+        c.line(x, Y(hy), x + total_w, Y(hy))
 
     c.restoreState()
     return total_h
 
 
-# Track-specific real African photo sets (zero AI, zero watermarks, 100% real Pexels photos)
-TRACK_META = {
-    "youtube-automation": {
-        "track": "Video & Creator Economy Track",
-        "duration": "8 Weeks",
-        "level": "Beginner to Pro",
-        "photos": [
-            "course_podcast_creator.jpg",
-            "course_camera_creator.jpg",
-            "course_abuja_photographer.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_study_pair_side.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "real_blazer_journaling.jpg",
-        ],
-    },
-    "ai-video-storytelling": {
-        "track": "Video & Creative AI Track",
-        "duration": "6 Weeks",
-        "level": "Beginner",
-        "photos": [
-            "course_camera_creator.jpg",
-            "course_abuja_photographer.jpg",
-            "course_podcast_creator.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_lagos_celebration_group.jpg",
-            "real_quiet_desk_notes.jpg",
-        ],
-    },
-    "python-programming": {
-        "track": "Coding & Software Engineering Track",
-        "duration": "8 Weeks",
-        "level": "Beginner",
-        "photos": [
-            "course_coding_dual_screen.jpg",
-            "course_coding_developer.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_seminar_side.jpg",
-        ],
-    },
-    "swe-llm-mastery": {
-        "track": "Software Engineering & AI Systems Track",
-        "duration": "10 Weeks",
-        "level": "Intermediate",
-        "photos": [
-            "course_coding_developer.jpg",
-            "course_coding_dual_screen.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_study_pair_side.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_overcoat_side.jpg",
-        ],
-    },
-    "ai-literacy": {
-        "track": "AI & Workplace Productivity Track",
-        "duration": "5 Weeks",
-        "level": "Beginner",
-        "photos": [
-            "course_woman_white_blouse_laptop.jpg",
-            "course_coding_dual_screen.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_blazer_journaling.jpg",
-            "real_seminar_side.jpg",
-        ],
-    },
-    "print-on-demand": {
-        "track": "Design & Digital Commerce Track",
-        "duration": "8 Weeks",
-        "level": "Beginner",
-        "photos": [
-            "course_pod_apparel.jpg",
-            "real_blazer_journaling.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_abuja_photographer.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_quiet_desk_notes.jpg",
-        ],
-    },
-    "communicate-like-a-ceo": {
-        "track": "Executive Leadership & Communication Track",
-        "duration": "6 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "course_exec_pitch_call.jpg",
-            "real_seminar_side.jpg",
-            "real_council_sisters.jpg",
-            "course_whiteboard_trainer.jpg",
-            "real_plaid_suit_side.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_overcoat_side.jpg",
-        ],
-    },
-    "negotiation": {
-        "track": "Business Strategy & Deal-Making Track",
-        "duration": "6 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "real_council_sisters.jpg",
-            "real_plaid_suit_side.jpg",
-            "course_exec_pitch_call.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_suited_window_side.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "real_blazer_journaling.jpg",
-        ],
-    },
-    "personal-branding": {
-        "track": "Leadership & Authority Positioning Track",
-        "duration": "6 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "course_exec_outdoor_laptop.jpg",
-            "course_podcast_creator.jpg",
-            "real_plaid_suit_side.jpg",
-            "course_abuja_photographer.jpg",
-            "real_blazer_journaling.jpg",
-            "real_lagos_celebration_group.jpg",
-            "real_seminar_side.jpg",
-        ],
-    },
-    "networking-secrets": {
-        "track": "Leadership & Relationship Capital Track",
-        "duration": "5 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "real_joyful_fellowship_group.jpg",
-            "real_seminar_side.jpg",
-            "real_lagos_celebration_group.jpg",
-            "real_council_sisters.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_overcoat_side.jpg",
-        ],
-    },
-    "ghostwriting": {
-        "track": "Editorial Writing & Publishing Track",
-        "duration": "8 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "real_modest_prayer_journal.jpg",
-            "real_blazer_journaling.jpg",
-            "lesson2_contemplation.jpg",
-            "real_quiet_desk_notes.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_seminar_side.jpg",
-        ],
-    },
-    "copywriting": {
-        "track": "Persuasive Writing & Conversion Track",
-        "duration": "8 Weeks",
-        "level": "Beginner to Pro",
-        "photos": [
-            "real_blazer_journaling.jpg",
-            "real_quiet_desk_notes.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_modest_prayer_journal.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "lesson2_contemplation.jpg",
-        ],
-    },
-    "freelancing": {
-        "track": "Independent Consulting & Remote Work Track",
-        "duration": "8 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "real_overcoat_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "course_exec_pitch_call.jpg",
-            "real_blazer_journaling.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_desk_notes.jpg",
-        ],
-    },
-    "content-creation": {
-        "track": "Digital Media & Audience Growth Track",
-        "duration": "6 Weeks",
-        "level": "Beginner",
-        "photos": [
-            "course_podcast_creator.jpg",
-            "course_abuja_photographer.jpg",
-            "course_camera_creator.jpg",
-            "real_blazer_journaling.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_study_pair_side.jpg",
-        ],
-    },
-    "sales-and-marketing": {
-        "track": "Revenue Growth & Go-To-Market Track",
-        "duration": "8 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "course_whiteboard_trainer.jpg",
-            "course_exec_pitch_call.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_council_sisters.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "real_plaid_suit_side.jpg",
-            "course_woman_desk_notes.jpg",
-        ],
-    },
-    "digital-marketing": {
-        "track": "Growth Marketing & Analytics Track",
-        "duration": "8 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "real_lagos_boardroom.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_whiteboard_trainer.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_council_sisters.jpg",
-            "real_blazer_journaling.jpg",
-        ],
-    },
-    "email-marketing": {
-        "track": "Retention & Direct Response Track",
-        "duration": "6 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "course_woman_desk_notes.jpg",
-            "real_quiet_desk_notes.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_blazer_journaling.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_modest_prayer_journal.jpg",
-        ],
-    },
-    "affiliate-marketing": {
-        "track": "Partner Commerce & Digital Funnels Track",
-        "duration": "8 Weeks",
-        "level": "Beginner to Pro",
-        "photos": [
-            "real_study_pair_side.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "course_podcast_creator.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_overcoat_side.jpg",
-        ],
-    },
-    "social-media-marketing": {
-        "track": "Brand Community & Social Strategy Track",
-        "duration": "8 Weeks",
-        "level": "All Levels",
-        "photos": [
-            "real_lagos_celebration_group.jpg",
-            "course_podcast_creator.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "course_camera_creator.jpg",
-            "real_council_sisters.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_blazer_journaling.jpg",
-        ],
-    },
-}
-
-
 def split_cover_title(title: str):
-    """Break course title into 2-3 bold display lines matching COURSES PDF.pdf Page 1."""
-    clean = title.replace(": ", ":\n")
-    words = clean.split()
-    lines = []
-    cur = ""
+    words = title.split()
+    lines, cur = [], ""
     for w in words:
         cand = (cur + " " + w).strip()
         if len(cand) <= 16 or not cur:
@@ -645,8 +831,7 @@ def split_cover_title(title: str):
     if cur:
         lines.append(cur)
     if len(lines) == 1:
-        lines.append("Course")
-        lines.append("Handbook")
+        lines.extend(["Course", "Handbook"])
     elif len(lines) == 2:
         lines.append("Course Handbook")
     elif len(lines) > 3:
@@ -669,8 +854,167 @@ def render_section_divider(c: canvas.Canvas, plate: str, sec_num: str, title_lin
         ty += 38.0
     c.restoreState()
     st_subdiv = style("subdiv", "Montserrat-Medium", 10.4, 14.5, "#C5D8FF")
-    draw_para(c, clean_text(sub_line), st_subdiv, 96.0, ty - 22.0, 430.0, 44.0)
+    draw_para(c, clean_text(sub_line), st_subdiv, 96.0, ty - 22.0, 430.0, 46.0)
     draw_page_num(c, pno, side="right", on_dark=True)
+    c.showPage()
+
+
+def render_chapter_spread(
+    c: canvas.Canvas,
+    mod_num: int,
+    sec_label: str,
+    ch: dict,
+    course_title: str,
+    meta: dict,
+    photo_name: str,
+    page_a: int,
+    page_b: int,
+) -> None:
+    """Render TWO spacious, unhurried, deeply explained & illustrated pages for a single chapter."""
+    domain_noun = meta["domain_noun"]
+
+    # -------------------------------------------------------------------------
+    # PAGE A: Deep-Dive Concept Explanation + Custom Vector Illustration
+    # -------------------------------------------------------------------------
+    fill_white(c)
+
+    # Top subtle module eyebrow + large Cobalt Title
+    c.saveState()
+    c.setFillColor(HexColor(CYAN_ACCENT))
+    c.roundRect(68.0, Y(74.0), 116.0, 20.0, 10.0, stroke=0, fill=1)
+    c.setFillColor(HexColor(COBALT_DEEP))
+    c.setFont("Montserrat-Bold", 8.0)
+    c.drawCentredString(68.0 + 58.0, Y(67.2), f"MODULE 0{mod_num}  •  PART 1")
+
+    title_str = f"{sec_label}  {ch['title']}"
+    tsz = 19.5
+    while pdfmetrics.stringWidth(title_str, "Montserrat-Bold", tsz) > 460.0 and tsz > 14.5:
+        tsz -= 0.5
+    c.setFillColor(HexColor(COBALT_HEAD))
+    c.setFont("Montserrat-Bold", tsz)
+    c.drawString(68.0, Y(108.0), title_str)
+    c.restoreState()
+    draw_accent_bar(c, 68.0, 117.0, 64.0, 2.6)
+
+    # Spacious 10.1pt prose paragraphs + expanded "Why This Matters in Practice" deep-dive paragraph
+    st_prose = style(f"chp_{mod_num}", "Montserrat", 10.1, 16.0, INK, align=TA_JUSTIFY, after=10.0)
+    yc = 134.0
+    for para in ch["body"]:
+        yc += draw_para(c, clean_text(para), st_prose, 68.0, yc, 460.0, 145.0) + 10.0
+
+    # Deep-dive pedagogical unpacking so the learner understands the 'why' and 'how' without rush
+    tks = ch.get("takeaways", [])
+    deep_unpack = (
+        f"<b>Why This Principle Matters in Depth:</b> Many learners read about <i>{clean_text(ch['title'].lower())}</i> "
+        f"at a surface level, yet struggle when building a real {clean_text(domain_noun)}. Notice the underlying logic: "
+        f"when you anchor your work around the rule that <b>{clean_text(tks[0].lower() if tks else ch['title'].lower())}</b>, "
+        f"you remove guesswork and build repeatable confidence. Take time to study the visual concept diagram below "
+        f"before moving to the worked case study on the next page."
+    )
+    yc += draw_para(c, deep_unpack, st_prose, 68.0, yc, 460.0, 130.0) + 16.0
+
+    # Custom Vector Concept Diagram filling the spacious lower canvas (h = 228..255 pt)
+    diag_y = max(yc, 470.0)
+    diag_h = max(205.0, 764.0 - diag_y)
+    draw_chapter_vector_illustration(
+        c,
+        mod_num,
+        ch,
+        course_title,
+        domain_noun,
+        68.0,
+        diag_y,
+        460.0,
+        diag_h,
+    )
+
+    draw_page_num(c, page_a, side="left" if page_a % 2 == 0 else "right", on_dark=False)
+    c.showPage()
+
+    # -------------------------------------------------------------------------
+    # PAGE B: Real Practitioner Photo + Worked Field Case + Step-by-Step Lab
+    # -------------------------------------------------------------------------
+    fill_white(c)
+
+    # Top Real African Practitioner Banner + Cobalt Case Header
+    draw_photo(c, photo_name, 68.0, 56.0, 216.0, 186.0)
+    c.saveState()
+    c.setFillColor(HexColor(COBALT_PANEL))
+    c.rect(284.0, Y(242.0), 244.0, 186.0, stroke=0, fill=1)
+    c.setFillColor(HexColor(LIME_ACCENT))
+    c.setFont("Montserrat-Bold", 8.2)
+    c.drawString(302.0, Y(78.0), f"MODULE 0{mod_num}  •  WORKED CASE STUDY")
+    c.restoreState()
+    draw_accent_bar(c, 302.0, 85.0, 48.0, 2.2)
+
+    st_case = style(f"cs_{mod_num}", "Montserrat", 9.3, 14.5, WHITE, align=TA_LEFT, after=6.0)
+    draw_para(
+        c,
+        f"<b>Real-World Scenario:</b><br/>{clean_text(ch['example'])}",
+        st_case,
+        302.0,
+        96.0,
+        210.0,
+        138.0,
+    )
+
+    # Unpacking the Case Lesson (spacious 10pt explanation)
+    c.saveState()
+    c.setFillColor(HexColor(COBALT_HEAD))
+    c.setFont("Montserrat-Bold", 15.5)
+    c.drawString(68.0, Y(274.0), "How to Apply This Lesson Step by Step")
+    c.restoreState()
+
+    unpack_case = (
+        f"Look closely at why the example above succeeded: instead of waiting for perfect conditions, "
+        f"the practitioner focused on one concrete deliverable and tested it in the real world. "
+        f"Use the guided assignment below to build the exact same muscle in your own <b>{clean_text(course_title)}</b> workbook."
+    )
+    uh = draw_para(c, unpack_case, st_prose, 68.0, 288.0, 460.0, 95.0)
+
+    # Guided Lab Card (Lavender Soft Box with generous padding)
+    lab_y = 298.0 + uh
+    lab_h = 176.0
+    c.saveState()
+    c.setFillColor(HexColor(LAVENDER_CARD))
+    c.roundRect(68.0, Y(lab_y + lab_h), 460.0, lab_h, 12.0, stroke=0, fill=1)
+    c.setStrokeColor(HexColor(COBALT_HEAD))
+    c.setLineWidth(1.2)
+    c.line(68.0 + 18.0, Y(lab_y + 42.0), 528.0 - 18.0, Y(lab_y + 42.0))
+    c.setFillColor(HexColor(COBALT_HEAD))
+    c.setFont("Montserrat-Bold", 11.2)
+    c.drawString(88.0, Y(lab_y + 28.0), f"HANDS-ON LAB ASSIGNMENT  •  MODULE 0{mod_num}")
+    c.restoreState()
+
+    st_lab = style(f"lb_{mod_num}", "Montserrat-Medium", 9.8, 15.2, INK, align=TA_LEFT, after=8.0)
+    lab_html = (
+        f"<b>Your Practical Task:</b> {clean_text(ch['practice'])}<br/><br/>"
+        f"<b>Self-Check Before Moving On:</b> Write down what worked, what felt unclear, and one specific "
+        f"improvement you will make on your second repetition. Competence comes from completed reps, never passive reading."
+    )
+    draw_para(c, lab_html, st_lab, 88.0, lab_y + 52.0, 420.0, lab_h - 62.0)
+
+    # Spacious 01 / 02 / 03 Key Takeaways Strip at bottom (modeled on Page 6/7 of COURSES PDF.pdf)
+    tk_y = lab_y + lab_h + 28.0
+    c.saveState()
+    c.setFillColor(HexColor(COBALT_HEAD))
+    c.setFont("Montserrat-Bold", 14.5)
+    c.drawString(68.0, Y(tk_y), f"Module 0{mod_num} Key Takeaways")
+    c.restoreState()
+
+    for idx, tk_txt in enumerate(tks[:3]):
+        tx = 68.0 + idx * 158.0
+        ty_box = tk_y + 14.0
+        c.saveState()
+        c.setFillColor(HexColor(COBALT_HEAD))
+        c.setFont("Montserrat", 20.0)
+        c.drawString(tx, Y(ty_box + 18.0), f"0{idx+1}")
+        c.restoreState()
+        draw_accent_bar(c, tx, ty_box + 25.0, 42.0, 2.4)
+        st_tk = style(f"tk_{mod_num}_{idx}", "Montserrat-Medium", 9.2, 13.8, INK)
+        draw_para(c, clean_text(tk_txt), st_tk, tx, ty_box + 34.0, 142.0, 95.0)
+
+    draw_page_num(c, page_b, side="left" if page_b % 2 == 0 else "right", on_dark=False)
     c.showPage()
 
 
@@ -680,19 +1024,19 @@ def build_single_course_pdf(book: dict) -> str:
     subtitle = book["subtitle"]
     promise = book["promise"]
     foreword = book["foreword"]
-    chapters = book["chapters"]  # 8 full chapters
+    chapters = book["chapters"]
 
     meta = TRACK_META[slug]
     photos = meta["photos"]
     out_path = os.path.join(OUT_DIR, f"{slug}.pdf")
 
     c = canvas.Canvas(out_path, pagesize=(W, H))
-    c.setTitle(f"{title} | CHRISCO Youth Aflame Course Handbook")
+    c.setTitle(f"{title} | CHRISCO Youth Aflame 28-Page Illustrated Course Handbook")
     c.setAuthor("CHRISCO Youth Aflame under CHRISCO FELLOWSHIP OF CHURCHES")
-    c.setSubject(f"CHRISCO Digital Academy Official Course E-Book: {title}")
+    c.setSubject(f"CHRISCO Digital Academy Official Illustrated Course E-Book: {title}")
 
     # =========================================================================
-    # PAGE 01: COVER (Exact COURSES PDF.pdf Page 1)
+    # PAGE 01: COVER
     # =========================================================================
     draw_plate(c, "plate_cover.jpg")
     draw_brand_lockup(c, 56.0, 56.0, dark_bg=True)
@@ -707,20 +1051,17 @@ def build_single_course_pdf(book: dict) -> str:
         c.drawString(59.5, Y(ty), ln)
         ty += sz + 9.0
 
-    # Subtitle quote
     st_sub = style("cov_sub", "Montserrat", 14.5, 20.5, "#E8F0FF")
     draw_para(c, f'"{clean_text(subtitle)}"', st_sub, 59.5, ty - 14.0, 445.0, max_h=68.0)
     c.restoreState()
 
-    # Hero real African photograph in the middle window (y=404..672)
-    draw_photo(c, photos[0], 0.0, 404.0, W, 268.0, focus=(0.5, 0.32))
+    draw_photo(c, photos[0], 0.0, 404.0, W, 268.0)
 
-    # Footer metadata on cobalt-cyan bottom ribbon
     c.saveState()
     c.setFillColor(HexColor(WHITE))
     c.setFont("Montserrat", 9.6)
     c.drawString(59.5, Y(774.0), f"{meta['track']}  |  {meta['duration']}  |  {meta['level']}")
-    c.drawRightString(536.0, Y(774.0), "Self-Paced Study Edition")
+    c.drawRightString(536.0, Y(774.0), "28-Page Illustrated Edition")
     c.setFont("Montserrat-Bold", 9.8)
     c.drawString(59.5, Y(793.0), "Prepared by CHRISCO Youth Aflame")
     c.setFont("Montserrat", 9.4)
@@ -729,7 +1070,7 @@ def build_single_course_pdf(book: dict) -> str:
     c.showPage()
 
     # =========================================================================
-    # PAGE 02: COURSE FOREWORD & PROMISE (Exact COURSES PDF.pdf Page 2)
+    # PAGE 02: COURSE FOREWORD & PROMISE
     # =========================================================================
     draw_plate(c, "plate_overview.jpg")
     c.saveState()
@@ -739,53 +1080,48 @@ def build_single_course_pdf(book: dict) -> str:
     c.drawString(59.5, Y(136.0), "Foreword")
     c.restoreState()
 
-    # Overlapping vertical African learner/practitioner portrait
-    draw_photo(c, photos[1], 59.5, 178.0, 224.0, 248.0, focus=(0.5, 0.28))
+    draw_photo(c, photos[1], 59.5, 178.0, 224.0, 248.0)
 
-    # Right upper box on white panel (below top blue header y=322)
     st_prom_lbl = style("pr_lbl", "Montserrat-Bold", 10.5, 14.0, COBALT_HEAD)
     draw_para(c, "THE PRACTITIONER PROMISE", st_prom_lbl, 312.0, 340.0, 228.0, 24.0)
     draw_accent_bar(c, 312.0, 358.0, 56.0, 2.5)
-    st_prom = style("pr_txt", "Montserrat-Medium", 9.6, 14.5, INK)
+    st_prom = style("pr_txt", "Montserrat-Medium", 9.8, 15.0, INK)
     draw_para(c, clean_text(promise), st_prom, 312.0, 370.0, 228.0, 120.0)
 
-    # Left column foreword paragraphs (y=446..755)
-    st_body = style("fw_b", "Montserrat", 9.5, 14.4, INK, align=TA_LEFT, after=8.0)
+    st_body = style("fw_b", "Montserrat", 9.8, 15.0, INK, align=TA_LEFT, after=8.0)
     ly = 446.0
     for para in foreword[:2]:
-        ly += draw_para(c, clean_text(para), st_body, 59.5, ly, 232.0, 155.0) + 10.0
+        ly += draw_para(c, clean_text(para), st_body, 59.5, ly, 232.0, 160.0) + 10.0
 
-    # Right column foreword + study approach (y=495..730)
     ry = 495.0
     if len(foreword) > 2:
         ry += draw_para(c, clean_text(foreword[2]), st_body, 312.0, ry, 228.0, 130.0) + 12.0
     study_note = (
         f"Published by <b>CHRISCO Digital Academy</b> under <b>CHRISCO Youth Aflame</b> "
-        f"(<i>CHRISCO Fellowship of Churches</i>), this 8-module workbook equips youth and emerging "
-        f"leaders with practical, ethical, income-ready skills. Complete every chapter drill in a dedicated "
-        f"workbook and reach our mentorship desk anytime at <b>{PRIMARY_EMAIL}</b>."
+        f"(<i>CHRISCO Fellowship of Churches</i>), this expanded 28-page illustrated handbook "
+        f"unpacks every module in spacious detail with visual diagrams, real East African case studies, "
+        f"and step-by-step labs. Reach our mentorship desk anytime at <b>{PRIMARY_EMAIL}</b>."
     )
-    ry += draw_para(c, study_note, st_body, 312.0, ry, 228.0, 145.0) + 10.0
-    # Signature warm gold horizontal rule from COURSES PDF.pdf Page 2
+    ry += draw_para(c, study_note, st_body, 312.0, ry, 228.0, 150.0) + 10.0
     c.saveState()
     c.setStrokeColor(HexColor(GOLD_RULE))
     c.setLineWidth(1.6)
-    c.line(312.0, Y(min(ry + 6.0, 742.0)), 520.0, Y(min(ry + 6.0, 742.0)))
+    c.line(312.0, Y(min(ry + 6.0, 748.0)), 520.0, Y(min(ry + 6.0, 748.0)))
     c.restoreState()
 
     draw_page_num(c, 2, side="left", on_dark=False)
     c.showPage()
 
     # =========================================================================
-    # PAGE 03: KEY OUTCOMES (Exact COURSES PDF.pdf Page 3)
+    # PAGE 03: KEY OUTCOMES
     # =========================================================================
     draw_plate(c, "plate_outcomes.jpg")
-    draw_photo(c, photos[2], 0.0, 0.0, W, 336.0, focus=(0.5, 0.32))
+    draw_photo(c, photos[2], 0.0, 0.0, W, 336.0)
 
     c.saveState()
     c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 20.0)
-    c.drawString(96.0, Y(384.0), "Key Outcomes")
+    c.setFont("Montserrat-Bold", 20.5)
+    c.drawString(96.0, Y(384.0), "Key Learning Outcomes")
     c.restoreState()
 
     outcomes_4 = [
@@ -802,20 +1138,19 @@ def build_single_course_pdf(book: dict) -> str:
         c.drawString(ox, Y(oy + 24.0), f"0{idx+1}")
         c.restoreState()
         draw_accent_bar(c, ox, oy + 32.0, 46.0, 2.4)
-        st_out = style(f"out_{idx}", "Montserrat-Medium", 9.4, 13.8, INK)
+        st_out = style(f"out_{idx}", "Montserrat-Medium", 9.5, 14.0, INK)
         ch_ref = chapters[idx * 2]
         out_txt = f"<b>{clean_text(ch_ref['title'])}:</b> {clean_text(outcomes_4[idx])}"
-        draw_para(c, out_txt, st_out, ox, oy + 42.0, 198.0, 62.0)
+        draw_para(c, out_txt, st_out, ox, oy + 42.0, 198.0, 64.0)
 
-    # Bottom synthesis columns (y=652..770)
     syn_left = (
-        f"Across <b>{meta['duration']}</b> of structured practice, learners progress from core principles "
-        f"to real-world execution. Every module pairs concise frameworks with an immediate hands-on drill "
-        f"so knowledge turns into demonstrable competence."
+        f"Across <b>{meta['duration']}</b> of structured practice, each of the 8 modules is given "
+        f"a dedicated two-page spread: first unpacking the concept visually, then walking through "
+        f"a real field scenario and hands-on lab."
     )
     syn_right = (
-        f"Graduates finish with a tangible portfolio deliverable in <b>{clean_text(title)}</b>, ready to "
-        f"serve clients, employers, ministries, and communities with excellence and integrity."
+        f"By Module 08, you will have built and verified a complete <b>{clean_text(meta['domain_noun'])}</b> "
+        f"ready to serve employers, clients, ministries, and communities with excellence."
     )
     draw_para(c, syn_left, st_body, 96.0, 654.0, 204.0, 118.0)
     draw_para(c, syn_right, st_body, 324.0, 654.0, 204.0, 118.0)
@@ -824,7 +1159,7 @@ def build_single_course_pdf(book: dict) -> str:
     c.showPage()
 
     # =========================================================================
-    # PAGE 04: TABLE OF CONTENTS (Exact COURSES PDF.pdf Page 4)
+    # PAGE 04: TABLE OF CONTENTS (28-Page Map)
     # =========================================================================
     draw_plate(c, "plate_toc.jpg")
     draw_brand_lockup(c, 56.0, 56.0, dark_bg=True)
@@ -837,17 +1172,17 @@ def build_single_course_pdf(book: dict) -> str:
 
     toc_rows = [
         ("Course Foreword & Key Outcomes", "02", 448.0),
-        ("01  Foundations & Core Mindset", "05", 492.5),
-        ("02  Core Frameworks & Strategy", "07", 536.8),
-        ("03  Execution & Applied Mastery", "10", 581.5),
-        ("04  Scaling, Capstone & Excellence", "12", 625.0),
-        ("05  8-Module Syllabus & Drill Matrix", "14", 669.2),
-        ("06  90-Day Action Plan & Stewardship", "15", 713.8),
+        ("01  Foundations & Core Mindset (Modules 1 to 2)", "05", 492.5),
+        ("02  Core Frameworks & Strategy (Modules 3 to 4)", "10", 536.8),
+        ("03  Execution & Applied Mastery (Modules 5 to 6)", "15", 581.5),
+        ("04  Scaling & Capstone Project (Modules 7 to 8)", "20", 625.0),
+        ("05  Complete Syllabus & Fellowship Reflections", "25", 669.2),
+        ("06  90-Day Action Plan & Stewardship", "27", 713.8),
     ]
     for label, pg_str, row_y in toc_rows:
-        c.setFont("Montserrat-Medium", 11.2)
+        c.setFont("Montserrat-Medium", 10.6)
         c.drawString(119.8, Y(row_y), label)
-        c.setFont("Montserrat-Bold", 11.5)
+        c.setFont("Montserrat-Bold", 11.2)
         c.drawRightString(416.0, Y(row_y), pg_str)
     c.restoreState()
 
@@ -855,438 +1190,182 @@ def build_single_course_pdf(book: dict) -> str:
     c.showPage()
 
     # =========================================================================
-    # PAGE 05: SECTION 01 DIVIDER (plate_div_01.jpg)
+    # SECTION 01 (P05) + MODULES 1 & 2 (P06-P09)
     # =========================================================================
     render_section_divider(
         c,
         "plate_div_01.jpg",
         "01",
         ["Foundations &", "Core Mindset"],
-        f"Module 1: {chapters[0]['title']}  |  Module 2: {chapters[1]['title']}",
+        f"Module 01: {chapters[0]['title']}  |  Module 02: {chapters[1]['title']}",
         5,
     )
+    render_chapter_spread(c, 1, "1.1", chapters[0], title, meta, photos[3], 6, 7)
+    render_chapter_spread(c, 2, "1.2", chapters[1], title, meta, photos[4], 8, 9)
 
     # =========================================================================
-    # PAGE 06: CHAPTERS 1 & 2 DEEP DIVE (Exact COURSES PDF.pdf Page 6)
-    # =========================================================================
-    c.saveState()
-    c.setFillColor(HexColor(WHITE))
-    c.rect(0, 0, W, H, stroke=0, fill=1)
-    c.restoreState()
-    draw_photo(c, photos[3], 0.0, 0.0, W, 178.0, focus=(0.5, 0.30))
-
-    ch1, ch2 = chapters[0], chapters[1]
-    c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 16.5)
-    c.drawString(72.0, Y(210.0), f"1.1  {ch1['title']}")
-    c.restoreState()
-
-    st_ch = style("ch_b", "Montserrat", 9.0, 13.3, INK, align=TA_JUSTIFY, after=5.0)
-    y_cur = 222.0
-    for p_txt in ch1["body"]:
-        y_cur += draw_para(c, clean_text(p_txt), st_ch, 72.0, y_cur, 456.0, 92.0) + 5.0
-
-    # 3 vertical periwinkle bar columns (Example + Practice + Key Takeaways)
-    cols_x = [72.0, 230.0, 388.0]
-    bar_items = [
-        ("Real-World Example", ch1["example"]),
-        ("Hands-On Practice", ch1["practice"]),
-        ("Core Takeaways", " • ".join(ch1["takeaways"])),
-    ]
-    max_col_h = 0.0
-    for idx, (lbl, txt) in enumerate(bar_items):
-        bx = cols_x[idx]
-        c.saveState()
-        c.setStrokeColor(HexColor("#AEB6F0"))
-        c.setLineWidth(2.0)
-        c.line(bx, Y(y_cur + 4.0), bx, Y(y_cur + 96.0))
-        c.restoreState()
-        st_mini = style(f"b1_{idx}", "Montserrat", 8.2, 11.8, INK)
-        h_used = draw_para(c, f"<b><font color='{COBALT_HEAD}'>{lbl}:</font></b> {clean_text(txt)}", st_mini, bx + 9.0, y_cur + 2.0, 136.0, 102.0)
-        max_col_h = max(max_col_h, h_used)
-
-    y2 = max(y_cur + max_col_h + 18.0, 504.0)
-    c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 16.5)
-    c.drawString(72.0, Y(y2), f"1.2  {ch2['title']}")
-    c.restoreState()
-
-    y2 += 12.0
-    for p_txt in ch2["body"]:
-        y2 += draw_para(c, clean_text(p_txt), st_ch, 72.0, y2, 456.0, 88.0) + 5.0
-
-    # Numbered 01 / 02 / 03 alignment columns at bottom (exact Page 6 style)
-    y_bot = y2 + 4.0
-    ch2_cards = [
-        ("Practitioner Case", ch2["example"]),
-        ("Action Drill", ch2["practice"]),
-        ("Key Standard", " ".join(ch2["takeaways"])),
-    ]
-    for idx, (head_lbl, body_txt) in enumerate(ch2_cards):
-        bx = cols_x[idx]
-        c.saveState()
-        c.setFillColor(HexColor(COBALT_HEAD))
-        c.setFont("Montserrat", 16.5)
-        c.drawString(bx, Y(y_bot + 14.0), f"0{idx+1}")
-        c.restoreState()
-        draw_accent_bar(c, bx, y_bot + 19.0, 38.0, 2.0)
-        st_c2 = style(f"c2_{idx}", "Montserrat", 8.0, 11.4, INK)
-        draw_para(c, f"<b><font color='{COBALT_HEAD}'>{head_lbl}</font></b><br/>{clean_text(body_txt)}", st_c2, bx, y_bot + 25.0, 142.0, 96.0)
-
-    draw_page_num(c, 6, side="left", on_dark=False)
-    c.showPage()
-
-    # =========================================================================
-    # PAGE 07: SECTION 02 DIVIDER (plate_div_02.jpg)
+    # SECTION 02 (P10) + MODULES 3 & 4 (P11-P14)
     # =========================================================================
     render_section_divider(
         c,
         "plate_div_02.jpg",
         "02",
         ["Core Frameworks", "& Strategy"],
-        f"Module 3: {chapters[2]['title']}  |  Module 4: {chapters[3]['title']}",
-        7,
+        f"Module 03: {chapters[2]['title']}  |  Module 04: {chapters[3]['title']}",
+        10,
     )
+    render_chapter_spread(c, 3, "2.1", chapters[2], title, meta, photos[5], 11, 12)
+    render_chapter_spread(c, 4, "2.2", chapters[3], title, meta, photos[6], 13, 14)
 
     # =========================================================================
-    # PAGE 08: CHAPTER 3 DEEP DIVE & 2x2 METHODOLOGY CARDS (Exact Page 10)
-    # =========================================================================
-    c.saveState()
-    c.setFillColor(HexColor(WHITE))
-    c.rect(0, 0, W, H, stroke=0, fill=1)
-    c.restoreState()
-
-    ch3 = chapters[2]
-    c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 18.0)
-    c.drawString(72.0, Y(68.0), f"2.1  {ch3['title']}")
-    c.restoreState()
-
-    yc = 82.0
-    for p_txt in ch3["body"]:
-        yc += draw_para(c, clean_text(p_txt), st_ch, 72.0, yc, 456.0, 95.0) + 6.0
-
-    # 2x2 Soft-Lavender Cards (matching Page 10 of COURSES PDF.pdf)
-    card_y = yc + 8.0
-    cards_data = [
-        ("principle", "Core Principle", ch3["takeaways"][0]),
-        ("case", "Field Case Study", ch3["example"]),
-        ("drill", "Applied Exercise", ch3["practice"]),
-        ("standard", "Mastery Check", " • ".join(ch3["takeaways"][1:])),
-    ]
-    card_w, card_h = 222.0, 128.0
-    for idx, (ic_kind, c_title, c_txt) in enumerate(cards_data):
-        cx = 72.0 if idx % 2 == 0 else 306.0
-        cy = card_y if idx < 2 else card_y + card_h + 10.0
-        c.saveState()
-        c.setFillColor(HexColor(LAVENDER_CARD))
-        c.roundRect(cx, Y(cy + card_h), card_w, card_h, 6.0, stroke=0, fill=1)
-        c.restoreState()
-        draw_method_icon(c, ic_kind, cx + 14.0, cy + 12.0)
-        st_ct = style(f"ct_{idx}", "Montserrat-Bold", 10.0, 13.0, COBALT_HEAD)
-        draw_para(c, c_title, st_ct, cx + 50.0, cy + 16.0, card_w - 62.0, 26.0)
-        st_cb = style(f"cb_{idx}", "Montserrat", 8.3, 12.0, INK)
-        draw_para(c, clean_text(c_txt), st_cb, cx + 14.0, cy + 48.0, card_w - 28.0, 74.0)
-
-    # Bottom Agenda / Step-by-Step Execution Sequence (y = card_y + 2*card_h + 32)
-    ag_y = card_y + 2 * card_h + 32.0
-    c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 16.5)
-    c.drawString(72.0, Y(ag_y), "2.2  Three-Step Execution Rhythm")
-    c.restoreState()
-
-    steps = [
-        ("Step 1", "Prepare & Frame", ch3["takeaways"][0], "Audit your current approach before acting."),
-        ("Step 2", "Execute Deliberately", ch3["takeaways"][1] if len(ch3["takeaways"]) > 1 else ch3["practice"], "Focus on clarity, calm pace, and measurable value."),
-        ("Step 3", "Review & Refine", ch3["takeaways"][2] if len(ch3["takeaways"]) > 2 else ch3["example"], "Record outcomes and sharpen one habit per rep."),
-    ]
-    sy = ag_y + 18.0
-    for s_num, s_head, s_left, s_right in steps:
-        c.saveState()
-        c.setFillColor(HexColor(COBALT_HEAD))
-        c.setFont("Montserrat", 15.0)
-        c.drawString(72.0, Y(sy + 14.0), s_num)
-        c.restoreState()
-        draw_accent_bar(c, 72.0, sy + 20.0, 44.0, 2.0)
-        st_s = style("sts", "Montserrat", 8.3, 11.8, INK)
-        draw_para(c, f"<b><font color='{COBALT_HEAD}'>{s_head}</font></b><br/>{clean_text(s_left)}", st_s, 138.0, sy + 2.0, 188.0, 44.0)
-        draw_para(c, f"<b>Practice Focus</b><br/>{clean_text(s_right)}", st_s, 344.0, sy + 2.0, 184.0, 44.0)
-        sy += 48.0
-
-    draw_page_num(c, 8, side="right", on_dark=False)
-    c.showPage()
-
-    # =========================================================================
-    # PAGE 09: CHAPTER 4 DEEP DIVE (plate_bottom_wave.jpg - Exact Page 7)
-    # =========================================================================
-    draw_plate(c, "plate_bottom_wave.jpg")
-    ch4 = chapters[3]
-
-    c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 18.0)
-    c.drawString(82.0, Y(68.0), f"2.3  {ch4['title']}")
-    c.restoreState()
-
-    y4 = 84.0
-    for p_txt in ch4["body"]:
-        y4 += draw_para(c, clean_text(p_txt), st_ch, 82.0, y4, 442.0, 100.0) + 6.0
-
-    # 01 / 02 / 03 Takeaways grid
-    y4 += 6.0
-    for idx, tk in enumerate(ch4["takeaways"][:3]):
-        tx = 82.0 + idx * 150.0
-        c.saveState()
-        c.setFillColor(HexColor(COBALT_HEAD))
-        c.setFont("Montserrat", 18.0)
-        c.drawString(tx, Y(y4 + 16.0), f"0{idx+1}")
-        c.restoreState()
-        draw_accent_bar(c, tx, y4 + 22.0, 38.0, 2.2)
-        st_tk = style(f"tk4_{idx}", "Montserrat-Medium", 8.5, 12.2, INK)
-        draw_para(c, clean_text(tk), st_tk, tx, y4 + 30.0, 136.0, 58.0)
-
-    y4_sub = max(y4 + 98.0, 326.0)
-    c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 16.5)
-    c.drawString(82.0, Y(y4_sub), "2.4  Real-World Case & Lab Assignment")
-    c.restoreState()
-
-    # Two wide periwinkle-bar blocks before bottom cobalt wave (starts at y=515)
-    for idx, (lbl, content) in enumerate([("Practitioner Case Study", ch4["example"]), ("Your Practical Assignment", ch4["practice"])]):
-        bx = 82.0 if idx == 0 else 314.0
-        c.saveState()
-        c.setStrokeColor(HexColor("#AEB6F0"))
-        c.setLineWidth(2.2)
-        c.line(bx, Y(y4_sub + 14.0), bx, Y(y4_sub + 122.0))
-        c.restoreState()
-        st_b4 = style(f"b4_{idx}", "Montserrat", 8.6, 12.6, INK)
-        draw_para(c, f"<b><font color='{COBALT_HEAD}'>{lbl}</font></b><br/>{clean_text(content)}", st_b4, bx + 10.0, y4_sub + 12.0, 202.0, 118.0)
-
-    # Inspiring takeaway inside the bottom cobalt-ribbon wave (y=585..720)
-    st_wave = style("wv_q", "Montserrat-Medium", 13.0, 19.5, WHITE)
-    draw_para(
-        c,
-        f'<b>CHRISCO Youth Aflame Study Principle:</b> "{clean_text(ch4["takeaways"][0])} '
-        f'Consistent execution in small daily assignments builds authority that cannot be faked."',
-        st_wave,
-        82.0,
-        595.0,
-        430.0,
-        120.0,
-    )
-    draw_page_num(c, 9, side="right", on_dark=True)
-    c.showPage()
-
-    # =========================================================================
-    # PAGE 10: SECTION 03 DIVIDER (plate_div_04.jpg)
+    # SECTION 03 (P15) + MODULES 5 & 6 (P16-P19)
     # =========================================================================
     render_section_divider(
         c,
         "plate_div_04.jpg",
         "03",
         ["Execution &", "Applied Mastery"],
-        f"Module 5: {chapters[4]['title']}  |  Module 6: {chapters[5]['title']}",
-        10,
+        f"Module 05: {chapters[4]['title']}  |  Module 06: {chapters[5]['title']}",
+        15,
     )
+    render_chapter_spread(c, 5, "3.1", chapters[4], title, meta, photos[7], 16, 17)
+    render_chapter_spread(c, 6, "3.2", chapters[5], title, meta, photos[0], 18, 19)
 
     # =========================================================================
-    # PAGE 11: CHAPTERS 5 & 6 FEATURE SPLIT CARDS (Exact COURSES PDF.pdf Page 18)
-    # =========================================================================
-    c.saveState()
-    c.setFillColor(HexColor(WHITE))
-    c.rect(0, 0, W, H, stroke=0, fill=1)
-    c.restoreState()
-
-    for idx, ch_obj in enumerate([chapters[4], chapters[5]]):
-        top_y = 58.0 if idx == 0 else 432.0
-        sec_tag = "3.1" if idx == 0 else "3.2"
-        ph_file = photos[4 if idx == 0 else 5]
-
-        c.saveState()
-        c.setFillColor(HexColor(COBALT_HEAD))
-        c.setFont("Montserrat-Bold", 17.0)
-        c.drawString(72.0, Y(top_y), f"{sec_tag}  {ch_obj['title']}")
-        c.restoreState()
-
-        cy = top_y + 13.0
-        for p_txt in ch_obj["body"]:
-            cy += draw_para(c, clean_text(p_txt), st_ch, 72.0, cy, 456.0, 88.0) + 5.0
-
-        # Horizontal Photo + Cobalt Callout Box (matching Page 18 of COURSES PDF.pdf)
-        box_y = cy + 6.0
-        box_h = 136.0
-        draw_photo(c, ph_file, 72.0, box_y, 232.0, box_h, focus=(0.5, 0.32))
-        c.saveState()
-        c.setFillColor(HexColor(COBALT_PANEL))
-        c.rect(304.0, Y(box_y + box_h), 224.0, box_h, stroke=0, fill=1)
-        c.restoreState()
-        draw_accent_bar(c, 318.0, box_y + 14.0, 42.0, 2.2)
-        st_wbox = style(f"wb_{idx}", "Montserrat", 8.1, 11.6, WHITE)
-        card_html = (
-            f"<b>Case:</b> {clean_text(ch_obj['example'])}<br/><br/>"
-            f"<b>Action Drill:</b> {clean_text(ch_obj['practice'])}"
-        )
-        draw_para(c, card_html, st_wbox, 318.0, box_y + 22.0, 196.0, box_h - 28.0)
-
-    draw_page_num(c, 11, side="left", on_dark=False)
-    c.showPage()
-
-    # =========================================================================
-    # PAGE 12: SECTION 04 DIVIDER (plate_div_05.jpg)
+    # SECTION 04 (P20) + MODULES 7 & 8 (P21-P24)
     # =========================================================================
     render_section_divider(
         c,
         "plate_div_05.jpg",
         "04",
         ["Scaling, Capstone", "& Excellence"],
-        f"Module 7: {chapters[6]['title']}  |  Module 8: {chapters[7]['title']}",
-        12,
+        f"Module 07: {chapters[6]['title']}  |  Module 08: {chapters[7]['title']}",
+        20,
     )
+    render_chapter_spread(c, 7, "4.1", chapters[6], title, meta, photos[2], 21, 22)
+    render_chapter_spread(c, 8, "4.2", chapters[7], title, meta, photos[5], 23, 24)
 
     # =========================================================================
-    # PAGE 13: CHAPTERS 7 & 8 + LAVENDER RUBRIC TABLE (plate_top_banner.jpg)
+    # PAGE 25: COMPLETE 8-MODULE PRACTICE & SELF-AUDIT MATRIX (Spacious Full Page)
     # =========================================================================
-    draw_plate(c, "plate_top_banner.jpg")
-    ch7, ch8 = chapters[6], chapters[7]
-
-    # Top Cobalt-Ribbon Banner text (y=85..320)
-    c.saveState()
-    c.setFillColor(HexColor(WHITE))
-    c.setFont("Montserrat-Bold", 18.5)
-    c.drawString(72.0, Y(92.0), f"4.1  {ch7['title']}")
-    c.restoreState()
-
-    st_banner = style("bn_p", "Montserrat", 9.3, 13.8, WHITE, align=TA_LEFT, after=6.0)
-    by = 108.0
-    for p_txt in ch7["body"]:
-        by += draw_para(c, clean_text(p_txt), st_banner, 72.0, by, 448.0, 92.0) + 5.0
-    by += draw_para(
-        c,
-        f"<b>Field Example:</b> {clean_text(ch7['example'])}  |  <b>Drill:</b> {clean_text(ch7['practice'])}",
-        st_banner,
-        72.0,
-        by,
-        448.0,
-        74.0,
-    )
-
-    # Lower White Panel: Chapter 8 Capstone + Lavender Self-Assessment Table (y=396..775)
+    fill_white(c)
     c.saveState()
     c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 17.5)
-    c.drawString(72.0, Y(402.0), f"4.2  {ch8['title']} (Capstone)")
+    c.setFont("Montserrat-Bold", 17.8)
+    c.drawString(64.0, Y(72.0), "5.1  Complete 8-Module Practice & Competency Matrix")
     c.restoreState()
+    draw_accent_bar(c, 64.0, 82.0, 62.0, 2.5)
 
-    cy8 = 416.0
-    for p_txt in ch8["body"]:
-        cy8 += draw_para(c, clean_text(p_txt), st_ch, 72.0, cy8, 456.0, 88.0) + 5.0
-
-    rubric_rows = [
-        ("1. Clarity & Preparation", ch7["takeaways"][0], "Needs Draft", " Confident & Ready"),
-        ("2. Execution Quality", ch8["takeaways"][0], "In Practice", "Portfolio-Grade"),
-        ("3. Real-World Proof", ch8["practice"], "Planned", "Completed & Reviewed"),
-        ("4. Consistency Habit", ch8["takeaways"][-1], "Occasional", "Weekly Discipline"),
-    ]
-    draw_lavender_table(
-        c,
-        72.0,
-        cy8 + 8.0,
-        [124.0, 196.0, 66.0, 70.0],
-        ["Competency Area", "Capstone Standard", "Starting", "Target Mastery"],
-        rubric_rows,
-        row_h=24.0,
-    )
-
-    draw_page_num(c, 13, side="right", on_dark=False)
-    c.showPage()
-
-    # =========================================================================
-    # PAGE 14: 8-MODULE SYLLABUS & LEARNER REFLECTION CARDS (Pages 9 & 21 style)
-    # =========================================================================
-    c.saveState()
-    c.setFillColor(HexColor(WHITE))
-    c.rect(0, 0, W, H, stroke=0, fill=1)
-    c.restoreState()
-
-    c.saveState()
-    c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 18.5)
-    c.drawString(64.0, Y(64.0), "5.1  Complete 8-Module Practice Matrix")
-    c.restoreState()
-
-    st_lead = style("m_ld", "Montserrat", 9.2, 13.5, MUTED)
     draw_para(
         c,
-        f"Use this checklist to track every hands-on assignment in <b>{clean_text(title)}</b> from Module 1 to your final project:",
-        st_lead,
+        f"Review every module in <b>{clean_text(title)}</b> using the table below. Check off each module only after "
+        f"you have completed its hands-on assignment and verified your work against the core principle.",
+        style("m25_ld", "Montserrat", 9.8, 15.0, MUTED),
         64.0,
-        78.0,
+        96.0,
         468.0,
-        32.0,
+        48.0,
     )
 
-    mod_rows = []
-    for idx, ch_item in enumerate(chapters, 1):
-        mod_rows.append((f"Module 0{idx}", ch_item["title"], ch_item["takeaways"][0]))
-
+    mod_rows = [
+        (f"Module 0{idx}", ch_item["title"], ch_item["takeaways"][0], "Completed  [   ]")
+        for idx, ch_item in enumerate(chapters, 1)
+    ]
     tbl_h = draw_lavender_table(
         c,
         64.0,
-        112.0,
-        [68.0, 172.0, 228.0],
-        ["Module", "Focus Topic", "Core Deliverable & Principle"],
+        152.0,
+        [68.0, 146.0, 174.0, 80.0],
+        ["Module", "Focus Topic", "Core Principle", "Workbook Check"],
         mod_rows,
-        row_h=23.5,
+        row_h=30.0,
     )
 
-    # Selected Learner Reflections (matching Page 17 & Page 21 of COURSES PDF.pdf)
-    ref_y = 112.0 + tbl_h + 24.0
+    # Bottom Capstone Readiness Note
+    ready_y = max(152.0 + tbl_h + 24.0, 565.0)
     c.saveState()
+    c.setFillColor(HexColor(LAVENDER_CARD))
+    c.roundRect(64.0, Y(ready_y + 130.0), 468.0, 130.0, 12.0, stroke=0, fill=1)
     c.setFillColor(HexColor(COBALT_HEAD))
-    c.setFont("Montserrat-Bold", 16.5)
-    c.drawString(64.0, Y(ref_y), "5.2  Applied Fellowship Reflections")
+    c.setFont("Montserrat-Bold", 12.0)
+    c.drawString(84.0, Y(ready_y + 30.0), "CAPSTONE PORTFOLIO STANDARD")
     c.restoreState()
+    draw_para(
+        c,
+        f"Before graduating from this handbook, combine all eight modules into one finished, shareable "
+        f"<b>{clean_text(meta['domain_noun'])}</b>: <i>{clean_text(chapters[7]['practice'])}</i> "
+        f"When ready for mentor feedback, email your work to <b>{PRIMARY_EMAIL}</b>.",
+        style("cap25", "Montserrat", 9.6, 15.0, INK),
+        84.0,
+        ready_y + 42.0,
+        428.0,
+        78.0,
+    )
 
-    ref_cards = [
-        (
-            photos[6],
-            f'"{clean_text(chapters[0]["example"])}"',
-            "CHRISCO Youth Aflame Cohort Case Note  |  Module 01",
-        ),
-        (
-            photos[1],
-            f'"{clean_text(chapters[7]["example"])}"',
-            "CHRISCO Digital Academy Capstone Highlight  |  Module 08",
-        ),
-    ]
-    rc_y = ref_y + 14.0
-    for idx, (r_img, r_quote, r_attr) in enumerate(ref_cards):
-        c.saveState()
-        c.setFillColor(HexColor(GRAY_CARD))
-        c.roundRect(64.0, Y(rc_y + 92.0), 468.0, 92.0, 6.0, stroke=0, fill=1)
-        c.restoreState()
-        if idx == 0:
-            draw_photo(c, r_img, 424.0, rc_y + 8.0, 98.0, 76.0, focus=(0.5, 0.25), radius=4.0)
-            tx_x = 78.0
-        else:
-            draw_photo(c, r_img, 74.0, rc_y + 8.0, 98.0, 76.0, focus=(0.5, 0.25), radius=4.0)
-            tx_x = 186.0
-        st_rq = style(f"rq_{idx}", "Montserrat-Italic", 8.4, 12.2, INK)
-        h_q = draw_para(c, r_quote, st_rq, tx_x, rc_y + 12.0, 332.0, 56.0)
-        st_ra = style(f"ra_{idx}", "Montserrat-Bold", 8.0, 11.0, COBALT_HEAD)
-        draw_para(c, r_attr, st_ra, tx_x, rc_y + 14.0 + h_q, 332.0, 20.0)
-        rc_y += 102.0
-
-    draw_page_num(c, 14, side="left", on_dark=False)
+    draw_page_num(c, 25, side="right", on_dark=False)
     c.showPage()
 
     # =========================================================================
-    # PAGE 15: 90-DAY ACTION ROADMAP & FOLLOW-UP PLAN (Pages 24 & 25 style)
+    # PAGE 26: FELLOWSHIP REFLECTIONS & STUDY DISCIPLINES (Spacious Full Page)
+    # =========================================================================
+    draw_plate(c, "plate_bottom_wave.jpg")
+    c.saveState()
+    c.setFillColor(HexColor(COBALT_HEAD))
+    c.setFont("Montserrat-Bold", 20.0)
+    c.drawString(68.0, Y(72.0), "5.2  Applied Fellowship Case Reflections")
+    c.restoreState()
+    draw_accent_bar(c, 68.0, 82.0, 62.0, 2.5)
+
+    draw_para(
+        c,
+        "Real transformation happens when learners turn theory into consistent service. Reflect on these "
+        "cohort case highlights from across East Africa as you prepare your own project:",
+        style("rf26_ld", "Montserrat", 9.8, 15.0, MUTED),
+        68.0,
+        96.0,
+        460.0,
+        44.0,
+    )
+
+    ref_cards = [
+        (photos[6], f'"{clean_text(chapters[0]["example"])}"', "Cohort Case Reflection  |  Starting Strong in Module 01"),
+        (photos[3], f'"{clean_text(chapters[3]["example"])}"', "Mid-Course Breakthrough  |  Applying Strategy in Module 04"),
+        (photos[1], f'"{clean_text(chapters[7]["example"])}"', "Capstone Completion  |  Shipping Real Work in Module 08"),
+    ]
+    rc_y = 148.0
+    for idx, (r_img, r_quote, r_attr) in enumerate(ref_cards):
+        c.saveState()
+        c.setFillColor(HexColor(GRAY_CARD))
+        c.roundRect(68.0, Y(rc_y + 106.0), 460.0, 106.0, 8.0, stroke=0, fill=1)
+        c.restoreState()
+        if idx % 2 == 0:
+            draw_photo(c, r_img, 412.0, rc_y + 11.0, 104.0, 84.0, radius=6.0)
+            tx_x = 84.0
+        else:
+            draw_photo(c, r_img, 80.0, rc_y + 11.0, 104.0, 84.0, radius=6.0)
+            tx_x = 198.0
+        st_rq = style(f"rq26_{idx}", "Montserrat-Italic", 9.0, 13.6, INK)
+        hq = draw_para(c, r_quote, st_rq, tx_x, rc_y + 14.0, 314.0, 66.0)
+        st_ra = style(f"ra26_{idx}", "Montserrat-Bold", 8.3, 11.5, COBALT_HEAD)
+        draw_para(c, r_attr, st_ra, tx_x, rc_y + 18.0 + hq, 314.0, 22.0)
+        rc_y += 116.0
+
+    draw_para(
+        c,
+        f'<b>Stewardship Principle:</b> "Whatever your hand finds to do, do it with excellence, integrity, and '
+        f'faithfulness so your skill becomes a blessing to many."',
+        style("wv26", "Montserrat-Medium", 12.5, 19.0, WHITE),
+        68.0,
+        595.0,
+        445.0,
+        115.0,
+    )
+
+    draw_page_num(c, 26, side="left", on_dark=True)
+    c.showPage()
+
+    # =========================================================================
+    # PAGE 27: 90-DAY ACTION ROADMAP & FOLLOW-UP PLAN
     # =========================================================================
     draw_plate(c, "plate_top_banner.jpg")
 
@@ -1300,7 +1379,7 @@ def build_single_course_pdf(book: dict) -> str:
         f"True mastery in <b>{clean_text(title)}</b> is measured by what you build, ship, and steward "
         f"after finishing the lessons. Follow this structured 90-day implementation plan developed by "
         f"<b>CHRISCO Youth Aflame</b> (under <b>CHRISCO Fellowship of Churches</b>) to turn study into fruitfulness.",
-        style("rd_top", "Montserrat", 10.2, 15.6, WHITE),
+        style("rd_top", "Montserrat", 10.2, 15.8, WHITE),
         72.0,
         124.0,
         438.0,
@@ -1314,7 +1393,7 @@ def build_single_course_pdf(book: dict) -> str:
     c.restoreState()
 
     milestones = [
-        ("Days 1 to 14: Foundation Sprint", f"Complete Modules 1 to 4 drills and document your baseline specimen in {title}."),
+        ("Days 1 to 14: Foundation Sprint", f"Complete Modules 1 to 4 labs and document your baseline specimen in {title}."),
         ("Days 15 to 30: First Live Output", f"Complete Modules 5 to 8 and ship your first real capstone deliverable: {chapters[7]['practice']}"),
         ("Days 31 to 60: Feedback & Iteration", "Share your work with a mentor, peer, or real client/community audience and refine weak points."),
         ("Days 61 to 90: Service & Multiplication", "Use your skill to serve your church, business, or clients faithfully and mentor one younger learner."),
@@ -1323,14 +1402,13 @@ def build_single_course_pdf(book: dict) -> str:
     for idx, ((mx, my), (m_head, m_body)) in enumerate(zip(m_pos, milestones)):
         c.saveState()
         c.setFillColor(HexColor(COBALT_HEAD))
-        c.setFont("Montserrat", 17.0)
+        c.setFont("Montserrat", 17.5)
         c.drawString(mx, Y(my + 15.0), f"0{idx+1}")
         c.restoreState()
         draw_accent_bar(c, mx, my + 20.0, 42.0, 2.2)
-        st_m = style(f"ms_{idx}", "Montserrat", 8.3, 12.0, INK)
-        draw_para(c, f"<b><font color='{COBALT_HEAD}'>{m_head}</font></b><br/>{clean_text(m_body)}", st_m, mx, my + 27.0, 214.0, 68.0)
+        st_m = style(f"ms_{idx}", "Montserrat", 8.6, 12.6, INK)
+        draw_para(c, f"<b><font color='{COBALT_HEAD}'>{m_head}</font></b><br/>{clean_text(m_body)}", st_m, mx, my + 27.0, 214.0, 70.0)
 
-    # Follow-Up Support Table at bottom (matching Page 25 of COURSES PDF.pdf)
     draw_lavender_table(
         c,
         72.0,
@@ -1342,14 +1420,14 @@ def build_single_course_pdf(book: dict) -> str:
             ("Capstone Submission", "CHRISCO Youth Aflame Mentors", SECONDARY_EMAIL),
             ("Peer Accountability", "CHRISCO Fellowship Study Hubs", "Monthly Cohort Check-In"),
         ],
-        row_h=24.5,
+        row_h=25.0,
     )
 
-    draw_page_num(c, 15, side="right", on_dark=False)
+    draw_page_num(c, 27, side="right", on_dark=False)
     c.showPage()
 
     # =========================================================================
-    # PAGE 16: BACK COVER (Exact COURSES PDF.pdf Page 26 — Gmail Only!)
+    # PAGE 28: BACK COVER (Gmail Only!)
     # =========================================================================
     draw_plate(c, "plate_back_cover.jpg")
     draw_brand_lockup(c, 59.5, 56.0, dark_bg=True)
@@ -1361,30 +1439,26 @@ def build_single_course_pdf(book: dict) -> str:
     c.drawString(59.5, Y(542.0), "Youth, Elevating")
     c.drawString(59.5, Y(586.0), "Purpose")
 
-    # Vertical cyan divider lines matching Page 26 of COURSES PDF.pdf
     c.setStrokeColor(HexColor(CYAN_ACCENT))
     c.setLineWidth(1.5)
     c.line(59.5, Y(646.0), 59.5, Y(708.0))
     c.line(316.0, Y(646.0), 316.0, Y(708.0))
 
-    # Left contact block (Brand & Umbrella Fellowship — ZERO phone numbers)
     c.setFont("Montserrat-Bold", 10.5)
     c.drawString(72.0, Y(658.0), "CHRISCO Youth Aflame")
     c.setFont("Montserrat", 9.3)
     c.drawString(72.0, Y(676.0), "CHRISCO Digital Academy")
     c.drawString(72.0, Y(694.0), "Under CHRISCO FELLOWSHIP OF CHURCHES")
 
-    # Right contact block (Gmail contacts ONLY)
     c.setFont("Montserrat-Bold", 10.5)
     c.drawString(328.0, Y(658.0), "Official Gmail Contacts")
     c.setFont("Montserrat", 9.5)
     c.drawString(328.0, Y(676.0), PRIMARY_EMAIL)
     c.drawString(328.0, Y(694.0), SECONDARY_EMAIL)
 
-    # Clean white bottom strip (y=755..805)
     c.setFillColor(HexColor(INK))
     c.setFont("Montserrat", 8.4)
-    c.drawString(59.5, Y(768.0), f"Official Course E-Book for {title} ({meta['track']}).")
+    c.drawString(59.5, Y(768.0), f"Official 28-Page Illustrated Course E-Book for {title} ({meta['track']}).")
     c.drawString(59.5, Y(783.0), "Prepared by CHRISCO Youth Aflame under CHRISCO FELLOWSHIP OF CHURCHES.")
     c.drawString(59.5, Y(798.0), f"For course guidance or mentorship, email {PRIMARY_EMAIL}.")
     c.setFont("Montserrat-Bold", 8.8)
@@ -1398,7 +1472,6 @@ def build_single_course_pdf(book: dict) -> str:
 
 def main() -> None:
     register_fonts()
-    # Combine all 19 courses (preserving unique slugs)
     by_slug = {}
     for b in ORIG_BOOKS:
         by_slug[b["slug"]] = b
@@ -1411,8 +1484,8 @@ def main() -> None:
         out_p = build_single_course_pdf(book)
         kb = os.path.getsize(out_p) / 1024.0
         total_kb += kb
-        print(f"  [{idx:02d}/19] Built {slug}.pdf ({kb:.1f} KB)")
-    print(f"\nCompleted all 19 Course E-Books! Total combined size: {total_kb/1024.0:.2f} MB")
+        print(f"  [{idx:02d}/19] Built 28-page {slug}.pdf ({kb:.1f} KB)")
+    print(f"\nCompleted all 19 28-Page Illustrated Course E-Books! Total combined size: {total_kb/1024.0:.2f} MB")
 
 
 if __name__ == "__main__":

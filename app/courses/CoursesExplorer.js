@@ -11,6 +11,13 @@ import { useAuth } from "../AuthProvider"
 import { readRef } from "../lib/referral"
 import { submitAcademyIntake } from "../lib/intakeClient"
 import RecaptchaCheck from "../components/RecaptchaCheck"
+import BookGateModal from "../components/BookGateModal"
+import ShareBookBar from "../components/ShareBookBar"
+import { getBookByCourse } from "../data/booksCatalogue"
+import {
+  fetchServerBookAccessStatus,
+  readLocalBookReader,
+} from "../lib/bookGateClient"
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim())
@@ -31,9 +38,22 @@ export default function CoursesExplorer() {
   const [category, setCategory] = useState("All")
   const [level, setLevel] = useState("All")
   const [lockedCourse, setLockedCourse] = useState(null)
+  const [bookReader, setBookReader] = useState(null)
   const [notRobot, setNotRobot] = useState(false)
   const [enrollError, setEnrollError] = useState("")
   const { user, profile, enrollCourse } = useAuth() || {}
+
+  useEffect(() => {
+    setBookReader(readLocalBookReader())
+    if (!user?.email) {
+      fetchServerBookAccessStatus().then((st) => setBookReader(st))
+    }
+    const onReader = (e) => setBookReader(e.detail || readLocalBookReader())
+    window.addEventListener("chrisco:book-reader-updated", onReader)
+    return () => window.removeEventListener("chrisco:book-reader-updated", onReader)
+  }, [user])
+
+  const hasBookAccess = Boolean(user?.email || bookReader?.registered)
 
   const slidesDeck = CONNECTED_RESOURCES.find((r) => r.connector === "google_slides")
   const dropboxVault = CONNECTED_RESOURCES.find((r) => r.connector === "dropbox")
@@ -141,12 +161,11 @@ export default function CoursesExplorer() {
   }
 
   /*
-   * Handbooks are members-only: objectives and the full outline are public,
-   * the PDF itself needs a signed-in account.
+   * Online book downloads require email registration (with Privacy & Data Protection consent).
    */
   function handleDownload(course) {
     if (!course.download) return
-    if (!user) {
+    if (!hasBookAccess) {
       setLockedCourse(course)
       return
     }
@@ -411,11 +430,11 @@ export default function CoursesExplorer() {
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
                             className="btn btn-outline btn-sm"
-                            title={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
-                            aria-label={user ? `Download ${course.title} handbook` : `Request the ${course.title} handbook on WhatsApp`}
+                            title={hasBookAccess ? "Download course handbook" : "Register by email to download handbook"}
+                            aria-label={hasBookAccess ? `Download ${course.title} handbook` : `Register by email to download ${course.title} handbook`}
                             style={{ cursor: "pointer", padding: "10px 16px" }}
                           >
-                            <Icon name={user ? "download" : "lock"} size={16} />
+                            <Icon name={hasBookAccess ? "download" : "lock"} size={16} />
                           </button>
                         </div>
                       </div>
@@ -428,46 +447,13 @@ export default function CoursesExplorer() {
         </div>
       </section>
 
-      {/* MODAL */}
+      {/* EMAIL-GATED BOOK DOWNLOAD MODAL */}
       {lockedCourse && (
-        <div className="overlay" onClick={() => setLockedCourse(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
-            <div style={{ padding: "34px 32px 30px", textAlign: "center" }}>
-              <span className="course-lock-ico"><Icon name="book" size={26} strokeWidth={1.8} /></span>
-              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "var(--ink)", marginBottom: 8 }}>
-                The handbook is one message away
-              </h3>
-              <p style={{ fontSize: 13.5, color: "var(--body)", lineHeight: 1.65, marginBottom: 22 }}>
-                The objectives and full outline of {lockedCourse.title} are free to read here. Message us on
-                WhatsApp with the course name and we will send the PDF handbook straight back, no account needed.
-              </p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
-                <a
-                  href={`${org.whatsapp}?text=${encodeURIComponent(
-                    `Hi CHRISCO, please send me the handbook for ${lockedCourse.title}.`
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn-green btn-sm"
-                  style={{ textDecoration: "none" }}
-                >
-                  <Icon name="whatsapp" size={15} /> Request on WhatsApp
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setLockedCourse(null)}
-                  className="btn btn-outline btn-sm"
-                  style={{ cursor: "pointer" }}
-                >
-                  Keep reading
-                </button>
-              </div>
-              <Link href="/sign-in" className="course-lock-dismiss">
-                I already have an account, sign me in
-              </Link>
-            </div>
-          </div>
-        </div>
+        <BookGateModal
+          book={getBookByCourse(lockedCourse)}
+          onClose={() => setLockedCourse(null)}
+          onUnlocked={(newReader) => setBookReader(newReader)}
+        />
       )}
 
       {selected && (
@@ -572,23 +558,24 @@ export default function CoursesExplorer() {
               <div className="course-handbook-note">
                 <Icon name="book" size={15} strokeWidth={2} />
                 <span>
-                  {user
-                    ? "Your handbook PDF is available with the download button below."
-                    : "Want the PDF handbook? Message us on WhatsApp with the course name."}
+                  {hasBookAccess
+                    ? "Your 28-page illustrated handbook PDF is unlocked — use the download button below."
+                    : "Register once with your email to download the 28-page illustrated PDF handbook online."}
                 </span>
-                {!user && (
-                  <a
-                    href={`${org.whatsapp}?text=${encodeURIComponent(
-                      `Hi CHRISCO, please send me the handbook for ${selected?.title || "this course"}.`
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer"
+                {!hasBookAccess && (
+                  <button
+                    type="button"
+                    onClick={() => setLockedCourse(selected)}
                     className="course-handbook-link"
-                    style={{ textDecoration: "none" }}
+                    style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
                   >
-                    Request it
-                  </a>
+                    Register by email
+                  </button>
                 )}
+              </div>
+
+              <div style={{ marginBottom: 22 }}>
+                <ShareBookBar book={getBookByCourse(selected)} />
               </div>
 
               {/* Who for */}
@@ -621,11 +608,11 @@ export default function CoursesExplorer() {
                   <button
                     onClick={() => handleDownload(selected)}
                     className="btn btn-outline"
-                    title={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
-                    aria-label={user ? "Download course handbook" : "Request the handbook on WhatsApp"}
+                    title={hasBookAccess ? "Download course handbook" : "Register by email to download handbook"}
+                    aria-label={hasBookAccess ? "Download course handbook" : "Register by email to download handbook"}
                     style={{ cursor: "pointer", padding: "14px 18px" }}
                   >
-                    <Icon name={user ? "download" : "lock"} size={17} />
+                    <Icon name={hasBookAccess ? "download" : "lock"} size={17} />
                   </button>
                   <button
                     onClick={() => setSelected(null)}

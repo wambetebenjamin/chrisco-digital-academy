@@ -4,14 +4,15 @@ import { org } from "../data/org"
 
 const exploreLinks = [
   { label: "Home", href: "/" },
+  { label: "Christian & Faith Books", href: "/library?shelf=christian" },
+  { label: "Skill & Learning Books", href: "/library?shelf=learning" },
+  { label: "Courses", href: "/courses" },
   { label: "About Us", href: "/about" },
-  { label: "Meet Our Tutor", href: "/about#tutor" },
   { label: "Become a Tutor", href: "/become-a-tutor" },
   { label: "PURSUE Shop", href: "/shop" },
   { label: "Affiliate Programme", href: "/affiliates" },
-  { label: "Courses", href: "/courses" },
+  { label: "Privacy & Data Policy", href: "/privacy" },
   { label: "Contact", href: "/contact" },
-  { label: "Dashboard", href: "/dashboard" },
 ]
 
 const popularCourses = [
@@ -155,7 +156,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="footer-bottom">
           <span>© 2026 CHRISCO Youth Aflame. All Rights Reserved.</span>
-          <span className="footer-bottom-right">
+          <span className="footer-bottom-right" style={{ display: "inline-flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+            <Link href="/privacy" className="footer-top-link">
+              Privacy &amp; Data Protection Policy
+            </Link>
             <span>{org.ownership}</span>
             <a href="#" className="footer-top-link">
               Back to top ↑
