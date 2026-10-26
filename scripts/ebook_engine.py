@@ -235,8 +235,9 @@ def draw_skewed_card(
 
 
 def _prepare_cropped_image(img_path: str, w_pt: float, h_pt: float, focus=(0.5, 0.3)) -> str:
-    """Crop image cleanly to target aspect ratio at ~250 DPI and cache on /tmp."""
-    key = f"{os.path.abspath(img_path)}_{w_pt:.1f}_{h_pt:.1f}_{focus[0]:.2f}_{focus[1]:.2f}"
+    """Crop image cleanly to target aspect ratio at ~200 DPI and cache on /tmp (invalidated on mtime)."""
+    mtime = os.path.getmtime(img_path)
+    key = f"{os.path.abspath(img_path)}_{mtime:.3f}_{w_pt:.1f}_{h_pt:.1f}_{focus[0]:.2f}_{focus[1]:.2f}"
     digest = hashlib.md5(key.encode("utf-8")).hexdigest()[:14]
     out_path = os.path.join(CACHE_DIR, f"crop_{digest}.jpg")
     if not os.path.exists(out_path):

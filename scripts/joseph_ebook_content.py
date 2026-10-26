@@ -21,12 +21,12 @@ def IMG(name: str) -> str:
 PAGE_01_COVER = {
     "brand_name": "CHRISCO Youth Aflame",
     "brand_umbrella": "UNDER CHRISCO FELLOWSHIP OF CHURCHES",
-    "photo": IMG("cover_regal_leader.jpg"),
-    "photo_focus": (0.35, 0.22),
+    "photo": IMG("cover_lagos_group.jpg"),
+    "photo_focus": (0.5, 0.0),
     "title_lines": [
-        ("JOSEPH:", CORAL_ACCENT, 50.0),
-        ("7 LESSONS", CREAM_TEXT, 48.0),
-        ("FOR SEERS", CORAL_ACCENT, 48.0),
+        ("JOSEPH:", CORAL_ACCENT, 48.0),
+        ("7 LESSONS", CREAM_TEXT, 46.5),
+        ("FOR SEERS", CORAL_ACCENT, 46.5),
     ],
     "kicker_inside": "EVERY EMERGING SEER PROPHET MUST LEARN",
     "pill_text": "SEER EDITION",
@@ -91,8 +91,8 @@ PAGE_04_CHAMBERS = {
     "title_sub": "CHAMBERS",
     "stages": [
         {
-            "photo": IMG("chamber1_blue_coat.jpg"),
-            "focus": (0.5, 0.22),
+            "photo": IMG("real_seminar_side.jpg"),
+            "focus": (0.5, 0.30),
             "html": (
                 "<b>1. Hebron: The Coat &amp; Sight</b><br/>"
                 "<i>Genesis 37:3 to 11 (Age 17)</i><br/>"
@@ -121,8 +121,8 @@ PAGE_04_CHAMBERS = {
             ),
         },
         {
-            "photo": IMG("lesson6_executive_suit.jpg"),
-            "focus": (0.5, 0.20),
+            "photo": IMG("real_overcoat_side.jpg"),
+            "focus": (0.45, 0.22),
             "html": (
                 "<b>4. Palace: Signet &amp; Granaries</b><br/>"
                 "<i>Genesis 41:38 to 45:8 (Age 30+)</i><br/>"
@@ -140,8 +140,8 @@ PAGE_05_LESSON1A = {
     "sidebar_top_label_1": "Lesson",
     "sidebar_top_label_2": "Number",
     "badge_number": "01",
-    "photo": IMG("lesson1_vision_classroom.jpg"),
-    "photo_focus": (0.56, 0.28),
+    "photo": IMG("real_study_pair_side.jpg"),
+    "photo_focus": (0.62, 0.45),
     "sidebar_items": [
         (
             "Core Thesis",
@@ -199,8 +199,8 @@ PAGE_06_LESSON1B = {
     "coral_body_2": [
         "When heaven shows you future authority, do not rush to announce a title. Record the revelation prayerfully, ask the Lord what virtues that future weight requires, and enroll willingly in today's humble assignments (<i>Luke 16:10</i>).",
     ],
-    "photo": IMG("lesson1_journaling.jpg"),
-    "photo_focus": (0.45, 0.30),
+    "photo": IMG("real_blazer_journaling.jpg"),
+    "photo_focus": (0.5, 0.28),
 }
 
 # ---------------------------------------------------------------------------
@@ -214,8 +214,8 @@ PAGE_07_LESSON2A = {
         "<b>4. Let Solitude Deepen Prayer</b><br/><i>Jeremiah 15:17</i>",
         "<b>5. Anchor Identity in the Father</b><br/><i>Psalm 27:10</i>",
     ],
-    "photo": IMG("lesson2_sunlit_solitude.jpg"),
-    "photo_focus": (0.48, 0.25),
+    "photo": IMG("real_quiet_desk_notes.jpg"),
+    "photo_focus": (0.5, 0.32),
     "title_lines": [
         ("LESSON 02:", ROYAL_MID),
         ("SOLITUDE", CORAL_ACCENT),
@@ -377,8 +377,8 @@ PAGE_12_LESSON4B = {
     "coral_body_2": [
         "Guard your eyes, your finances, your tongue, and your motives behind closed doors. If you cleanse yourself as a vessel of honor (<i>2 Timothy 2:21</i>), no false accusation can cancel heaven's appointment.",
     ],
-    "photo": IMG("lesson4_serene_prayer.jpg"),
-    "photo_focus": (0.5, 0.25),
+    "photo": IMG("real_modest_prayer_journal.jpg"),
+    "photo_focus": (0.5, 0.22),
 }
 
 # ---------------------------------------------------------------------------
@@ -392,8 +392,8 @@ PAGE_13_LESSON5A = {
         "<b>4. Servant Attentiveness</b><br/><i>Genesis 40:6 to 7</i>",
         "<b>5. Surrendered Timing</b><br/><i>Genesis 41:1</i>",
     ],
-    "photo": IMG("lesson5_statesman_vest.jpg"),
-    "photo_focus": (0.5, 0.20),
+    "photo": IMG("real_seminar_side.jpg"),
+    "photo_focus": (0.5, 0.34),
     "title_lines": [
         ("LESSON 05:", ROYAL_MID),
         ("GOVERNMENT", CORAL_ACCENT),
@@ -413,8 +413,8 @@ PAGE_14_LESSON5B = {
         ("DELAY BUILDS", CREAM_TEXT),
         ("CAPACITY", CREAM_TEXT),
     ],
-    "photo": IMG("lesson5_diligent_steward.jpg"),
-    "photo_focus": (0.5, 0.25),
+    "photo": IMG("real_suited_window_side.jpg"),
+    "photo_focus": (0.82, 0.45),
     "points_html": [
         '<b>Stewarding Royal Prisoners</b><br/>Joseph was placed in the <i>"place where the king\'s prisoners were confined"</i> (<i>Genesis 39:20</i>). Under the Cupbearer and Baker, he learned Egyptian court protocol, economics, and statecraft before ever entering the palace!',
         '<b>Compassion Under Chains</b><br/>In <i>Genesis 40:6 to 7</i>, Joseph noticed two fellow prisoners looked sad and asked, <i>"Why do you look so sad today?"</i> Mature prophets still see others\' pain while carrying their own.',
@@ -434,8 +434,8 @@ PAGE_15_LESSON6A = {
         ("REVELATION", ROYAL_MID),
         ("& WISDOM", CORAL_ACCENT),
     ],
-    "photo": IMG("lesson6_strategic_council.jpg"),
-    "photo_focus": (0.5, 0.22),
+    "photo": IMG("real_lagos_boardroom.jpg"),
+    "photo_focus": (0.48, 0.35),
     "spotlight_html": [
         '<b>"Can we find such a one as this, a man in whom is the Spirit of God?... There is no one as discerning and wise as you."</b> <i>(Genesis 41:38 to 39)</i>',
         '"Knowledge sees the fact; wisdom sees what to do next." <b>(Charles H. Spurgeon)</b>',
@@ -454,8 +454,8 @@ PAGE_15_LESSON6A = {
 # PAGE 16: LESSON 06 (PART II)
 # ---------------------------------------------------------------------------
 PAGE_16_LESSON6B = {
-    "photo": IMG("lesson6_executive_suit.jpg"),
-    "photo_focus": (0.5, 0.22),
+    "photo": IMG("real_plaid_suit_side.jpg"),
+    "photo_focus": (0.55, 0.36),
     "coral_title_lines": [
         ("SEE CLEARLY,", CREAM_TEXT),
         ("STEWARD WELL", CREAM_TEXT),
@@ -496,8 +496,8 @@ PAGE_17_LESSON7A = {
     "sidebar_top_label_1": "Lesson",
     "sidebar_top_label_2": "Number",
     "badge_number": "07",
-    "photo": IMG("lesson7_community_joy.jpg"),
-    "photo_focus": (0.5, 0.25),
+    "photo": IMG("real_council_sisters.jpg"),
+    "photo_focus": (0.45, 0.35),
     "sidebar_items": [
         (
             "Core Thesis",
@@ -555,8 +555,8 @@ PAGE_18_LESSON7B = {
     "coral_body_2": [
         "Let God purge self promotion from your sight. The dream may begin with you, but its fulfillment belongs to families, churches, cities, and nations awaiting deliverance.",
     ],
-    "photo": IMG("lesson7_generational_victory.jpg"),
-    "photo_focus": (0.5, 0.25),
+    "photo": IMG("real_lagos_celebration_group.jpg"),
+    "photo_focus": (0.48, 0.35),
 }
 
 # ---------------------------------------------------------------------------
@@ -570,8 +570,8 @@ PAGE_19_EPILOGUE = {
         "<b>Process Preserves the Promise</b><br/><i>Psalm 105:19</i>",
         "<b>Appointed Time Will Surely Come</b><br/><i>Habakkuk 2:3</i>",
     ],
-    "photo": IMG("portrait_smiling_youth.jpg"),
-    "photo_focus": (0.5, 0.22),
+    "photo": IMG("real_joyful_fellowship_group.jpg"),
+    "photo_focus": (0.48, 0.35),
     "title_lines": [
         ("THE DREAM", ROYAL_MID),
         ("SURVIVES", CORAL_ACCENT),

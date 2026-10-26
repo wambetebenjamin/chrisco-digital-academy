@@ -62,27 +62,27 @@ def render_cover_page(c: canvas.Canvas, data: dict) -> None:
         c.drawString(380.0, Y(104.5), data["brand_umbrella"])
     c.restoreState()
 
-    # Hero portrait photo (arch-top-left)
+    # Hero portrait photo (arch-top-left, ending cleanly behind SEER EDITION pill)
     draw_clipped_photo(
         c,
         data["photo"],
         x=48.0,
         y_top=151.8,
         w=298.0,
-        h=435.0,
-        radii=(196, 38, 0, 0),
-        focus=data.get("photo_focus", (0.5, 0.25)),
+        h=382.0,
+        radii=(175, 42, 22, 18),
+        focus=(0.5, 1.0),
     )
 
-    # Overlapping skewed Royal Blue title block
+    # Overlapping skewed Royal Blue title block (positioned so all 3 group members shine unobstructed)
     draw_skewed_card(
         c,
-        x=204.0,
-        y_top=254.0,
-        w=346.0,
-        h=222.0,
-        radius=30.0,
-        lean_right_deg=6.8,
+        x=214.0,
+        y_top=318.0,
+        w=338.0,
+        h=202.0,
+        radius=28.0,
+        lean_right_deg=6.2,
         fill_hex=ROYAL_DARK,
     )
 
@@ -90,19 +90,19 @@ def render_cover_page(c: canvas.Canvas, data: dict) -> None:
     draw_display_lines(
         c,
         lines=data["title_lines"],
-        x=236.0,
-        y_top_first_baseline=314.0,
+        x=242.0,
+        y_top_first_baseline=370.0,
         font_name="LilitaOne",
-        size=47.5,
-        line_step=48.5,
+        size=45.0,
+        line_step=44.5,
         align="left",
     )
 
     # Subtitle strip tucked inside bottom of royal blue block
     c.saveState()
-    c.setFont("Poppins-SemiBold", 9.0)
+    c.setFont("Poppins-SemiBold", 8.6)
     c.setFillColor(HexColor(CREAM_TEXT))
-    c.drawString(230.0, Y(454.0), data["kicker_inside"])
+    c.drawString(236.0, Y(501.0), data["kicker_inside"])
     c.restoreState()
 
     # Coral edition pill badge overlapping bottom of photo
