@@ -19,6 +19,13 @@ const isTestEnv =
   typeof process !== "undefined" &&
   (process.env.VITEST === "true" || process.env.NODE_ENV === "test")
 
+function isUuid(value) {
+  return (
+    typeof value === "string" &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value.trim())
+  )
+}
+
 function makeRefCode(prefix = "CDA") {
   const rand = Math.random().toString(36).substring(2, 8).toUpperCase()
   return `${prefix}-${rand}`
@@ -292,8 +299,9 @@ export async function submitAcademyIntake(payload = {}) {
   // 2. Fallback: Direct Supabase PostgREST insert
   if (isSupabaseConfigured && supabase) {
     try {
+      const validUserId = isUuid(payload.user_id) ? payload.user_id : null
       await supabase.from("contacts").insert({
-        user_id: payload.user_id || null,
+        user_id: validUserId,
         name: payload.name || "Visitor",
         email: payload.email || null,
         phone: payload.phone || null,
@@ -311,9 +319,42 @@ export async function submitAcademyIntake(payload = {}) {
         auto_reply_sent: true,
       })
 
+      if (action === "course_application" && payload.course_title) {
+        if (validUserId) {
+          await supabase.from("enrollments").upsert(
+            {
+              user_id: validUserId,
+              course_title: payload.course_title,
+              course_id: payload.course_id ? Number(payload.course_id) : null,
+              category: payload.category || null,
+              level: payload.level || null,
+              applicant_name: payload.name || null,
+              applicant_email: payload.email || null,
+              applicant_phone: payload.phone || null,
+              status: "active",
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id,course_title" }
+          )
+        } else {
+          await supabase.from("enrollments").insert({
+            user_id: null,
+            course_title: payload.course_title,
+            course_id: payload.course_id ? Number(payload.course_id) : null,
+            category: payload.category || null,
+            level: payload.level || null,
+            applicant_name: payload.name || null,
+            applicant_email: payload.email || null,
+            applicant_phone: payload.phone || null,
+            status: "active",
+            updated_at: new Date().toISOString(),
+          })
+        }
+      }
+
       if (payload.email) {
         await supabase.from("email_notifications").insert({
-          user_id: payload.user_id || null,
+          user_id: validUserId,
           sender_email: ORG.email,
           sender_name: `${ORG.academy} (${ORG.programme})`,
           recipient_email: payload.email,
@@ -337,16 +378,49 @@ export async function submitAcademyIntake(payload = {}) {
   }
 }
 
-export async function authenticateWithGoogleBridge({ name, email, avatar_url, ref }) {
+export async function authenticateWithGoogleBridge({ name, email, password, avatar_url, ref }) {
   const cleanEmail = (email || "").trim().toLowerCase()
-  const cleanName = (name || cleanEmail.split("@")[0] || "Google Learner").trim()
+  const cleanName = (name || cleanEmail.split("@")[0] || "Learner").trim()
 
-  if (!cleanEmail || !cleanEmail.includes("@")) {
+  if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(cleanEmail)) {
     return { error: { message: "Please enter a valid Google email address." } }
+  }
+  if (!password || String(password).length < 6) {
+    return { error: { message: "Please enter your password (at least 6 characters)." } }
   }
 
   if (!isTestEnv && isSupabaseConfigured && supabase) {
     try {
+      const signInAttempt = await supabase.auth.signInWithPassword({
+        email: cleanEmail,
+        password,
+      })
+      if (!signInAttempt.error && signInAttempt.data?.user) {
+        return {
+          data: signInAttempt.data,
+          error: null,
+        }
+      }
+
+      const signUpAttempt = await supabase.auth.signUp({
+        email: cleanEmail,
+        password,
+        options: {
+          data: {
+            name: cleanName,
+            full_name: cleanName,
+            auth_provider: "google",
+            ref: ref || null,
+          },
+        },
+      })
+      if (!signUpAttempt.error && signUpAttempt.data?.user) {
+        return {
+          data: signUpAttempt.data,
+          error: null,
+        }
+      }
+
       const res = await fetch(SUPABASE_EDGE_INTAKE_URL, {
         method: "POST",
         headers: {
@@ -364,9 +438,6 @@ export async function authenticateWithGoogleBridge({ name, email, avatar_url, re
       })
       const payload = await res.json()
       if (payload?.ok && payload?.hashed_token) {
-        if (payload.auto_reply) {
-          saveToLocalInbox(payload.auto_reply)
-        }
         const { data: otpData, error: otpErr } = await supabase.auth.verifyOtp({
           token_hash: payload.hashed_token,
           type: "magiclink",
@@ -374,7 +445,6 @@ export async function authenticateWithGoogleBridge({ name, email, avatar_url, re
         if (!otpErr && otpData?.user) {
           return {
             data: otpData,
-            auto_reply: payload.auto_reply,
             error: null,
           }
         }
@@ -384,12 +454,6 @@ export async function authenticateWithGoogleBridge({ name, email, avatar_url, re
     }
   }
 
-  const fallbackReceipt = buildAutoReplyReceipt({
-    action: "google_auth",
-    name: cleanName,
-    email: cleanEmail,
-  })
-  saveToLocalInbox(fallbackReceipt)
   return {
     data: {
       user: {
@@ -400,7 +464,6 @@ export async function authenticateWithGoogleBridge({ name, email, avatar_url, re
         user_metadata: { name: cleanName, full_name: cleanName, auth_provider: "google" },
       },
     },
-    auto_reply: fallbackReceipt,
     error: null,
     isFallbackSession: true,
   }

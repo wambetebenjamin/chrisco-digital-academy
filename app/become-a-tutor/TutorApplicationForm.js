@@ -5,7 +5,7 @@ import Icon from "../components/Icon"
 import { org, whatsappLink } from "../data/org"
 import { useAuth } from "../AuthProvider"
 import { submitAcademyIntake } from "../lib/intakeClient"
-import AutoReplyReceipt from "../components/AutoReplyReceipt"
+import RecaptchaCheck from "../components/RecaptchaCheck"
 
 const TRACK_OPTIONS = [
   "Design & Branding",
@@ -16,6 +16,10 @@ const TRACK_OPTIONS = [
   "AI & Productivity",
 ]
 
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim())
+}
+
 export default function TutorApplicationForm({ initialTrack = "" }) {
   const { user, profile } = useAuth() || {}
   const [name, setName] = useState("")
@@ -23,9 +27,9 @@ export default function TutorApplicationForm({ initialTrack = "" }) {
   const [phone, setPhone] = useState("")
   const [track, setTrack] = useState(initialTrack || TRACK_OPTIONS[0])
   const [experience, setExperience] = useState("")
+  const [notRobot, setNotRobot] = useState(false)
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
-  const [receipt, setReceipt] = useState(null)
   const [error, setError] = useState("")
 
   useEffect(() => {
@@ -45,10 +49,18 @@ export default function TutorApplicationForm({ initialTrack = "" }) {
       setError("Please fill in your name, email address, and teaching experience.")
       return
     }
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.")
+      return
+    }
+    if (!notRobot) {
+      setError("Please complete the reCAPTCHA check to prove you are not a bot.")
+      return
+    }
     setSending(true)
     setError("")
     try {
-      const res = await submitAcademyIntake({
+      await submitAcademyIntake({
         action: "tutor_application",
         name: name.trim(),
         email: email.trim(),
@@ -58,8 +70,8 @@ export default function TutorApplicationForm({ initialTrack = "" }) {
         message: `Tutor Application (${track}): ${experience.trim()}`,
         user_id: user?.id || null,
       })
-      setReceipt(res?.auto_reply || null)
       setSent(true)
+      setNotRobot(false)
     } catch {
       setError(`Could not submit application. Please email ${org.email}.`)
     } finally {
@@ -94,29 +106,25 @@ export default function TutorApplicationForm({ initialTrack = "" }) {
       </div>
 
       <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.65, marginBottom: 24 }}>
-        Submit your tutor application below. Your details are saved to our Supabase database and you will immediately receive an automated confirmation response from <strong>{org.email}</strong>.
+        Share the track you would like to lead and a brief summary of your practical experience.
       </p>
 
       {sent ? (
-        <div>
-          <div style={{ textAlign: "center", marginBottom: 14 }}>
-            <span style={{ display: "inline-flex", width: 68, height: 68, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
-              <Icon name="checkCircle" size={34} strokeWidth={1.7} />
-            </span>
-            <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.35rem", color: "var(--ink)", marginBottom: 6 }}>
-              We Have Received Your Tutor Application!
-            </h4>
-            <p style={{ color: "var(--muted)", fontSize: 14 }}>
-              Thank you, <strong>{name}</strong>. Your application for the <strong>{track}</strong> track is recorded and your official receipt from <strong>{org.email}</strong> is below.
-            </p>
-          </div>
-          {receipt && <AutoReplyReceipt receipt={receipt} />}
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginTop: 20 }}>
+        <div style={{ textAlign: "center", padding: "24px 10px" }}>
+          <span style={{ display: "inline-flex", width: 68, height: 68, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
+            <Icon name="checkCircle" size={34} strokeWidth={1.7} />
+          </span>
+          <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.35rem", color: "var(--ink)", marginBottom: 6 }}>
+            Tutor Application Submitted!
+          </h4>
+          <p style={{ color: "var(--muted)", fontSize: 14, marginBottom: 20 }}>
+            Thank you, <strong>{name}</strong>. Our academic team will review your application for the <strong>{track}</strong> track and get in touch with you.
+          </p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button
               type="button"
               onClick={() => {
                 setSent(false)
-                setReceipt(null)
                 setExperience("")
               }}
               className="btn btn-navy btn-sm"
@@ -209,6 +217,11 @@ export default function TutorApplicationForm({ initialTrack = "" }) {
               required
             />
           </div>
+
+          <RecaptchaCheck
+            verified={notRobot}
+            onChange={setNotRobot}
+          />
 
           <button
             type="submit"

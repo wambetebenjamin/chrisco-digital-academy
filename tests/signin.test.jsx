@@ -22,19 +22,24 @@ async function createAccount() {
   )
   await user.type(screen.getByPlaceholderText("e.g. Amani Mwangi"), "Amina Nakato")
   await user.type(screen.getByPlaceholderText("you@email.com"), "amina@example.com")
+  await user.click(screen.getByRole("button", { name: /verify email/i }))
   await user.type(screen.getByPlaceholderText("••••••••"), "secret123")
+  await user.click(screen.getByRole("checkbox", { name: /i'm not a robot/i }))
+  await waitFor(() =>
+    expect(screen.getByRole("checkbox", { name: /i'm not a robot/i }).getAttribute("aria-checked")).toBe("true")
+  )
   await user.click(screen.getByRole("button", { name: /create account/i }))
   await waitFor(() => expect(window.localStorage.getItem("chrisco:preview-session")).toBeTruthy())
 }
 
 describe("sign up and sign in", () => {
-  it("creates an account and starts a session", async () => {
+  it("creates an account after email verification, password entry, and reCAPTCHA", async () => {
     await createAccount()
     const session = JSON.parse(window.localStorage.getItem("chrisco:preview-session"))
     expect(session.email).toBe("amina@example.com")
   })
 
-  it("signs in with the account just created", async () => {
+  it("signs in with the account just created after reCAPTCHA verification", async () => {
     await createAccount()
     window.localStorage.removeItem("chrisco:preview-session")
 
@@ -42,6 +47,10 @@ describe("sign up and sign in", () => {
     const user = userEvent.setup()
     await user.type(screen.getByPlaceholderText("you@email.com"), "amina@example.com")
     await user.type(screen.getByPlaceholderText("••••••••"), "secret123")
+    await user.click(screen.getByRole("checkbox", { name: /i'm not a robot/i }))
+    await waitFor(() =>
+      expect(screen.getByRole("checkbox", { name: /i'm not a robot/i }).getAttribute("aria-checked")).toBe("true")
+    )
     await user.click(screen.getByRole("button", { name: /sign in/i }))
 
     await waitFor(() => {
@@ -59,6 +68,10 @@ describe("sign up and sign in", () => {
     const user = userEvent.setup()
     await user.type(screen.getByPlaceholderText("you@email.com"), "amina@example.com")
     await user.type(screen.getByPlaceholderText("••••••••"), "wrongpass")
+    await user.click(screen.getByRole("checkbox", { name: /i'm not a robot/i }))
+    await waitFor(() =>
+      expect(screen.getByRole("checkbox", { name: /i'm not a robot/i }).getAttribute("aria-checked")).toBe("true")
+    )
     await user.click(screen.getByRole("button", { name: /sign in/i }))
 
     expect(await screen.findByText(/incorrect password/i)).toBeTruthy()
@@ -70,6 +83,10 @@ describe("sign up and sign in", () => {
     const user = userEvent.setup()
     await user.type(screen.getByPlaceholderText("you@email.com"), "nobody@example.com")
     await user.type(screen.getByPlaceholderText("••••••••"), "secret123")
+    await user.click(screen.getByRole("checkbox", { name: /i'm not a robot/i }))
+    await waitFor(() =>
+      expect(screen.getByRole("checkbox", { name: /i'm not a robot/i }).getAttribute("aria-checked")).toBe("true")
+    )
     await user.click(screen.getByRole("button", { name: /sign in/i }))
 
     expect(await screen.findByText(/no account found/i)).toBeTruthy()
@@ -80,5 +97,14 @@ describe("sign up and sign in", () => {
     const user = userEvent.setup()
     await user.click(screen.getByRole("button", { name: /sign in/i }))
     expect(await screen.findByText(/please fill in all fields/i)).toBeTruthy()
+  })
+
+  it("blocks submission when reCAPTCHA is not checked", async () => {
+    renderSignIn()
+    const user = userEvent.setup()
+    await user.type(screen.getByPlaceholderText("you@email.com"), "amina@example.com")
+    await user.type(screen.getByPlaceholderText("••••••••"), "secret123")
+    await user.click(screen.getByRole("button", { name: /sign in/i }))
+    expect(await screen.findByText(/please complete the recaptcha check/i)).toBeTruthy()
   })
 })

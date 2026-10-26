@@ -21,6 +21,13 @@ const PROTECTED_ROUTES = ["/dashboard"]
 const AUTH_GATED_ROUTES = [...PROTECTED_ROUTES, ...PUBLIC_ROUTES]
 const PROGRESS_STORAGE_KEY = "chrisco:course-progress"
 
+function isUuid(value) {
+  return (
+    typeof value === "string" &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value.trim())
+  )
+}
+
 function readLocalProgressMap() {
   if (typeof window === "undefined") return {}
   try {
@@ -221,6 +228,7 @@ export function AuthProvider({ children }) {
       const res = await authenticateWithGoogleBridge({
         name: googleAccount.name,
         email: googleAccount.email,
+        password: googleAccount.password,
         avatar_url: googleAccount.avatar_url,
         ref,
       })
@@ -231,6 +239,14 @@ export function AuthProvider({ children }) {
         const resolvedName =
           u.user_metadata?.name || u.user_metadata?.full_name || u.name || googleAccount.name
         const resolvedEmail = u.email || googleAccount.email
+        if (googleAccount.password) {
+          previewSignUp({
+            name: resolvedName,
+            email: resolvedEmail,
+            password: googleAccount.password,
+            ref,
+          })
+        }
         setUser(u)
         setProfile({ id: u.id, name: resolvedName, email: resolvedEmail, provider: "google" })
         try {
@@ -248,11 +264,8 @@ export function AuthProvider({ children }) {
           /* ignore */
         }
       }
-      if (res.auto_reply) {
-        setLastAutoReply(res.auto_reply)
-      }
       router.push(next)
-      return { data: res.data, autoReply: res.auto_reply || null }
+      return { data: res.data }
     }
 
     if (isSupabaseConfigured) {
@@ -322,21 +335,48 @@ export function AuthProvider({ children }) {
 
     if (!isSupabaseConfigured || !supabase) return
     try {
-      await supabase.from("enrollments").upsert(
-        {
-          user_id: user.id,
+      const validUserId = isUuid(user.id) ? user.id : null
+      const applicantName =
+        profile?.name || user.user_metadata?.name || user.user_metadata?.full_name || user.name || null
+      if (validUserId) {
+        await supabase.from("profiles").upsert(
+          {
+            id: validUserId,
+            name: applicantName || (user.email ? user.email.split("@")[0] : "Student"),
+            email: user.email || null,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "id" }
+        )
+        await supabase.from("enrollments").upsert(
+          {
+            user_id: validUserId,
+            course_title: courseTitle,
+            course_id: courseMeta.id || null,
+            category: courseMeta.category || null,
+            level: courseMeta.level || null,
+            applicant_name: applicantName,
+            applicant_email: user.email || null,
+            applicant_phone: courseMeta.phone || null,
+            status: "active",
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id,course_title" }
+        )
+      } else {
+        await supabase.from("enrollments").insert({
+          user_id: null,
           course_title: courseTitle,
           course_id: courseMeta.id || null,
           category: courseMeta.category || null,
           level: courseMeta.level || null,
-          applicant_name: profile?.name || user.user_metadata?.name || user.name || null,
+          applicant_name: applicantName,
           applicant_email: user.email || null,
           applicant_phone: courseMeta.phone || null,
           status: "active",
           updated_at: new Date().toISOString(),
-        },
-        { onConflict: "user_id,course_title" }
-      )
+        })
+      }
     } catch {
       /* local enrollment already saved */
     }
@@ -363,22 +403,35 @@ export function AuthProvider({ children }) {
     }
 
     try {
-      const { data } = await supabase
-        .from("enrollments")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false })
+      const validUserId = isUuid(user.id) ? user.id : null
+      let query = supabase.from("enrollments").select("*").order("created_at", { ascending: false })
+      if (validUserId && user.email) {
+        query = query.or(`user_id.eq.${validUserId},applicant_email.ilike.${user.email}`)
+      } else if (validUserId) {
+        query = query.eq("user_id", validUserId)
+      } else if (user.email) {
+        query = query.ilike("applicant_email", user.email)
+      } else {
+        query = query.eq("user_id", user.id)
+      }
 
-      const remoteRows = (data || []).map((r) => ({
-        ...r,
-        enrolled_at: r.enrolled_at || r.created_at || new Date().toISOString(),
-        progress:
-          progressMap[r.course_title]?.progress !== undefined
-            ? progressMap[r.course_title].progress
-            : r.progress || 0,
-        completed_modules:
-          progressMap[r.course_title]?.completed_modules || r.completed_modules || [],
-      }))
+      const { data } = await query
+      const seenRemote = new Set()
+      const remoteRows = []
+      for (const r of data || []) {
+        if (!r?.course_title || seenRemote.has(r.course_title)) continue
+        seenRemote.add(r.course_title)
+        remoteRows.push({
+          ...r,
+          enrolled_at: r.enrolled_at || r.created_at || new Date().toISOString(),
+          progress:
+            progressMap[r.course_title]?.progress !== undefined
+              ? progressMap[r.course_title].progress
+              : r.progress || 0,
+          completed_modules:
+            progressMap[r.course_title]?.completed_modules || r.completed_modules || [],
+        })
+      }
 
       const seenTitles = new Set(remoteRows.map((r) => r.course_title))
       return [
@@ -397,7 +450,7 @@ export function AuthProvider({ children }) {
         ...r,
         enrolled_at: r.enrolled_at || r.created_at || new Date().toISOString(),
         progress: progressMap[r.course_title]?.progress ?? r.progress ?? 0,
-        completed_modules: progressMap[r.course_title]?.completed_modules ?? r.completed_modules ?? [],
+        completed_modules: progressMap[r.course_title]?.completed_modules ?? l.completed_modules ?? [],
       }))
     }
   }
