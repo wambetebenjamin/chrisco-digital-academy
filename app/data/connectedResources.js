@@ -16,7 +16,7 @@ export const CONNECTED_RESOURCES = [
     highlights: [
       "Slide 1: Welcome to CHRISCO Digital Academy",
       "Slide 2: Your 4-Step Learning Journey",
-      "Slide 3–4: All 7 Practical Digital Skills Tracks (19 Courses)",
+      "Slides 3 to 4: All 7 Practical Digital Skills Tracks (19 Courses)",
       "Slide 5: Connected Learning Ecosystem & Support",
     ],
   },

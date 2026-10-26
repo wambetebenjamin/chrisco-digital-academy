@@ -1,31 +1,37 @@
 import { notFound } from "next/navigation"
 import { allBooks, getBookBySlug } from "../../data/booksCatalogue"
+import { resolveServerOrigin, buildSocialMetadata } from "../../lib/siteOrigin"
 import BookDetailClient from "./BookDetailClient"
 
-export function generateStaticParams() {
-  return allBooks.map((b) => ({ slug: b.slug }))
-}
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({ params }) {
+  const origin = await resolveServerOrigin()
   const resolved = await params
   const book = getBookBySlug(resolved?.slug)
   if (!book) {
     return { title: "Book Not Found | CHRISCO Library" }
   }
-  return {
-    title: `${book.title} | CHRISCO Youth Aflame Library`,
-    description: `${book.subtitle} (${book.pages} spacious pages with ${book.illustrations} visual diagrams — register free by email to download online.)`,
-    openGraph: {
-      title: book.title,
-      description: book.subtitle,
-      images: [book.coverImage],
-    },
-  }
+
+  return buildSocialMetadata({
+    origin,
+    title: `${book.title} | CHRISCO Youth Aflame`,
+    description: book.subtitle,
+    path: book.sharePath,
+    bannerPath: book.ogImage || `/og/books/${book.slug}.jpg`,
+    squarePath: book.ogSquareImage || `/og/books/${book.slug}-sq.jpg`,
+    type: "website",
+  })
 }
 
 export default async function BookDetailPage({ params }) {
   const resolved = await params
   const book = getBookBySlug(resolved?.slug)
   if (!book) notFound()
-  return <BookDetailClient book={book} />
+
+  const relatedBooks = allBooks
+    .filter((b) => b.shelf === book.shelf && b.slug !== book.slug)
+    .slice(0, 4)
+
+  return <BookDetailClient book={book} relatedBooks={relatedBooks} />
 }

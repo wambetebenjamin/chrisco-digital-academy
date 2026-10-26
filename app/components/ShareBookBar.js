@@ -1,17 +1,34 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Image from "next/image"
 import Icon from "./Icon"
 import { buildBookShareUrl } from "../data/booksCatalogue"
 
 export default function ShareBookBar({ book, compact = false }) {
   const [copied, setCopied] = useState(false)
+  const [origin, setOrigin] = useState("")
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location?.origin) {
+      setOrigin(window.location.origin)
+    }
+  }, [])
+
   if (!book) return null
 
-  const shareUrl = buildBookShareUrl(book.slug)
+  const shareUrl = buildBookShareUrl(book.slug, origin)
+  const displayHost = (() => {
+    try {
+      return new URL(shareUrl).host
+    } catch {
+      return "chrisco-digital-academy.vercel.app"
+    }
+  })()
+
   const shareHeadline =
     book.shelf === "christian"
-      ? `Read "${book.title}" from CHRISCO Youth Aflame — register free by email and download here:`
-      : `Download the 28-page illustrated "${book.title}" from CHRISCO Digital Academy — register free by email here:`
+      ? `${book.title} | CHRISCO Youth Aflame`
+      : `${book.title} | CHRISCO Digital Academy`
 
   async function handleCopy(e) {
     e?.stopPropagation?.()
@@ -43,10 +60,14 @@ export default function ShareBookBar({ book, compact = false }) {
     handleCopy(e)
   }
 
-  const waHref = `https://wa.me/?text=${encodeURIComponent(`${shareHeadline} ${shareUrl}`)}`
+  // Put URL cleanly on its own line so WhatsApp groups & chats immediately generate the cover preview popup
+  const waHref = `https://wa.me/?text=${encodeURIComponent(`${shareHeadline}\n${shareUrl}`)}`
+  const tgHref = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareHeadline)}`
   const xHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareHeadline)}&url=${encodeURIComponent(shareUrl)}`
   const fbHref = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
   const mailHref = `mailto:?subject=${encodeURIComponent(`Recommended E-Book: ${book.title}`)}&body=${encodeURIComponent(`${shareHeadline}\n\n${shareUrl}`)}`
+
+  const ogCardSrc = book.ogImage || `/og/books/${book.slug}.jpg`
 
   if (compact) {
     return (
@@ -58,7 +79,7 @@ export default function ShareBookBar({ book, compact = false }) {
           type="button"
           onClick={handleCopy}
           className="pill pill-sm"
-          title="Copy shareable link to this book page"
+          title="Copy shareable link with cover preview"
           aria-label={`Copy share link for ${book.title}`}
           style={{
             cursor: "pointer",
@@ -81,7 +102,7 @@ export default function ShareBookBar({ book, compact = false }) {
         background: "var(--layer-1)",
         border: "1px solid var(--line)",
         borderRadius: 16,
-        padding: "14px 16px",
+        padding: "16px",
       }}
     >
       <div
@@ -92,7 +113,7 @@ export default function ShareBookBar({ book, compact = false }) {
           letterSpacing: "0.1em",
           textTransform: "uppercase",
           color: "var(--muted)",
-          marginBottom: 10,
+          marginBottom: 12,
           display: "flex",
           alignItems: "center",
           gap: 7,
@@ -102,7 +123,50 @@ export default function ShareBookBar({ book, compact = false }) {
         Share this book so others can visit &amp; download
       </div>
 
+      {/* Live WhatsApp / Group Link Cover Preview Card */}
+      <div
+        style={{
+          background: "#fff",
+          border: "1px solid var(--line)",
+          borderRadius: 12,
+          overflow: "hidden",
+          marginBottom: 12,
+          boxShadow: "0 4px 14px rgba(0,35,51,0.06)",
+        }}
+      >
+        <div style={{ position: "relative", width: "100%", aspectRatio: "1200 / 630", background: "var(--navy)" }}>
+          <Image
+            src={ogCardSrc}
+            alt={`WhatsApp link preview for ${book.title}`}
+            fill
+            sizes="(max-width: 640px) 92vw, 480px"
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+        <div style={{ padding: "10px 13px", borderTop: "1px solid var(--line)" }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--green-deep)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+            {displayHost}
+          </div>
+          <div style={{ fontSize: 13.2, fontWeight: 800, color: "var(--ink)", marginTop: 2, lineHeight: 1.3 }}>
+            {book.title}
+          </div>
+          <div style={{ fontSize: 11.8, color: "var(--muted)", marginTop: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {shareUrl}
+          </div>
+        </div>
+      </div>
+
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noreferrer"
+          className="btn btn-green btn-sm"
+          style={{ textDecoration: "none", fontSize: 12.5, padding: "8px 14px" }}
+        >
+          <Icon name="whatsapp" size={14} /> Share on WhatsApp
+        </a>
+
         <button
           type="button"
           onClick={handleCopy}
@@ -110,17 +174,17 @@ export default function ShareBookBar({ book, compact = false }) {
           style={{ cursor: "pointer", fontSize: 12.5, padding: "8px 14px" }}
         >
           <Icon name={copied ? "check" : "copy"} size={14} />
-          {copied ? "Share Link Copied!" : "Copy Book Link"}
+          {copied ? "Link Copied!" : "Copy Link"}
         </button>
 
         <a
-          href={waHref}
+          href={tgHref}
           target="_blank"
           rel="noreferrer"
           className="pill pill-sm"
           style={{ textDecoration: "none", color: "var(--ink)" }}
         >
-          <Icon name="whatsapp" size={14} /> WhatsApp
+          Telegram
         </a>
 
         <a
@@ -130,7 +194,7 @@ export default function ShareBookBar({ book, compact = false }) {
           className="pill pill-sm"
           style={{ textDecoration: "none", color: "var(--ink)" }}
         >
-          <Icon name="send" size={13} /> Post on X
+          X / Post
         </a>
 
         <a
@@ -140,7 +204,7 @@ export default function ShareBookBar({ book, compact = false }) {
           className="pill pill-sm"
           style={{ textDecoration: "none", color: "var(--ink)" }}
         >
-          <Icon name="globe" size={13} /> Facebook
+          Facebook
         </a>
 
         <a
@@ -148,23 +212,17 @@ export default function ShareBookBar({ book, compact = false }) {
           className="pill pill-sm"
           style={{ textDecoration: "none", color: "var(--ink)" }}
         >
-          <Icon name="mail" size={13} /> Email Friend
+          Email
         </a>
 
-        {typeof navigator !== "undefined" && navigator.share && (
-          <button
-            type="button"
-            onClick={handleNativeShare}
-            className="pill pill-sm"
-            style={{ cursor: "pointer" }}
-          >
-            <Icon name="share" size={13} /> More
-          </button>
-        )}
-      </div>
-
-      <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 8, wordBreak: "break-all" }}>
-        Book page link: <strong style={{ color: "var(--ink)" }}>{shareUrl}</strong>
+        <button
+          type="button"
+          onClick={handleNativeShare}
+          className="pill pill-sm"
+          style={{ cursor: "pointer", color: "var(--ink)", background: "#fff" }}
+        >
+          More...
+        </button>
       </div>
     </div>
   )

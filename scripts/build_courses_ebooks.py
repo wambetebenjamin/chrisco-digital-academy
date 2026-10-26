@@ -36,7 +36,7 @@ from books_content_original import BOOKS as ORIG_BOOKS
 ASSET_DIR = os.path.join(SCRIPT_DIR, "courses_ebook_assets")
 FONT_DIR = os.path.join(ASSET_DIR, "fonts")
 GRAPHICS_DIR = os.path.join(ASSET_DIR, "graphics")
-IMAGES_DIR = os.path.join(ASSET_DIR, "images")
+PER_COURSE_DIR = os.path.join(ASSET_DIR, "per_course")
 OUT_DIR = os.path.join(REPO_ROOT, "content", "books")
 CACHE_DIR = "/tmp/chrisco_courses_pdf_cache_28p"
 os.makedirs(OUT_DIR, exist_ok=True)
@@ -63,32 +63,88 @@ WHITE = "#FFFFFF"
 PRIMARY_EMAIL = "chriscoyouthaflame2025@gmail.com"
 SECONDARY_EMAIL = "shambetz@gmail.com"
 
+# Per-photo crop centering overrides for exclusive per-course photos (<slug>/p1.jpg..p4.jpg)
 PHOTO_FOCUS = {
-    "real_quiet_desk_notes.jpg": (0.5, 0.58),
-    "course_woman_desk_notes.jpg": (0.5, 0.44),
-    "course_woman_white_blouse_laptop.jpg": (0.5, 0.36),
-    "course_podcast_creator.jpg": (0.55, 0.35),
-    "course_camera_creator.jpg": (0.5, 0.34),
-    "course_abuja_photographer.jpg": (0.5, 0.28),
-    "course_pod_apparel.jpg": (0.5, 0.26),
-    "course_coding_dual_screen.jpg": (0.5, 0.38),
-    "course_coding_developer.jpg": (0.5, 0.32),
-    "course_whiteboard_trainer.jpg": (0.5, 0.34),
-    "course_exec_pitch_call.jpg": (0.5, 0.36),
-    "course_exec_outdoor_laptop.jpg": (0.5, 0.36),
-    "real_blazer_journaling.jpg": (0.5, 0.40),
-    "real_modest_prayer_journal.jpg": (0.5, 0.48),
-    "lesson2_contemplation.jpg": (0.5, 0.34),
-    "real_study_pair_side.jpg": (0.5, 0.36),
-    "real_lagos_boardroom.jpg": (0.5, 0.35),
-    "real_council_sisters.jpg": (0.5, 0.34),
-    "real_lagos_celebration_group.jpg": (0.5, 0.34),
-    "real_joyful_fellowship_group.jpg": (0.5, 0.35),
-    "real_plaid_suit_side.jpg": (0.5, 0.28),
-    "real_overcoat_side.jpg": (0.5, 0.42),
-    "real_seminar_side.jpg": (0.5, 0.34),
-    "real_suited_window_side.jpg": (0.5, 0.32),
+    "youtube-automation/p1.jpg": (0.55, 0.34),
+    "youtube-automation/p2.jpg": (0.5, 0.42),
+    "youtube-automation/p3.jpg": (0.5, 0.28),
+    "youtube-automation/p4.jpg": (0.5, 0.28),
+    "ai-video-storytelling/p1.jpg": (0.5, 0.32),
+    "ai-video-storytelling/p2.jpg": (0.5, 0.24),
+    "ai-video-storytelling/p3.jpg": (0.5, 0.26),
+    "ai-video-storytelling/p4.jpg": (0.5, 0.28),
+    "python-programming/p1.jpg": (0.5, 0.38),
+    "python-programming/p2.jpg": (0.5, 0.36),
+    "python-programming/p3.jpg": (0.5, 0.30),
+    "python-programming/p4.jpg": (0.5, 0.50),
+    "swe-llm-mastery/p1.jpg": (0.5, 0.32),
+    "swe-llm-mastery/p2.jpg": (0.5, 0.45),
+    "swe-llm-mastery/p3.jpg": (0.5, 0.48),
+    "swe-llm-mastery/p4.jpg": (0.5, 0.26),
+    "ai-literacy/p1.jpg": (0.5, 0.32),
+    "ai-literacy/p2.jpg": (0.35, 0.28),
+    "ai-literacy/p3.jpg": (0.5, 0.30),
+    "ai-literacy/p4.jpg": (0.5, 0.32),
+    "print-on-demand/p1.jpg": (0.5, 0.26),
+    "print-on-demand/p2.jpg": (0.5, 0.24),
+    "print-on-demand/p3.jpg": (0.5, 0.25),
+    "print-on-demand/p4.jpg": (0.5, 0.50),
+    "communicate-like-a-ceo/p1.jpg": (0.5, 0.26),
+    "communicate-like-a-ceo/p2.jpg": (0.5, 0.24),
+    "communicate-like-a-ceo/p3.jpg": (0.5, 0.28),
+    "communicate-like-a-ceo/p4.jpg": (0.45, 0.30),
+    "negotiation/p1.jpg": (0.5, 0.34),
+    "negotiation/p2.jpg": (0.5, 0.32),
+    "negotiation/p3.jpg": (0.5, 0.32),
+    "negotiation/p4.jpg": (0.5, 0.32),
+    "personal-branding/p1.jpg": (0.5, 0.06),
+    "personal-branding/p2.jpg": (0.5, 0.24),
+    "personal-branding/p3.jpg": (0.5, 0.25),
+    "personal-branding/p4.jpg": (0.5, 0.28),
+    "networking-secrets/p1.jpg": (0.5, 0.35),
+    "networking-secrets/p2.jpg": (0.5, 0.34),
+    "networking-secrets/p3.jpg": (0.5, 0.30),
+    "networking-secrets/p4.jpg": (0.5, 0.32),
+    "ghostwriting/p1.jpg": (0.5, 0.55),
+    "ghostwriting/p2.jpg": (0.5, 0.35),
+    "ghostwriting/p3.jpg": (0.5, 0.34),
+    "ghostwriting/p4.jpg": (0.5, 0.36),
+    "copywriting/p1.jpg": (0.5, 0.30),
+    "copywriting/p2.jpg": (0.5, 0.36),
+    "copywriting/p3.jpg": (0.5, 0.30),
+    "copywriting/p4.jpg": (0.5, 0.45),
+    "freelancing/p1.jpg": (0.5, 0.35),
+    "freelancing/p2.jpg": (0.5, 0.34),
+    "freelancing/p3.jpg": (0.5, 0.32),
+    "freelancing/p4.jpg": (0.5, 0.32),
+    "content-creation/p1.jpg": (0.5, 0.24),
+    "content-creation/p2.jpg": (0.5, 0.32),
+    "content-creation/p3.jpg": (0.5, 0.28),
+    "content-creation/p4.jpg": (0.5, 0.28),
+    "sales-and-marketing/p1.jpg": (0.5, 0.34),
+    "sales-and-marketing/p2.jpg": (0.5, 0.32),
+    "sales-and-marketing/p3.jpg": (0.5, 0.30),
+    "sales-and-marketing/p4.jpg": (0.5, 0.30),
+    "digital-marketing/p1.jpg": (0.5, 0.35),
+    "digital-marketing/p2.jpg": (0.5, 0.34),
+    "digital-marketing/p3.jpg": (0.5, 0.30),
+    "digital-marketing/p4.jpg": (0.5, 0.34),
+    "email-marketing/p1.jpg": (0.5, 0.42),
+    "email-marketing/p2.jpg": (0.5, 0.32),
+    "email-marketing/p3.jpg": (0.5, 0.28),
+    "email-marketing/p4.jpg": (0.5, 0.34),
+    "affiliate-marketing/p1.jpg": (0.5, 0.32),
+    "affiliate-marketing/p2.jpg": (0.5, 0.40),
+    "affiliate-marketing/p3.jpg": (0.5, 0.40),
+    "affiliate-marketing/p4.jpg": (0.5, 0.40),
+    "social-media-marketing/p1.jpg": (0.5, 0.34),
+    "social-media-marketing/p2.jpg": (0.5, 0.50),
+    "social-media-marketing/p3.jpg": (0.5, 0.28),
+    "social-media-marketing/p4.jpg": (0.5, 0.36),
 }
+
+def exclusive_photos(slug: str):
+    return [f"{slug}/p1.jpg", f"{slug}/p2.jpg", f"{slug}/p3.jpg", f"{slug}/p4.jpg"]
 
 TRACK_META = {
     "youtube-automation": {
@@ -96,304 +152,133 @@ TRACK_META = {
         "duration": "8 Weeks",
         "level": "Beginner to Pro",
         "domain_noun": "channel system",
-        "photos": [
-            "course_podcast_creator.jpg",
-            "course_camera_creator.jpg",
-            "course_abuja_photographer.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_study_pair_side.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "real_blazer_journaling.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-        ],
+        "photos": exclusive_photos("youtube-automation"),
     },
     "ai-video-storytelling": {
-        "track": "Video & Creative AI Track",
+        "track": "Video & Creative Storytelling Track",
         "duration": "6 Weeks",
         "level": "Beginner",
         "domain_noun": "visual story",
-        "photos": [
-            "course_camera_creator.jpg",
-            "course_abuja_photographer.jpg",
-            "course_podcast_creator.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_lagos_celebration_group.jpg",
-            "real_quiet_desk_notes.jpg",
-            "real_blazer_journaling.jpg",
-        ],
+        "photos": exclusive_photos("ai-video-storytelling"),
     },
     "python-programming": {
         "track": "Coding & Software Engineering Track",
         "duration": "8 Weeks",
         "level": "Beginner",
         "domain_noun": "Python program",
-        "photos": [
-            "course_coding_dual_screen.jpg",
-            "course_coding_developer.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_seminar_side.jpg",
-            "course_exec_outdoor_laptop.jpg",
-        ],
+        "photos": exclusive_photos("python-programming"),
     },
     "swe-llm-mastery": {
-        "track": "Software Engineering & AI Systems Track",
+        "track": "Software Engineering & Applied Systems Track",
         "duration": "10 Weeks",
         "level": "Intermediate",
-        "domain_noun": "production AI feature",
-        "photos": [
-            "course_coding_developer.jpg",
-            "course_coding_dual_screen.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_study_pair_side.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_overcoat_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-        ],
+        "domain_noun": "production software feature",
+        "photos": exclusive_photos("swe-llm-mastery"),
     },
     "ai-literacy": {
-        "track": "AI & Workplace Productivity Track",
+        "track": "Digital Fluency & Workplace Productivity Track",
         "duration": "5 Weeks",
         "level": "Beginner",
-        "domain_noun": "AI workflow",
-        "photos": [
-            "course_woman_white_blouse_laptop.jpg",
-            "course_coding_dual_screen.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_blazer_journaling.jpg",
-            "real_seminar_side.jpg",
-            "course_exec_outdoor_laptop.jpg",
-        ],
+        "domain_noun": "digital workflow",
+        "photos": exclusive_photos("ai-literacy"),
     },
     "print-on-demand": {
         "track": "Design & Digital Commerce Track",
         "duration": "8 Weeks",
         "level": "Beginner",
         "domain_noun": "merchandise storefront",
-        "photos": [
-            "course_pod_apparel.jpg",
-            "real_blazer_journaling.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_abuja_photographer.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_quiet_desk_notes.jpg",
-            "real_study_pair_side.jpg",
-        ],
+        "photos": exclusive_photos("print-on-demand"),
     },
     "communicate-like-a-ceo": {
         "track": "Executive Leadership & Communication Track",
         "duration": "6 Weeks",
         "level": "All Levels",
         "domain_noun": "executive message",
-        "photos": [
-            "course_exec_pitch_call.jpg",
-            "real_seminar_side.jpg",
-            "real_council_sisters.jpg",
-            "course_whiteboard_trainer.jpg",
-            "real_plaid_suit_side.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_overcoat_side.jpg",
-            "real_suited_window_side.jpg",
-        ],
+        "photos": exclusive_photos("communicate-like-a-ceo"),
     },
     "negotiation": {
         "track": "Business Strategy & Deal-Making Track",
         "duration": "6 Weeks",
         "level": "All Levels",
         "domain_noun": "negotiation agreement",
-        "photos": [
-            "real_council_sisters.jpg",
-            "real_plaid_suit_side.jpg",
-            "course_exec_pitch_call.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_suited_window_side.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "real_blazer_journaling.jpg",
-            "real_seminar_side.jpg",
-        ],
+        "photos": exclusive_photos("negotiation"),
     },
     "personal-branding": {
         "track": "Leadership & Authority Positioning Track",
         "duration": "6 Weeks",
         "level": "All Levels",
         "domain_noun": "authority reputation",
-        "photos": [
-            "course_exec_outdoor_laptop.jpg",
-            "course_podcast_creator.jpg",
-            "real_plaid_suit_side.jpg",
-            "course_abuja_photographer.jpg",
-            "real_blazer_journaling.jpg",
-            "real_lagos_celebration_group.jpg",
-            "real_seminar_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-        ],
+        "photos": exclusive_photos("personal-branding"),
     },
     "networking-secrets": {
         "track": "Leadership & Relationship Capital Track",
         "duration": "5 Weeks",
         "level": "All Levels",
         "domain_noun": "trusted relationship network",
-        "photos": [
-            "real_joyful_fellowship_group.jpg",
-            "real_seminar_side.jpg",
-            "real_lagos_celebration_group.jpg",
-            "real_council_sisters.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_overcoat_side.jpg",
-            "real_plaid_suit_side.jpg",
-        ],
+        "photos": exclusive_photos("networking-secrets"),
     },
     "ghostwriting": {
         "track": "Editorial Writing & Publishing Track",
         "duration": "8 Weeks",
         "level": "All Levels",
         "domain_noun": "client manuscript",
-        "photos": [
-            "real_modest_prayer_journal.jpg",
-            "real_blazer_journaling.jpg",
-            "lesson2_contemplation.jpg",
-            "real_quiet_desk_notes.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_seminar_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-        ],
+        "photos": exclusive_photos("ghostwriting"),
     },
     "copywriting": {
         "track": "Persuasive Writing & Conversion Track",
         "duration": "8 Weeks",
         "level": "Beginner to Pro",
         "domain_noun": "conversion copy asset",
-        "photos": [
-            "real_blazer_journaling.jpg",
-            "real_quiet_desk_notes.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_modest_prayer_journal.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "lesson2_contemplation.jpg",
-            "course_exec_outdoor_laptop.jpg",
-        ],
+        "photos": exclusive_photos("copywriting"),
     },
     "freelancing": {
         "track": "Independent Consulting & Remote Work Track",
         "duration": "8 Weeks",
         "level": "All Levels",
         "domain_noun": "client service practice",
-        "photos": [
-            "real_overcoat_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "course_exec_pitch_call.jpg",
-            "real_blazer_journaling.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_council_sisters.jpg",
-        ],
+        "photos": exclusive_photos("freelancing"),
     },
     "content-creation": {
         "track": "Digital Media & Audience Growth Track",
         "duration": "6 Weeks",
         "level": "Beginner",
         "domain_noun": "content engine",
-        "photos": [
-            "course_podcast_creator.jpg",
-            "course_abuja_photographer.jpg",
-            "course_camera_creator.jpg",
-            "real_blazer_journaling.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_desk_notes.jpg",
-        ],
+        "photos": exclusive_photos("content-creation"),
     },
     "sales-and-marketing": {
         "track": "Revenue Growth & Go-To-Market Track",
         "duration": "8 Weeks",
         "level": "All Levels",
         "domain_noun": "customer acquisition system",
-        "photos": [
-            "course_whiteboard_trainer.jpg",
-            "course_exec_pitch_call.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_council_sisters.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "real_plaid_suit_side.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_exec_outdoor_laptop.jpg",
-        ],
+        "photos": exclusive_photos("sales-and-marketing"),
     },
     "digital-marketing": {
         "track": "Growth Marketing & Analytics Track",
         "duration": "8 Weeks",
         "level": "All Levels",
         "domain_noun": "digital campaign",
-        "photos": [
-            "real_lagos_boardroom.jpg",
-            "course_woman_desk_notes.jpg",
-            "course_whiteboard_trainer.jpg",
-            "real_study_pair_side.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_council_sisters.jpg",
-            "real_blazer_journaling.jpg",
-            "course_exec_pitch_call.jpg",
-        ],
+        "photos": exclusive_photos("digital-marketing"),
     },
     "email-marketing": {
         "track": "Retention & Direct Response Track",
         "duration": "6 Weeks",
         "level": "All Levels",
         "domain_noun": "subscriber sequence",
-        "photos": [
-            "course_woman_desk_notes.jpg",
-            "real_quiet_desk_notes.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_blazer_journaling.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "real_lagos_boardroom.jpg",
-            "real_modest_prayer_journal.jpg",
-            "real_study_pair_side.jpg",
-        ],
+        "photos": exclusive_photos("email-marketing"),
     },
     "affiliate-marketing": {
         "track": "Partner Commerce & Digital Funnels Track",
         "duration": "8 Weeks",
         "level": "Beginner to Pro",
         "domain_noun": "recommendation funnel",
-        "photos": [
-            "real_study_pair_side.jpg",
-            "course_exec_outdoor_laptop.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "course_podcast_creator.jpg",
-            "real_lagos_celebration_group.jpg",
-            "course_woman_desk_notes.jpg",
-            "real_overcoat_side.jpg",
-            "real_blazer_journaling.jpg",
-        ],
+        "photos": exclusive_photos("affiliate-marketing"),
     },
     "social-media-marketing": {
         "track": "Brand Community & Social Strategy Track",
         "duration": "8 Weeks",
         "level": "All Levels",
         "domain_noun": "community growth calendar",
-        "photos": [
-            "real_lagos_celebration_group.jpg",
-            "course_podcast_creator.jpg",
-            "real_joyful_fellowship_group.jpg",
-            "course_camera_creator.jpg",
-            "real_council_sisters.jpg",
-            "course_woman_white_blouse_laptop.jpg",
-            "real_blazer_journaling.jpg",
-            "course_abuja_photographer.jpg",
-        ],
+        "photos": exclusive_photos("social-media-marketing"),
     },
 }
 
@@ -476,8 +361,8 @@ def draw_plate(c: canvas.Canvas, plate_name: str) -> None:
 
 
 def draw_photo(c: canvas.Canvas, img_name: str, x: float, y_top: float, w: float, h: float, focus=None, radius: float = 0.0) -> None:
-    use_focus = PHOTO_FOCUS.get(img_name, focus if focus is not None else (0.5, 0.35))
-    p = crop_cached(os.path.join(IMAGES_DIR, img_name), w, h, focus=use_focus)
+    use_focus = PHOTO_FOCUS.get(img_name, focus if focus is not None else (0.5, 0.32))
+    p = crop_cached(os.path.join(PER_COURSE_DIR, img_name), w, h, focus=use_focus)
     c.saveState()
     if radius > 0:
         path = c.beginPath()
@@ -932,18 +817,46 @@ def render_chapter_spread(
     c.showPage()
 
     # -------------------------------------------------------------------------
-    # PAGE B: Real Practitioner Photo + Worked Field Case + Step-by-Step Lab
+    # PAGE B: Real Practitioner Photo (or Case Snapshot Card) + Worked Case + Lab
     # -------------------------------------------------------------------------
     fill_white(c)
 
-    # Top Real African Practitioner Banner + Cobalt Case Header
-    draw_photo(c, photo_name, 68.0, 56.0, 216.0, 186.0)
+    if photo_name:
+        draw_photo(c, photo_name, 68.0, 56.0, 216.0, 186.0)
+    else:
+        # Structured Case Architecture Panel (ensures zero repeated photos inside a book)
+        c.saveState()
+        c.setFillColor(HexColor(LAVENDER_CARD))
+        c.rect(68.0, Y(242.0), 216.0, 186.0, stroke=0, fill=1)
+        c.setStrokeColor(HexColor(LAVENDER_BORDER))
+        c.setLineWidth(1.0)
+        c.rect(68.0, Y(242.0), 216.0, 186.0, stroke=1, fill=0)
+        c.setFillColor(HexColor(COBALT_HEAD))
+        c.setFont("Montserrat-Bold", 8.2)
+        c.drawString(84.0, Y(78.0), f"MODULE 0{mod_num}  |  FIELD BRIEF")
+        c.restoreState()
+        draw_accent_bar(c, 84.0, 85.0, 44.0, 2.2)
+        brief_html = (
+            f"<b>Focus Skill:</b><br/>{clean_text(ch['title'])}<br/><br/>"
+            f"<b>Core Rule:</b><br/>{clean_text(tks[0] if tks else ch['title'])}<br/><br/>"
+            f"<b>Target Output:</b><br/>Working {clean_text(domain_noun)}"
+        )
+        draw_para(
+            c,
+            brief_html,
+            style(f"br_{mod_num}", "Montserrat", 8.8, 13.0, INK),
+            84.0,
+            96.0,
+            184.0,
+            138.0,
+        )
+
     c.saveState()
     c.setFillColor(HexColor(COBALT_PANEL))
     c.rect(284.0, Y(242.0), 244.0, 186.0, stroke=0, fill=1)
     c.setFillColor(HexColor(LIME_ACCENT))
     c.setFont("Montserrat-Bold", 8.2)
-    c.drawString(302.0, Y(78.0), f"MODULE 0{mod_num}  •  WORKED CASE STUDY")
+    c.drawString(302.0, Y(78.0), f"MODULE 0{mod_num}  |  WORKED CASE STUDY")
     c.restoreState()
     draw_accent_bar(c, 302.0, 85.0, 48.0, 2.2)
 
@@ -1098,8 +1011,8 @@ def build_single_course_pdf(book: dict) -> str:
         ry += draw_para(c, clean_text(foreword[2]), st_body, 312.0, ry, 228.0, 130.0) + 12.0
     study_note = (
         f"Published by <b>CHRISCO Digital Academy</b> under <b>CHRISCO Youth Aflame</b> "
-        f"(<i>CHRISCO Fellowship of Churches</i>), this expanded 28-page illustrated handbook "
-        f"unpacks every module in spacious detail with visual diagrams, real East African case studies, "
+        f"(<i>CHRISCO Fellowship of Churches</i>), this 28-page course handbook "
+        f"explains every module clearly with visual diagrams, real East African case studies, "
         f"and step-by-step labs. Reach our mentorship desk anytime at <b>{PRIMARY_EMAIL}</b>."
     )
     ry += draw_para(c, study_note, st_body, 312.0, ry, 228.0, 150.0) + 10.0
@@ -1201,7 +1114,7 @@ def build_single_course_pdf(book: dict) -> str:
         5,
     )
     render_chapter_spread(c, 1, "1.1", chapters[0], title, meta, photos[3], 6, 7)
-    render_chapter_spread(c, 2, "1.2", chapters[1], title, meta, photos[4], 8, 9)
+    render_chapter_spread(c, 2, "1.2", chapters[1], title, meta, None, 8, 9)
 
     # =========================================================================
     # SECTION 02 (P10) + MODULES 3 & 4 (P11-P14)
@@ -1214,8 +1127,8 @@ def build_single_course_pdf(book: dict) -> str:
         f"Module 03: {chapters[2]['title']}  |  Module 04: {chapters[3]['title']}",
         10,
     )
-    render_chapter_spread(c, 3, "2.1", chapters[2], title, meta, photos[5], 11, 12)
-    render_chapter_spread(c, 4, "2.2", chapters[3], title, meta, photos[6], 13, 14)
+    render_chapter_spread(c, 3, "2.1", chapters[2], title, meta, None, 11, 12)
+    render_chapter_spread(c, 4, "2.2", chapters[3], title, meta, None, 13, 14)
 
     # =========================================================================
     # SECTION 03 (P15) + MODULES 5 & 6 (P16-P19)
@@ -1228,8 +1141,8 @@ def build_single_course_pdf(book: dict) -> str:
         f"Module 05: {chapters[4]['title']}  |  Module 06: {chapters[5]['title']}",
         15,
     )
-    render_chapter_spread(c, 5, "3.1", chapters[4], title, meta, photos[7], 16, 17)
-    render_chapter_spread(c, 6, "3.2", chapters[5], title, meta, photos[0], 18, 19)
+    render_chapter_spread(c, 5, "3.1", chapters[4], title, meta, None, 16, 17)
+    render_chapter_spread(c, 6, "3.2", chapters[5], title, meta, None, 18, 19)
 
     # =========================================================================
     # SECTION 04 (P20) + MODULES 7 & 8 (P21-P24)
@@ -1242,8 +1155,8 @@ def build_single_course_pdf(book: dict) -> str:
         f"Module 07: {chapters[6]['title']}  |  Module 08: {chapters[7]['title']}",
         20,
     )
-    render_chapter_spread(c, 7, "4.1", chapters[6], title, meta, photos[2], 21, 22)
-    render_chapter_spread(c, 8, "4.2", chapters[7], title, meta, photos[5], 23, 24)
+    render_chapter_spread(c, 7, "4.1", chapters[6], title, meta, None, 21, 22)
+    render_chapter_spread(c, 8, "4.2", chapters[7], title, meta, None, 23, 24)
 
     # =========================================================================
     # PAGE 25: COMPLETE 8-MODULE PRACTICE & SELF-AUDIT MATRIX (Spacious Full Page)
@@ -1328,22 +1241,26 @@ def build_single_course_pdf(book: dict) -> str:
     )
 
     ref_cards = [
-        (photos[6], f'"{clean_text(chapters[0]["example"])}"', "Cohort Case Reflection  |  Starting Strong in Module 01"),
-        (photos[3], f'"{clean_text(chapters[3]["example"])}"', "Mid-Course Breakthrough  |  Applying Strategy in Module 04"),
-        (photos[1], f'"{clean_text(chapters[7]["example"])}"', "Capstone Completion  |  Shipping Real Work in Module 08"),
+        ("01", "STAGE 01", f'"{clean_text(chapters[0]["example"])}"', "Cohort Case Reflection  |  Starting Strong in Module 01"),
+        ("02", "STAGE 02", f'"{clean_text(chapters[3]["example"])}"', "Mid-Course Breakthrough  |  Applying Strategy in Module 04"),
+        ("03", "STAGE 03", f'"{clean_text(chapters[7]["example"])}"', "Capstone Completion  |  Shipping Real Work in Module 08"),
     ]
     rc_y = 148.0
-    for idx, (r_img, r_quote, r_attr) in enumerate(ref_cards):
+    for idx, (r_num, r_stage, r_quote, r_attr) in enumerate(ref_cards):
         c.saveState()
         c.setFillColor(HexColor(GRAY_CARD))
         c.roundRect(68.0, Y(rc_y + 106.0), 460.0, 106.0, 8.0, stroke=0, fill=1)
+        badge_x = 412.0 if idx % 2 == 0 else 80.0
+        tx_x = 84.0 if idx % 2 == 0 else 198.0
+        c.setFillColor(HexColor(COBALT_PANEL))
+        c.roundRect(badge_x, Y(rc_y + 95.0), 104.0, 84.0, 8.0, stroke=0, fill=1)
+        c.setFillColor(HexColor(LIME_ACCENT))
+        c.setFont("Montserrat-Bold", 7.8)
+        c.drawCentredString(badge_x + 52.0, Y(rc_y + 34.0), r_stage)
+        c.setFillColor(HexColor(WHITE))
+        c.setFont("Montserrat-Bold", 26.0)
+        c.drawCentredString(badge_x + 52.0, Y(rc_y + 68.0), r_num)
         c.restoreState()
-        if idx % 2 == 0:
-            draw_photo(c, r_img, 412.0, rc_y + 11.0, 104.0, 84.0, radius=6.0)
-            tx_x = 84.0
-        else:
-            draw_photo(c, r_img, 80.0, rc_y + 11.0, 104.0, 84.0, radius=6.0)
-            tx_x = 198.0
         st_rq = style(f"rq26_{idx}", "Montserrat-Italic", 9.0, 13.6, INK)
         hq = draw_para(c, r_quote, st_rq, tx_x, rc_y + 14.0, 314.0, 66.0)
         st_ra = style(f"ra26_{idx}", "Montserrat-Bold", 8.3, 11.5, COBALT_HEAD)

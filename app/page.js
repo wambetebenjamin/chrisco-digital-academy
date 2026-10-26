@@ -428,19 +428,14 @@ export default function Home() {
       {/* ================= TWO DEDICATED BOOK SHELVES (CHRISTIAN BESIDE LEARNING) ================= */}
       <section className="section" style={{ background: "#fff", borderTop: "1px solid var(--line)" }}>
         <div className="container">
-          <div style={{ maxWidth: 720, marginBottom: 38 }}>
+          <div style={{ maxWidth: 680, marginBottom: 38 }}>
             <span className="eyebrow">CHRISCO Online Library</span>
             <h2 className="display" style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", color: "var(--ink)", marginTop: 14 }}>
-              Two dedicated shelves: <span style={{ color: "#010C80" }}>Christian Books</span> beside{" "}
-              <span style={{ color: "var(--green-deep)" }}>Learning Handbooks.</span>
+              <span style={{ color: "#010C80" }}>Christian Books</span> &amp;{" "}
+              <span style={{ color: "var(--green-deep)" }}>Course Handbooks.</span>
             </h2>
             <p style={{ color: "var(--muted)", fontSize: 15.5, lineHeight: 1.7, marginTop: 12 }}>
-              Every e-book spans 28 spacious pages with detailed explanations and custom visual diagrams. Register once
-              by email under our{" "}
-              <Link href="/privacy" style={{ color: "var(--green-deep)", fontWeight: 700 }}>
-                Privacy &amp; Data Protection Policy
-              </Link>{" "}
-              to download online, or share any book link so others can visit and download.
+              Sign in to read, save, and download Christian books and practical course handbooks from your Dashboard.
             </p>
           </div>
 
@@ -471,9 +466,7 @@ export default function Home() {
                   Joseph: 7 Lessons Every Emerging Seer Prophet Must Learn
                 </h3>
                 <p style={{ fontSize: 14.2, color: "rgba(255,255,255,0.82)", lineHeight: 1.7, marginBottom: 22 }}>
-                  Set apart in our dedicated Christian &amp; Faith Library under CHRISCO Youth Aflame (CHRISCO
-                  Fellowship of Churches) — 28 spacious pages with 8 prophetic framework diagrams, Scripture exposition,
-                  and personal prayer reflections.
+                  A biblical study from Genesis 37 to 50 on dreams, character, private integrity, and appointed fulfillment, published by CHRISCO Youth Aflame.
                 </p>
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -514,9 +507,7 @@ export default function Home() {
                   19 Illustrated Digital Skill Course Handbooks
                 </h3>
                 <p style={{ fontSize: 14.2, color: "var(--body)", lineHeight: 1.7, marginBottom: 22 }}>
-                  Beside our Christian shelf sit all 19 practical course handbooks — Python, AI &amp; LLMs, YouTube
-                  Automation, Executive Communication, Copywriting, Print on Demand, and more — each expanded to 28
-                  illustrated pages.
+                  Practical study guides for Python, AI, YouTube Automation, Executive Communication, Copywriting, Print on Demand, and 13 more digital tracks.
                 </p>
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>

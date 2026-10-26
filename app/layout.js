@@ -1,30 +1,38 @@
 import "./globals.css"
-/*
- * Self-hosted fonts via Fontsource, bundled at build time and served from
- * the same origin. Replaces the render-blocking external Google Fonts CSS
- * (faster first paint, no third-party dependency, CLS-safe).
- */
 import "@fontsource/archivo-black/400.css"
 import "@fontsource-variable/archivo"
 import "@fontsource-variable/inter"
 import { AuthProvider } from "./AuthProvider"
+import { resolveServerOrigin, buildSocialMetadata } from "./lib/siteOrigin"
 
-export const metadata = {
-  title: {
-    default: "CHRISCO Digital Academy, Learn Skills That Pay For Life",
-    template: "%s | CHRISCO Digital Academy",
-  },
-  description:
-    "A modern learning platform equipping African youth with practical digital and economic-empowerment skills, communication, negotiation, personal branding, AI literacy, storytelling, sales, coding, marketing and more. Under CHRISCO Youth Aflame.",
-  keywords: [
-    "CHRISCO Digital Academy",
-    "digital skills Africa",
-    "youth empowerment",
-    "economic empowerment",
-    "personal branding",
-    "AI literacy",
-    "online courses Africa",
-  ],
+export async function generateMetadata() {
+  const origin = await resolveServerOrigin()
+  const baseMeta = buildSocialMetadata({
+    origin,
+    title: "CHRISCO Digital Academy · Learn Practical Skills That Pay For Life",
+    description:
+      "Equipping African youth with 19 practical digital skills courses, Christian study books, certificates, and Dashboard e-book access under CHRISCO Youth Aflame.",
+    path: "/",
+    bannerPath: "/og/default.jpg",
+  })
+
+  return {
+    ...baseMeta,
+    title: {
+      default: "CHRISCO Digital Academy · Learn Skills That Pay For Life",
+      template: "%s | CHRISCO Digital Academy",
+    },
+    keywords: [
+      "CHRISCO Digital Academy",
+      "CHRISCO Youth Aflame",
+      "digital skills Africa",
+      "Christian youth books",
+      "economic empowerment",
+      "personal branding",
+      "AI literacy",
+      "online courses Africa",
+    ],
+  }
 }
 
 export const viewport = {

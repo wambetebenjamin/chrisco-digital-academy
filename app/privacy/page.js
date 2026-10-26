@@ -23,25 +23,25 @@ const sections = [
     title: "2. Applicable Data Protection Frameworks & Core Principles",
     body: [
       "Our data protection practices are designed in alignment with the Kenya Data Protection Act, 2019, the Uganda Data Protection and Privacy Act, 2019, and internationally recognized GDPR principles:",
-      "• Lawfulness, Fairness & Transparency — We explain clearly why your email is requested before you submit it.\n• Purpose Limitation — Data collected to unlock online book downloads is never repurposed for unrelated profiling.\n• Data Minimization — We request only the minimum details necessary (email address and optional first name for library access).\n• Storage Limitation & Security — Access tokens expire automatically and store salted cryptographic hashes rather than plaintext emails in cookies.",
+      "• Lawfulness, Fairness & Transparency: We explain clearly why your account details are requested before you submit them.\n• Purpose Limitation: Data collected to create your learner account and unlock book downloads is never repurposed for unrelated profiling.\n• Data Minimization: We request only the minimum details necessary for your student account and library access.\n• Storage Limitation & Security: Access tokens expire automatically and store salted cryptographic hashes rather than plaintext emails in cookies.",
     ],
   },
   {
     id: "collection",
     title: "3. Information We Collect & How We Use It",
     body: [
-      "• Online Book & Handbook Downloads: When you register to download a Christian Book or Course Handbook online, we verify your email address and record your explicit privacy consent timestamp (Policy Version " +
+      "• Account-Protected Book & Handbook Downloads: Downloading Christian Books or Course Handbooks requires creating a learner account and signing in, with explicit privacy consent recorded under Policy Version " +
         CONSENT_POLICY_VERSION +
-        "). If you leave the optional updates box unchecked, your email is used strictly for download verification and receipt confirmation.",
-      "• Student Accounts & Course Enrollments: When you create a student account or enroll in a cohort, we process your name, email, and course progress so you can access your dashboard, modules, and completion records.",
-      "• Technical Security Logs: To protect the platform from automated abuse, our registration endpoint applies short-lived, SHA-256 hashed IP rate-limiting in memory without building persistent tracking profiles.",
+        ". Once signed in, all 20 books remain unlocked in your Student Dashboard.",
+      "• Student Accounts & Course Enrollments: When you create a student account or enroll in a cohort, we process your name, email, and course progress so you can access your dashboard, e-book library, modules, and completion records.",
+      "• Technical Security Logs: To protect the platform from automated abuse, our authentication endpoint applies short-lived, SHA-256 hashed IP rate-limiting in memory without building persistent tracking profiles.",
     ],
   },
   {
     id: "consent",
     title: "4. Unbundled Consent & Zero Data Selling",
     body: [
-      "We never use pre-ticked consent boxes. Downloading books requires only your agreement to this Privacy & Data Protection Policy for email verification; subscribing to fellowship or new-book announcements is always separate and optional.",
+      "We never use pre-ticked consent boxes. Creating an account to download books requires your explicit agreement to this Privacy & Data Protection Policy; optional announcements are never bundled without your choice.",
       "We NEVER sell, rent, trade, or broker your email address or personal data to advertisers, data brokers, or external marketers.",
     ],
   },

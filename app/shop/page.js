@@ -7,11 +7,38 @@ import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 import Link from "next/link"
 import Shop from "./Shop"
+import { findMerch } from "../data/merch"
+import { resolveServerOrigin, buildSocialMetadata } from "../lib/siteOrigin"
 
-export const metadata = {
-  title: "CHRISCO Merchandise",
-  description:
-    "Scripture merchandise from CHRISCO Youth Aflame: PURSUE artwork, Christian affirmations and 1 Samuel 30:8 statement pieces on t-shirts, hoodies, polos, caps, totes, mugs and journals. Message the design code on WhatsApp to order.",
+export const dynamic = "force-dynamic"
+
+export async function generateMetadata({ searchParams }) {
+  const origin = await resolveServerOrigin()
+  const params = (await searchParams) || {}
+  const code = typeof params.item === "string" ? params.item.toUpperCase() : ""
+  const item = code ? findMerch(code) : null
+
+  if (item) {
+    const merchSlug = item.img
+      ? item.img.split("/").pop().replace(/\.(png|jpe?g)$/i, ".jpg")
+      : ""
+    return buildSocialMetadata({
+      origin,
+      title: `${item.name} (${item.code}) | CHRISCO PURSUE Merchandise`,
+      description: `${item.desc} Order code ${item.code} from CHRISCO Youth Aflame.`,
+      path: `/shop?item=${item.code}`,
+      bannerPath: merchSlug ? `/og/merch/${merchSlug}` : "/og/shop.jpg",
+    })
+  }
+
+  return buildSocialMetadata({
+    origin,
+    title: "CHRISCO PURSUE Merchandise | Wear the Word",
+    description:
+      "Scripture merchandise from CHRISCO Youth Aflame: PURSUE artwork, Christian affirmations and 1 Samuel 30:8 statement pieces on tees, hoodies, polos, caps, and totes.",
+    path: "/shop",
+    bannerPath: "/og/shop.jpg",
+  })
 }
 
 export default async function ShopPage({ searchParams }) {

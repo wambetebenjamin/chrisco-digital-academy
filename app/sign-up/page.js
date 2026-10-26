@@ -92,11 +92,19 @@ export default function SignUp() {
     }
   }
 
+  function getNextDest() {
+    if (typeof window !== "undefined") {
+      const rawNext = new URLSearchParams(window.location.search).get("next") || ""
+      if (rawNext.startsWith("/") && !rawNext.startsWith("//")) return rawNext
+    }
+    return "/dashboard"
+  }
+
   async function handleGoogle() {
     setError("")
     setLoading(true)
     try {
-      const res = await signInWithGoogle("/dashboard")
+      const res = await signInWithGoogle(getNextDest())
       if (res?.openModal) {
         setLoading(false)
         setGoogleModalOpen(true)
@@ -108,7 +116,7 @@ export default function SignUp() {
   }
 
   async function handleGoogleModalComplete(account) {
-    await signInWithGoogle("/dashboard", account)
+    await signInWithGoogle(getNextDest(), account)
     setGoogleModalOpen(false)
   }
 

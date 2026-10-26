@@ -114,14 +114,12 @@ def build_ebook(out_pdf: str) -> None:
     size_kb = os.path.getsize(out_pdf) / 1024.0
     print(f"\nSaved '{out_pdf}' ({size_kb:.1f} KB)")
 
-    gated_dir = os.path.join(ROOT_DIR, "content", "books")
-    os.makedirs(gated_dir, exist_ok=True)
-    shutil.copy2(out_pdf, os.path.join(gated_dir, "joseph-7-lessons-emerging-seer-prophet.pdf"))
-
 
 if __name__ == "__main__":
+    gated_dir = os.path.join(ROOT_DIR, "content", "books")
+    os.makedirs(gated_dir, exist_ok=True)
     output_path = os.path.join(
-        ROOT_DIR,
-        "Joseph-7-Lessons-Every-Emerging-Seer-Prophet-Must-Learn.pdf",
+        gated_dir,
+        "joseph-7-lessons-emerging-seer-prophet.pdf",
     )
     build_ebook(output_path)
