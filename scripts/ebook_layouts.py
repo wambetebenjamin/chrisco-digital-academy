@@ -49,16 +49,20 @@ def render_cover_page(c: canvas.Canvas, data: dict) -> None:
     draw_pinwheel(c, 34.0, 59.5, 233.6, CREAM_SHAPE)
     draw_circle_grid_2x2(c, 414.3, 318.2, 310.0, CREAM_SHAPE)
 
-    # Top-right overlapping dual-circle brand logo + brand name
-    draw_circle(c, 336.0, 92.4, 22.5, CORAL_CARD)
-    draw_circle(c, 358.5, 92.4, 22.5, ROYAL_DARK)
+    # Top-right overlapping dual-circle brand logo + brand name & umbrella fellowship
+    draw_circle(c, 326.0, 92.4, 21.5, CORAL_CARD)
+    draw_circle(c, 348.0, 92.4, 21.5, ROYAL_DARK)
     c.saveState()
-    c.setFont("Poppins-Bold", 15.8)
+    c.setFont("Poppins-Bold", 14.8)
     c.setFillColor(HexColor(ROYAL_MID))
-    c.drawString(392.0, Y(98.0), data["brand_name"])
+    c.drawString(380.0, Y(91.0), data["brand_name"])
+    if data.get("brand_umbrella"):
+        c.setFont("Poppins-SemiBold", 7.5)
+        c.setFillColor(HexColor(CORAL_CARD))
+        c.drawString(380.0, Y(104.5), data["brand_umbrella"])
     c.restoreState()
 
-    # Hero portrait photo (arch-top-left) — position subject in visible upper-left/left arch window
+    # Hero portrait photo (arch-top-left)
     draw_clipped_photo(
         c,
         data["photo"],
@@ -73,12 +77,12 @@ def render_cover_page(c: canvas.Canvas, data: dict) -> None:
     # Overlapping skewed Royal Blue title block
     draw_skewed_card(
         c,
-        x=186.0,
-        y_top=236.0,
-        w=356.0,
-        h=228.0,
+        x=204.0,
+        y_top=254.0,
+        w=346.0,
+        h=222.0,
         radius=30.0,
-        lean_right_deg=7.0,
+        lean_right_deg=6.8,
         fill_hex=ROYAL_DARK,
     )
 
@@ -86,19 +90,19 @@ def render_cover_page(c: canvas.Canvas, data: dict) -> None:
     draw_display_lines(
         c,
         lines=data["title_lines"],
-        x=222.0,
-        y_top_first_baseline=298.0,
+        x=236.0,
+        y_top_first_baseline=314.0,
         font_name="LilitaOne",
-        size=49.0,
-        line_step=50.0,
+        size=47.5,
+        line_step=48.5,
         align="left",
     )
 
     # Subtitle strip tucked inside bottom of royal blue block
     c.saveState()
-    c.setFont("Poppins-SemiBold", 9.3)
+    c.setFont("Poppins-SemiBold", 9.0)
     c.setFillColor(HexColor(CREAM_TEXT))
-    c.drawString(216.0, Y(442.0), data["kicker_inside"])
+    c.drawString(230.0, Y(454.0), data["kicker_inside"])
     c.restoreState()
 
     # Coral edition pill badge overlapping bottom of photo
@@ -122,12 +126,12 @@ def render_cover_page(c: canvas.Canvas, data: dict) -> None:
     draw_pinwheel(c, 146.0, 667.2, 87.0, INDIGO_MUTE)
     draw_circle_grid_2x2(c, 233.0, 664.4, 90.0, CORAL_ACCENT)
 
-    # Bottom-right 4-line description
+    # Bottom-right description
     st_desc = make_style(
         "cover_desc",
         font="Poppins",
-        size=11.6,
-        leading=19.0,
+        size=10.6,
+        leading=16.8,
         color=INK_DARK,
         align=TA_RIGHT,
         space_after=0,
@@ -135,16 +139,16 @@ def render_cover_page(c: canvas.Canvas, data: dict) -> None:
     draw_paragraphs_box(
         c,
         [(data["subtitle_html"], st_desc)],
-        x=332.0,
-        y_top=664.0,
-        w=212.0,
-        max_h=115.0,
+        x=330.0,
+        y_top=658.0,
+        w=216.0,
+        max_h=126.0,
         label="Cover subtitle",
     )
 
 
 # ---------------------------------------------------------------------------
-# 2. TABLE OF CONTENTS PAGE (Exact Page 2 of `company book.pdf`)
+# 2. TABLE OF CONTENTS PAGE (Exact Page 2 of `company book.pdf`, zero dashes)
 # ---------------------------------------------------------------------------
 def render_toc_page(c: canvas.Canvas, data: dict, page_num: int = 2) -> None:
     fill_page(c, WHITE)
@@ -188,27 +192,23 @@ def render_toc_page(c: canvas.Canvas, data: dict, page_num: int = 2) -> None:
 
     for idx, (num_str, t1, t2, pg_str) in enumerate(entries):
         ry = start_y + idx * row_step
-        # Follow the subtle skew slope from top row to bottom row
+        # Follow the subtle skew slope from top row to bottom row (no dashes)
         dx = (len(entries) - 1 - idx) * 3.4
-        # Coral horizontal dash
         c.saveState()
-        c.setStrokeColor(HexColor(CORAL_CARD))
-        c.setLineWidth(2.4)
-        c.line(214.0 + dx, Y(ry + 11.0), 238.0 + dx, Y(ry + 11.0))
 
-        # Big bold number
+        # Big bold number in Coral Accent (clean, zero dashes)
         c.setFont("Poppins-Bold", 25.0)
-        c.setFillColor(HexColor(CREAM_TEXT))
-        c.drawString(250.0 + dx, Y(ry + 20.0), num_str)
+        c.setFillColor(HexColor(CORAL_ACCENT))
+        c.drawString(214.0 + dx, Y(ry + 20.0), num_str)
 
-        # Two-line chapter title + subtitle (well clear of page number on right)
-        c.setFont("Poppins-Bold", 11.4)
+        # Two-line chapter title + subtitle
+        c.setFont("Poppins-Bold", 11.6)
         c.setFillColor(HexColor(CREAM_TEXT))
-        c.drawString(302.0 + dx, Y(ry + 6.0), t1)
+        c.drawString(268.0 + dx, Y(ry + 6.0), t1)
 
-        c.setFont("Poppins", 9.3)
+        c.setFont("Poppins", 9.4)
         c.setFillColor(HexColor("#D2DBFF"))
-        c.drawString(302.0 + dx, Y(ry + 21.0), t2)
+        c.drawString(268.0 + dx, Y(ry + 21.0), t2)
 
         # Page number aligned cleanly along the right margin inside skewed card
         c.setFont("Poppins-Bold", 10.6)

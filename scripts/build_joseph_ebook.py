@@ -58,10 +58,10 @@ def build_ebook(out_pdf: str) -> None:
     register_ebook_fonts(font_dir)
 
     c = canvas.Canvas(out_pdf, pagesize=(W, H))
-    c.setTitle("Joseph: 7 Lessons Every Emerging Seer Prophet Must Learn — Chrisco Youth Aflame")
-    c.setAuthor("Chrisco Youth Aflame")
-    c.setSubject("Prophetic Blueprint from the Life of Joseph (Genesis 37-50)")
-    c.setCreator("Chrisco Youth Aflame Editorial Studio")
+    c.setTitle("Joseph: 7 Lessons Every Emerging Seer Prophet Must Learn | CHRISCO Youth Aflame")
+    c.setAuthor("CHRISCO Youth Aflame under CHRISCO FELLOWSHIP OF CHURCHES")
+    c.setSubject("Prophetic Blueprint from the Life of Joseph (Genesis 37 to 50)")
+    c.setCreator("CHRISCO Youth Aflame")
 
     pages = [
         (lambda: render_cover_page(c, PAGE_01_COVER)),
