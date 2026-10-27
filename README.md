@@ -105,10 +105,12 @@ Canva, CapCut) — no API keys or sign-ups required.
 - Video, image and writing prompts are **adapted from OpenCreator** (formerly
   KrillinAI), Apache License 2.0. Only English prompt *data* is used — no
   source code, media or brand assets. Full attribution and the exact scope of
-  reuse live in [NOTICE.md](./NOTICE.md), and every adapted card links back to
-  its source repository.
-- The page also references **image-blaster** (MIT License) as an advanced,
-  optional desktop tool; nothing is copied from it.
+  reuse live in [NOTICE.md](./NOTICE.md), with per-card source and license
+  metadata retained in `app/data/toolkit.js`; the toolkit UI itself does not
+  display upstream attribution text.
+- The page also references two advanced, optional desktop tools —
+  **image-blaster** (MIT License) and **open-creator** (Apache-2.0) — as
+  external links; nothing is copied from either project.
 - Catalogue data: `app/data/toolkit.js` · UI: `app/toolkit/` ·
   styles: `.toolkit-*` in `app/globals.css`.
 - To remove an upstream card, delete its object from `app/data/toolkit.js`;

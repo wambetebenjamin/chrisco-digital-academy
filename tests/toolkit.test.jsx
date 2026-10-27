@@ -129,9 +129,12 @@ describe("AI Creator Toolkit page", () => {
       expect(link.getAttribute("target")).toBe("_blank")
       expect(link.getAttribute("rel")).toContain("noreferrer")
     }
-    // "Apache License 2.0" appears in the tool card and the attribution banner.
+    // License labels still appear on the advanced tool cards.
     expect(screen.getAllByText(/Apache License 2\.0/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/MIT License/i).length).toBeGreaterThan(0)
-    expect(screen.getAllByText(/NOTICE\.md/i).length).toBeGreaterThan(0)
+    // Per-card source/attribution lines are intentionally not user-visible;
+    // attribution lives in NOTICE.md and the toolkit data metadata.
+    expect(screen.queryByText(/view source repository/i)).toBeNull()
+    expect(screen.queryByText(/Adapted from OpenCreator/i)).toBeNull()
   })
 })

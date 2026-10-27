@@ -2436,15 +2436,6 @@ img { display: block; max-width: 100%; }
   margin: 0;
 }
 .toolkit-tip svg { color: var(--green-deep); flex-shrink: 0; margin-top: 2px; }
-.toolkit-source {
-  font-size: 11px;
-  color: var(--muted);
-  margin: 0;
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
-}
-.toolkit-source a { color: var(--green-deep); font-weight: 700; text-decoration: none; }
-.toolkit-source a:hover { text-decoration: underline; }
 
 .toolkit-empty {
   padding: 56px 32px;
@@ -2470,26 +2461,6 @@ img { display: block; max-width: 100%; }
 .toolkit-bullets svg { color: var(--green-deep); flex-shrink: 0; margin-top: 2px; }
 .toolkit-bullets--muted li { color: var(--body); }
 .toolkit-bullets--muted svg { color: var(--muted); }
-
-.toolkit-attribution {
-  margin-top: 28px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 18px 22px;
-}
-.toolkit-attribution svg { color: var(--green-deep); flex-shrink: 0; margin-top: 2px; }
-.toolkit-attribution p { font-size: 12.5px; line-height: 1.65; color: var(--muted); margin: 0; }
-.toolkit-attribution code {
-  font-size: 11px;
-  background: rgba(0, 35, 51, 0.07);
-  padding: 2px 6px;
-  border-radius: 5px;
-  font-weight: 700;
-}
 
 @media (max-width: 700px) {
   .toolkit-controls { flex-direction: column; align-items: stretch; }

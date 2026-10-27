@@ -141,20 +141,6 @@ function PromptCard({ card }) {
       <p className="toolkit-tip">
         <Icon name="bulb" size={13} strokeWidth={2.2} /> <span>{card.tip}</span>
       </p>
-
-      <p className="toolkit-source">
-        {card.sourceUrl ? (
-          <>
-            {card.source} ·{" "}
-            <a href={card.sourceUrl} target="_blank" rel="noreferrer">
-              view source repository →
-            </a>
-            {card.license ? ` · ${card.license}` : ""}
-          </>
-        ) : (
-          card.source
-        )}
-      </p>
     </article>
   )
 }
@@ -362,16 +348,6 @@ export default function ToolkitClient() {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="toolkit-attribution">
-            <Icon name="book" size={15} strokeWidth={2.1} />
-            <p>
-              Most prompts above are adapted from <strong>OpenCreator</strong> (formerly KrillinAI), shared under the
-              Apache License 2.0, with full attribution in the project&apos;s <code>NOTICE.md</code>. The starter
-              prompts were written by CHRISCO Digital Academy. No source code from either external project is shipped
-              with this website.
-            </p>
           </div>
         </div>
       </section>
