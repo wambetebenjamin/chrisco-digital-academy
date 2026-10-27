@@ -34,6 +34,7 @@ const programLinks = [
 
 const studentLinks = [
   { label: "Student Dashboard", desc: "Your courses and progress", href: "/dashboard", icon: "grid" },
+  { label: "AI Creator Toolkit", desc: "Free prompts for video, image and writing", href: "/toolkit", icon: "bulb" },
   { label: "Affiliate Programme", desc: "Share your link and earn", href: "/affiliates", icon: "cash" },
   { label: "Log In", desc: "Pick up where you left off", href: "/sign-in", icon: "lock" },
   { label: "Create Account", desc: "Join the academy in minutes", href: "/sign-up", icon: "user" },

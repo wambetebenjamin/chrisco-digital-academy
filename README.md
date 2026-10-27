@@ -40,6 +40,10 @@ green stays a signal rather than a surface. Full rationale in
   recommendations and share links.
 - **Affiliates** - referral code and link builder, per-course links, referral tracking.
 - **Contact** - info cards, WhatsApp shortcut, EmailJS contact form.
+- **AI Creator Toolkit** (`/toolkit`) - 24 copy-ready prompts for AI video,
+  image design and writing, with type filters, search, fill-in `[token]`
+  highlights, an editable prompt box and one-click copy, plus advanced
+  open-source tool links. See "AI Creator Toolkit" below.
 - **Dashboard** - stats, enrollments, account (Supabase auth, gated).
 - **Sign In / Sign Up** - split editorial auth screens.
 
@@ -61,6 +65,54 @@ Setup for restoring the database and enabling Google sign-in is documented in
   signed-in account; signed-out visitors get a sign-in prompt instead.
 - Referral links look like `/?ref=YOURCODE`. The code is stored for 60 days,
   attached to sign-ups, and summarised on the Affiliates page.
+
+## 🔔 Enrollment notifications
+
+Every course enrollment (from the Courses page or dashboard quick-enroll)
+triggers three notifications, so an application is never missed even when one
+service is down:
+
+1. **Admin alert email** — a separate EmailJS email titled
+   `New Course Enrollment: <course> — <learner> (<ref>)` is sent to every
+   address in `ADMIN_NOTIFY_EMAILS` (`app/data/org.js`): the academy inbox and
+   the founder inbox. It contains the learner's name, email, phone/WhatsApp,
+   track, referral code and one-tap reply links. The learner's own confirmation
+   receipt still goes out as before.
+2. **Dashboard "Enrollment alerts" feed** — the dashboard lists every enrollment
+   application with a green **NEW** badge for ones not yet seen, a
+   mark-all-as-seen action, a refresh button, and direct email/WhatsApp reply
+   links. This works in preview mode too, backed by `localStorage`.
+3. **Optional desktop alerts** — "Enable desktop alerts" in the same card asks
+   for browser notification permission and shows a desktop notification when a
+   genuinely new enrollment arrives while the dashboard is open.
+
+> **EmailJS setup check:** the admin alert reuses the existing service and
+> template (`service_m86zbad` / `template_i5wg4c8`). In the EmailJS dashboard
+> the template's **To Email** field must be the dynamic variable `{{to_email}}`
+> (the learner receipt already relies on this), with `{{subject}}` and
+> `{{message}}` in the subject and body. If the template uses a fixed recipient,
+> both emails land in that one inbox instead — the dashboard feed continues to
+> work regardless.
+
+## 🧰 AI Creator Toolkit & third-party attributions
+
+The `/toolkit` page gives students a free, phone-friendly prompt library:
+8 cinematic video prompts, 6 image/design prompts, 4 writing frameworks and 6
+CHRISCO-original starter prompts, each mapped to a course. Students replace
+the highlighted `[tokens]`, copy, and paste into free tools (ChatGPT, Gemini,
+Canva, CapCut) — no API keys or sign-ups required.
+
+- Video, image and writing prompts are **adapted from OpenCreator** (formerly
+  KrillinAI), Apache License 2.0. Only English prompt *data* is used — no
+  source code, media or brand assets. Full attribution and the exact scope of
+  reuse live in [NOTICE.md](./NOTICE.md), and every adapted card links back to
+  its source repository.
+- The page also references **image-blaster** (MIT License) as an advanced,
+  optional desktop tool; nothing is copied from it.
+- Catalogue data: `app/data/toolkit.js` · UI: `app/toolkit/` ·
+  styles: `.toolkit-*` in `app/globals.css`.
+- To remove an upstream card, delete its object from `app/data/toolkit.js`;
+  the page, filters and tests derive everything from that file.
 
 ## 🧪 Tests
 
