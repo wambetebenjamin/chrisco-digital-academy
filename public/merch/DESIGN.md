@@ -16,13 +16,16 @@ design instead of an interpretation of it.
 
 ## The no-lines rule
 
-Nothing in this range carries a line. No rule lines, no underlines, no
+Nothing in this range carries a drawn line. No rule lines, no underlines, no
 divider bars, no outline strokes, no engraved hatching, no badge rings, no
-hanger wires, no drawstring cords, no seam stitches and no card bars. Prints
-are solid shapes and type only; garments are shaded with soft gradients so
-edges read as fabric, not as drawing. `scripts/build_merch_mockups.py` owns
-every pixel of every mockup, which is how the rule is enforced: the renderer
-has no stroke primitive at all.
+hanger wires, no seam stitches and no card bars. Prints are solid shapes and
+type only; garments are shaded with soft gradients so edges read as fabric,
+not as drawing. `scripts/build_merch_mockups.py` owns every pixel of every
+mockup, which is how the rule is enforced: the renderer has no stroke
+primitive at all. Physical garment features that exist on real products —
+hoodie drawstrings, polo plackets, cap panel seams, neck and hood interiors —
+are allowed, but only as soft, blurred fabric-shading regions, never as
+strokes or hard edges.
 
 If a supplied design arrives with a rule line in it, the line is dropped when
 the artwork is prepared, and `tighten()` in the renderer collapses any stray
@@ -57,11 +60,14 @@ the mockup is the only colour in a card.
     .venv-merch/bin/python scripts/build_merch_mockups.py
 
 The renderer draws each garment (tee, hoodie, polo, cap, tote, mug, journal)
-as filled shapes with soft shading, keys the flat backdrop out of each
-artwork, and prints the artwork into the placement box below. Output is
-1200x1500 (4:5) to match the shop cards. Adding a product is: drop the
-artwork in `public/merch/source/art/`, add a job line to `JOBS`, add the
-catalogue entry in `app/data/merch.js`.
+as smooth cubic-Bézier silhouettes filled with the garment colour, then
+builds volume entirely from soft, blurred shading regions (folds, shoulders,
+sleeves, openings) — no polygon cutouts and no strokes. It keys the flat
+backdrop out of each artwork, gives chest prints a gentle fabric warp, and
+prints the artwork into the placement box. Output is 1200x1500 (4:5) to match
+the shop cards. Adding a product is: drop the artwork in
+`public/merch/source/art/`, add a job line to `JOBS`, add the catalogue entry
+in `app/data/merch.js`.
 
 ## Placement template
 
