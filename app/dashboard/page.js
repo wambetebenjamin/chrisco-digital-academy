@@ -7,7 +7,7 @@ import Footer from "../components/Footer"
 import Icon from "../components/Icon"
 import { useAuth } from "../AuthProvider"
 import { courses } from "../data/courses"
-import { org } from "../data/org"
+import { org, ADMIN_NOTIFY_EMAILS } from "../data/org"
 import { CONNECTED_RESOURCES, CONNECTED_APPS_SUMMARY } from "../data/connectedResources"
 import {
   fetchAcademyOverview,
@@ -15,6 +15,53 @@ import {
   buildAutoReplyReceipt,
 } from "../lib/intakeClient"
 import AutoReplyReceipt from "../components/AutoReplyReceipt"
+
+const SEEN_ALERTS_KEY = "chrisco:seen-enrollments"
+
+function readSeenAlertIds() {
+  if (typeof window === "undefined") return []
+  try {
+    const raw = window.localStorage.getItem(SEEN_ALERTS_KEY)
+    const list = raw ? JSON.parse(raw) : []
+    return Array.isArray(list) ? list.map(String) : []
+  } catch {
+    return []
+  }
+}
+
+function writeSeenAlertIds(ids) {
+  if (typeof window === "undefined") return
+  try {
+    window.localStorage.setItem(SEEN_ALERTS_KEY, JSON.stringify(ids.slice(-100)))
+  } catch {
+    // ignore storage errors
+  }
+}
+
+/* Server applications and locally cached applications use slightly different
+ * shapes; normalise both into one alert record for the UI. */
+function normalizeEnrollmentAlert(raw) {
+  const ref = raw.reference_code || raw.id || raw.ref_code || ""
+  return {
+    id: String(raw.id || ref || `${raw.course_title || "course"}-${raw.created_at || ""}`),
+    type: raw.type || "course_application",
+    name: raw.name || raw.recipient_name || "Learner",
+    email: raw.email || "",
+    phone: raw.phone || "",
+    course_title: raw.course_title || "",
+    track: raw.track || raw.category || "",
+    message: raw.message || "",
+    reference_code: ref ? String(ref) : "",
+    created_at: raw.created_at || raw.sent_at || null,
+  }
+}
+
+function formatAlertDate(iso) {
+  if (!iso) return "Recently"
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return "Recently"
+  return d.toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })
+}
 
 export default function Dashboard() {
   const {
@@ -37,6 +84,14 @@ export default function Dashboard() {
   const [activeCertificate, setActiveCertificate] = useState(null)
   const [showSlidesEmbed, setShowSlidesEmbed] = useState(true)
   const [selectedNotification, setSelectedNotification] = useState(null)
+  const [enrollmentAlerts, setEnrollmentAlerts] = useState([])
+  const [unseenAlertIds, setUnseenAlertIds] = useState([])
+  const [alertsLoading, setAlertsLoading] = useState(false)
+  const [desktopNotifyPermission, setDesktopNotifyPermission] = useState(
+    typeof window !== "undefined" && "Notification" in window
+      ? Notification.permission
+      : "unsupported"
+  )
 
   const displayName =
     profile?.name ||
@@ -51,8 +106,73 @@ export default function Dashboard() {
   const notionRes = CONNECTED_RESOURCES.find((r) => r.connector === "notion")
   const sheetsRes = CONNECTED_RESOURCES.find((r) => r.connector === "google_sheets")
 
+  /* Normalise intake applications into enrollment alerts, flag the ones the
+   * admin has not seen yet, persist them as seen, and ping the desktop for
+   * genuinely new enrollments. */
+  function applyEnrollmentAlerts(rawApplications, { announce = true } = {}) {
+    const alerts = (rawApplications || [])
+      .map(normalizeEnrollmentAlert)
+      .filter((a) => a.type === "course_application")
+
+    const previouslySeen = readSeenAlertIds()
+    const fresh = alerts.filter((a) => !previouslySeen.includes(a.id))
+
+    setEnrollmentAlerts(alerts)
+    if (fresh.length > 0) {
+      setUnseenAlertIds((prev) =>
+        Array.from(new Set([...prev, ...fresh.map((a) => a.id)]))
+      )
+    }
+    writeSeenAlertIds(alerts.map((a) => a.id))
+
+    if (
+      announce &&
+      fresh.length > 0 &&
+      typeof window !== "undefined" &&
+      "Notification" in window &&
+      Notification.permission === "granted"
+    ) {
+      fresh.slice(0, 5).forEach((a) => {
+        try {
+          new Notification("New CHRISCO course enrollment", {
+            body: `${a.name} enrolled in ${a.course_title}`,
+          })
+        } catch {
+          // Some browsers only allow notifications via a service worker
+        }
+      })
+    }
+    return alerts
+  }
+
+  async function refreshEnrollmentAlerts() {
+    setAlertsLoading(true)
+    try {
+      const overview = await fetchAcademyOverview({
+        user_id: user?.id,
+        email: user?.email,
+      })
+      applyEnrollmentAlerts(overview?.applications || [])
+    } finally {
+      setAlertsLoading(false)
+    }
+  }
+
+  function markAlertsSeen() {
+    setUnseenAlertIds([])
+    writeSeenAlertIds(enrollmentAlerts.map((a) => a.id))
+  }
+
+  async function enableDesktopAlerts() {
+    if (typeof window === "undefined" || !("Notification" in window)) return
+    const permission = await Notification.requestPermission()
+    setDesktopNotifyPermission(permission)
+  }
+
   useEffect(() => {
+    let cancelled = false
     async function load() {
+      setAlertsLoading(true)
       const [enrolledData, overview] = await Promise.all([
         getEnrollments(),
         fetchAcademyOverview({
@@ -60,6 +180,7 @@ export default function Dashboard() {
           email: user?.email,
         }),
       ])
+      if (cancelled) return
       setEnrollments(enrolledData || [])
 
       let inbox = overview?.notifications || []
@@ -74,9 +195,14 @@ export default function Dashboard() {
         ]
       }
       setNotifications(inbox)
+      applyEnrollmentAlerts(overview?.applications || [])
       setLoading(false)
+      setAlertsLoading(false)
     }
     if (user) load()
+    return () => {
+      cancelled = true
+    }
   }, [user])
 
   async function handleQuickEnroll(e) {
@@ -105,6 +231,20 @@ export default function Dashboard() {
         setLastAutoReply(intake.auto_reply)
         setNotifications((prev) => [intake.auto_reply, ...prev])
       }
+      const newAlert = normalizeEnrollmentAlert({
+        id: intake.reference_code,
+        type: "course_application",
+        name: displayName,
+        email: user.email || "",
+        course_title: quickCourseTitle,
+        category: courseObj?.category || "",
+        level: courseObj?.level || "",
+        reference_code: intake.reference_code,
+        created_at: intake.auto_reply?.sent_at,
+        message: `Dashboard Quick Enrollment in ${quickCourseTitle}`,
+      })
+      setEnrollmentAlerts((prev) => [newAlert, ...prev.filter((a) => a.id !== newAlert.id)])
+      writeSeenAlertIds([newAlert.id, ...readSeenAlertIds()])
       const updated = await getEnrollments()
       setEnrollments(updated)
     } finally {
@@ -204,6 +344,290 @@ export default function Dashboard() {
               />
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Enrollment alerts — admin notifications for new course enrollments */}
+      <section style={{ padding: "8px 0 24px" }}>
+        <div className="container">
+          <div className="card" style={{ padding: "28px 28px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                gap: 14,
+                flexWrap: "wrap",
+                marginBottom: enrollmentAlerts.length ? 18 : 0,
+              }}
+            >
+              <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+                <span
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 14,
+                    background: "var(--green-tint)",
+                    color: "var(--green-deep)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Icon name="chat" size={22} />
+                </span>
+                <div>
+                  <span className="eyebrow" style={{ fontSize: 11 }}>
+                    Admin notifications
+                  </span>
+                  <h2
+                    style={{
+                      fontFamily: "var(--font-head)",
+                      fontWeight: 800,
+                      fontSize: "1.3rem",
+                      color: "var(--ink)",
+                      marginTop: 2,
+                    }}
+                  >
+                    Enrollment alerts
+                    {enrollmentAlerts.length > 0 && (
+                      <span
+                        className="pill pill-soft pill-sm"
+                        style={{ marginLeft: 10, fontSize: 11.5 }}
+                      >
+                        {enrollmentAlerts.length} total
+                      </span>
+                    )}
+                    {unseenAlertIds.length > 0 && (
+                      <span
+                        className="pill pill-sm"
+                        style={{
+                          marginLeft: 8,
+                          fontSize: 11.5,
+                          background: "var(--green)",
+                          color: "var(--navy)",
+                          fontWeight: 800,
+                        }}
+                      >
+                        {unseenAlertIds.length} new
+                      </span>
+                    )}
+                  </h2>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {desktopNotifyPermission === "default" && (
+                  <button
+                    type="button"
+                    onClick={enableDesktopAlerts}
+                    className="btn btn-outline btn-sm"
+                    style={{ cursor: "pointer", fontSize: 12 }}
+                  >
+                    Enable desktop alerts
+                  </button>
+                )}
+                {desktopNotifyPermission === "granted" && (
+                  <span className="pill pill-soft pill-sm" style={{ fontSize: 11.5 }}>
+                    Desktop alerts on
+                  </span>
+                )}
+                {unseenAlertIds.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={markAlertsSeen}
+                    className="btn btn-outline btn-sm"
+                    style={{ cursor: "pointer", fontSize: 12 }}
+                  >
+                    Mark all as seen
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={refreshEnrollmentAlerts}
+                  disabled={alertsLoading}
+                  className="btn btn-navy btn-sm"
+                  style={{ cursor: "pointer", fontSize: 12 }}
+                >
+                  {alertsLoading ? "Refreshing…" : "Refresh"}
+                </button>
+              </div>
+            </div>
+
+            {enrollmentAlerts.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "28px 16px 8px" }}>
+                <p style={{ color: "var(--muted)", fontSize: 14, marginBottom: 6 }}>
+                  No enrollment applications yet. When someone enrols from the Courses page
+                  or this dashboard, their details appear here instantly.
+                </p>
+                <p style={{ color: "var(--muted)", fontSize: 12.5 }}>
+                  A copy of every alert is also emailed to{" "}
+                  {ADMIN_NOTIFY_EMAILS.join(" and ")}.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  {enrollmentAlerts.slice(0, 8).map((alert) => {
+                    const isNew = unseenAlertIds.includes(alert.id)
+                    const learnerWa = alert.phone
+                      ? `https://wa.me/${alert.phone.replace(/[^0-9]/g, "")}`
+                      : null
+                    return (
+                      <div
+                        key={alert.id}
+                        style={{
+                          border: "1px solid var(--line)",
+                          borderRadius: 14,
+                          padding: "16px 18px",
+                          background: isNew ? "var(--green-tint)" : "#fff",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            gap: 12,
+                            flexWrap: "wrap",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <div style={{ display: "flex", gap: 12, minWidth: 220, flex: 1 }}>
+                            <span
+                              style={{
+                                width: 42,
+                                height: 42,
+                                borderRadius: "50%",
+                                background: "var(--navy)",
+                                color: "#fff",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontFamily: "var(--font-display)",
+                                fontSize: "1rem",
+                                flexShrink: 0,
+                              }}
+                            >
+                              {alert.name[0]?.toUpperCase() || "L"}
+                            </span>
+                            <div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 8,
+                                  flexWrap: "wrap",
+                                }}
+                              >
+                                <strong style={{ color: "var(--ink)", fontSize: 14.5 }}>
+                                  {alert.name}
+                                </strong>
+                                {isNew && (
+                                  <span
+                                    style={{
+                                      fontSize: 10,
+                                      fontWeight: 800,
+                                      letterSpacing: "0.08em",
+                                      textTransform: "uppercase",
+                                      background: "var(--green)",
+                                      color: "var(--navy)",
+                                      padding: "2px 8px",
+                                      borderRadius: 999,
+                                    }}
+                                  >
+                                    New
+                                  </span>
+                                )}
+                                {alert.track && (
+                                  <span className="pill pill-soft pill-sm" style={{ fontSize: 10.5 }}>
+                                    {alert.track}
+                                  </span>
+                                )}
+                              </div>
+                              <div style={{ color: "var(--ink)", fontSize: 13.5, fontWeight: 700, marginTop: 3 }}>
+                                Enrolled in: {alert.course_title || "A course"}
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  gap: 14,
+                                  flexWrap: "wrap",
+                                  marginTop: 6,
+                                  fontSize: 12.5,
+                                  color: "var(--muted)",
+                                }}
+                              >
+                                {alert.email && (
+                                  <a
+                                    href={`mailto:${alert.email}?subject=${encodeURIComponent(
+                                      `Your ${alert.course_title} enrollment — ${org.academy}`
+                                    )}`}
+                                    style={{
+                                      color: "var(--green-deep)",
+                                      fontWeight: 700,
+                                      textDecoration: "none",
+                                      display: "inline-flex",
+                                      gap: 5,
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <Icon name="mail" size={13} /> {alert.email}
+                                  </a>
+                                )}
+                                {alert.phone && (
+                                  <a
+                                    href={learnerWa}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    style={{
+                                      color: "var(--green-deep)",
+                                      fontWeight: 700,
+                                      textDecoration: "none",
+                                      display: "inline-flex",
+                                      gap: 5,
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <Icon name="whatsapp" size={13} /> {alert.phone}
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div style={{ textAlign: "right", flexShrink: 0 }}>
+                            <div style={{ fontSize: 12, color: "var(--muted)", display: "flex", gap: 5, alignItems: "center", justifyContent: "flex-end" }}>
+                              <Icon name="clock" size={12} /> {formatAlertDate(alert.created_at)}
+                            </div>
+                            {alert.reference_code && (
+                              <code
+                                style={{
+                                  display: "inline-block",
+                                  marginTop: 6,
+                                  fontSize: 11,
+                                  background: "rgba(0,35,51,0.08)",
+                                  padding: "3px 8px",
+                                  borderRadius: 6,
+                                  fontWeight: 700,
+                                }}
+                              >
+                                {alert.reference_code}
+                              </code>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 14, marginBottom: 0 }}>
+                  Showing the latest {Math.min(8, enrollmentAlerts.length)} of {enrollmentAlerts.length}.
+                  Email alerts are sent to {ADMIN_NOTIFY_EMAILS.join(" and ")} on every enrollment.
+                </p>
+              </>
+            )}
+          </div>
         </div>
       </section>
 

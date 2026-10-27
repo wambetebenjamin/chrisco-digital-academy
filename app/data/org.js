@@ -29,6 +29,14 @@ export const tutor = {
   skills: ["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"],
 }
 
+/*
+ * Inboxes that receive an alert every time a learner enrols in a course.
+ * The academy inbox is primary; the founder/developer inbox is copied so an
+ * alert is never missed. Add or remove addresses here in one place — the
+ * intake client and the dashboard read this list.
+ */
+export const ADMIN_NOTIFY_EMAILS = [org.email, "shambetz@gmail.com"]
+
 export function whatsappLink(message = "") {
   if (!message) return org.whatsapp
   return `${org.whatsapp}?text=${encodeURIComponent(message)}`

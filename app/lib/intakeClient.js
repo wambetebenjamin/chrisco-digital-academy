@@ -1,5 +1,5 @@
 import emailjs from "@emailjs/browser"
-import { ORG } from "../data/org"
+import { ORG, ADMIN_NOTIFY_EMAILS } from "../data/org"
 import { CONNECTED_RESOURCES } from "../data/connectedResources"
 import {
   supabase,
@@ -214,6 +214,86 @@ function saveToLocalApplications(item) {
   }
 }
 
+/*
+ * Admin-side enrollment alert. Separate from the learner's auto-reply
+ * receipt: it tells the CHRISCO team that someone new has enrolled, with all
+ * the contact details they need to follow up.
+ */
+export function buildAdminEnrollmentAlert(payload = {}, receipt = null) {
+  const courseName = payload.course_title || "Practical Digital Skills Track"
+  const learnerName = payload.name || "A new learner"
+  const refCode = receipt?.reference_code || payload.refCode || ""
+  const enrolledAt = receipt?.sent_at
+    ? new Date(receipt.sent_at).toLocaleString("en-KE", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      })
+    : new Date().toLocaleString("en-KE", { dateStyle: "medium", timeStyle: "short" })
+
+  const lines = [
+    `A new learner has enrolled on ${ORG.academy}.`,
+    "",
+    `Learner: ${learnerName}`,
+    `Course: ${courseName}`,
+  ]
+  if (payload.category) lines.push(`Track: ${payload.category}`)
+  if (payload.level) lines.push(`Level: ${payload.level}`)
+  if (payload.email) lines.push(`Email: ${payload.email}`)
+  if (payload.phone) lines.push(`Phone / WhatsApp: ${payload.phone}`)
+  if (payload.ref) lines.push(`Referred by affiliate code: ${payload.ref}`)
+  if (refCode) lines.push(`Application reference: ${refCode}`)
+  lines.push(`Enrolled at: ${enrolledAt}`)
+  if (payload.message) lines.push("", "Learner's message:", payload.message)
+  lines.push(
+    "",
+    `Reply by email: ${payload.email ? `mailto:${payload.email}` : ORG.email}`,
+    `Reply on WhatsApp: https://wa.me/${(payload.phone || "").replace(/[^0-9]/g, "")}`
+  )
+
+  return {
+    subject: `New Course Enrollment: ${courseName} — ${learnerName}${refCode ? ` (${refCode})` : ""}`,
+    message: lines.join("\n"),
+    reference_code: refCode,
+  }
+}
+
+/*
+ * Sends one alert email per admin inbox through the existing EmailJS
+ * service. Never throws: an admin alert failing must not break the learner's
+ * enrollment flow. Returns how many inboxes the alert was dispatched to.
+ */
+export async function sendAdminEnrollmentNotifications(payload = {}, receipt = null) {
+  if (
+    typeof window === "undefined" ||
+    !Array.isArray(ADMIN_NOTIFY_EMAILS) ||
+    ADMIN_NOTIFY_EMAILS.length === 0
+  ) {
+    return 0
+  }
+  const alert = buildAdminEnrollmentAlert(payload, receipt)
+
+  const results = await Promise.allSettled(
+    ADMIN_NOTIFY_EMAILS.map((adminEmail) =>
+      emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: `${ORG.academy} Enrollment Alert`,
+          from_email: ORG.email,
+          reply_to: payload.email || ORG.email,
+          to_email: adminEmail,
+          phone: payload.phone || "",
+          subject: alert.subject,
+          message: alert.message,
+        },
+        PUBLIC_KEY
+      )
+    )
+  )
+
+  return results.filter((r) => r.status === "fulfilled").length
+}
+
 export async function submitAcademyIntake(payload = {}) {
   const action = payload.action || payload.type || "contact"
   const fallbackReceipt = buildAutoReplyReceipt({
@@ -265,6 +345,12 @@ export async function submitAcademyIntake(payload = {}) {
         PUBLIC_KEY
       )
       .catch(() => {})
+
+    // Separate alert to the CHRISCO admin inboxes for every enrollment.
+    // Fire-and-forget: the learner's flow must never wait on or fail over it.
+    if (action === "course_application") {
+      sendAdminEnrollmentNotifications(payload, fallbackReceipt).catch(() => {})
+    }
   }
 
   // 1. Primary: Call Supabase Edge Function `academy-intake`

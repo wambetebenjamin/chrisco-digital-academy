@@ -187,3 +187,28 @@ does not work".
 | Preview-only accounts (no keys) | `app/lib/previewAuth.js` |
 | Google callback screen | `app/auth/callback/page.js` |
 | Auth screens | `app/sign-in/page.js`, `app/sign-up/page.js` |
+| Enrollment admin alerts (email + dashboard feed) | `app/lib/intakeClient.js`, `app/dashboard/page.js` |
+| Admin inboxes that receive enrollment alerts | `ADMIN_NOTIFY_EMAILS` in `app/data/org.js` |
+
+---
+
+## 7. Enrollment notifications
+
+When a learner enrolls, `submitAcademyIntake` (action `course_application`)
+sends the learner's receipt **and** a separate admin alert email via EmailJS to
+every address in `ADMIN_NOTIFY_EMAILS`. The dashboard also shows an
+"Enrollment alerts" card with NEW badges, and optional browser desktop alerts.
+
+If admin alert emails are not arriving:
+
+1. Open the EmailJS dashboard → template `template_i5wg4c8` and confirm the
+   **To Email** field is `{{to_email}}` (not a fixed address), with
+   `{{subject}}` and `{{message}}` used in the template. The learner receipt
+   depends on the same setting.
+2. Check the EmailJS monthly quota (free plan: 200 emails/month). Each
+   enrollment now sends one learner receipt plus one email per admin inbox.
+3. The dashboard feed does not depend on email — in preview mode it reads
+   `localStorage` key `chrisco:applications`; in production it reads the
+   `academy-intake` Edge Function's `applications` response.
+4. To change who gets alerted, edit `ADMIN_NOTIFY_EMAILS` in
+   `app/data/org.js` — no other code changes needed.
