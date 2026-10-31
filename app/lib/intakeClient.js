@@ -287,11 +287,11 @@ export async function submitAcademyIntake(payload = {}) {
         {
           from_name: payload.name || "Learner",
           from_email: payload.email || ORG.email,
-          reply_to: ORG.email,
-          to_email: payload.email || ORG.email,
+          reply_to: payload.email || ORG.email,
+          to_email: ORG.email,
           phone: payload.phone || "",
-          subject: fallbackReceipt.subject,
-          message: `${payload.message || action}\n\n--- Automated Response from ${ORG.email} ---\n${fallbackReceipt.body}`,
+          subject: `[New Registration] ${payload.course_title || action} — ${payload.name || "Applicant"}`,
+          message: `${payload.message || action}\n\nApplicant: ${payload.name || "Learner"}\nEmail: ${payload.email || "N/A"}\nPhone: ${payload.phone || "N/A"}\nReference: ${fallbackReceipt.reference_code}`,
         },
         PUBLIC_KEY
       )

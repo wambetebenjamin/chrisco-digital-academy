@@ -26,6 +26,7 @@ const aboutLinks = [
 
 const programLinks = [
   { label: "Online Learning", desc: "Study from anywhere in Africa", href: "/courses", icon: "laptop" },
+  { label: "AI Prompt & Voice Studio", desc: "OpenHiggsfield, VoiceStudio & OpenSEO lab", href: "/studio", icon: "robot" },
   { label: "In-Person Classes", desc: "Classroom cohorts, scheduled monthly", href: "/contact", icon: "pin" },
   { label: "Youth & Community", desc: "CHRISCO Youth Aflame programmes", href: "/about", icon: "flame" },
   { label: "Corporate Training", desc: "Upskill your team with us", href: "/contact", icon: "briefcase" },
@@ -34,6 +35,7 @@ const programLinks = [
 
 const studentLinks = [
   { label: "Student Dashboard", desc: "Your courses and progress", href: "/dashboard", icon: "grid" },
+  { label: "AI Prompt & Voice Studio", desc: "Image/video prompts, voice & SEO lab", href: "/studio", icon: "robot" },
   { label: "Christian & Faith Books", desc: "Prophetic & spiritual formation shelf", href: "/library?shelf=christian", icon: "flame" },
   { label: "Skill & Learning Books", desc: "All 19 illustrated course handbooks", href: "/library?shelf=learning", icon: "book" },
   { label: "Affiliate Programme", desc: "Share your link and earn", href: "/affiliates", icon: "cash" },
