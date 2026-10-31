@@ -8,6 +8,7 @@ export const OPEN_HIGGSFIELD_CATALOG = [
     id: "flux-pro-1.1",
     name: "Flux Pro 1.1 Studio",
     kind: "image",
+    color: "#E60914",
     aspectRatios: ["1:1", "4:5", "16:9", "9:16"],
     resolutions: ["1080p", "2K", "4K"],
     durations: [],
@@ -17,6 +18,7 @@ export const OPEN_HIGGSFIELD_CATALOG = [
     id: "ideogram-v3",
     name: "Ideogram v3 Typography",
     kind: "image",
+    color: "#084EC8",
     aspectRatios: ["1:1", "4:5", "16:9"],
     resolutions: ["1080p", "2K"],
     durations: [],
@@ -26,6 +28,7 @@ export const OPEN_HIGGSFIELD_CATALOG = [
     id: "recraft-v3",
     name: "Recraft v3 Brand & Vector",
     kind: "image",
+    color: "#38A128",
     aspectRatios: ["1:1", "4:5", "16:9"],
     resolutions: ["1080p", "2K"],
     durations: [],
@@ -35,6 +38,7 @@ export const OPEN_HIGGSFIELD_CATALOG = [
     id: "seedance-2.5",
     name: "Seedance 2.5 Cinema",
     kind: "video",
+    color: "#EE6816",
     aspectRatios: ["16:9", "9:16", "1:1"],
     resolutions: ["720p", "1080p"],
     durations: ["5s", "10s"],
@@ -44,6 +48,7 @@ export const OPEN_HIGGSFIELD_CATALOG = [
     id: "kling-3-pro",
     name: "Kling 3 Pro 4K Motion",
     kind: "video",
+    color: "#D99B00",
     aspectRatios: ["16:9", "9:16", "4:5"],
     resolutions: ["1080p", "4K"],
     durations: ["5s", "10s"],
@@ -51,12 +56,15 @@ export const OPEN_HIGGSFIELD_CATALOG = [
   },
 ]
 
+const POSTER_COLORS = ["#E60914", "#084EC8", "#38A128", "#EE6816", "#D99B00"]
+
 const STARTER_GALLERY = [
   {
     id: "run-teens-poster",
     modelId: "ideogram-v3",
     modelName: "Ideogram v3 Typography",
     kind: "image",
+    color: "#E60914",
     prompt:
       "4:5 educational poster for CHRISCO Youth Aflame Digital Academy Teens AI & Projects Bootcamp, joyful East African teenager with backpack looking upward toward floating 3D clay icons, off-white background with torn-paper blue footer.",
     aspectRatio: "4:5",
@@ -71,8 +79,9 @@ const STARTER_GALLERY = [
     modelId: "flux-pro-1.1",
     modelName: "Flux Pro 1.1 Studio",
     kind: "image",
+    color: "#084EC8",
     prompt:
-      "African youth collaborating in a modern digital creative lab in Nairobi, working on AI prompt workflows, laptops and glowing UI holograms, warm studio lighting.",
+      "African youth collaborating in a modern digital creative lab in Nairobi, working on AI prompt workflows, laptops and project boards, warm studio lighting.",
     aspectRatio: "16:9",
     resolution: "2K",
     duration: null,
@@ -85,8 +94,9 @@ const STARTER_GALLERY = [
     modelId: "seedance-2.5",
     modelName: "Seedance 2.5 Cinema",
     kind: "video",
+    color: "#38A128",
     prompt:
-      "Cinematic camera pan across a youth fellowship media desk editing documentary reels and AI motion graphics, vibrant teal and emerald rim lighting.",
+      "Cinematic camera pan across a youth fellowship media desk editing documentary reels and AI motion graphics, vibrant royal blue and warm orange lighting.",
     aspectRatio: "16:9",
     resolution: "1080p",
     duration: "5s",
@@ -100,13 +110,13 @@ export default function OpenHiggsfieldStudio() {
   const [selectedModelId, setSelectedModelId] = useState(OPEN_HIGGSFIELD_CATALOG[0].id)
   const [modelSearch, setModelSearch] = useState("")
   const [prompt, setPrompt] = useState(
-    "Design a creative digital project showcase card for an East African teen AI innovator building smart study assistants, studio lighting, crisp typography."
+    "Design a creative digital project showcase poster for an East African teen AI innovator building smart study assistants, studio lighting, crisp typography."
   )
   const [aspectRatio, setAspectRatio] = useState("4:5")
   const [resolution, setResolution] = useState("2K")
   const [duration, setDuration] = useState("5s")
   const [enhancePrompt, setEnhancePrompt] = useState(true)
-  const [scope, setScope] = useState("Assets") // Assets | Image | Video | Favorites
+  const [scope, setScope] = useState("Assets")
   const [runs, setRuns] = useState(STARTER_GALLERY)
   const [lastDeletedRun, setLastDeletedRun] = useState(null)
 
@@ -155,7 +165,7 @@ export default function OpenHiggsfieldStudio() {
     if (!prompt.trim()) return
 
     const finalPrompt = enhancePrompt
-      ? `${prompt.trim()} — studio grade lighting, ultra-crisp composition, vibrant colors`
+      ? `${prompt.trim()} — studio grade lighting, ultra-crisp composition, vibrant poster colors`
       : prompt.trim()
 
     const newRun = {
@@ -163,6 +173,7 @@ export default function OpenHiggsfieldStudio() {
       modelId: currentModel.id,
       modelName: currentModel.name,
       kind: currentModel.kind,
+      color: currentModel.color || "#084EC8",
       prompt: finalPrompt,
       aspectRatio,
       resolution,
@@ -209,12 +220,12 @@ export default function OpenHiggsfieldStudio() {
   return (
     <section
       style={{
-        background: "#0B111E",
-        color: "#F8FAFC",
-        borderRadius: 22,
-        padding: "28px 24px",
-        border: "1px solid rgba(209, 254, 23, 0.24)",
-        boxShadow: "0 18px 42px rgba(0, 0, 0, 0.28)",
+        background: "#FFFFFF",
+        color: "#0B1D51",
+        borderRadius: 12,
+        padding: "26px 24px",
+        border: "1px solid #DCE3F0",
+        borderTop: "5px solid #E60914",
       }}
     >
       {/* Studio Header */}
@@ -225,15 +236,17 @@ export default function OpenHiggsfieldStudio() {
           alignItems: "center",
           justifyContent: "space-between",
           gap: 12,
-          marginBottom: 20,
+          marginBottom: 18,
+          paddingBottom: 14,
+          borderBottom: "1px solid #DCE3F0",
         }}
       >
         <div>
           <span
             style={{
               display: "inline-block",
-              background: "rgba(209, 254, 23, 0.14)",
-              color: "#D1FE17",
+              background: "#E60914",
+              color: "#FFFFFF",
               fontSize: 11,
               fontWeight: 800,
               padding: "4px 12px",
@@ -245,7 +258,7 @@ export default function OpenHiggsfieldStudio() {
           >
             OpenHiggsfield Studio · Image &amp; Video Prompt Lab
           </span>
-          <h2 style={{ fontSize: "1.45rem", fontWeight: 900, margin: 0, color: "#FFFFFF" }}>
+          <h2 style={{ fontSize: "1.4rem", fontWeight: 900, margin: 0, color: "#0B1D51" }}>
             One Composer for Image &amp; Video Projects
           </h2>
         </div>
@@ -256,9 +269,9 @@ export default function OpenHiggsfieldStudio() {
           onChange={(e) => setModelSearch(e.target.value)}
           placeholder="Search models (Flux, Ideogram, Seedance...)"
           style={{
-            background: "#131C2E",
-            color: "#FFFFFF",
-            border: "1px solid rgba(255,255,255,0.16)",
+            background: "#F7F6F1",
+            color: "#0B1D51",
+            border: "1.5px solid #C2CEE3",
             borderRadius: 999,
             padding: "8px 16px",
             fontSize: 12.5,
@@ -267,42 +280,44 @@ export default function OpenHiggsfieldStudio() {
         />
       </div>
 
-      {/* Searchable Model Picker Rail */}
+      {/* Searchable Model Picker Rail — Each Model Uses Its Poster Color */}
       <div
         style={{
-          display: "flex",
-          gap: 10,
-          overflowX: "auto",
-          paddingBottom: 10,
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(175px, 1fr))",
+          border: "1px solid #DCE3F0",
+          borderRadius: 10,
+          overflow: "hidden",
           marginBottom: 18,
         }}
       >
-        {filteredModels.map((model) => {
+        {filteredModels.map((model, idx) => {
           const active = model.id === currentModel.id
+          const mColor = model.color || POSTER_COLORS[idx % POSTER_COLORS.length]
           return (
             <button
               key={model.id}
               type="button"
               onClick={() => handleSelectModel(model)}
               style={{
-                flexShrink: 0,
-                background: active ? "#D1FE17" : "#131C2E",
-                color: active ? "#0B111E" : "#E2E8F0",
-                border: active
-                  ? "1px solid #D1FE17"
-                  : "1px solid rgba(255,255,255,0.14)",
-                borderRadius: 14,
-                padding: "10px 14px",
+                background: active ? mColor : "#FFFFFF",
+                color: active ? "#FFFFFF" : "#0B1D51",
+                border: "none",
+                borderRight: "1px solid #DCE3F0",
+                borderTop: `4px solid ${mColor}`,
+                padding: "12px 14px",
                 textAlign: "left",
                 cursor: "pointer",
               }}
             >
-              <div style={{ fontWeight: 800, fontSize: 13 }}>{model.name}</div>
+              <div style={{ fontWeight: 800, fontSize: 13, color: active ? "#FFFFFF" : mColor }}>
+                • {model.name}
+              </div>
               <div
                 style={{
                   fontSize: 11,
-                  opacity: 0.8,
-                  marginTop: 2,
+                  color: active ? "rgba(255,255,255,0.9)" : "#475569",
+                  marginTop: 3,
                   fontWeight: 600,
                 }}
               >
@@ -317,11 +332,11 @@ export default function OpenHiggsfieldStudio() {
       <form
         onSubmit={handleGenerate}
         style={{
-          background: "#131C2E",
-          borderRadius: 16,
+          background: "#F7F6F1",
+          borderRadius: 10,
           padding: 18,
-          border: "1px solid rgba(255,255,255,0.12)",
-          marginBottom: 22,
+          border: "1px solid #DCE3F0",
+          marginBottom: 20,
         }}
       >
         <textarea
@@ -336,10 +351,10 @@ export default function OpenHiggsfieldStudio() {
           placeholder="Describe your AI image or video project prompt... (Press Ctrl/⌘ + Enter to run)"
           style={{
             width: "100%",
-            background: "#0B111E",
-            color: "#FFFFFF",
-            border: "1px solid rgba(255,255,255,0.16)",
-            borderRadius: 12,
+            background: "#FFFFFF",
+            color: "#0B1D51",
+            border: "1.5px solid #C2CEE3",
+            borderRadius: 8,
             padding: "12px 14px",
             fontSize: 14,
             marginBottom: 14,
@@ -356,20 +371,21 @@ export default function OpenHiggsfieldStudio() {
             gap: 12,
           }}
         >
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-            <label style={{ fontSize: 12, color: "#94A3B8", fontWeight: 700 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+            <label style={{ fontSize: 12.5, color: "#E60914", fontWeight: 800 }}>
               Aspect Ratio:
               <select
                 value={aspectRatio}
                 onChange={(e) => setAspectRatio(e.target.value)}
                 style={{
                   marginLeft: 6,
-                  background: "#0B111E",
-                  color: "#FFFFFF",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  borderRadius: 8,
+                  background: "#FFFFFF",
+                  color: "#0B1D51",
+                  border: "1px solid #C2CEE3",
+                  borderRadius: 6,
                   padding: "5px 8px",
                   fontSize: 12,
+                  fontWeight: 700,
                 }}
               >
                 {currentModel.aspectRatios.map((ar) => (
@@ -380,19 +396,20 @@ export default function OpenHiggsfieldStudio() {
               </select>
             </label>
 
-            <label style={{ fontSize: 12, color: "#94A3B8", fontWeight: 700 }}>
+            <label style={{ fontSize: 12.5, color: "#084EC8", fontWeight: 800 }}>
               Resolution:
               <select
                 value={resolution}
                 onChange={(e) => setResolution(e.target.value)}
                 style={{
                   marginLeft: 6,
-                  background: "#0B111E",
-                  color: "#FFFFFF",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  borderRadius: 8,
+                  background: "#FFFFFF",
+                  color: "#0B1D51",
+                  border: "1px solid #C2CEE3",
+                  borderRadius: 6,
                   padding: "5px 8px",
                   fontSize: 12,
+                  fontWeight: 700,
                 }}
               >
                 {currentModel.resolutions.map((res) => (
@@ -404,19 +421,20 @@ export default function OpenHiggsfieldStudio() {
             </label>
 
             {currentModel.durations.length > 0 && (
-              <label style={{ fontSize: 12, color: "#94A3B8", fontWeight: 700 }}>
+              <label style={{ fontSize: 12.5, color: "#38A128", fontWeight: 800 }}>
                 Duration:
                 <select
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
                   style={{
                     marginLeft: 6,
-                    background: "#0B111E",
-                    color: "#FFFFFF",
-                    border: "1px solid rgba(255,255,255,0.2)",
-                    borderRadius: 8,
+                    background: "#FFFFFF",
+                    color: "#0B1D51",
+                    border: "1px solid #C2CEE3",
+                    borderRadius: 6,
                     padding: "5px 8px",
                     fontSize: 12,
+                    fontWeight: 700,
                   }}
                 >
                   {currentModel.durations.map((d) => (
@@ -433,8 +451,9 @@ export default function OpenHiggsfieldStudio() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
-                fontSize: 12,
-                color: "#E2E8F0",
+                fontSize: 12.5,
+                color: "#EE6816",
+                fontWeight: 800,
                 cursor: "pointer",
               }}
             >
@@ -442,7 +461,7 @@ export default function OpenHiggsfieldStudio() {
                 type="checkbox"
                 checked={enhancePrompt}
                 onChange={(e) => setEnhancePrompt(e.target.checked)}
-                style={{ accentColor: "#D1FE17" }}
+                style={{ accentColor: "#EE6816" }}
               />
               Prompt Enhancement
             </label>
@@ -451,8 +470,8 @@ export default function OpenHiggsfieldStudio() {
           <button
             type="submit"
             style={{
-              background: "#D1FE17",
-              color: "#0B111E",
+              background: "#F8C90E",
+              color: "#0B1D51",
               border: "none",
               borderRadius: 999,
               padding: "10px 22px",
@@ -473,12 +492,13 @@ export default function OpenHiggsfieldStudio() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            background: "#1E293B",
-            border: "1px solid #D1FE17",
-            borderRadius: 10,
+            background: "#FEF9E3",
+            border: "1px solid #F8C90E",
+            borderRadius: 8,
             padding: "8px 14px",
             marginBottom: 16,
             fontSize: 12.5,
+            color: "#0B1D51",
           }}
         >
           <span>Run removed from studio gallery.</span>
@@ -486,8 +506,8 @@ export default function OpenHiggsfieldStudio() {
             type="button"
             onClick={handleUndoDelete}
             style={{
-              background: "#D1FE17",
-              color: "#0B111E",
+              background: "#084EC8",
+              color: "#FFFFFF",
               border: "none",
               borderRadius: 999,
               padding: "4px 12px",
@@ -501,7 +521,7 @@ export default function OpenHiggsfieldStudio() {
         </div>
       )}
 
-      {/* 4-Scope Gallery Tab Rail */}
+      {/* 4-Scope Gallery Tab Rail (Red, Blue, Green, Orange) */}
       <div
         role="tablist"
         aria-label="Gallery scopes"
@@ -509,159 +529,171 @@ export default function OpenHiggsfieldStudio() {
           display: "flex",
           gap: 8,
           marginBottom: 16,
-          borderBottom: "1px solid rgba(255,255,255,0.1)",
+          borderBottom: "1px solid #DCE3F0",
           paddingBottom: 10,
         }}
       >
-        {["Assets", "Image", "Video", "Favorites"].map((tab) => {
-          const active = scope === tab
+        {[
+          { label: "Assets", color: "#E60914" },
+          { label: "Image", color: "#084EC8" },
+          { label: "Video", color: "#38A128" },
+          { label: "Favorites", color: "#EE6816" },
+        ].map((tab) => {
+          const active = scope === tab.label
           return (
             <button
-              key={tab}
+              key={tab.label}
               role="tab"
               aria-selected={active}
               type="button"
-              onClick={() => setScope(tab)}
+              onClick={() => setScope(tab.label)}
               style={{
-                background: active ? "#D1FE17" : "transparent",
-                color: active ? "#0B111E" : "#94A3B8",
-                border: "none",
+                background: active ? tab.color : "#F7F6F1",
+                color: active ? "#FFFFFF" : tab.color,
+                border: `1.5px solid ${tab.color}`,
                 borderRadius: 999,
-                padding: "6px 14px",
+                padding: "6px 16px",
                 fontWeight: 800,
                 fontSize: 12.5,
                 cursor: "pointer",
               }}
             >
-              {tab}
+              {tab.label}
             </button>
           )
         })}
       </div>
 
-      {/* Gallery Grid */}
+      {/* Gallery Sheet — Divided Items Using Poster Colors */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: 16,
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          border: "1px solid #DCE3F0",
+          borderRadius: 10,
+          overflow: "hidden",
         }}
       >
-        {visibleRuns.map((run) => (
-          <div
-            key={run.id}
-            style={{
-              background: "#131C2E",
-              borderRadius: 14,
-              overflow: "hidden",
-              border: "1px solid rgba(255,255,255,0.1)",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ position: "relative", aspectRatio: "16/10", background: "#000" }}>
-              <Image
-                src={run.previewUrl}
-                alt={run.prompt}
-                fill
-                sizes="(min-width: 768px) 320px, 90vw"
-                style={{ objectFit: "cover" }}
-              />
-              <span
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  left: 10,
-                  background: "rgba(11,17,30,0.82)",
-                  color: "#D1FE17",
-                  fontSize: 10.5,
-                  fontWeight: 800,
-                  padding: "3px 8px",
-                  borderRadius: 999,
-                }}
-              >
-                {run.modelName} · {run.aspectRatio}
-              </span>
-            </div>
-
-            <div style={{ padding: 14, flex: 1, display: "flex", flexDirection: "column" }}>
-              <p
-                style={{
-                  fontSize: 12.5,
-                  color: "#E2E8F0",
-                  lineHeight: 1.5,
-                  margin: "0 0 12px",
-                  flex: 1,
-                }}
-              >
-                {run.prompt}
-              </p>
-
+        {visibleRuns.map((run, idx) => {
+          const rColor = run.color || POSTER_COLORS[idx % POSTER_COLORS.length]
+          return (
+            <div
+              key={run.id}
+              style={{
+                background: "#FFFFFF",
+                borderRight: "1px solid #DCE3F0",
+                borderBottom: "1px solid #DCE3F0",
+                borderTop: `4px solid ${rColor}`,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: 8,
-                  paddingTop: 10,
-                  borderTop: "1px solid rgba(255,255,255,0.08)",
+                  position: "relative",
+                  height: 185,
+                  width: "100%",
+                  background: "#0B1D51",
                 }}
               >
-                <button
-                  type="button"
-                  onClick={() => handleReuse(run)}
+                <Image
+                  src={run.previewUrl}
+                  alt={run.prompt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 320px"
+                  style={{ objectFit: "cover" }}
+                />
+                <span
                   style={{
-                    background: "rgba(209, 254, 23, 0.14)",
-                    color: "#D1FE17",
-                    border: "1px solid rgba(209, 254, 23, 0.35)",
-                    borderRadius: 8,
-                    padding: "5px 10px",
-                    fontSize: 11.5,
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    background: rColor,
+                    color: "#FFFFFF",
+                    fontSize: 10.5,
                     fontWeight: 800,
-                    cursor: "pointer",
+                    padding: "3px 10px",
+                    borderRadius: 999,
                   }}
                 >
-                  ↻ Reuse Prompt &amp; Settings
-                </button>
+                  {run.kind.toUpperCase()} · {run.aspectRatio} · {run.resolution}
+                  {run.duration ? ` · ${run.duration}` : ""}
+                </span>
+              </div>
 
-                <div style={{ display: "flex", gap: 6 }}>
+              <div style={{ padding: 16, display: "flex", flexDirection: "column", flex: 1 }}>
+                <div style={{ fontSize: 12.5, fontWeight: 800, color: rColor, marginBottom: 4 }}>
+                  • {run.modelName} ({run.createdAt})
+                </div>
+                <p
+                  style={{
+                    fontSize: 12.5,
+                    color: "#1E293B",
+                    lineHeight: 1.55,
+                    margin: "0 0 12px",
+                    flex: 1,
+                  }}
+                >
+                  {run.prompt}
+                </p>
+
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", borderTop: "1px solid #DCE3F0", paddingTop: 10 }}>
                   <button
                     type="button"
-                    aria-label="Favorite run"
+                    onClick={() => handleReuse(run)}
+                    style={{
+                      background: "#084EC8",
+                      color: "#FFFFFF",
+                      border: "none",
+                      borderRadius: 999,
+                      padding: "5px 12px",
+                      fontSize: 11.5,
+                      fontWeight: 800,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Reuse Prompt
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => handleToggleFavorite(run.id)}
                     style={{
-                      background: "transparent",
-                      border: "1px solid rgba(255,255,255,0.18)",
-                      color: run.favorite ? "#FACC15" : "#94A3B8",
-                      borderRadius: 8,
-                      padding: "4px 8px",
+                      background: run.favorite ? "#F8C90E" : "#F7F6F1",
+                      color: "#0B1D51",
+                      border: "1px solid #C2CEE3",
+                      borderRadius: 999,
+                      padding: "5px 12px",
+                      fontSize: 11.5,
+                      fontWeight: 800,
                       cursor: "pointer",
-                      fontSize: 12,
                     }}
                   >
-                    ★
+                    {run.favorite ? "★ Favorited" : "☆ Favorite"}
                   </button>
+
                   <button
                     type="button"
-                    aria-label="Delete run"
                     onClick={() => handleDelete(run)}
                     style={{
-                      background: "transparent",
-                      border: "1px solid rgba(255,255,255,0.18)",
-                      color: "#F87171",
-                      borderRadius: 8,
-                      padding: "4px 8px",
+                      background: "#FFFFFF",
+                      color: "#E60914",
+                      border: "1px solid #E60914",
+                      borderRadius: 999,
+                      padding: "5px 12px",
+                      fontSize: 11.5,
+                      fontWeight: 800,
                       cursor: "pointer",
-                      fontSize: 12,
+                      marginLeft: "auto",
                     }}
                   >
-                    ✕
+                    Delete
                   </button>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </section>
   )

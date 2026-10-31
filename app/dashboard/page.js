@@ -176,21 +176,58 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section style={{ marginTop: -56, padding: "0 0 16px" }}>
+      {/* Stats — Poster 4-Item Info Bar (Red, Blue, Green, Orange) */}
+      <section style={{ marginTop: -44, padding: "0 0 16px", position: "relative", zIndex: 2 }}>
         <div className="container">
-          <div className="grid-4">
-            {stats.map((stat, i) => (
-              <div key={i} className="card card-hover" style={{ padding: "24px 22px", display: "flex", alignItems: "center", gap: 16 }}>
-                <span style={{ width: 54, height: 54, borderRadius: 16, background: "var(--green-tint)", color: "var(--green-deep)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <Icon name={stat.icon} size={24} />
-                </span>
-                <div>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", color: "var(--ink)" }}>{stat.value}</div>
-                  <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>{stat.label}</div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+              background: "#FFFFFF",
+              border: "1px solid var(--line)",
+              borderRadius: 12,
+              overflow: "hidden",
+            }}
+          >
+            {stats.map((stat, i) => {
+              const sColors = ["#E60914", "#084EC8", "#38A128", "#EE6816"]
+              const sc = sColors[i % sColors.length]
+              return (
+                <div
+                  key={i}
+                  style={{
+                    padding: "20px 22px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                    borderRight: i < stats.length - 1 ? "1px solid var(--line)" : "none",
+                    borderTop: `4px solid ${sc}`,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 46,
+                      height: 46,
+                      borderRadius: "50%",
+                      background: sc,
+                      color: "#FFFFFF",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Icon name={stat.icon} size={22} />
+                  </span>
+                  <div>
+                    <div style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", color: sc }}>
+                      {stat.value}
+                    </div>
+                    <div style={{ fontSize: 12, color: "var(--body)", fontWeight: 700 }}>{stat.label}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

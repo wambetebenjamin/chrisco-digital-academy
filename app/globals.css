@@ -7,61 +7,76 @@
 
 :root {
   /* ------------------------------------------------------------
-     BRAND CORE - unchanged inspiration (navy + electric green)
-     These four values carry the identity. Everything below is a
-     neutral stage built to hold them.
+     OFFICIAL POSTER PALETTE
+     Extracted directly from the CHRISCO Youth Aflame Teens AI &
+     Projects Bootcamp Poster:
+     - Poster Vibrant Red:   #E60914 ("TEENS AI &" & item 1)
+     - Poster Royal Blue:    #084EC8 ("PROJECTS BOOTCAMP!" & item 2)
+     - Poster Deep Royal:    #003896 (Bottom wave & footer bar)
+     - Poster Deep Navy:     #0B1D51 (Header brand & dark ink)
+     - Poster Leaf Green:    #38A128 ("Physical & Team Activities" & item 3)
+     - Poster Flame Orange:  #EE6816 ("AFLAME" & logo flame & item 4)
+     - Poster Golden Yellow: #F8C90E ("Register via Link" pill & star)
+     - Poster Warm Paper:    #F7F6F1 (Warm off-white poster background)
      ------------------------------------------------------------ */
-  --navy: #002333;          /* dark teal - top nav, dark sections */
-  --navy-2: #013A4F;        /* lighter teal */
-  --navy-3: #06506A;        /* hover teal */
-  --green: #10B981;         /* refined emerald accent */
-  --green-deep: #047857;    /* deep emerald for text & icons on light backgrounds */
-  --green-tint: #ECFDF5;    /* soft emerald wash */
-  --cta-primary: #0D9488;   /* primary CTA teal-emerald */
-  --cta-primary-dark: #047857;
-  --cta-warm: #D97706;      /* warm amber-gold CTA accent */
-  --cta-warm-light: #F59E0B;
+  --poster-red: #E60914;
+  --poster-blue: #084EC8;
+  --poster-blue-deep: #003896;
+  --poster-navy: #0B1D51;
+  --poster-green: #38A128;
+  --poster-orange: #EE6816;
+  --poster-yellow: #F8C90E;
+  --poster-paper: #F7F6F1;
+
+  --navy: #0B1D51;          /* poster deep navy */
+  --navy-2: #003896;        /* poster deep royal blue */
+  --navy-3: #084EC8;        /* poster vibrant royal blue */
+  --green: #F8C90E;         /* poster golden yellow highlight on dark surfaces */
+  --green-deep: #38A128;    /* poster leaf green on light backgrounds */
+  --green-tint: #EAF6E8;    /* soft poster leaf green wash */
+  --cta-primary: #084EC8;   /* poster royal blue */
+  --cta-primary-dark: #003896;
+  --cta-warm: #EE6816;      /* poster flame orange */
+  --cta-warm-light: #F8C90E;/* poster golden yellow */
 
   /* ------------------------------------------------------------
      TEXT NEUTRALS
      ------------------------------------------------------------ */
-  --ink: #06202E;           /* headings */
-  --body: #3D5261;          /* body copy */
-  --muted: #6E8089;         /* secondary text */
+  --ink: #0B1D51;           /* poster deep navy headings */
+  --body: #1E293B;          /* crisp charcoal body copy */
+  --muted: #475569;         /* secondary text */
 
   /* ------------------------------------------------------------
-     SURFACE LADDER - stepped one shade at a time.
-     Sections climb this ladder (0 -> 1 -> 2 -> navy) so each band
-     reads as its own plane instead of one flat green sheet.
+     SURFACE LADDER - clean poster paper & crisp white sheets
      ------------------------------------------------------------ */
-  --paper: #FAFAF6;         /* layer 0 - editorial base */
-  --layer-1: #F4F7F4;       /* layer 1 - mist */
-  --layer-2: #EBF0ED;       /* layer 2 - slate */
-  --layer-3: #E2E9E5;       /* layer 3 - deep slate */
-  --surface: #FFFFFF;       /* layer 4 - cards, panels */
-  --line: #E3E9E7;          /* hairlines */
-  --line-strong: #CBD6D3;
-  --line-navy: rgba(0, 35, 51, 0.14);
-  --coral: #FF6B4A;         /* playful accent (used sparingly) */
-  --danger: #E5484D;
-  --danger-tint: #FDECEC;
+  --paper: #F7F6F1;         /* poster warm off-white canvas */
+  --layer-1: #F0EFE9;       /* warm paper step */
+  --layer-2: #EBF1FA;       /* soft royal blue tint */
+  --layer-3: #DCE5F4;       /* deeper blue-gray step */
+  --surface: #FFFFFF;       /* crisp white sheet */
+  --line: #DCE3F0;          /* clean poster hairline */
+  --line-strong: #C2CEE3;
+  --line-navy: rgba(11, 29, 81, 0.14);
+  --coral: #EE6816;         /* poster flame orange */
+  --danger: #E60914;        /* poster vibrant red */
+  --danger-tint: #FEECEC;
 
   /* Typography - self-hosted via Fontsource (bundled, no external CSS) */
   --font-display: 'Archivo Black', 'Archivo Variable', 'Archivo', sans-serif;
   --font-head: 'Archivo Variable', 'Archivo', sans-serif;
   --font-body: 'Inter Variable', 'Inter', 'Archivo Variable', sans-serif;
 
-  /* Shape & elevation */
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
-  --shadow-sm: 0 1px 2px rgba(0, 35, 51, 0.05);
-  --shadow-md: 0 2px 6px rgba(0, 35, 51, 0.06), 0 12px 32px rgba(0, 35, 51, 0.08);
-  --shadow-lg: 0 4px 12px rgba(0, 35, 51, 0.08), 0 24px 64px rgba(0, 35, 51, 0.12);
-  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 18px 48px rgba(0, 35, 51, 0.16);
-  --shadow-green: 0 6px 18px rgba(4, 120, 87, 0.24);
-  --shadow-warm: 0 8px 22px rgba(217, 119, 6, 0.28);
+  /* Shape & elevation - clean editorial/poster geometry, NOT bubbly AI cards */
+  --radius-xl: 14px;
+  --radius-lg: 10px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  --shadow-sm: none;
+  --shadow-md: 0 2px 8px rgba(11, 29, 81, 0.06);
+  --shadow-lg: 0 8px 24px rgba(11, 29, 81, 0.10);
+  --shadow-panel: 0 6px 20px rgba(11, 29, 81, 0.12);
+  --shadow-green: none;
+  --shadow-warm: none;
 }
 
 * { box-sizing: border-box; }
@@ -80,57 +95,30 @@ body {
   line-height: 1.6;
 }
 
-/* ---------- Full-page photographic backdrop ----------
-   PageBackdrop paints a fixed, per-route photo behind everything (z-index -1).
-   Routes using it mark their <main> with .has-backdrop so no opaque surface
-   is painted over the photo; sections opt into translucency via .section-frost
-   and cards via .card-frost. */
-.has-backdrop { background: transparent !important; }
+/* ---------- Solid Poster Section Surfaces (No Glassmorphic Blur) ---------- */
+.has-backdrop { background: var(--paper) !important; }
 
-/* Frosted section surfaces sit on the surface ladder. Each consecutive band
-   steps one shade so the page reads as stacked planes, while the photo stays
-   a faint texture underneath rather than a colour cast. */
 .section-frost {
-  background: rgba(255, 255, 255, 0.70);
-  backdrop-filter: blur(14px) saturate(1.04);
-  -webkit-backdrop-filter: blur(18px) saturate(1.06);
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  border-bottom: 1px solid rgba(227, 233, 231, 0.6);
+  background: #FFFFFF;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-/* Alternating tone so consecutive frosted bands stay distinguishable. */
 .section-frost-alt {
-  background: rgba(244, 247, 244, 0.64);
-  backdrop-filter: blur(14px) saturate(1.04);
-  -webkit-backdrop-filter: blur(18px) saturate(1.06);
-  border-top: 1px solid rgba(255, 255, 255, 0.45);
-  border-bottom: 1px solid rgba(227, 233, 231, 0.5);
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-/* A deeper step for third-level bands (never green). */
 .section-frost-deep {
-  background: rgba(235, 240, 237, 0.70);
-  backdrop-filter: blur(14px) saturate(1.04);
-  -webkit-backdrop-filter: blur(18px) saturate(1.06);
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
-  border-bottom: 1px solid rgba(203, 214, 211, 0.5);
+  background: var(--layer-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-/* Cards sitting on a frosted band need a touch more opacity to hold contrast. */
 .card-frost {
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-color: rgba(255, 255, 255, 0.7);
-}
-
-/* Graceful degradation: browsers without backdrop-filter get opaque surfaces
-   rather than washed-out, unreadable text over the photo. */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .section-frost { background: rgba(255, 255, 255, 0.97); }
-  .section-frost-alt { background: rgba(244, 247, 244, 0.97); }
-  .section-frost-deep { background: rgba(235, 240, 237, 0.97); }
-  .card-frost { background: #fff; }
+  background: #FFFFFF;
+  border-color: var(--line);
 }
 
 h1, h2, h3, h4, h5 {
@@ -261,108 +249,121 @@ img { display: block; max-width: 100%; }
 }
 .stat-num.on-dark { color: var(--green); }
 
-/* ---------- Buttons & Structured CTAs ---------- */
+/* ---------- Buttons & Structured CTAs (Solid Poster Colors, No Plastic Gradients) ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   font-family: var(--font-head);
-  font-weight: 700;
+  font-weight: 800;
   font-size: 14.5px;
   letter-spacing: 0.01em;
   padding: 14px 26px;
-  border-radius: 12px;
+  border-radius: 999px;
   border: 1.5px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   white-space: nowrap;
   line-height: 1.1;
 }
-.btn:active { transform: translateY(1px) scale(0.99); }
-.btn:disabled { opacity: 0.58; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.58; cursor: not-allowed; }
 
 .btn-green,
 .btn-primary {
-  background: linear-gradient(135deg, #0D9488 0%, #047857 100%);
+  background: var(--poster-green);
   color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), var(--shadow-green);
+  border-color: var(--poster-green);
 }
 .btn-green:hover,
 .btn-primary:hover {
-  background: linear-gradient(135deg, #0F766E 0%, #065F46 100%);
+  background: #297D1C;
+  border-color: #297D1C;
   color: #FFFFFF;
-  transform: translateY(-2px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 12px 26px rgba(4, 120, 87, 0.32);
 }
 
 .btn-amber,
 .btn-accent {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--shadow-warm);
+  background: var(--poster-yellow);
+  color: var(--poster-navy);
+  border-color: var(--poster-yellow);
 }
 .btn-amber:hover,
 .btn-accent:hover {
-  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
-  color: #FFFFFF;
-  transform: translateY(-2px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 12px 28px rgba(217, 119, 6, 0.36);
+  background: #E5B80B;
+  border-color: #E5B80B;
+  color: var(--poster-navy);
 }
 
 .btn-navy {
-  background: linear-gradient(135deg, #0E2F44 0%, #002333 100%);
+  background: var(--poster-blue);
   color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 14px rgba(0, 35, 51, 0.16);
+  border-color: var(--poster-blue);
 }
 .btn-navy:hover {
-  background: linear-gradient(135deg, #133E59 0%, #013A4F 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 35, 51, 0.26);
+  background: var(--poster-blue-deep);
+  border-color: var(--poster-blue-deep);
+  color: #FFFFFF;
+}
+
+.btn-red {
+  background: var(--poster-red);
+  color: #FFFFFF;
+  border-color: var(--poster-red);
+}
+.btn-red:hover {
+  background: #B8060F;
+  border-color: #B8060F;
+  color: #FFFFFF;
+}
+
+.btn-orange {
+  background: var(--poster-orange);
+  color: #FFFFFF;
+  border-color: var(--poster-orange);
+}
+.btn-orange:hover {
+  background: #CC520C;
+  border-color: #CC520C;
+  color: #FFFFFF;
 }
 
 .btn-outline {
-  border-color: var(--line-strong);
-  color: var(--ink);
+  border-color: var(--poster-blue);
+  color: var(--poster-blue);
   background: #FFFFFF;
-  box-shadow: 0 1px 2px rgba(0, 35, 51, 0.04);
 }
 .btn-outline:hover {
-  border-color: var(--navy);
-  background: var(--layer-1);
-  color: var(--navy);
-  transform: translateY(-2px);
+  border-color: var(--poster-navy);
+  background: var(--layer-2);
+  color: var(--poster-navy);
 }
 
 .btn-outline-light {
-  border-color: rgba(255, 255, 255, 0.34);
+  border-color: rgba(255, 255, 255, 0.55);
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
+  background: transparent;
 }
 .btn-outline-light:hover {
-  border-color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px);
+  border-color: var(--poster-yellow);
+  background: rgba(248, 201, 14, 0.14);
+  color: var(--poster-yellow);
 }
 
 .btn-outline-green {
-  border-color: var(--green-deep);
-  color: var(--green-deep);
-  background: rgba(16, 185, 129, 0.06);
+  border-color: var(--poster-green);
+  color: var(--poster-green);
+  background: #FFFFFF;
 }
 .btn-outline-green:hover {
-  background: var(--green-deep);
+  background: var(--poster-green);
   color: #FFFFFF;
-  transform: translateY(-2px);
 }
 
-.btn-sm { padding: 10px 18px; font-size: 13px; border-radius: 10px; }
-.btn-lg { padding: 16px 32px; font-size: 15.5px; border-radius: 14px; }
+.btn-sm { padding: 10px 18px; font-size: 13px; border-radius: 999px; }
+.btn-lg { padding: 16px 32px; font-size: 15.5px; border-radius: 999px; }
 .btn-block { width: 100%; }
 
 /* ---------- reCAPTCHA widget ---------- */
@@ -371,24 +372,24 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #F9FAFB;
-  border: 1.5px solid #D1D5DB;
-  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 8px;
   padding: 12px 16px;
   cursor: pointer;
   user-select: none;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 .recaptcha-box:hover {
-  border-color: #9CA3AF;
-  background: #F3F4F6;
+  border-color: var(--poster-blue);
+  background: var(--paper);
 }
 .recaptcha-box.is-verified {
-  border-color: #0D9488;
-  background: #F0FDF4;
+  border-color: var(--poster-green);
+  background: #EAF6E8;
 }
 .recaptcha-box.has-error {
-  border-color: var(--danger);
+  border-color: var(--poster-red);
   background: var(--danger-tint);
 }
 .recaptcha-checkbox {
@@ -404,15 +405,15 @@ img { display: block; max-width: 100%; }
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 .recaptcha-checkbox.is-checked {
-  border-color: #0D9488;
-  background: #ECFDF5;
+  border-color: var(--poster-green);
+  background: #EAF6E8;
 }
 .recaptcha-spinner {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2.5px solid rgba(13, 148, 136, 0.25);
-  border-top-color: #0D9488;
+  border: 2.5px solid rgba(8, 78, 200, 0.25);
+  border-top-color: var(--poster-blue);
   animation: spin 0.7s linear infinite;
 }
 
@@ -424,58 +425,74 @@ img { display: block; max-width: 100%; }
   padding: 8px 18px;
   border-radius: 999px;
   border: 1.5px solid var(--line-strong);
-  background: transparent;
+  background: #FFFFFF;
   color: var(--ink);
   font-family: var(--font-head);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
-  transition: all 0.22s ease;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   cursor: pointer;
   white-space: nowrap;
   line-height: 1.3;
 }
-.pill:hover { border-color: var(--ink); color: var(--ink); }
-.pill.is-active { background: var(--navy); border-color: var(--navy); color: #fff; }
+.pill:hover { border-color: var(--poster-blue); color: var(--poster-blue); }
+.pill.is-active { background: var(--poster-blue); border-color: var(--poster-blue); color: #fff; }
 
-/* Soft chips sit on the neutral ladder; green stays in the icon or on hover. */
-.pill-soft { background: var(--layer-1); border-color: var(--line); color: var(--body); }
-.pill-soft svg { color: var(--green-deep); }
-.pill-soft:hover { background: var(--green-tint); border-color: rgba(0, 184, 101, 0.28); color: var(--ink); }
+.pill-soft { background: var(--paper); border-color: var(--line); color: var(--body); }
+.pill-soft svg { color: var(--poster-blue); }
+.pill-soft:hover { background: var(--layer-2); border-color: var(--poster-blue); color: var(--ink); }
 
-.pill-dark { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.18); color: rgba(255, 255, 255, 0.85); }
-.pill-dark:hover { border-color: var(--green); color: var(--green); }
+.pill-dark { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.22); color: #FFFFFF; }
+.pill-dark:hover { border-color: var(--poster-yellow); color: var(--poster-yellow); }
 
-.pill-green { background: var(--green-deep); border-color: var(--green-deep); color: #fff; font-weight: 700; }
-.pill-green:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+.pill-green { background: var(--poster-green); border-color: var(--poster-green); color: #fff; font-weight: 700; }
+.pill-green:hover { background: var(--poster-blue); border-color: var(--poster-blue); color: #fff; }
 
 .pill-sm { padding: 5px 13px; font-size: 12px; }
 
-/* ---------- Cards ---------- */
+/* ---------- Editorial Sheets & Panels (No AI-Looking Cards) ---------- */
 .card {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  border-radius: 10px;
+  box-shadow: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 .card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--line-strong);
+  border-color: var(--poster-blue);
 }
 
 .ghost-num {
-  position: absolute;
-  top: 12px;
-  right: 20px;
-  font-family: var(--font-display);
-  font-size: 3.4rem;
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1.2px var(--line-strong);
-  pointer-events: none;
-  user-select: none;
+  display: none !important;
+}
+
+/* Poster-style white feature sheet with clean horizontal/vertical hairline dividers */
+.poster-sheet {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.poster-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.poster-row:last-child {
+  border-bottom: none;
+}
+.poster-circle-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #FFFFFF;
 }
 
 /* ---------- Links ---------- */
@@ -770,9 +787,9 @@ img { display: block; max-width: 100%; }
 
 /* ---- Layer 1: utility strip ---- */
 .nav-utility {
-  background: #012B3B;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.6);
+  background: var(--poster-navy);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.82);
 }
 .nav-utility-inner {
   display: flex;
@@ -781,12 +798,12 @@ img { display: block; max-width: 100%; }
   gap: 16px;
   height: 34px;
   font-size: 11.5px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
 .nav-utility-group { display: inline-flex; align-items: center; gap: 22px; }
 .nav-utility-item { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
-.nav-utility-item svg { color: var(--green); opacity: 0.85; }
+.nav-utility-item svg { color: var(--poster-yellow); }
 .nav-utility-icon {
   display: inline-flex;
   align-items: center;
@@ -794,36 +811,33 @@ img { display: block; max-width: 100%; }
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  color: var(--green);
+  color: var(--poster-yellow);
   transition: background 0.2s ease, color 0.2s ease;
 }
-.nav-utility-icon:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.nav-utility-icon:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
 
 .nav-utility-link {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.88);
   text-decoration: none;
   transition: color 0.2s ease;
 }
-.nav-utility-link svg { color: var(--green); }
-.nav-utility-link:hover { color: #fff; }
+.nav-utility-link svg { color: var(--poster-yellow); }
+.nav-utility-link:hover { color: var(--poster-yellow); }
 @media (max-width: 899px) {
   .nav-utility { display: none; }
 }
 
 /* ---- Layer 2: brand bar ---- */
 .nav-bar {
-  background: var(--navy);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  background: var(--poster-blue-deep);
+  border-bottom: 3px solid var(--poster-yellow);
+  transition: background 0.25s ease;
 }
 .nav-shell.is-scrolled .nav-bar {
-  background: rgba(0, 35, 51, 0.95);
-  backdrop-filter: blur(16px) saturate(1.1);
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
-  box-shadow: 0 10px 30px rgba(0, 35, 51, 0.18);
+  background: var(--poster-blue-deep);
 }
 .nav-bar-inner {
   display: flex;
@@ -837,8 +851,8 @@ img { display: block; max-width: 100%; }
 .nav-logo-mark {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+  border-radius: 50%;
+  background: var(--poster-orange);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1359,39 +1373,78 @@ img { display: block; max-width: 100%; }
   .nav-user-name { display: none; }
 }
 
-/* ---------- Credentials strip (sits between hero and content) ---------- */
-.factstrip { display: grid; grid-template-columns: repeat(2, 1fr); }
+/* ---------- Credentials strip (modeled directly on the Poster's 4-item info bar) ---------- */
+.factstrip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: #FFFFFF;
+}
 .factstrip-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 22px 18px;
 }
 .factstrip-item + .factstrip-item { border-left: 1px solid var(--line); }
 .factstrip-ico {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
-  border-radius: 11px;
-  background: var(--layer-1);
-  border: 1px solid var(--line);
-  color: var(--navy-3);
+  border-radius: 50%;
+  background: var(--poster-blue);
+  color: #FFFFFF;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
+.factstrip-item:nth-child(1) .factstrip-ico { background: var(--poster-red); }
+.factstrip-item:nth-child(1) .factstrip-title { color: var(--poster-red); }
+.factstrip-item:nth-child(2) .factstrip-ico { background: var(--poster-blue); }
+.factstrip-item:nth-child(2) .factstrip-title { color: var(--poster-blue); }
+.factstrip-item:nth-child(3) .factstrip-ico { background: var(--poster-green); }
+.factstrip-item:nth-child(3) .factstrip-title { color: var(--poster-green); }
+.factstrip-item:nth-child(4) .factstrip-ico { background: var(--poster-orange); }
+.factstrip-item:nth-child(4) .factstrip-title { color: var(--poster-orange); }
+
 .factstrip-title {
   font-family: var(--font-head);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 800;
   color: var(--ink);
   line-height: 1.3;
 }
 .factstrip-desc {
-  font-size: 11.5px;
-  color: var(--muted);
+  font-size: 12px;
+  color: var(--body);
   line-height: 1.4;
   margin-top: 2px;
+}
+
+/* Poster 5-color cycle for grid items */
+.grid-3 > .card:nth-child(5n+1),
+.grid-4 > .card:nth-child(5n+1),
+.merch-grid > .merch-card:nth-child(5n+1) {
+  border-top: 4px solid var(--poster-red);
+}
+.grid-3 > .card:nth-child(5n+2),
+.grid-4 > .card:nth-child(5n+2),
+.merch-grid > .merch-card:nth-child(5n+2) {
+  border-top: 4px solid var(--poster-blue);
+}
+.grid-3 > .card:nth-child(5n+3),
+.grid-4 > .card:nth-child(5n+3),
+.merch-grid > .merch-card:nth-child(5n+3) {
+  border-top: 4px solid var(--poster-green);
+}
+.grid-3 > .card:nth-child(5n+4),
+.grid-4 > .card:nth-child(5n+4),
+.merch-grid > .merch-card:nth-child(5n+4) {
+  border-top: 4px solid var(--poster-orange);
+}
+.grid-3 > .card:nth-child(5n+5),
+.grid-4 > .card:nth-child(5n+5),
+.merch-grid > .merch-card:nth-child(5n+5) {
+  border-top: 4px solid var(--poster-yellow);
 }
 @media (max-width: 899px) {
   .factstrip-item:nth-child(3) { border-left: 0; }
@@ -1581,9 +1634,9 @@ img { display: block; max-width: 100%; }
   flex-shrink: 0;
   width: 42px;
   height: 42px;
-  border-radius: 12px;
-  background: var(--navy);
-  color: var(--green);
+  border-radius: 50%;
+  background: var(--poster-red);
+  color: #FFFFFF;
   font-family: var(--font-head);
   font-size: 13px;
   font-weight: 800;
@@ -1593,6 +1646,14 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   margin-top: 2px;
 }
+.shop-collection-block:nth-child(4n+1) .shop-collection-num { background: var(--poster-red); }
+.shop-collection-block:nth-child(4n+1) .shop-collection-eyebrow { color: var(--poster-red); }
+.shop-collection-block:nth-child(4n+2) .shop-collection-num { background: var(--poster-blue); }
+.shop-collection-block:nth-child(4n+2) .shop-collection-eyebrow { color: var(--poster-blue); }
+.shop-collection-block:nth-child(4n+3) .shop-collection-num { background: var(--poster-green); }
+.shop-collection-block:nth-child(4n+3) .shop-collection-eyebrow { color: var(--poster-green); }
+.shop-collection-block:nth-child(4n+4) .shop-collection-num { background: var(--poster-orange); }
+.shop-collection-block:nth-child(4n+4) .shop-collection-eyebrow { color: var(--poster-orange); }
 .shop-collection-eyebrow {
   display: block;
   font-family: var(--font-head);
@@ -1641,17 +1702,16 @@ img { display: block; max-width: 100%; }
 
 .merch-card {
   background: var(--surface);
-  border: 0;
-  border-radius: 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s ease;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
 }
 .merch-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--poster-blue);
 }
 
 .merch-media {
