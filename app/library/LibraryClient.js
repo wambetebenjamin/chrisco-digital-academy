@@ -138,11 +138,11 @@ export default function LibraryClient() {
         <div className="container">
           <div
             style={{
-              background: "linear-gradient(135deg, #010C80 0%, #0A1854 68%, #162266 100%)",
-              borderRadius: 28,
-              padding: "40px 36px",
+              background: "#003896",
+              borderRadius: 12,
+              borderTop: "5px solid #F8C90E",
+              padding: "36px 32px",
               color: "#fff",
-              boxShadow: "0 22px 54px rgba(1,12,128,0.18)",
               position: "relative",
               overflow: "hidden",
             }}
@@ -152,7 +152,7 @@ export default function LibraryClient() {
                 <span
                   className="pill pill-sm"
                   style={{
-                    background: "#FA3F26",
+                    background: "#EE6816",
                     color: "#fff",
                     border: "none",
                     marginBottom: 10,
@@ -160,20 +160,17 @@ export default function LibraryClient() {
                 >
                   CHRISCO Youth Aflame
                 </span>
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.7rem, 3vw, 2.35rem)", lineHeight: 1.15 }}>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.7rem, 3vw, 2.35rem)", lineHeight: 1.15, color: "#FFFFFF" }}>
                   Christian &amp; Prophetic Study Books
                 </h2>
-                <p style={{ color: "rgba(255,255,255,0.8)", fontSize: 14.5, maxWidth: 620, marginTop: 8 }}>
+                <p style={{ color: "rgba(255,255,255,0.88)", fontSize: 14.5, maxWidth: 620, marginTop: 8 }}>
                   Scripture-grounded studies on character, discernment, and spiritual growth.
                 </p>
               </div>
               <a
                 href="#learning-handbooks"
-                className="btn btn-sm"
+                className="btn btn-amber btn-sm"
                 style={{
-                  background: "rgba(255,255,255,0.14)",
-                  color: "#fff",
-                  border: "1px solid rgba(255,255,255,0.28)",
                   textDecoration: "none",
                 }}
               >
@@ -185,9 +182,10 @@ export default function LibraryClient() {
               <div
                 key={book.slug}
                 style={{
-                  background: "rgba(255,255,255,0.97)",
+                  background: "#FFFFFF",
                   color: "var(--ink)",
-                  borderRadius: 22,
+                  borderRadius: 10,
+                  borderTop: "5px solid #E60914",
                   padding: "28px",
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
@@ -202,9 +200,9 @@ export default function LibraryClient() {
                       width: 220,
                       height: 310,
                       position: "relative",
-                      borderRadius: 14,
+                      borderRadius: 8,
+                      border: "2px solid #084EC8",
                       overflow: "hidden",
-                      boxShadow: "0 18px 38px rgba(1,12,128,0.24)",
                       display: "block",
                     }}
                   >
@@ -227,7 +225,7 @@ export default function LibraryClient() {
                   </div>
 
                   <Link href={book.sharePath} style={{ textDecoration: "none", color: "inherit" }}>
-                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.5rem", color: "#010C80", lineHeight: 1.2 }}>
+                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.5rem", color: "#E60914", lineHeight: 1.2 }}>
                       {book.title}
                     </h3>
                   </Link>
@@ -237,23 +235,24 @@ export default function LibraryClient() {
                   </p>
 
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 8, marginBottom: 20 }}>
-                    {book.highlights.map((item) => (
-                      <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "var(--ink)" }}>
-                        <Icon name="checkCircle" size={16} style={{ color: "#FA3F26", flexShrink: 0, marginTop: 2 }} />
-                        <span>{item}</span>
-                      </div>
-                    ))}
+                    {book.highlights.map((item, idx) => {
+                      const hColors = ["#E60914", "#084EC8", "#38A128", "#EE6816"]
+                      const hc = hColors[idx % hColors.length]
+                      return (
+                        <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "var(--ink)" }}>
+                          <Icon name="checkCircle" size={16} style={{ color: hc, flexShrink: 0, marginTop: 2 }} />
+                          <span>{item}</span>
+                        </div>
+                      )
+                    })}
                   </div>
 
                   <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
                     <button
                       type="button"
                       onClick={() => handleDownloadClick(book)}
-                      className="btn"
+                      className="btn btn-red"
                       style={{
-                        background: "#FA3F26",
-                        color: "#fff",
-                        border: "none",
                         cursor: "pointer",
                       }}
                     >
@@ -364,113 +363,133 @@ export default function LibraryClient() {
             ))}
           </div>
 
-          {/* Handbooks Grid */}
+          {/* Handbooks Grid — Clean Poster Sheets with Poster Color Cycle */}
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
-              gap: 24,
+              gap: 20,
             }}
           >
-            {filteredCourseBooks.map((book) => (
-              <div
-                key={book.slug}
-                className="card"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  overflow: "hidden",
-                  padding: 0,
-                }}
-              >
-                <Link
-                  href={book.sharePath}
+            {filteredCourseBooks.map((book, idx) => {
+              const pColors = ["#E60914", "#084EC8", "#38A128", "#EE6816", "#D99B00"]
+              const accent = pColors[idx % pColors.length]
+              return (
+                <div
+                  key={book.slug}
+                  className="card"
                   style={{
                     display: "flex",
-                    gap: 16,
-                    padding: "20px 20px 16px",
-                    background: "linear-gradient(155deg, #F6F7FB 0%, #ECEFFA 100%)",
-                    textDecoration: "none",
-                    color: "inherit",
-                    alignItems: "center",
+                    flexDirection: "column",
+                    overflow: "hidden",
+                    padding: 0,
+                    borderTop: `4px solid ${accent}`,
                   }}
                 >
-                  <div
+                  <Link
+                    href={book.sharePath}
                     style={{
-                      width: 88,
-                      height: 124,
-                      position: "relative",
-                      borderRadius: 8,
-                      overflow: "hidden",
-                      flexShrink: 0,
-                      boxShadow: "0 10px 22px rgba(20,19,59,0.18)",
+                      display: "flex",
+                      gap: 16,
+                      padding: "18px 18px 14px",
+                      background: "#F7F6F1",
+                      borderBottom: "1px solid var(--line)",
+                      textDecoration: "none",
+                      color: "inherit",
+                      alignItems: "center",
                     }}
                   >
-                    <Image
-                      src={book.coverImage}
-                      alt={book.title}
-                      fill
-                      sizes="100px"
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
-                  <div>
-                    <span className="pill pill-soft pill-sm" style={{ marginBottom: 6 }}>
-                      {book.category}
-                    </span>
-                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", color: "var(--ink)", lineHeight: 1.28 }}>
-                      {book.title}
-                    </h3>
-                    <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>
-                      {book.pages} Pages · {book.illustrations} Diagrams · {book.level}
-                    </div>
-                  </div>
-                </Link>
-
-                <div style={{ padding: "16px 20px 20px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <p style={{ fontSize: 13.3, color: "var(--body)", lineHeight: 1.6, flex: 1, marginBottom: 16 }}>
-                    {book.subtitle || book.desc}
-                  </p>
-
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    <button
-                      type="button"
-                      onClick={() => handleDownloadClick(book)}
-                      className="btn btn-navy btn-sm"
-                      style={{ flex: 1, cursor: "pointer" }}
-                    >
-                      <Icon name={isUnlocked ? "download" : "lock"} size={14} />
-                      {isUnlocked ? "Download PDF" : "Sign In to Download"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleSaveClick(book)}
-                      className="btn btn-outline btn-sm"
-                      title={isBookSaved?.(book.slug) ? "Saved in your Dashboard" : "Save book to your Dashboard"}
-                      aria-label={isBookSaved?.(book.slug) ? `Unsave ${book.title}` : `Save ${book.title}`}
+                    <div
                       style={{
-                        cursor: "pointer",
-                        padding: "9px 12px",
-                        background: isBookSaved?.(book.slug) ? "var(--green-tint)" : "transparent",
-                        color: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--ink)",
-                        borderColor: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--line-strong)",
+                        width: 84,
+                        height: 120,
+                        position: "relative",
+                        borderRadius: 6,
+                        border: "1px solid var(--line-strong)",
+                        overflow: "hidden",
+                        flexShrink: 0,
                       }}
                     >
-                      <Icon name="bookmark" size={14} />
-                      {isBookSaved?.(book.slug) ? "Saved" : "Save"}
-                    </button>
-                    <Link
-                      href={book.sharePath}
-                      className="btn btn-outline btn-sm"
-                      title="Open shareable book page"
-                      style={{ textDecoration: "none", padding: "9px 12px" }}
-                    >
-                      Share →
-                    </Link>
+                      <Image
+                        src={book.coverImage}
+                        alt={book.title}
+                        fill
+                        sizes="100px"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </div>
+                    <div>
+                      <span
+                        className="pill pill-sm"
+                        style={{
+                          marginBottom: 6,
+                          background: accent,
+                          color: "#FFFFFF",
+                          borderColor: accent,
+                        }}
+                      >
+                        {book.category}
+                      </span>
+                      <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", color: accent, lineHeight: 1.28 }}>
+                        {book.title}
+                      </h3>
+                      <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 6, fontWeight: 600 }}>
+                        {book.pages} Pages · {book.illustrations} Diagrams · {book.level}
+                      </div>
+                    </div>
+                  </Link>
+
+                  <div style={{ padding: "16px 20px 20px", display: "flex", flexDirection: "column", flex: 1 }}>
+                    <p style={{ fontSize: 13.3, color: "var(--body)", lineHeight: 1.6, flex: 1, marginBottom: 16 }}>
+                      {book.subtitle || book.desc}
+                    </p>
+
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                      <button
+                        type="button"
+                        onClick={() => handleDownloadClick(book)}
+                        className="btn btn-sm"
+                        style={{
+                          flex: 1,
+                          cursor: "pointer",
+                          background: accent,
+                          color: "#FFFFFF",
+                          borderColor: accent,
+                        }}
+                      >
+                        <Icon name={isUnlocked ? "download" : "lock"} size={14} />
+                        {isUnlocked ? "Download PDF" : "Sign In to Download"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleSaveClick(book)}
+                        className="btn btn-outline btn-sm"
+                        title={isBookSaved?.(book.slug) ? "Saved in your Dashboard" : "Save book to your Dashboard"}
+                        aria-label={isBookSaved?.(book.slug) ? `Unsave ${book.title}` : `Save ${book.title}`}
+                        style={{
+                          cursor: "pointer",
+                          padding: "9px 12px",
+                          background: isBookSaved?.(book.slug) ? "var(--green-tint)" : "transparent",
+                          color: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--ink)",
+                          borderColor: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--line-strong)",
+                        }}
+                      >
+                        <Icon name="bookmark" size={14} />
+                        {isBookSaved?.(book.slug) ? "Saved" : "Save"}
+                      </button>
+                      <Link
+                        href={book.sharePath}
+                        className="btn btn-outline btn-sm"
+                        title="Open shareable book page"
+                        style={{ textDecoration: "none", padding: "9px 12px" }}
+                      >
+                        Share →
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

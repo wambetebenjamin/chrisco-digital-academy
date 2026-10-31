@@ -308,16 +308,16 @@ export default function Chatbot() {
             width: "min(395px, calc(100vw - 48px))",
           }}
         >
-          {/* Header */}
-          <div style={{ background: "var(--navy)", padding: "14px 18px" }}>
+          {/* Header — Poster Royal Blue & Golden Yellow */}
+          <div style={{ background: "#003896", borderTop: "4px solid #F8C90E", padding: "14px 18px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
               <span
                 style={{
                   width: 40,
                   height: 40,
-                  borderRadius: 12,
-                  background: "var(--green)",
-                  color: "var(--navy)",
+                  borderRadius: "50%",
+                  background: "#EE6816",
+                  color: "#FFFFFF",
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -337,7 +337,7 @@ export default function Chatbot() {
                 >
                   CHRISCO Support Desk · Captain AI
                 </div>
-                <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.6)" }}>
+                <div style={{ fontSize: 11.5, color: "#F8C90E", fontWeight: 700 }}>
                   Omnichannel Live Chat &amp; Help Center
                 </div>
               </div>
@@ -347,7 +347,7 @@ export default function Chatbot() {
                   width: 9,
                   height: 9,
                   borderRadius: "50%",
-                  background: "var(--green)",
+                  background: "#38A128",
                   display: "inline-block",
                 }}
               />
@@ -359,9 +359,9 @@ export default function Chatbot() {
                 display: "grid",
                 gridTemplateColumns: "repeat(3, 1fr)",
                 gap: 6,
-                background: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.12)",
                 padding: 4,
-                borderRadius: 10,
+                borderRadius: 8,
               }}
             >
               {[
@@ -374,10 +374,10 @@ export default function Chatbot() {
                   type="button"
                   onClick={() => setActiveTab(t.id)}
                   style={{
-                    background: activeTab === t.id ? "var(--green)" : "transparent",
-                    color: activeTab === t.id ? "var(--navy)" : "#FFFFFF",
+                    background: activeTab === t.id ? "#F8C90E" : "transparent",
+                    color: activeTab === t.id ? "#0B1D51" : "#FFFFFF",
                     border: "none",
-                    borderRadius: 7,
+                    borderRadius: 6,
                     padding: "6px 8px",
                     fontSize: 11.5,
                     fontWeight: 800,
@@ -560,7 +560,7 @@ export default function Chatbot() {
           )}
 
           {activeTab === "help" && (
-            <div style={{ padding: 16, background: "#F8FAFC", maxHeight: 370, overflowY: "auto" }}>
+            <div style={{ padding: 16, background: "#F7F6F1", maxHeight: 370, overflowY: "auto" }}>
               <input
                 type="search"
                 value={helpQuery}
@@ -569,39 +569,49 @@ export default function Chatbot() {
                 className="input"
                 style={{ padding: "9px 12px", fontSize: 12.5, marginBottom: 12 }}
               />
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {filteredArticles.map((art) => (
-                  <div
-                    key={art.id}
-                    style={{
-                      background: "#FFFFFF",
-                      border: "1px solid #E2E8F0",
-                      borderRadius: 12,
-                      padding: 12,
-                    }}
-                  >
-                    <span
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #DCE3F0",
+                  borderRadius: 10,
+                  overflow: "hidden",
+                }}
+              >
+                {filteredArticles.map((art, idx) => {
+                  const pColors = ["#E60914", "#084EC8", "#38A128", "#EE6816"]
+                  const c = pColors[idx % pColors.length]
+                  return (
+                    <div
+                      key={art.id}
                       style={{
-                        display: "inline-block",
-                        fontSize: 10,
-                        fontWeight: 800,
-                        color: "#1D4ED8",
-                        background: "#EFF6FF",
-                        padding: "2px 8px",
-                        borderRadius: 999,
-                        marginBottom: 4,
+                        borderBottom: "1px solid #DCE3F0",
+                        borderLeft: `4px solid ${c}`,
+                        padding: 12,
                       }}
                     >
-                      {art.category}
-                    </span>
-                    <div style={{ fontWeight: 800, fontSize: 12.5, color: "#0F172A", marginBottom: 4 }}>
-                      {art.title}
+                      <span
+                        style={{
+                          display: "inline-block",
+                          fontSize: 10,
+                          fontWeight: 800,
+                          color: "#FFFFFF",
+                          background: c,
+                          padding: "2px 8px",
+                          borderRadius: 999,
+                          marginBottom: 4,
+                        }}
+                      >
+                        {art.category}
+                      </span>
+                      <div style={{ fontWeight: 800, fontSize: 12.5, color: c, marginBottom: 4 }}>
+                        • {art.title}
+                      </div>
+                      <div style={{ fontSize: 12, color: "#1E293B", lineHeight: 1.5 }}>
+                        {art.body}
+                      </div>
                     </div>
-                    <div style={{ fontSize: 12, color: "#475569", lineHeight: 1.5 }}>
-                      {art.body}
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           )}

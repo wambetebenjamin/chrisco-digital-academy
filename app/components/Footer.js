@@ -7,6 +7,7 @@ const exploreLinks = [
   { label: "Christian & Faith Books", href: "/library?shelf=christian" },
   { label: "Skill & Learning Books", href: "/library?shelf=learning" },
   { label: "Courses", href: "/courses" },
+  { label: "AI Prompt & Voice Studio", href: "/studio" },
   { label: "About Us", href: "/about" },
   { label: "Become a Tutor", href: "/become-a-tutor" },
   { label: "PURSUE Shop", href: "/shop" },
@@ -29,34 +30,97 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: "var(--navy)",
-        color: "rgba(255,255,255,0.6)",
+        background: "#003896",
+        color: "rgba(255,255,255,0.82)",
         position: "relative",
         overflow: "hidden",
-        borderTop: "1px solid rgba(255,255,255,0.1)",
+        borderTop: "4px solid #F8C90E",
       }}
     >
-      {/* Ghost wordmark */}
+      {/* Poster-style 4-item Royal Blue Contact Strip */}
       <div
-        aria-hidden
         style={{
-          position: "absolute",
-          bottom: -42,
-          left: "50%",
-          transform: "translateX(-50%)",
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(5rem, 18vw, 13rem)",
-          lineHeight: 1,
-          color: "rgba(255,255,255,0.025)",
-          whiteSpace: "nowrap",
-          pointerEvents: "none",
-          userSelect: "none",
+          background: "#084EC8",
+          borderBottom: "1px solid rgba(255,255,255,0.18)",
+          padding: "16px 0",
         }}
       >
-        CHRISCO
+        <div
+          className="container"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+            gap: 14,
+            alignItems: "center",
+            color: "#FFFFFF",
+            fontSize: 13.5,
+            fontWeight: 700,
+          }}
+        >
+          <a
+            href={`tel:${org.phone}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              color: "#FFFFFF",
+              textDecoration: "none",
+              borderRight: "1px solid rgba(255,255,255,0.28)",
+              paddingRight: 12,
+            }}
+          >
+            <Icon name="phone" size={18} />
+            <span>{org.phone}</span>
+          </a>
+
+          <a
+            href={`mailto:${org.email}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              color: "#FFFFFF",
+              textDecoration: "none",
+              borderRight: "1px solid rgba(255,255,255,0.28)",
+              paddingRight: 12,
+              wordBreak: "break-all",
+            }}
+          >
+            <Icon name="mail" size={18} />
+            <span>{org.email}</span>
+          </a>
+
+          <Link
+            href="/courses"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              color: "#FFFFFF",
+              textDecoration: "none",
+              borderRight: "1px solid rgba(255,255,255,0.28)",
+              paddingRight: 12,
+            }}
+          >
+            <Icon name="globe" size={18} />
+            <span>chrisco-digital-academy.vercel.app/courses</span>
+          </Link>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              color: "#FFFFFF",
+            }}
+          >
+            <Icon name="users" size={18} />
+            <span>@chrisco youth aflame</span>
+          </div>
+        </div>
       </div>
 
-      <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: 80, paddingBottom: 36 }}>
+      <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: 64, paddingBottom: 36 }}>
         <div className="footer-grid">
           {/* Brand */}
           <div className="footer-col">
@@ -65,14 +129,14 @@ export default function Footer() {
                 style={{
                   width: 40,
                   height: 40,
-                  borderRadius: 12,
-                  background: "var(--green)",
+                  borderRadius: "50%",
+                  background: "#EE6816",
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontFamily: "var(--font-display)",
                   fontSize: "1.15rem",
-                  color: "var(--navy)",
+                  color: "#FFFFFF",
                   flexShrink: 0,
                 }}
               >
@@ -80,10 +144,10 @@ export default function Footer() {
               </span>
               <span>
                 <span style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", color: "#fff", letterSpacing: "0.01em", display: "block", lineHeight: 1.1 }}>
-                  CHRISCO
+                  CHRISCO YOUTH <span style={{ color: "#EE6816" }}>AFLAME</span>
                 </span>
-                <span style={{ fontFamily: "var(--font-head)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--green)" }}>
-                  Digital Academy
+                <span style={{ fontFamily: "var(--font-head)", fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#F8C90E" }}>
+                  Digital Academy · Learn | Build | Impact
                 </span>
               </span>
             </Link>
@@ -147,7 +211,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <a href={org.whatsapp} className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
+            <a href={org.whatsapp} className="btn btn-amber btn-sm" style={{ marginTop: 24 }}>
               <Icon name="whatsapp" size={15} /> WhatsApp Us
             </a>
           </div>

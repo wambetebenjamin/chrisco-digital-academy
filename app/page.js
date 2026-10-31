@@ -4,50 +4,127 @@ import Navbar from "./Navbar"
 import Footer from "./components/Footer"
 import Chatbot from "./Chatbot"
 import PhotoBand from "./components/PhotoBand"
-import PageBackdrop from "./components/PageBackdrop"
 import Icon from "./components/Icon"
 import { courses, categories, categoryCounts, imageFor } from "./data/courses"
 import { org, tutor } from "./data/org"
 
 const skills = [
-  { num: "01", icon: "palette", title: "Graphic Design", desc: "Branding, posters and visual identity with Canva and Adobe tools." },
-  { num: "02", icon: "code", title: "Web Development", desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js." },
-  { num: "03", icon: "smartphone", title: "Social Media", desc: "Strategy, content creation and growth that gets real engagement." },
-  { num: "04", icon: "clapper", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events, a skill in demand." },
-  { num: "05", icon: "layers", title: "Animation", desc: "Motion graphics and animated content that stops the scroll." },
-  { num: "06", icon: "robot", title: "AI Expertise", desc: "Leveraging AI tools like ChatGPT for creativity and productivity." },
+  {
+    num: "01",
+    icon: "palette",
+    title: "Graphic Design",
+    color: "#E60914",
+    desc: "Branding, posters and visual identity with Canva and Adobe tools.",
+  },
+  {
+    num: "02",
+    icon: "code",
+    title: "Web Development",
+    color: "#084EC8",
+    desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js.",
+  },
+  {
+    num: "03",
+    icon: "smartphone",
+    title: "Social Media",
+    color: "#38A128",
+    desc: "Strategy, content creation and growth that gets real engagement.",
+  },
+  {
+    num: "04",
+    icon: "clapper",
+    title: "Video Editing",
+    color: "#EE6816",
+    desc: "Cinematic edits for YouTube, Reels and events, a skill in demand.",
+  },
+  {
+    num: "05",
+    icon: "layers",
+    title: "Animation",
+    color: "#D99B00",
+    desc: "Motion graphics and animated content that stops the scroll.",
+  },
+  {
+    num: "06",
+    icon: "robot",
+    title: "AI Expertise",
+    color: "#0B1D51",
+    desc: "Leveraging AI tools like ChatGPT for creativity and productivity.",
+  },
 ]
 
 const stats = [
-  { value: "500+", label: "Youth Trained" },
-  { value: "19", label: "Courses" },
-  { value: "2", label: "Districts" },
-  { value: "100%", label: "Practical" },
+  { value: "500+", label: "Youth Trained", color: "#F8C90E" },
+  { value: "19", label: "Courses", color: "#EE6816" },
+  { value: "2", label: "Districts", color: "#38A128" },
+  { value: "100%", label: "Practical", color: "#FFFFFF" },
 ]
 
-const featured = [courses[4], courses[0], courses[10]] // Freelancing, YouTube Automation, SWE & LLM
-
+const featured = [
+  { ...courses[4], posterColor: "#E60914" },  // Freelancing -> Poster Red
+  { ...courses[0], posterColor: "#084EC8" },  // YouTube Automation -> Poster Royal Blue
+  { ...courses[10], posterColor: "#38A128" }, // SWE & LLM -> Poster Leaf Green
+]
 
 const steps = [
-  { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI." },
-  { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request, we confirm on WhatsApp or email within a day." },
-  { num: "03", icon: "rocket", title: "Learn & Build", desc: "Follow the hands-on syllabus, finish your real-world project portfolio, and start earning." },
+  {
+    num: "01",
+    icon: "search",
+    title: "Browse & Choose",
+    color: "#E60914",
+    desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI.",
+  },
+  {
+    num: "02",
+    icon: "clipboard",
+    title: "Enroll in Minutes",
+    color: "#084EC8",
+    desc: "Send an enrollment request, we confirm on WhatsApp or email within a day.",
+  },
+  {
+    num: "03",
+    icon: "rocket",
+    title: "Learn & Build",
+    color: "#38A128",
+    desc: "Follow the hands-on syllabus, finish your real-world project portfolio, and start earning.",
+  },
+]
+
+const CATEGORY_POSTER_COLORS = [
+  "#E60914", // Red
+  "#084EC8", // Royal Blue
+  "#38A128", // Leaf Green
+  "#EE6816", // Flame Orange
+  "#D99B00", // Golden Yellow
+  "#E60914", // Red
+  "#084EC8", // Royal Blue
 ]
 
 export default function Home() {
   const counts = categoryCounts()
 
   return (
-    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
-      <PageBackdrop image="/images/bg-home.jpg" position="center 30%" />
+    <main style={{ minHeight: "100vh", overflowX: "hidden", background: "#F7F6F1" }}>
       <Navbar />
 
-      {/* ================= HERO ================= */}
-      <section style={{ padding: "clamp(116px, 15vw, 168px) 0 clamp(64px, 9vw, 104px)", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.16)" }}>
-        {/* The page-wide PageBackdrop supplies the photo; the hero only needs
-            its dark scrim so the white display type stays legible. */}
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.84) 0%, rgba(0,35,51,0.62) 50%, rgba(1,58,79,0.42) 100%)" }} />
-        <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
+      {/* ================= HERO (POSTER ROYAL BLUE & DEEP NAVY STAGE) ================= */}
+      <section
+        style={{
+          padding: "clamp(116px, 15vw, 160px) 0 clamp(60px, 8vw, 92px)",
+          position: "relative",
+          overflow: "hidden",
+          background: "#003896",
+          borderBottom: "4px solid #F8C90E",
+        }}
+      >
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(125deg, #0B1D51 0%, #003896 58%, #084EC8 100%)",
+          }}
+        />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
             style={{
@@ -56,80 +133,141 @@ export default function Home() {
               alignItems: "center",
               gap: 16,
               flexWrap: "wrap",
-              borderBottom: "1px solid rgba(255,255,255,0.16)",
-              paddingBottom: 20,
-              marginBottom: 48,
+              borderBottom: "1px solid rgba(255,255,255,0.22)",
+              paddingBottom: 18,
+              marginBottom: 42,
             }}
           >
-            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy</span>
-            <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
-              Under CHRISCO Youth Aflame
+            <span
+              style={{
+                fontFamily: "var(--font-head)",
+                fontSize: 12.5,
+                fontWeight: 800,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#F8C90E",
+              }}
+            >
+              CHRISCO YOUTH <span style={{ color: "#EE6816" }}>AFLAME</span> DIGITAL ACADEMY
+            </span>
+            <span
+              style={{
+                fontFamily: "var(--font-head)",
+                fontSize: 12.5,
+                fontWeight: 800,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "#FFFFFF",
+              }}
+            >
+              • LEARN | BUILD | IMPACT
             </span>
           </div>
 
           <div className="hero-grid">
-            {/* Category sidebar */}
+            {/* Category sidebar — clean white poster sheet with hairline dividers */}
             <aside className="hero-side" style={{ minWidth: 0 }}>
-              <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>
-                Explore by Category
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {categories.map((cat) => (
-                  <Link
-                    key={cat.name}
-                    href="/courses"
-                    className="pill pill-dark"
-                    style={{ justifyContent: "space-between", width: "100%", textDecoration: "none" }}
-                  >
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-                      <Icon name={cat.icon} size={15} /> {cat.name}
-                    </span>
-                    <span style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>{counts[cat.name] || 0}</span>
-                  </Link>
-                ))}
-              </div>
-
               <div
                 style={{
-                  marginTop: 20,
-                  background: "var(--navy)",
-                  border: "1px solid rgba(255,255,255,0.14)",
-                  borderRadius: 18,
-                  padding: "20px 18px",
-                  color: "#fff",
+                  background: "#FFFFFF",
+                  borderRadius: 12,
+                  border: "1px solid #DCE3F0",
+                  overflow: "hidden",
                 }}
               >
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", lineHeight: 1 }}>
-                  19<span style={{ color: "var(--green)", fontSize: "1rem" }}> courses</span>
+                <div
+                  style={{
+                    background: "#0B1D51",
+                    color: "#F8C90E",
+                    padding: "12px 16px",
+                    fontFamily: "var(--font-head)",
+                    fontWeight: 800,
+                    fontSize: 11.5,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Explore by Category
                 </div>
-                <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", margin: "8px 0 14px" }}>
-                  All built for real income.
+                <div>
+                  {categories.map((cat, idx) => {
+                    const cColor = CATEGORY_POSTER_COLORS[idx % CATEGORY_POSTER_COLORS.length]
+                    return (
+                      <Link
+                        key={cat.name}
+                        href={`/courses?category=${encodeURIComponent(cat.name)}`}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          padding: "11px 16px",
+                          borderBottom: "1px solid #E5E9F2",
+                          textDecoration: "none",
+                          color: "#0B1D51",
+                          fontWeight: 700,
+                          fontSize: 13.5,
+                        }}
+                      >
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+                          <span
+                            style={{
+                              width: 26,
+                              height: 26,
+                              borderRadius: "50%",
+                              background: cColor,
+                              color: "#FFFFFF",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Icon name={cat.icon} size={13} />
+                          </span>
+                          <span style={{ color: cColor, fontWeight: 800 }}>{cat.name}</span>
+                        </span>
+                        <span style={{ color: "#0B1D51", fontWeight: 800, fontSize: 12 }}>
+                          {counts[cat.name] || 0}
+                        </span>
+                      </Link>
+                    )
+                  })}
                 </div>
-                <Link href="/courses" className="btn btn-green btn-sm" style={{ textDecoration: "none", width: "100%" }}>
-                  Browse All →
-                </Link>
+                <div style={{ padding: "14px 16px", background: "#F7F6F1" }}>
+                  <Link
+                    href="/courses"
+                    className="btn btn-amber btn-sm"
+                    style={{ textDecoration: "none", width: "100%", fontWeight: 900 }}
+                  >
+                    Browse All 19 Courses →
+                  </Link>
+                </div>
               </div>
             </aside>
 
             {/* Main hero content */}
             <div style={{ minWidth: 0 }}>
-              <h1 className="display on-dark fade-up" style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)" }}>
-                Learn skills
+              <h1
+                className="display on-dark"
+                style={{ fontSize: "clamp(2.5rem, 5.8vw, 4.5rem)", lineHeight: 1.02 }}
+              >
+                <span style={{ color: "#F8C90E" }}>Learn skills</span>
                 <br />
-                that <span className="outline" style={{ WebkitTextStrokeColor: "rgba(255,255,255,0.85)" }}>pay</span>{" "}
-                <span className="accent-bright">for life.</span>
+                that pay <span style={{ color: "#EE6816" }}>for life.</span>
               </h1>
 
-              <p className="lead on-dark fade-up fade-up-1" style={{ maxWidth: 560, marginTop: 26 }}>
-                CHRISCO Digital Academy is a modern learning platform for African youth, practical courses in
+              <p
+                className="lead on-dark"
+                style={{ maxWidth: 560, marginTop: 22, color: "rgba(255,255,255,0.92)" }}
+              >
+                CHRISCO Digital Academy is a practical learning platform for African youth — hands-on courses in
                 design, code, marketing, writing, video and AI, taught by our tutors at CHRISCO Youth Aflame.
               </p>
 
-              <div className="fade-up fade-up-2" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 34 }}>
-                <Link href="/courses" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 30 }}>
+                <Link href="/courses" className="btn btn-amber btn-lg" style={{ textDecoration: "none" }}>
                   Explore Courses →
                 </Link>
-                <Link href="/sign-up" className="btn btn-amber btn-lg" style={{ textDecoration: "none" }}>
+                <Link href="/sign-up" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
                   Apply Free →
                 </Link>
                 <Link href="/about#tutor" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
@@ -137,28 +275,37 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Stats */}
+              {/* Stats — divided with crisp white poster lines */}
               <div
                 style={{
                   display: "grid",
                   gridTemplateColumns: "repeat(2, 1fr)",
                   gap: 0,
-                  borderTop: "1px solid rgba(255,255,255,0.16)",
-                  marginTop: 56,
+                  borderTop: "1px solid rgba(255,255,255,0.24)",
+                  marginTop: 48,
                 }}
               >
                 {stats.map((s, i) => (
                   <div
                     key={i}
                     style={{
-                      padding: "22px 24px 22px 0",
-                      borderBottom: "1px solid rgba(255,255,255,0.16)",
-                      borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.16)" : "none",
-                      paddingRight: i % 2 === 0 ? 24 : 0,
+                      padding: "20px 24px 20px 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.24)",
+                      borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.24)" : "none",
+                      paddingLeft: i % 2 === 1 ? 24 : 0,
                     }}
                   >
-                    <div className="stat-num" style={{ color: "#fff" }}>{s.value}</div>
-                    <div style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 600, marginTop: 4 }}>
+                    <div className="stat-num" style={{ color: s.color }}>{s.value}</div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.85)",
+                        fontWeight: 700,
+                        marginTop: 4,
+                      }}
+                    >
                       {s.label}
                     </div>
                   </div>
@@ -166,20 +313,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hero image tile */}
-            <div className="fade-up fade-up-1" style={{ minWidth: 0 }}>
-              <div style={{ position: "relative" }}>
-                <div
-                  style={{
-                    position: "relative",
-                    zIndex: 1,
-                    borderRadius: "var(--radius-xl)",
-                    overflow: "hidden",
-                    border: "1px solid var(--line)",
-                    boxShadow: "var(--shadow-lg)",
-                    aspectRatio: "4/4.4",
-                  }}
-                >
+            {/* Hero image frame — clean poster frame, no floating AI badge */}
+            <div style={{ minWidth: 0 }}>
+              <div
+                style={{
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  border: "3px solid #FFFFFF",
+                  background: "#FFFFFF",
+                }}
+              >
+                <div style={{ position: "relative", aspectRatio: "4/4.3" }}>
                   <Image
                     src="/images/hero-tile.jpg"
                     alt="Young learner at CHRISCO Digital Academy"
@@ -188,66 +332,49 @@ export default function Home() {
                     sizes="(min-width: 1100px) 400px, (min-width: 768px) 45vw, 92vw"
                     style={{ objectFit: "cover" }}
                   />
-                  <span
-                    className="pill pill-green pill-sm"
-                    style={{ position: "absolute", top: 18, left: 18, boxShadow: "0 6px 20px rgba(0,35,51,0.25)" }}
-                  >
-                    <Icon name="flame" size={13} strokeWidth={2.4} /> 500+ learners
-                  </span>
                 </div>
-
-                {/* Overlay caption card */}
                 <div
                   style={{
-                    position: "relative",
-                    zIndex: 2,
-                    marginTop: -46,
-                    marginLeft: 18,
-                    marginRight: 18,
-                    background: "var(--navy)",
-                    borderRadius: 18,
-                    padding: "18px 22px",
-                    color: "#fff",
+                    background: "#FFFFFF",
+                    padding: "14px 18px",
                     display: "flex",
                     alignItems: "center",
-                    gap: 14,
-                    boxShadow: "var(--shadow-md)",
+                    gap: 12,
+                    borderTop: "3px solid #E60914",
                   }}
                 >
                   <span
                     style={{
-                      width: 46,
-                      height: 46,
-                      borderRadius: 14,
-                      background: "var(--green)",
-                      color: "var(--navy)",
+                      width: 38,
+                      height: 38,
+                      borderRadius: "50%",
+                      background: "#E60914",
+                      color: "#FFFFFF",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontFamily: "var(--font-display)",
-                      fontSize: 16,
                       flexShrink: 0,
                     }}
                   >
-                    <Icon name="cap" size={22} strokeWidth={1.8} />
+                    <Icon name="cap" size={19} strokeWidth={1.9} />
                   </span>
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14.5 }}>CHRISCO Youth Aflame</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>Our tutors</div>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14, color: "#0B1D51" }}>
+                      CHRISCO Youth Aflame
+                    </div>
+                    <div style={{ fontSize: 12, color: "#475569" }}>500+ youth trained across East Africa</div>
                   </div>
                   <span
                     style={{
                       marginLeft: "auto",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 6,
-                      fontSize: 11.5,
-                      fontWeight: 700,
-                      color: "var(--green)",
-                      flexShrink: 0,
+                      background: "#38A128",
+                      color: "#FFFFFF",
+                      fontSize: 11,
+                      fontWeight: 800,
+                      padding: "4px 10px",
+                      borderRadius: 999,
                     }}
                   >
-                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--green)" }} />
                     Open
                   </span>
                 </div>
@@ -257,8 +384,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= WHAT YOU GET (layer 1) ================= */}
-      <section className="section-frost" style={{ padding: "0" }}>
+      {/* ================= 4-ITEM POSTER INFO BAR (RED, BLUE, GREEN, ORANGE) ================= */}
+      <section style={{ background: "#FFFFFF", borderBottom: "1px solid var(--line)" }}>
         <div className="container">
           <div className="factstrip">
             {[
@@ -268,7 +395,7 @@ export default function Home() {
               { icon: "whatsapp", title: "Fast support", desc: "Same-day help on WhatsApp" },
             ].map((f) => (
               <div key={f.title} className="factstrip-item">
-                <span className="factstrip-ico"><Icon name={f.icon} size={18} strokeWidth={1.9} /></span>
+                <span className="factstrip-ico"><Icon name={f.icon} size={18} strokeWidth={2} /></span>
                 <div>
                   <div className="factstrip-title">{f.title}</div>
                   <div className="factstrip-desc">{f.desc}</div>
@@ -280,19 +407,14 @@ export default function Home() {
       </section>
 
       {/* ================= OFFICIAL TEENS AI & PROJECTS BOOTCAMP POSTER ================= */}
-      <section className="section section-frost">
+      <section className="section" style={{ background: "#F7F6F1", borderBottom: "1px solid var(--line)" }}>
         <div className="container">
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: 36,
+              gap: 40,
               alignItems: "center",
-              background: "#FFFFFF",
-              border: "1px solid var(--line)",
-              borderRadius: 24,
-              padding: "clamp(24px, 4vw, 44px)",
-              boxShadow: "var(--shadow-md)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -300,10 +422,10 @@ export default function Home() {
                 style={{
                   width: "100%",
                   maxWidth: 460,
-                  borderRadius: 18,
+                  borderRadius: 12,
                   overflow: "hidden",
-                  boxShadow: "0 18px 42px rgba(0, 35, 51, 0.18)",
-                  border: "1px solid var(--line)",
+                  border: "2px solid #084EC8",
+                  background: "#FFFFFF",
                 }}
               >
                 <Image
@@ -317,40 +439,134 @@ export default function Home() {
             </div>
 
             <div>
-              <span className="eyebrow">Featured Holiday Program · Ages 13+</span>
-              <h2 className="title" style={{ marginTop: 14 }}>
-                Teens AI &amp; <span className="accent">Projects Bootcamp!</span>
-              </h2>
-              <p style={{ fontSize: 15.5, color: "var(--muted)", lineHeight: 1.7, marginTop: 14 }}>
-                Fun AI learning and creative digital projects designed for young minds. Running{" "}
-                <strong>3 Nov – 11 Dec 2026 (6 Weeks)</strong> for <strong>Ages 13+</strong> via
-                online classes plus physical &amp; team activities.
-              </p>
-
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 10,
-                  marginTop: 18,
-                  marginBottom: 24,
-                  fontSize: 14.5,
-                  color: "var(--ink)",
+                  fontFamily: "var(--font-head)",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "#0B1D51",
                 }}
               >
-                <div>
-                  • <strong>Learning AI &amp; Projects:</strong> Teen-friendly tools, prompts &amp; hands-on builds
+                CHRISCO YOUTH <span style={{ color: "#EE6816" }}>AFLAME</span> DIGITAL ACADEMY • LEARN | BUILD | IMPACT
+              </div>
+
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 4.2vw, 3.1rem)",
+                  lineHeight: 1.04,
+                  textTransform: "uppercase",
+                  marginTop: 10,
+                }}
+              >
+                <span style={{ color: "#E60914" }}>TEENS AI &amp;</span>
+                <br />
+                <span style={{ color: "#084EC8" }}>PROJECTS BOOTCAMP!</span>
+              </h2>
+
+              <p style={{ fontSize: 16, fontWeight: 600, color: "#111827", lineHeight: 1.6, marginTop: 14 }}>
+                Fun AI learning &amp; creative digital projects designed for young minds.
+              </p>
+
+              {/* Exact Poster White Feature Sheet with Horizontal Dividers */}
+              <div className="poster-sheet" style={{ marginTop: 20, marginBottom: 20 }}>
+                <div className="poster-row">
+                  <span className="poster-circle-ico" style={{ background: "#E60914" }}>
+                    <Icon name="robot" size={20} />
+                  </span>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: 15, color: "#E60914" }}>
+                      • Learning AI &amp; Projects:
+                    </div>
+                    <div style={{ fontSize: 14, color: "#111827", marginTop: 2 }}>
+                      Teen-friendly tools, prompts &amp; hands-on builds
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  • <strong>Access to Digital Media:</strong> Laptop/tablet/phone required
+
+                <div className="poster-row">
+                  <span className="poster-circle-ico" style={{ background: "#084EC8" }}>
+                    <Icon name="laptop" size={20} />
+                  </span>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: 15, color: "#084EC8" }}>
+                      • Access to Digital Media:
+                    </div>
+                    <div style={{ fontSize: 14, color: "#111827", marginTop: 2 }}>
+                      Laptop/tablet/phone required
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  • <strong>Physical &amp; Team Activities:</strong> Dates &amp; venues to be communicated
+
+                <div className="poster-row">
+                  <span className="poster-circle-ico" style={{ background: "#38A128" }}>
+                    <Icon name="users" size={20} />
+                  </span>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: 15, color: "#38A128" }}>
+                      • Physical &amp; Team Activities:
+                    </div>
+                    <div style={{ fontSize: 14, color: "#111827", marginTop: 2 }}>
+                      Dates &amp; venues to be communicated
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Exact Poster 4-Item Info Strip */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+                  background: "#FFFFFF",
+                  border: "1px solid #DCE3F0",
+                  borderRadius: 999,
+                  padding: "12px 18px",
+                  gap: 10,
+                  marginBottom: 22,
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8, borderRight: "1px solid #DCE3F0", paddingRight: 8 }}>
+                  <span style={{ color: "#E60914", fontWeight: 900 }}>
+                    <Icon name="clock" size={18} />
+                  </span>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
+                    3 Nov –<br />11 Dec 2026
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: 8, borderRight: "1px solid #DCE3F0", paddingRight: 8 }}>
+                  <span style={{ color: "#084EC8", fontWeight: 900 }}>
+                    <Icon name="clock" size={18} />
+                  </span>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
+                    6<br />Weeks
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: 8, borderRight: "1px solid #DCE3F0", paddingRight: 8 }}>
+                  <span style={{ color: "#38A128", fontWeight: 900 }}>
+                    <Icon name="users" size={18} />
+                  </span>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
+                    Ages<br />13+
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ color: "#EE6816", fontWeight: 900 }}>
+                    <Icon name="globe" size={18} />
+                  </span>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
+                    Online<br />Classes
+                  </div>
                 </div>
               </div>
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-                <Link href="/courses" className="btn btn-green" style={{ textDecoration: "none" }}>
+                <Link href="/courses" className="btn btn-amber" style={{ textDecoration: "none", fontWeight: 900 }}>
                   Explore Courses &amp; Enroll →
                 </Link>
                 <Link href="/studio" className="btn btn-navy" style={{ textDecoration: "none" }}>
@@ -362,54 +578,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SKILLS (layer 2) ================= */}
-      <section className="section section-frost-alt">
+      {/* ================= SIX SKILL TRACKS (CLEAN POSTER SHEET, NO AI CARDS) ================= */}
+      <section className="section" style={{ background: "#FFFFFF", borderBottom: "1px solid var(--line)" }}>
         <div className="container">
-          <div style={{ maxWidth: 640, marginBottom: 56 }}>
-            <span className="eyebrow">What you&apos;ll master</span>
-            <h2 className="title" style={{ marginTop: 16 }}>
-              Six skill tracks. One mission: <span className="accent">your future.</span>
+          <div style={{ maxWidth: 640, marginBottom: 42 }}>
+            <span className="eyebrow" style={{ color: "#E60914" }}>What you&apos;ll master</span>
+            <h2 className="title" style={{ marginTop: 12 }}>
+              Six skill tracks. One mission: <span style={{ color: "#084EC8" }}>your future.</span>
             </h2>
           </div>
 
-          <div className="grid-3">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              background: "#FFFFFF",
+              border: "1px solid #DCE3F0",
+              borderRadius: 12,
+              overflow: "hidden",
+            }}
+          >
             {skills.map((skill, i) => (
-              <div key={i} className="card card-hover" style={{ padding: "30px 28px", position: "relative" }}>
-                <div className="ghost-num">{skill.num}</div>
-                <div
+              <div
+                key={skill.num}
+                style={{
+                  padding: "26px 24px",
+                  borderBottom: "1px solid #DCE3F0",
+                  borderRight: "1px solid #DCE3F0",
+                  borderTop: `4px solid ${skill.color}`,
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 16,
+                }}
+              >
+                <span
                   style={{
-                    width: 56,
-                    height: 56,
-                    borderRadius: 16,
-                    background: "var(--green-tint)",
-                    color: "var(--green-deep)",
-                    display: "flex",
+                    width: 46,
+                    height: 46,
+                    borderRadius: "50%",
+                    background: skill.color,
+                    color: "#FFFFFF",
+                    display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: 20,
+                    flexShrink: 0,
                   }}
                 >
-                  <Icon name={skill.icon} size={26} />
+                  <Icon name={skill.icon} size={22} />
+                </span>
+                <div>
+                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, color: skill.color, marginBottom: 6 }}>
+                    • {skill.title}
+                  </h3>
+                  <p style={{ fontSize: 14, color: "#1E293B", lineHeight: 1.6, marginBottom: 12 }}>
+                    {skill.desc}
+                  </p>
+                  <Link
+                    href="/courses"
+                    style={{
+                      fontFamily: "var(--font-head)",
+                      fontSize: 13,
+                      fontWeight: 800,
+                      color: "#0B1D51",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Explore courses <span style={{ color: skill.color }}>→</span>
+                  </Link>
                 </div>
-                <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 10 }}>{skill.title}</h3>
-                <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.65, marginBottom: 20 }}>{skill.desc}</p>
-                <Link href="/courses" className="link-arrow" style={{ fontSize: 13 }}>
-                  Explore courses <span className="arr">→</span>
-                </Link>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ================= FEATURED COURSES (layer 1) ================= */}
-      <section className="section section-frost">
+      {/* ================= FEATURED COURSES (POSTER RED, BLUE, GREEN) ================= */}
+      <section className="section" style={{ background: "#F7F6F1", borderBottom: "1px solid var(--line)" }}>
         <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 48 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 40 }}>
             <div>
-              <span className="eyebrow">Course catalogue</span>
-              <h2 className="title" style={{ marginTop: 16 }}>
-                Featured courses that <span className="accent">actually pay</span>
+              <span className="eyebrow" style={{ color: "#EE6816" }}>Course catalogue</span>
+              <h2 className="title" style={{ marginTop: 12 }}>
+                Featured courses that <span style={{ color: "#38A128" }}>actually pay</span>
               </h2>
             </div>
             <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>
@@ -421,86 +671,91 @@ export default function Home() {
             {featured.map((course) => (
               <Link
                 key={course.id}
-                href="/courses"
-                className="card card-hover"
-                style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
+                href={`/courses?course=${course.id}`}
+                style={{
+                  textDecoration: "none",
+                  background: "#FFFFFF",
+                  border: "1px solid #DCE3F0",
+                  borderTop: `5px solid ${course.posterColor}`,
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
               >
-                {/* Card header, photo under a navy wash; course colour survives
-                    only as a thin identity rule so the grid stays calm. */}
-                <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", background: "var(--navy)" }}>
+                <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", background: "#0B1D51" }}>
                   <Image
                     src={imageFor(course)}
-                    alt=""
+                    alt={course.title}
                     fill
                     sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
                     style={{ objectFit: "cover" }}
                   />
-                  <div
-                    aria-hidden
+                  <span
                     style={{
                       position: "absolute",
-                      inset: 0,
-                      background: "linear-gradient(152deg, rgba(0,35,51,0.62) 0%, rgba(0,35,51,0.34) 58%, rgba(1,58,79,0.16) 100%)",
+                      top: 12,
+                      left: 12,
+                      background: course.posterColor,
+                      color: "#FFFFFF",
+                      fontSize: 11,
+                      fontWeight: 800,
+                      padding: "4px 12px",
+                      borderRadius: 999,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
                     }}
-                  />
-                  <span
-                    className="pill pill-sm"
-                    style={{ position: "absolute", top: 14, left: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
                   >
                     {course.category}
                   </span>
+                </div>
+
+                <div style={{ padding: "22px 24px 24px", display: "flex", flexDirection: "column", flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+                    <span
+                      style={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: "50%",
+                        background: course.posterColor,
+                        color: "#FFFFFF",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <Icon name={course.icon} size={18} />
+                    </span>
+                    <div>
+                      <h3 style={{ fontSize: "1.1rem", fontWeight: 800, color: course.posterColor }}>
+                        {course.title}
+                      </h3>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: "#475569", textTransform: "uppercase" }}>
+                        {course.level} · {course.duration}
+                      </div>
+                    </div>
+                  </div>
+
+                  <p style={{ fontSize: 13.8, color: "#1E293B", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>
+                    {course.desc}
+                  </p>
+
                   <div
                     style={{
-                      position: "absolute",
-                      left: 18,
-                      right: 18,
-                      bottom: 16,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      gap: 12,
+                      borderTop: "1px solid #E5E9F2",
+                      paddingTop: 14,
+                      fontSize: 12.5,
+                      fontWeight: 800,
+                      color: "#0B1D51",
                     }}
                   >
-                    <span
-                      style={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: 14,
-                        background: "rgba(255,255,255,0.14)",
-                        border: "1px solid rgba(255,255,255,0.26)",
-                        color: "#fff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Icon name={course.icon} size={24} strokeWidth={1.7} />
-                    </span>
-                    <span style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.82)" }}>
-                      {course.level}
-                    </span>
+                    <span>{course.students} learners · ★ {course.rating}</span>
+                    <span style={{ color: course.posterColor }}>Open course →</span>
                   </div>
-                  <span
-                    aria-hidden
-                    style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }}
-                  />
-                </div>
-
-                {/* Card body */}
-                <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, marginBottom: 6 }}>{course.title}</h3>
-                  <p style={{ fontFamily: "var(--font-head)", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
-                    {org.courseCredit}
-                  </p>
-                  <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{course.desc}</p>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-                    <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
-                    <span className="pill pill-soft pill-sm"><Icon name="star" size={13} strokeWidth={2.2} /> {course.rating}</span>
-                    <span className="pill pill-soft pill-sm"><Icon name="users" size={13} strokeWidth={2.2} /> {course.students}</span>
-                  </div>
-                  <span className="link-arrow" style={{ fontSize: 13.5 }}>
-                    View course <span className="arr">→</span>
-                  </span>
                 </div>
               </Link>
             ))}
@@ -508,16 +763,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= TWO DEDICATED BOOK SHELVES (CHRISTIAN BESIDE LEARNING) ================= */}
-      <section className="section" style={{ background: "#fff", borderTop: "1px solid var(--line)" }}>
+      {/* ================= TWO DEDICATED BOOK SHELVES (CLEAN DIVIDED SHEET) ================= */}
+      <section className="section" style={{ background: "#FFFFFF", borderBottom: "1px solid var(--line)" }}>
         <div className="container">
-          <div style={{ maxWidth: 680, marginBottom: 38 }}>
-            <span className="eyebrow">CHRISCO Online Library</span>
-            <h2 className="display" style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", color: "var(--ink)", marginTop: 14 }}>
-              <span style={{ color: "#010C80" }}>Christian Books</span> &amp;{" "}
-              <span style={{ color: "var(--green-deep)" }}>Course Handbooks.</span>
+          <div style={{ maxWidth: 680, marginBottom: 36 }}>
+            <span className="eyebrow" style={{ color: "#E60914" }}>CHRISCO Online Library</span>
+            <h2 className="display" style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", color: "#0B1D51", marginTop: 12 }}>
+              <span style={{ color: "#E60914" }}>Christian Books</span> &amp;{" "}
+              <span style={{ color: "#084EC8" }}>Course Handbooks.</span>
             </h2>
-            <p style={{ color: "var(--muted)", fontSize: 15.5, lineHeight: 1.7, marginTop: 12 }}>
+            <p style={{ color: "#1E293B", fontSize: 15.5, lineHeight: 1.7, marginTop: 10 }}>
               Sign in to read, save, and download Christian books and practical course handbooks from your Dashboard.
             </p>
           </div>
@@ -526,43 +781,50 @@ export default function Home() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: 28,
+              background: "#FFFFFF",
+              border: "1px solid #DCE3F0",
+              borderRadius: 12,
+              overflow: "hidden",
             }}
           >
-            {/* Shelf A: Christian & Faith Books */}
+            {/* Shelf A: Christian & Faith Books (Poster Red & Orange) */}
             <div
-              className="card"
               style={{
-                padding: "32px",
-                background: "linear-gradient(150deg, #010C80 0%, #122191 100%)",
-                color: "#fff",
+                padding: "32px 28px",
+                borderTop: "5px solid #E60914",
+                borderRight: "1px solid #DCE3F0",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
               }}
             >
               <div>
-                <span className="pill pill-sm" style={{ background: "#FA3F26", color: "#fff", border: "none", marginBottom: 16 }}>
-                  <Icon name="flame" size={13} /> Christian &amp; Faith Shelf
-                </span>
-                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.45rem", marginBottom: 10 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                  <span className="poster-circle-ico" style={{ background: "#E60914" }}>
+                    <Icon name="flame" size={20} />
+                  </span>
+                  <span style={{ fontWeight: 800, fontSize: 13, color: "#E60914", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                    Christian &amp; Faith Shelf
+                  </span>
+                </div>
+                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "#0B1D51", marginBottom: 10 }}>
                   Joseph: 7 Lessons Every Emerging Seer Prophet Must Learn
                 </h3>
-                <p style={{ fontSize: 14.2, color: "rgba(255,255,255,0.82)", lineHeight: 1.7, marginBottom: 22 }}>
+                <p style={{ fontSize: 14.2, color: "#1E293B", lineHeight: 1.7, marginBottom: 22 }}>
                   A biblical study from Genesis 37 to 50 on dreams, character, private integrity, and appointed fulfillment, published by CHRISCO Youth Aflame.
                 </p>
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 <Link
                   href="/library/joseph-7-lessons-emerging-seer-prophet"
-                  className="btn btn-green btn-sm"
+                  className="btn btn-red btn-sm"
                   style={{ textDecoration: "none" }}
                 >
                   Open &amp; Share Christian Book →
                 </Link>
                 <Link
                   href="/library?shelf=christian"
-                  className="btn btn-outline-light btn-sm"
+                  className="btn btn-outline btn-sm"
                   style={{ textDecoration: "none" }}
                 >
                   Christian Shelf
@@ -570,26 +832,29 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Shelf B: Digital Skill & Learning Books */}
+            {/* Shelf B: Digital Skill & Learning Books (Poster Royal Blue & Green) */}
             <div
-              className="card"
               style={{
-                padding: "32px",
-                background: "var(--layer-1)",
-                border: "1px solid var(--line)",
+                padding: "32px 28px",
+                borderTop: "5px solid #084EC8",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
               }}
             >
               <div>
-                <span className="pill pill-sm" style={{ background: "#E0E4FF", color: "#1D2EA8", border: "none", marginBottom: 16 }}>
-                  <Icon name="cap" size={13} /> Skill &amp; Learning Shelf
-                </span>
-                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.45rem", color: "var(--ink)", marginBottom: 10 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                  <span className="poster-circle-ico" style={{ background: "#084EC8" }}>
+                    <Icon name="cap" size={20} />
+                  </span>
+                  <span style={{ fontWeight: 800, fontSize: 13, color: "#084EC8", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                    Skill &amp; Learning Shelf
+                  </span>
+                </div>
+                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "#0B1D51", marginBottom: 10 }}>
                   19 Illustrated Digital Skill Course Handbooks
                 </h3>
-                <p style={{ fontSize: 14.2, color: "var(--body)", lineHeight: 1.7, marginBottom: 22 }}>
+                <p style={{ fontSize: 14.2, color: "#1E293B", lineHeight: 1.7, marginBottom: 22 }}>
                   Practical study guides for Python, AI, YouTube Automation, Executive Communication, Copywriting, Print on Demand, and 13 more digital tracks.
                 </p>
               </div>
@@ -603,7 +868,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/library"
-                  className="btn btn-outline btn-sm"
+                  className="btn btn-outline-green btn-sm"
                   style={{ textDecoration: "none" }}
                 >
                   Full Library
@@ -614,33 +879,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= TUTOR ================= */}
-      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.86)", color: "rgba(255,255,255,0.82)" }}>
-        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.22 }} />
-        </div>
+      {/* ================= TUTOR (POSTER ROYAL BLUE & GOLDEN YELLOW) ================= */}
+      <section
+        className="section"
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          background: "#003896",
+          color: "#FFFFFF",
+          borderBottom: "4px solid #EE6816",
+        }}
+      >
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split" style={{ alignItems: "center" }}>
             <div>
-              <span className="eyebrow on-dark">Meet our tutor</span>
-              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
-                Taught by people who <span className="accent-bright">do the work.</span>
+              <span className="eyebrow on-dark" style={{ color: "#F8C90E" }}>Meet our tutor</span>
+              <h2 className="display on-dark" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 16 }}>
+                Taught by people who <span style={{ color: "#F8C90E" }}>do the work.</span>
               </h2>
-              <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
+              <p style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 13.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#EE6816", margin: "14px 0 22px" }}>
                 {tutor.role}, CHRISCO Youth Aflame
               </p>
-              <p className="lead on-dark" style={{ maxWidth: 520 }}>
+              <p className="lead on-dark" style={{ maxWidth: 520, color: "rgba(255,255,255,0.9)" }}>
                 Every class is led by our lead tutor: a Computer Science graduate who works daily in design,
                 development, video and AI. CHRISCO Digital Academy is a learning platform of CHRISCO Youth Aflame,
                 operating under CHRISCO Fellowship of Churches International.
               </p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
-                {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t) => (
-                  <span key={t} className="pill pill-dark pill-sm">{t}</span>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "24px 0 32px" }}>
+                {[
+                  { name: "Graphic Design", bg: "#E60914" },
+                  { name: "Web Development", bg: "#084EC8" },
+                  { name: "Video Editing", bg: "#EE6816" },
+                  { name: "Animation", bg: "#38A128" },
+                  { name: "Social Media", bg: "#F8C90E", text: "#0B1D51" },
+                  { name: "AI", bg: "#0B1D51" },
+                ].map((t) => (
+                  <span
+                    key={t.name}
+                    style={{
+                      background: t.bg,
+                      color: t.text || "#FFFFFF",
+                      fontSize: 12,
+                      fontWeight: 800,
+                      padding: "6px 14px",
+                      borderRadius: 999,
+                    }}
+                  >
+                    {t.name}
+                  </span>
                 ))}
               </div>
               <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <Link href="/contact" className="btn btn-green" style={{ textDecoration: "none" }}>
+                <Link href="/contact" className="btn btn-amber" style={{ textDecoration: "none" }}>
                   Get In Touch →
                 </Link>
                 <Link href="/become-a-tutor" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
@@ -650,8 +940,15 @@ export default function Home() {
             </div>
 
             <div>
-              <div style={{ position: "relative" }}>
-                <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
+              <div
+                style={{
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  border: "3px solid #FFFFFF",
+                  background: "#FFFFFF",
+                }}
+              >
+                <div style={{ position: "relative", aspectRatio: "4/3" }}>
                   <Image
                     src="/images/workspace.jpg"
                     alt="Creative workspace, design, code and video"
@@ -662,25 +959,34 @@ export default function Home() {
                 </div>
                 <div
                   style={{
-                    position: "absolute",
-                    left: 20,
-                    bottom: 20,
-                    background: "rgba(0,35,51,0.9)",
-                    backdropFilter: "blur(12px)",
-                    border: "1px solid rgba(255,255,255,0.14)",
-                    borderRadius: 16,
+                    background: "#FFFFFF",
+                    color: "#0B1D51",
                     padding: "14px 18px",
                     display: "flex",
                     gap: 14,
                     alignItems: "center",
+                    borderTop: "3px solid #38A128",
                   }}
                 >
-                  <span style={{ color: "var(--green)" }}>
-                    <Icon name="laptop" size={26} strokeWidth={1.7} />
+                  <span
+                    style={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: "50%",
+                      background: "#38A128",
+                      color: "#FFFFFF",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Icon name="laptop" size={20} strokeWidth={1.9} />
                   </span>
                   <div>
-                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>7+ skill areas</div>
-                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>taught hands-on</div>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#38A128", fontSize: 14 }}>
+                      7+ Practical Skill Tracks
+                    </div>
+                    <div style={{ fontSize: 12, color: "#475569" }}>Hands-on project mentorship</div>
                   </div>
                 </div>
               </div>
@@ -689,54 +995,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= HOW IT WORKS (layer 2) ================= */}
-      <section className="section section-frost-alt">
+      {/* ================= HOW IT WORKS (3-ITEM POSTER SHEET: RED, BLUE, GREEN) ================= */}
+      <section className="section" style={{ background: "#F7F6F1" }}>
         <div className="container">
-          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
-            <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
-            <h2 className="title" style={{ marginTop: 16 }}>
-              From zero to earning <span className="accent">in 3 steps</span>
+          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 44px" }}>
+            <span className="eyebrow" style={{ justifyContent: "center", color: "#E60914" }}>How it works</span>
+            <h2 className="title" style={{ marginTop: 12 }}>
+              From zero to earning <span style={{ color: "#084EC8" }}>in 3 steps</span>
             </h2>
           </div>
 
-          <div className="grid-3" style={{ alignItems: "stretch" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              background: "#FFFFFF",
+              border: "1px solid #DCE3F0",
+              borderRadius: 12,
+              overflow: "hidden",
+            }}
+          >
             {steps.map((step, i) => (
-              <div key={i} style={{ position: "relative" }}>
-                <div className="card card-hover" style={{ padding: "34px 30px", height: "100%" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontSize: "2.2rem",
-                        color: "var(--green-deep)",
-                      }}
-                    >
-                      {step.num}
-                    </span>
-                    <span style={{ color: "var(--ink)" }}>
-                      <Icon name={step.icon} size={30} strokeWidth={1.6} />
-                    </span>
-                  </div>
-                  <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 10 }}>{step.title}</h3>
-                  <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7 }}>{step.desc}</p>
+              <div
+                key={step.num}
+                style={{
+                  padding: "30px 26px",
+                  borderRight: i < steps.length - 1 ? "1px solid #DCE3F0" : "none",
+                  borderTop: `5px solid ${step.color}`,
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 16,
+                }}
+              >
+                <span
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: "50%",
+                    background: step.color,
+                    color: "#FFFFFF",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.1rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  {step.num}
+                </span>
+                <div>
+                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, color: step.color, marginBottom: 8 }}>
+                    • {step.title}
+                  </h3>
+                  <p style={{ fontSize: 14, color: "#1E293B", lineHeight: 1.68 }}>
+                    {step.desc}
+                  </p>
                 </div>
-                {i < steps.length - 1 && (
-                  <span
-                    className="hide-mobile"
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      right: -34,
-                      zIndex: 2,
-                      fontFamily: "var(--font-display)",
-                      color: "var(--line-strong)",
-                      fontSize: "1.4rem",
-                      transform: "translateY(-50%)",
-                    }}
-                  >
-                    →
-                  </span>
-                )}
               </div>
             ))}
           </div>

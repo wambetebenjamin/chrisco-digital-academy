@@ -1,82 +1,63 @@
 "use client"
 
-import { useState, useEffect, useMemo, useRef } from "react"
+import { useState, useEffect, useMemo } from "react"
 
-const LANGUAGE_PRESETS = [
-  { code: "en-GB", label: "English (East Africa / UK)" },
-  { code: "en-US", label: "English (Studio US)" },
-  { code: "sw-KE", label: "Kiswahili (Kenya)" },
-  { code: "fr-FR", label: "Français (Africa / France)" },
-]
+export function splitScriptIntoChunks(rawText = "") {
+  const cleaned = String(rawText || "").trim()
+  if (!cleaned) return []
 
-export function splitIntoSpeechChunks(rawText = "", maxChars = 220) {
-  const normalized = String(rawText || "")
-    .replace(/\r\n/g, "\n")
-    .trim()
-  if (!normalized) return []
-
-  const paragraphs = normalized
-    .split(/\n{2,}|\n/)
+  const paragraphs = cleaned
+    .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean)
 
   const chunks = []
-  for (const para of paragraphs) {
-    if (para.length <= maxChars) {
-      chunks.push(para)
-      continue
-    }
-    const sentences = para.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [para]
-    let current = ""
-    for (const s of sentences) {
-      const clean = s.trim()
-      if (!clean) continue
-      if ((current + " " + clean).trim().length <= maxChars) {
-        current = (current + " " + clean).trim()
-      } else {
-        if (current) chunks.push(current)
-        current = clean
-      }
-    }
-    if (current) chunks.push(current)
-  }
+  paragraphs.forEach((para, pIndex) => {
+    const sentences = para
+      .split(/(?<=[.!?])\s+/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+
+    sentences.forEach((sentence, sIndex) => {
+      chunks.push({
+        id: `p${pIndex + 1}-s${sIndex + 1}`,
+        paragraph: pIndex + 1,
+        text: sentence,
+      })
+    })
+  })
+
   return chunks
 }
 
+const LANGUAGE_PRESETS = [
+  { code: "en-KE", label: "English (Kenya)" },
+  { code: "en-UG", label: "English (Uganda)" },
+  { code: "en-GB", label: "English (UK)" },
+  { code: "en-US", label: "English (US)" },
+  { code: "sw-KE", label: "Kiswahili (East Africa)" },
+]
+
+const CHUNK_POSTER_COLORS = ["#E60914", "#084EC8", "#38A128", "#EE6816", "#D99B00"]
+
 export default function VoiceStudioNarrator({
-  title = "Course & Book Audio Narrator",
-  initialText = "",
+  title = "VoiceStudio · AI Audio Narrator & Paste-and-Split",
+  initialText = "Welcome to CHRISCO Youth Aflame Digital Academy. Learn practical digital skills, AI tools, coding, design, and creative projects designed for young minds.",
   compact = false,
 }) {
-  const [text, setText] = useState(
-    initialText ||
-      "Welcome to CHRISCO Youth Aflame Digital Academy. Use VoiceStudio to narrate course handbooks, Christian study books, and AI project scripts aloud with paragraph splitting and speed control."
-  )
-  const [lang, setLang] = useState("en-GB")
+  const [text, setText] = useState(initialText)
+  const [lang, setLang] = useState("en-KE")
   const [rate, setRate] = useState(1.0)
-  const [chunkLimit, setChunkLimit] = useState(220)
-  const [activeChunkIndex, setActiveChunkIndex] = useState(-1)
+  const [pitch, setPitch] = useState(1.0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [showCustomEditor, setShowCustomEditor] = useState(false)
+  const [activeChunkIndex, setActiveChunkIndex] = useState(-1)
+  const [showStudioPanel, setShowStudioPanel] = useState(!compact)
   const [dictatedNotes, setDictatedNotes] = useState("")
   const [isDictating, setIsDictating] = useState(false)
-  const stopRequestedRef = useRef(false)
 
   useEffect(() => {
-    if (initialText) {
-      setText(initialText)
-    }
+    setText(initialText)
   }, [initialText])
-
-  const chunks = useMemo(
-    () => splitIntoSpeechChunks(text, chunkLimit),
-    [text, chunkLimit]
-  )
-
-  const estimatedSeconds = useMemo(() => {
-    const words = text.trim().split(/\s+/).filter(Boolean).length
-    return Math.max(1, Math.round((words / (150 * rate)) * 60))
-  }, [text, rate])
 
   useEffect(() => {
     return () => {
@@ -86,32 +67,38 @@ export default function VoiceStudioNarrator({
     }
   }, [])
 
+  const chunks = useMemo(() => splitScriptIntoChunks(text), [text])
+  const wordCount = useMemo(
+    () => (text.trim() ? text.trim().split(/\s+/).length : 0),
+    [text]
+  )
+  const estimatedSeconds = Math.max(1, Math.round((wordCount / 145) * 60))
+
   const speakChunkAt = (index) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      setIsPlaying(false)
       return
     }
-    if (index >= chunks.length || stopRequestedRef.current) {
+    if (index >= chunks.length) {
       setIsPlaying(false)
       setActiveChunkIndex(-1)
       return
     }
 
-    setActiveChunkIndex(index)
-    const utterance = new SpeechSynthesisUtterance(chunks[index])
+    window.speechSynthesis.cancel()
+    const utterance = new window.SpeechSynthesisUtterance(chunks[index].text)
     utterance.lang = lang
     utterance.rate = rate
-
-    const voices = window.speechSynthesis.getVoices?.() || []
-    const matchedVoice =
-      voices.find((v) => v.lang?.toLowerCase().startsWith(lang.toLowerCase())) ||
-      voices.find((v) => v.lang?.toLowerCase().startsWith("en"))
-    if (matchedVoice) {
-      utterance.voice = matchedVoice
-    }
+    utterance.pitch = pitch
+    setActiveChunkIndex(index)
+    setIsPlaying(true)
 
     utterance.onend = () => {
-      if (!stopRequestedRef.current) {
+      if (index + 1 < chunks.length) {
         speakChunkAt(index + 1)
+      } else {
+        setIsPlaying(false)
+        setActiveChunkIndex(-1)
       }
     }
     utterance.onerror = () => {
@@ -123,18 +110,11 @@ export default function VoiceStudioNarrator({
   }
 
   const handlePlay = () => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      return
-    }
-    window.speechSynthesis.cancel()
-    stopRequestedRef.current = false
-    setIsPlaying(true)
-    const startIdx = activeChunkIndex >= 0 ? activeChunkIndex : 0
-    speakChunkAt(startIdx)
+    if (!chunks.length) return
+    speakChunkAt(0)
   }
 
   const handleStop = () => {
-    stopRequestedRef.current = true
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel()
     }
@@ -142,7 +122,7 @@ export default function VoiceStudioNarrator({
     setActiveChunkIndex(-1)
   }
 
-  const handleToggleDictation = () => {
+  const handleStartDictation = () => {
     if (typeof window === "undefined") return
     const SpeechRec =
       window.SpeechRecognition || window.webkitSpeechRecognition
@@ -150,12 +130,8 @@ export default function VoiceStudioNarrator({
       setDictatedNotes((prev) =>
         prev
           ? prev
-          : "Voice dictation is ready in Chrome/Edge browsers with microphone access."
+          : "Voice dictation uses Web Speech Recognition in supported browsers (Chrome/Edge). Type your study notes below!"
       )
-      return
-    }
-    if (isDictating) {
-      setIsDictating(false)
       return
     }
     try {
@@ -181,12 +157,12 @@ export default function VoiceStudioNarrator({
   return (
     <div
       style={{
-        background: "#002333",
-        color: "#FFFFFF",
-        borderRadius: 18,
-        padding: compact ? "16px 18px" : "22px 24px",
-        border: "1px solid rgba(0, 255, 132, 0.24)",
-        boxShadow: "0 12px 28px rgba(0, 35, 51, 0.16)",
+        background: "#FFFFFF",
+        color: "#0B1D51",
+        borderRadius: 12,
+        padding: compact ? "16px 18px" : "24px 24px",
+        border: "1px solid #DCE3F0",
+        borderTop: "5px solid #084EC8",
       }}
     >
       <div
@@ -197,26 +173,28 @@ export default function VoiceStudioNarrator({
           justifyContent: "space-between",
           gap: 12,
           marginBottom: 14,
+          paddingBottom: 12,
+          borderBottom: "1px solid #DCE3F0",
         }}
       >
         <div>
           <span
             style={{
               display: "inline-block",
-              background: "rgba(0, 255, 132, 0.14)",
-              color: "#00FF84",
+              background: "#084EC8",
+              color: "#FFFFFF",
               fontSize: 11,
               fontWeight: 800,
-              padding: "3px 10px",
+              padding: "3px 12px",
               borderRadius: 999,
               letterSpacing: "0.06em",
               textTransform: "uppercase",
-              marginBottom: 4,
+              marginBottom: 5,
             }}
           >
             VoiceStudio · AI Narration &amp; Paste-and-Split
           </span>
-          <div style={{ fontWeight: 800, fontSize: "1.02rem" }}>{title}</div>
+          <div style={{ fontWeight: 900, fontSize: "1.08rem", color: "#0B1D51" }}>{title}</div>
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
@@ -225,17 +203,17 @@ export default function VoiceStudioNarrator({
             value={lang}
             onChange={(e) => setLang(e.target.value)}
             style={{
-              background: "rgba(255,255,255,0.1)",
-              color: "#FFFFFF",
-              border: "1px solid rgba(255,255,255,0.22)",
-              borderRadius: 10,
+              background: "#F7F6F1",
+              color: "#0B1D51",
+              border: "1px solid #C2CEE3",
+              borderRadius: 8,
               padding: "6px 10px",
               fontSize: 12,
               fontWeight: 700,
             }}
           >
             {LANGUAGE_PRESETS.map((p) => (
-              <option key={p.code} value={p.code} style={{ color: "#0F172A" }}>
+              <option key={p.code} value={p.code}>
                 {p.label}
               </option>
             ))}
@@ -246,19 +224,19 @@ export default function VoiceStudioNarrator({
             value={rate}
             onChange={(e) => setRate(Number(e.target.value))}
             style={{
-              background: "rgba(255,255,255,0.1)",
-              color: "#FFFFFF",
-              border: "1px solid rgba(255,255,255,0.22)",
-              borderRadius: 10,
+              background: "#F7F6F1",
+              color: "#0B1D51",
+              border: "1px solid #C2CEE3",
+              borderRadius: 8,
               padding: "6px 10px",
               fontSize: 12,
               fontWeight: 700,
             }}
           >
-            <option value={0.85} style={{ color: "#0F172A" }}>0.85x Calm</option>
-            <option value={1.0} style={{ color: "#0F172A" }}>1.0x Normal</option>
-            <option value={1.2} style={{ color: "#0F172A" }}>1.2x Brisk</option>
-            <option value={1.4} style={{ color: "#0F172A" }}>1.4x Fast</option>
+            <option value={0.85}>0.85x Calm</option>
+            <option value={1.0}>1.0x Normal</option>
+            <option value={1.2}>1.2x Brisk</option>
+            <option value={1.4}>1.4x Fast</option>
           </select>
 
           {!isPlaying ? (
@@ -266,8 +244,8 @@ export default function VoiceStudioNarrator({
               type="button"
               onClick={handlePlay}
               style={{
-                background: "#00FF84",
-                color: "#002333",
+                background: "#38A128",
+                color: "#FFFFFF",
                 border: "none",
                 borderRadius: 999,
                 padding: "8px 16px",
@@ -283,7 +261,7 @@ export default function VoiceStudioNarrator({
               type="button"
               onClick={handleStop}
               style={{
-                background: "#EF4444",
+                background: "#E60914",
                 color: "#FFFFFF",
                 border: "none",
                 borderRadius: 999,
@@ -299,165 +277,197 @@ export default function VoiceStudioNarrator({
 
           <button
             type="button"
-            onClick={() => setShowCustomEditor((v) => !v)}
+            onClick={() => setShowStudioPanel((v) => !v)}
             style={{
-              background: "rgba(255,255,255,0.1)",
-              color: "#FFFFFF",
-              border: "1px solid rgba(255,255,255,0.2)",
+              background: "#F8C90E",
+              color: "#0B1D51",
+              border: "none",
               borderRadius: 999,
-              padding: "7px 13px",
-              fontWeight: 700,
+              padding: "7px 14px",
+              fontWeight: 800,
               fontSize: 12,
               cursor: "pointer",
             }}
           >
-            {showCustomEditor ? "Hide Script" : "Paste & Split"}
+            {showStudioPanel ? "Hide Chunks" : `Paste & Split (${chunks.length})`}
           </button>
         </div>
       </div>
 
-      {showCustomEditor && (
+      {showStudioPanel && (
         <div
           style={{
-            background: "rgba(255,255,255,0.06)",
-            borderRadius: 12,
-            padding: 14,
-            marginBottom: 14,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 16,
+            marginTop: 14,
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 10,
-              marginBottom: 8,
-              fontSize: 12,
-              color: "rgba(255,255,255,0.75)",
-            }}
-          >
-            <span>
-              Paste &amp; Split: {chunks.length} speech chunks · Est. {estimatedSeconds}s
-            </span>
-            <label style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-              Max chars/chunk:
-              <input
-                type="number"
-                min={80}
-                max={500}
-                value={chunkLimit}
-                onChange={(e) =>
-                  setChunkLimit(Math.max(80, Math.min(500, Number(e.target.value) || 220)))
-                }
-                style={{
-                  width: 68,
-                  padding: "3px 6px",
-                  borderRadius: 6,
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  background: "#001824",
-                  color: "#FFFFFF",
-                  fontSize: 12,
-                }}
-              />
-            </label>
-          </div>
-          <textarea
-            rows={3}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            style={{
-              width: "100%",
-              borderRadius: 10,
-              border: "1px solid rgba(255,255,255,0.2)",
-              background: "#001824",
-              color: "#FFFFFF",
-              padding: "10px 12px",
-              fontSize: 13,
-              marginBottom: 10,
-            }}
-          />
-
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 10,
-            }}
-          >
-            <button
-              type="button"
-              onClick={handleToggleDictation}
+          {/* Paste & Split Script Editor */}
+          <div style={{ background: "#F7F6F1", padding: 14, borderRadius: 10, border: "1px solid #DCE3F0" }}>
+            <div
               style={{
-                background: isDictating ? "#F59E0B" : "rgba(0,255,132,0.16)",
-                color: isDictating ? "#0F172A" : "#00FF84",
-                border: "1px solid rgba(0,255,132,0.35)",
-                borderRadius: 999,
-                padding: "6px 14px",
+                display: "flex",
+                justifyContent: "space-between",
                 fontSize: 12,
+                color: "#E60914",
+                marginBottom: 6,
                 fontWeight: 800,
-                cursor: "pointer",
               }}
             >
-              {isDictating ? "● Listening... Click to Stop" : "🎙 Dictate Voice Study Note"}
-            </button>
-            {dictatedNotes && (
-              <span style={{ fontSize: 12, color: "#A7F3D0" }}>
-                Note: &ldquo;{dictatedNotes}&rdquo;
+              <span>• Paste &amp; Split Script</span>
+              <span style={{ color: "#084EC8" }}>
+                {wordCount} words · {chunks.length} sentence chunks
               </span>
-            )}
+            </div>
+            <textarea
+              rows={4}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Paste any study passage or lesson script here to automatically split into narratable sentence chunks..."
+              style={{
+                width: "100%",
+                background: "#FFFFFF",
+                color: "#0B1D51",
+                border: "1px solid #C2CEE3",
+                borderRadius: 8,
+                padding: 10,
+                fontSize: 13,
+                lineHeight: 1.5,
+              }}
+            />
+
+            {/* Sentence Chunks List — Poster Divider Rows */}
+            <div
+              style={{
+                maxHeight: 165,
+                overflowY: "auto",
+                marginTop: 10,
+                background: "#FFFFFF",
+                border: "1px solid #DCE3F0",
+                borderRadius: 8,
+              }}
+            >
+              {chunks.map((c, idx) => {
+                const cColor = CHUNK_POSTER_COLORS[idx % CHUNK_POSTER_COLORS.length]
+                const isActive = activeChunkIndex === idx
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => speakChunkAt(idx)}
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      background: isActive ? "#FEF9E3" : "#FFFFFF",
+                      color: "#0B1D51",
+                      border: "none",
+                      borderBottom: "1px solid #E5E9F2",
+                      borderLeft: `4px solid ${cColor}`,
+                      padding: "8px 12px",
+                      fontSize: 12,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <strong style={{ color: cColor, marginRight: 6 }}>
+                      [{c.id}]
+                    </strong>
+                    {c.text}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Voice Dictation & Study Notes */}
+          <div style={{ background: "#F7F6F1", padding: 14, borderRadius: 10, border: "1px solid #DCE3F0" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontSize: 12,
+                color: "#38A128",
+                marginBottom: 6,
+                fontWeight: 800,
+              }}
+            >
+              <span>• Voice Dictation &amp; Study Notes</span>
+              <button
+                type="button"
+                onClick={handleStartDictation}
+                style={{
+                  background: isDictating ? "#E60914" : "#EE6816",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: 999,
+                  padding: "4px 12px",
+                  fontSize: 11.5,
+                  fontWeight: 800,
+                  cursor: "pointer",
+                }}
+              >
+                {isDictating ? "● Listening..." : "🎤 Dictate Note"}
+              </button>
+            </div>
+            <textarea
+              rows={5}
+              value={dictatedNotes}
+              onChange={(e) => setDictatedNotes(e.target.value)}
+              placeholder="Click 'Dictate Note' to transcribe spoken reflections, or type your study summary here..."
+              style={{
+                width: "100%",
+                background: "#FFFFFF",
+                color: "#0B1D51",
+                border: "1px solid #C2CEE3",
+                borderRadius: 8,
+                padding: 10,
+                fontSize: 13,
+                lineHeight: 1.5,
+              }}
+            />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
+              <label style={{ fontSize: 11.5, color: "#0B1D51", fontWeight: 700 }}>
+                Voice Pitch ({pitch.toFixed(1)}):
+                <input
+                  type="range"
+                  min="0.7"
+                  max="1.3"
+                  step="0.1"
+                  value={pitch}
+                  onChange={(e) => setPitch(Number(e.target.value))}
+                  style={{ marginLeft: 8, verticalAlign: "middle", accentColor: "#084EC8" }}
+                />
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  if (!dictatedNotes.trim() || typeof window === "undefined") return
+                  const blob = new Blob([dictatedNotes], { type: "text/plain;charset=utf-8" })
+                  const url = URL.createObjectURL(blob)
+                  const a = document.createElement("a")
+                  a.href = url
+                  a.download = "chrisco-study-notes.txt"
+                  a.click()
+                  URL.revokeObjectURL(url)
+                }}
+                style={{
+                  background: "#084EC8",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: 999,
+                  padding: "5px 12px",
+                  fontSize: 11.5,
+                  fontWeight: 800,
+                  cursor: "pointer",
+                }}
+              >
+                Export Notes (.txt)
+              </button>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Active Speech Chunks Rail */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 6,
-          maxHeight: compact ? 110 : 160,
-          overflowY: "auto",
-        }}
-      >
-        {chunks.map((chunk, idx) => {
-          const active = idx === activeChunkIndex
-          return (
-            <div
-              key={idx}
-              onClick={() => {
-                stopRequestedRef.current = false
-                if (typeof window !== "undefined" && "speechSynthesis" in window) {
-                  window.speechSynthesis.cancel()
-                  setIsPlaying(true)
-                  speakChunkAt(idx)
-                }
-              }}
-              style={{
-                padding: "8px 12px",
-                borderRadius: 10,
-                background: active
-                  ? "rgba(0, 255, 132, 0.2)"
-                  : "rgba(255, 255, 255, 0.05)",
-                border: active
-                  ? "1px solid #00FF84"
-                  : "1px solid rgba(255, 255, 255, 0.08)",
-                fontSize: 12.5,
-                lineHeight: 1.5,
-                color: active ? "#FFFFFF" : "rgba(255, 255, 255, 0.82)",
-                cursor: "pointer",
-              }}
-            >
-              <strong style={{ color: "#00FF84", marginRight: 8 }}>
-                #{idx + 1}
-              </strong>
-              {chunk}
-            </div>
-          )
-        })}
-      </div>
     </div>
   )
 }

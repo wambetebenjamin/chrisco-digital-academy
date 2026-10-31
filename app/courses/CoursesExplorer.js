@@ -217,15 +217,15 @@ export default function CoursesExplorer() {
                       style={{
                         width: "100%",
                         justifyContent: "space-between",
-                        background: category === cat.name ? "var(--navy)" : "transparent",
-                        borderColor: category === cat.name ? "var(--navy)" : "var(--line-strong)",
-                        color: category === cat.name ? "#fff" : "var(--ink)",
+                        background: category === cat.name ? (cat.color || "var(--poster-blue)") : "#FFFFFF",
+                        borderColor: category === cat.name ? (cat.color || "var(--poster-blue)") : "var(--line-strong)",
+                        color: category === cat.name ? "#fff" : (cat.color || "var(--ink)"),
                       }}
                     >
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                         <Icon name={cat.icon} size={14} /> {cat.name}
                       </span>
-                      <span style={{ opacity: 0.7, fontWeight: 700 }}>{counts[cat.name] || 0}</span>
+                      <span style={{ opacity: 0.85, fontWeight: 800 }}>{counts[cat.name] || 0}</span>
                     </button>
                   ))}
                 </div>
@@ -372,87 +372,150 @@ export default function CoursesExplorer() {
                 </div>
               ) : (
                 <div className="course-grid">
-                  {filtered.map((course, i) => (
-                    <div
-                      key={course.id}
-                      className="card card-hover"
-                      style={{ overflow: "hidden", display: "flex", flexDirection: "column", cursor: "pointer", animation: `fadeUp 0.5s ease ${i * 0.05}s both` }}
-                      onClick={() => openCourse(course)}
-                    >
-                      {/* Header, photo + course-tone overlay */}
-                      <div style={{ background: "var(--navy)", padding: "26px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
-                        <Image
-                          src={imageFor(course)}
-                          alt=""
-                          fill
-                          sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
-                          style={{ objectFit: "cover" }}
-                        />
-                        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.68) 0%, rgba(0,35,51,0.38) 58%, rgba(1,58,79,0.2) 100%)" }} />
-                        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${course.color[0]}3D, transparent 68%)` }} />
-                        <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: `linear-gradient(90deg, ${course.color[0]}, ${course.color[1]})` }} />
-                        <span
-                          className="pill pill-sm"
-                          style={{ position: "absolute", top: 14, right: 14, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
-                        >
-                          {course.category}
-                        </span>
-                        <div style={{ display: "flex", alignItems: "center", gap: 16, position: "relative" }}>
-                          <div
+                  {filtered.map((course) => {
+                    const accentColor = course.color?.[0] || "#084EC8"
+                    return (
+                      <div
+                        key={course.id}
+                        className="card"
+                        style={{
+                          overflow: "hidden",
+                          display: "flex",
+                          flexDirection: "column",
+                          cursor: "pointer",
+                          borderTop: `4px solid ${accentColor}`,
+                        }}
+                        onClick={() => openCourse(course)}
+                      >
+                        {/* Clean Poster Course Header — un-muddy photo + solid poster color badge */}
+                        <div style={{ background: "#0B1D51", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                          <Image
+                            src={imageFor(course)}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
+                            style={{ objectFit: "cover" }}
+                          />
+                          <span
+                            className="pill pill-sm"
                             style={{
-                              width: 58,
-                              height: 58,
-                              borderRadius: 18,
-                              background: "rgba(255,255,255,0.18)",
-                              border: "1px solid rgba(255,255,255,0.3)",
-                              color: "#fff",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
+                              position: "absolute",
+                              top: 12,
+                              right: 12,
+                              background: accentColor,
+                              border: "none",
+                              color: "#FFFFFF",
+                              fontWeight: 800,
                             }}
                           >
-                            <Icon name={course.icon} size={29} strokeWidth={1.7} />
+                            {course.category}
+                          </span>
+                          <span
+                            style={{
+                              position: "absolute",
+                              top: 12,
+                              left: 12,
+                              background: "#FFFFFF",
+                              color: "#0B1D51",
+                              fontSize: 10.5,
+                              fontWeight: 800,
+                              padding: "4px 10px",
+                              borderRadius: 999,
+                              textTransform: "uppercase",
+                              letterSpacing: "0.06em",
+                            }}
+                          >
+                            {course.level}
+                          </span>
+                        </div>
+
+                        {/* Body — Poster Circle Icon + Colored Heading + Clean Dividers */}
+                        <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
+                          <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 10 }}>
+                            <span
+                              style={{
+                                width: 38,
+                                height: 38,
+                                borderRadius: "50%",
+                                background: accentColor,
+                                color: "#FFFFFF",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flexShrink: 0,
+                              }}
+                            >
+                              <Icon name={course.icon} size={19} strokeWidth={1.8} />
+                            </span>
+                            <div>
+                              <h3 style={{ fontSize: "1.1rem", fontWeight: 800, color: accentColor, marginBottom: 3 }}>
+                                {course.title}
+                              </h3>
+                              <p style={{ fontFamily: "var(--font-head)", fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>
+                                {org.courseCredit}
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <span style={{ background: "rgba(255,255,255,0.92)", color: "var(--ink)", fontSize: 11, fontWeight: 800, padding: "4px 12px", borderRadius: 999, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                              {course.level}
+
+                          <p style={{ fontSize: 13.5, color: "var(--body)", lineHeight: 1.6, marginBottom: 16, flex: 1 }}>
+                            {course.desc}
+                          </p>
+
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 12,
+                              borderTop: "1px solid var(--line)",
+                              borderBottom: "1px solid var(--line)",
+                              padding: "9px 0",
+                              marginBottom: 16,
+                              fontSize: 12,
+                              fontWeight: 700,
+                              color: "var(--ink)",
+                            }}
+                          >
+                            <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#E60914" }}>
+                              <Icon name="clock" size={13} /> {course.duration}
+                            </span>
+                            <span style={{ color: "var(--line-strong)" }}>|</span>
+                            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: "#084EC8" }}>
+                              <Icon name="star" size={13} /> {course.rating}
+                            </span>
+                            <span style={{ color: "var(--line-strong)" }}>|</span>
+                            <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#38A128" }}>
+                              <Icon name="users" size={13} /> {course.students}
                             </span>
                           </div>
-                        </div>
-                      </div>
 
-                      {/* Body */}
-                      <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
-                        <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 6 }}>{course.title}</h3>
-                        <p style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
-                          {org.courseCredit}
-                        </p>
-                        <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.65, marginBottom: 18, flex: 1 }}>{course.desc}</p>
-                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-                          <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
-                          <span className="pill pill-soft pill-sm"><Icon name="star" size={13} strokeWidth={2.2} /> {course.rating}</span>
-                          <span className="pill pill-soft pill-sm"><Icon name="users" size={13} strokeWidth={2.2} /> {course.students}</span>
-                        </div>
-                        <div style={{ display: "flex", gap: 10 }}>
-                          <button
-                            className="btn btn-navy btn-sm"
-                            style={{ flex: 1, cursor: "pointer", fontSize: 13.5 }}
-                          >
-                            View Course →
-                          </button>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
-                            className="btn btn-outline btn-sm"
-                            title={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
-                            aria-label={hasBookAccess ? `Download ${course.title} handbook` : `Sign in to your account to download ${course.title} handbook`}
-                            style={{ cursor: "pointer", padding: "10px 16px" }}
-                          >
-                            <Icon name={hasBookAccess ? "download" : "lock"} size={16} />
-                          </button>
+                          <div style={{ display: "flex", gap: 10 }}>
+                            <button
+                              className="btn btn-sm"
+                              style={{
+                                flex: 1,
+                                cursor: "pointer",
+                                fontSize: 13,
+                                background: accentColor,
+                                color: "#FFFFFF",
+                                borderColor: accentColor,
+                              }}
+                            >
+                              View Course →
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
+                              className="btn btn-outline btn-sm"
+                              title={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
+                              aria-label={hasBookAccess ? `Download ${course.title} handbook` : `Sign in to your account to download ${course.title} handbook`}
+                              style={{ cursor: "pointer", padding: "10px 16px" }}
+                            >
+                              <Icon name={hasBookAccess ? "download" : "lock"} size={16} />
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
             </div>

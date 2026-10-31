@@ -15,8 +15,9 @@ export default function PhotoBand({
       style={{
         position: "relative",
         overflow: "hidden",
-        background: "var(--navy)",
-        padding: "88px 0",
+        background: "#003896",
+        borderTop: "4px solid #F8C90E",
+        padding: "76px 0",
       }}
     >
       <div aria-hidden style={{ position: "absolute", inset: 0 }}>
@@ -25,7 +26,7 @@ export default function PhotoBand({
           alt=""
           fill
           sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.34 }}
+          style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.18 }}
         />
       </div>
       <div
@@ -34,18 +35,14 @@ export default function PhotoBand({
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(120deg, rgba(0, 28, 42, 0.94) 0%, rgba(1, 48, 66, 0.86) 55%, rgba(4, 120, 87, 0.48) 100%)",
+            "linear-gradient(120deg, rgba(11, 29, 81, 0.94) 0%, rgba(0, 56, 150, 0.90) 65%, rgba(8, 78, 200, 0.85) 100%)",
         }}
       />
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div
           style={{
-            background: "rgba(255, 255, 255, 0.05)",
-            border: "1px solid rgba(255, 255, 255, 0.14)",
-            borderRadius: "var(--radius-xl)",
-            padding: "clamp(32px, 5vw, 52px)",
-            backdropFilter: "blur(12px)",
-            boxShadow: "0 24px 60px rgba(0, 18, 28, 0.32)",
+            borderLeft: centered ? "none" : "4px solid #F8C90E",
+            paddingLeft: centered ? 0 : "clamp(18px, 3vw, 28px)",
             textAlign: centered ? "center" : "left",
           }}
         >
@@ -68,8 +65,8 @@ export default function PhotoBand({
                   className="eyebrow on-dark"
                   style={
                     centered
-                      ? { justifyContent: "center", color: "var(--cta-warm-light)" }
-                      : { color: "var(--cta-warm-light)" }
+                      ? { justifyContent: "center", color: "#F8C90E" }
+                      : { color: "#F8C90E" }
                   }
                 >
                   {eyebrow}
@@ -86,7 +83,7 @@ export default function PhotoBand({
                   style={{
                     marginTop: 14,
                     fontWeight: 500,
-                    color: "rgba(255,255,255,0.8)",
+                    color: "rgba(255,255,255,0.88)",
                     fontSize: "1.02rem",
                     lineHeight: 1.7,
                   }}
