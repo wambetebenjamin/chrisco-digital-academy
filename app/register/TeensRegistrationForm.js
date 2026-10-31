@@ -6,7 +6,7 @@ import Navbar from "../Navbar"
 import { submitAcademyIntake } from "../lib/intakeClient"
 
 export const GOOGLE_FORM_VIEW_URL =
-  "https://docs.google.com/forms/d/1vuLx-9fPTLkKy_H0ez0lKeAYHEJqi3uK1rGgf_edch8/viewform"
+  "https://docs.google.com/forms/d/e/1FAIpQLSdDpyAhyll3dRwhvUNYX1RmjjFGYrY8-fz09IwdPzHJih5gng/viewform"
 
 export default function TeensRegistrationForm() {
   const [registrantRole, setRegistrantRole] = useState("parent")
