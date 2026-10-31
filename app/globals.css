@@ -2827,3 +2827,104 @@ img { display: block; max-width: 100%; }
   .shop-modal-actions > * { flex: 1 1 100%; justify-content: center; }
   .shop-modal-actions .shop-modal-share { flex: 1 1 auto; }
 }
+
+/* ---------- Dribbble 24790137 Travel Login Template ---------- */
+.auth-horizon-stage {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+}
+@media (min-width: 920px) {
+  .auth-horizon-stage {
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: 56px;
+  }
+}
+.auth-horizon-aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.auth-horizon-card-wrap {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+@media (max-width: 919px) {
+  .auth-horizon-card-wrap {
+    justify-content: center;
+  }
+}
+.auth-horizon-card {
+  width: 100%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.17);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 22px;
+  padding: 36px 34px 32px;
+  box-shadow: 0 28px 68px rgba(0, 0, 0, 0.42);
+  color: #FFFFFF;
+}
+.auth-horizon-input {
+  width: 100%;
+  height: 48px;
+  background: #FFFFFF !important;
+  color: #0B1D51 !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 7px !important;
+  padding: 0 16px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+.auth-horizon-input::placeholder {
+  color: #94A3B8 !important;
+  font-weight: 500;
+}
+.auth-horizon-input:focus {
+  outline: none;
+  border-color: #F8C90E !important;
+  box-shadow: 0 0 0 3px rgba(248, 201, 14, 0.35) !important;
+}
+.auth-horizon-submit {
+  width: 100%;
+  height: 48px;
+  background: #084EC8;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 7px;
+  font-family: var(--font-head);
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgba(8, 78, 200, 0.42);
+  transition: background 0.2s ease;
+}
+.auth-horizon-submit:hover {
+  background: #E60914;
+}
+.auth-horizon-google {
+  width: 100%;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 7px;
+  color: #FFFFFF;
+  font-family: var(--font-head);
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.auth-horizon-google:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
