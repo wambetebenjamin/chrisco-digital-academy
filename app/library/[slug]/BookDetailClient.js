@@ -5,6 +5,7 @@ import Link from "next/link"
 import Icon from "../../components/Icon"
 import BookGateModal from "../../components/BookGateModal"
 import ShareBookBar from "../../components/ShareBookBar"
+import VoiceStudioNarrator from "../../components/VoiceStudioNarrator"
 import { useAuth } from "../../AuthProvider"
 
 export default function BookDetailClient({ book, relatedBooks = [] }) {
@@ -226,6 +227,20 @@ export default function BookDetailClient({ book, relatedBooks = [] }) {
               </div>
               <div style={{ marginTop: 22, paddingTop: 18, borderTop: "1px solid var(--line)", fontSize: 12.8, color: "var(--muted)" }}>
                 Published by <strong>{book.publisher}</strong> · Editorial inquiries: chriscoyouthaflame2025@gmail.com
+              </div>
+
+              <div style={{ marginTop: 22 }}>
+                <VoiceStudioNarrator
+                  compact
+                  title={`Audio Overview: ${book.title}`}
+                  initialText={[
+                    `${book.title}. ${book.subtitle || ""}`,
+                    book.desc || "",
+                    ...(book.highlights || []),
+                  ]
+                    .filter(Boolean)
+                    .join("\n\n")}
+                />
               </div>
             </div>
 

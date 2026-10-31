@@ -231,6 +231,9 @@ export default function Dashboard() {
               <Link href="/courses" className="btn btn-outline btn-sm" style={{ textDecoration: "none" }}>
                 Catalogue →
               </Link>
+              <Link href="/studio" className="btn btn-navy btn-sm" style={{ textDecoration: "none" }}>
+                AI Studio →
+              </Link>
             </form>
           </div>
 

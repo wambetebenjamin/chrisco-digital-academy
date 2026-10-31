@@ -31,7 +31,7 @@ const featured = [courses[4], courses[0], courses[10]] // Freelancing, YouTube A
 const steps = [
   { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI." },
   { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request, we confirm on WhatsApp or email within a day." },
-  { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, earn your certificate, and start earning." },
+  { num: "03", icon: "rocket", title: "Learn & Build", desc: "Follow the hands-on syllabus, finish your real-world project portfolio, and start earning." },
 ]
 
 export default function Home() {
@@ -262,7 +262,7 @@ export default function Home() {
         <div className="container">
           <div className="factstrip">
             {[
-              { icon: "medal", title: "Certificate included", desc: "Every course ends with one" },
+              { icon: "rocket", title: "Hands-on portfolio", desc: "Build real digital projects" },
               { icon: "laptop", title: "Online & in-person", desc: "Learn from anywhere" },
               { icon: "wrench", title: "Project-based", desc: "Learn by building real work" },
               { icon: "whatsapp", title: "Fast support", desc: "Same-day help on WhatsApp" },
@@ -275,6 +275,89 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= OFFICIAL TEENS AI & PROJECTS BOOTCAMP POSTER ================= */}
+      <section className="section section-frost">
+        <div className="container">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: 36,
+              alignItems: "center",
+              background: "#FFFFFF",
+              border: "1px solid var(--line)",
+              borderRadius: 24,
+              padding: "clamp(24px, 4vw, 44px)",
+              boxShadow: "var(--shadow-md)",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: 460,
+                  borderRadius: 18,
+                  overflow: "hidden",
+                  boxShadow: "0 18px 42px rgba(0, 35, 51, 0.18)",
+                  border: "1px solid var(--line)",
+                }}
+              >
+                <Image
+                  src="/posters/teens-ai-bootcamp-official.png"
+                  alt="CHRISCO Youth Aflame Digital Academy — Teens AI & Projects Bootcamp Poster"
+                  width={736}
+                  height={920}
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <span className="eyebrow">Featured Holiday Program · Ages 13+</span>
+              <h2 className="title" style={{ marginTop: 14 }}>
+                Teens AI &amp; <span className="accent">Projects Bootcamp!</span>
+              </h2>
+              <p style={{ fontSize: 15.5, color: "var(--muted)", lineHeight: 1.7, marginTop: 14 }}>
+                Fun AI learning and creative digital projects designed for young minds. Running{" "}
+                <strong>3 Nov – 11 Dec 2026 (6 Weeks)</strong> for <strong>Ages 13+</strong> via
+                online classes plus physical &amp; team activities.
+              </p>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                  marginTop: 18,
+                  marginBottom: 24,
+                  fontSize: 14.5,
+                  color: "var(--ink)",
+                }}
+              >
+                <div>
+                  • <strong>Learning AI &amp; Projects:</strong> Teen-friendly tools, prompts &amp; hands-on builds
+                </div>
+                <div>
+                  • <strong>Access to Digital Media:</strong> Laptop/tablet/phone required
+                </div>
+                <div>
+                  • <strong>Physical &amp; Team Activities:</strong> Dates &amp; venues to be communicated
+                </div>
+              </div>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                <Link href="/courses" className="btn btn-green" style={{ textDecoration: "none" }}>
+                  Explore Courses &amp; Enroll →
+                </Link>
+                <Link href="/studio" className="btn btn-navy" style={{ textDecoration: "none" }}>
+                  Open AI Prompt &amp; Voice Studio →
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

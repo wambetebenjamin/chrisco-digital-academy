@@ -310,6 +310,34 @@ export default function CoursesExplorer() {
                       <Icon name="book" size={13} /> Notion Curriculum Guide
                     </a>
                   )}
+                  <Link
+                    href="/studio"
+                    className="pill pill-sm"
+                    style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                  >
+                    <Icon name="robot" size={13} /> AI Prompt &amp; Voice Studio
+                  </Link>
+                </div>
+
+                <div style={{ borderTop: "1px solid var(--line)", margin: "22px 0 14px" }} />
+                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                  Teens AI Bootcamp Poster
+                </div>
+                <div
+                  style={{
+                    borderRadius: 14,
+                    overflow: "hidden",
+                    border: "1px solid var(--line)",
+                    boxShadow: "0 10px 24px rgba(0, 35, 51, 0.12)",
+                  }}
+                >
+                  <Image
+                    src="/posters/teens-ai-bootcamp-official.png"
+                    alt="CHRISCO Teens AI & Projects Bootcamp Official Poster"
+                    width={736}
+                    height={920}
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
                 </div>
               </div>
             </aside>
