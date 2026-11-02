@@ -11,6 +11,21 @@ describe("PURSUE shop", () => {
     }
   })
 
+  it("shows the six current PURSUE designs and filters grey shirts", async () => {
+    const user = userEvent.setup()
+    render(<Shop />)
+    for (const code of ["TS-12", "TS-13", "TS-14", "TS-15", "TS-16", "TS-17"]) {
+      expect(screen.getAllByText(code).length).toBeGreaterThan(0)
+    }
+    await user.click(screen.getByRole("button", { name: "Grey" }))
+    expect(screen.getByLabelText("View PURSUE Red Speedlines Tee (TS-16)")).toBeTruthy()
+    expect(screen.queryByLabelText("View PURSUE Brush Burst Tee (TS-15)")).toBeNull()
+    await user.click(screen.getByLabelText("View PURSUE Red Speedlines Tee (TS-16)"))
+    await user.click(screen.getByRole("button", { name: "L" }))
+    await user.click(screen.getByRole("button", { name: /add to order/i }))
+    expect(within(await screen.findByLabelText("My order")).getByText(/TS-16/)).toBeTruthy()
+  })
+
   it("offers S to XXL, quantity and a running total", async () => {
     const user = userEvent.setup()
     render(<Shop />)
