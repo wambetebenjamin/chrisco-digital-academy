@@ -3,117 +3,93 @@ import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
 import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
-import PageBackdrop from "../components/PageBackdrop"
 import ContactForm from "./ContactForm"
+import { org } from "../data/org"
 
 export const metadata = {
-  title: "Contact",
+  title: "Contact Us | CHRISCO Digital Academy",
   description:
-    "Get in touch with CHRISCO Digital Academy, ask a question, enroll in a course or partner with us. We respond fast, usually the same day on WhatsApp.",
+    "Get in touch with CHRISCO Digital Academy — ask a question, enroll in a course, or partner with CHRISCO Youth Aflame.",
 }
-
-const infoItems = [
-  { icon: "mail", label: "Email", value: "chriscoyouthaflame2025@gmail.com", href: "mailto:chriscoyouthaflame2025@gmail.com" },
-  { icon: "phone", label: "Call or WhatsApp", value: "", href: "tel:+254112272061", iconLabel: "Call us" },
-  { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame" },
-]
 
 export default function Contact() {
   return (
-    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
-      <PageBackdrop image="/images/bg-contact.jpg" position="center 35%" />
+    <main style={{ minHeight: "100vh", background: "#FFFFFF", overflowX: "hidden" }}>
       <Navbar />
 
-      {/* HERO */}
       <PhotoHero
         image="/images/bg-contact.jpg"
-        eyebrow="Get in touch"
-        title={
-          <>
-            Let&apos;s start a <span className="accent-bright">conversation</span>
-          </>
-        }
-        titleStyle={{ maxWidth: 820 }}
-        lead="Have a question, want to enroll, or ready to partner? We respond fast, usually the same day on WhatsApp."
+        eyebrow="CHRISCO Youth Aflame · CHRISCO Fellowship of Churches International"
+        title="Contact CHRISCO Digital Academy"
+        lead="Have a question about our 19 courses, the Teens AI & Projects Bootcamp, or our books? Reach out to our team and we will respond promptly."
       />
 
-      {/* BODY */}
-      <section className="section-frost" style={{ padding: "56px 0 96px" }}>
+      <section style={{ background: "#FFFFFF", padding: "64px 0 88px" }}>
         <div className="container">
           <div className="split" style={{ alignItems: "start" }}>
-            {/* LEFT, info */}
+            {/* LEFT: Institutional Contact Details */}
             <div>
-              <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "var(--ink)", marginBottom: 22 }}>
-                Contact details
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#003896", marginBottom: 6 }}>
+                Academy Desk
+              </div>
+              <h2 className="title" style={{ marginBottom: 22 }}>
+                Contact Details
               </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {infoItems.map((item, i) => (
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div style={{ background: "#F5F7FA", padding: "22px 24px" }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#475569", marginBottom: 4 }}>
+                    Email Address
+                  </div>
                   <a
-                    key={i}
-                    href={item.href}
-                    className="card card-hover"
-                    aria-label={item.iconLabel || item.label}
-                    style={{ padding: "20px 22px", display: "flex", alignItems: "center", gap: 16, textDecoration: "none", color: "inherit" }}
+                    href={`mailto:${org.email}`}
+                    style={{ fontWeight: 700, color: "#0B1D51", fontSize: 15, textDecoration: "none", wordBreak: "break-word" }}
                   >
-                    <span
-                      style={{
-                        width: 50,
-                        height: 50,
-                        borderRadius: 15,
-                        background: "var(--green-tint)",
-                        color: "var(--green-deep)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Icon name={item.icon} size={22} />
-                    </span>
-                    <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", fontWeight: 700, marginBottom: 3 }}>
-                        {item.label}
-                      </div>
-                      {item.value ? (
-                        <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 15, wordBreak: "break-word" }}>
-                          {item.value}
-                        </div>
-                      ) : (
-                        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--ink)" }}>
-                          <Icon name="phone" size={16} strokeWidth={2} />
-                          <span style={{ fontWeight: 700, fontSize: 15 }}>{item.iconLabel}</span>
-                        </div>
-                      )}
-                    </div>
+                    {org.email}
                   </a>
-                ))}
-              </div>
+                </div>
 
-              <div style={{ marginTop: 32 }}>
-                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>
-                  Find us online
+                <div style={{ background: "#F5F7FA", padding: "22px 24px" }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#475569", marginBottom: 6 }}>
+                    Direct Voice &amp; WhatsApp Desk
+                  </div>
+                  <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                    <a
+                      href={`tel:${org.phoneE164}`}
+                      aria-label="Call CHRISCO Digital Academy"
+                      className="btn btn-navy btn-sm"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Icon name="phone" size={15} /> Call Desk
+                    </a>
+                    <a
+                      href={org.whatsapp}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Message CHRISCO Digital Academy on WhatsApp"
+                      className="btn btn-primary btn-sm"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Icon name="whatsapp" size={15} /> WhatsApp Desk
+                    </a>
+                  </div>
                 </div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  {["Facebook", "Instagram", "YouTube", "LinkedIn"].map((s) => (
-                    <span key={s} className="pill pill-soft pill-sm" style={{ cursor: "default" }}>{s}</span>
-                  ))}
-                </div>
-              </div>
 
-              <div style={{ marginTop: 36, background: "var(--navy)", borderRadius: "var(--radius-lg)", padding: "26px 26px", color: "#fff" }}>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "1.3rem", lineHeight: 1.2, marginBottom: 8 }}>
-                  Prefer WhatsApp?
+                <div style={{ background: "#F5F7FA", padding: "22px 24px" }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#475569", marginBottom: 4 }}>
+                    Organisation &amp; Districts
+                  </div>
+                  <div style={{ fontWeight: 700, color: "#0B1D51", fontSize: 15 }}>
+                    {org.programme} ({org.umbrella})
+                  </div>
+                  <div style={{ fontSize: 13.5, color: "#334155", marginTop: 4 }}>
+                    Operating across Jinja &amp; Buikwe Districts, Uganda, and online across East Africa.
+                  </div>
                 </div>
-                <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.6)", marginBottom: 16 }}>
-                  Chat with us directly, we reply fast.
-                </p>
-                <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
-                  <Icon name="whatsapp" size={15} /> Chat on WhatsApp
-                </a>
               </div>
             </div>
 
-            {/* RIGHT, form (client island) */}
+            {/* RIGHT: Contact Form */}
             <ContactForm />
           </div>
         </div>

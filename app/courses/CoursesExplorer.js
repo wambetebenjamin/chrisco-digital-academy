@@ -1,6 +1,5 @@
 "use client"
 import { useState, useEffect } from "react"
-import emailjs from "@emailjs/browser"
 import Image from "next/image"
 import Link from "next/link"
 import Icon from "../components/Icon"
@@ -18,10 +17,6 @@ import { getBookByCourse } from "../data/booksCatalogue"
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim())
 }
-
-const SERVICE_ID = "service_m86zbad"
-const TEMPLATE_ID = "template_i5wg4c8"
-const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
 
 const levels = ["All", "Beginner", "Intermediate"]
 
@@ -56,15 +51,12 @@ export default function CoursesExplorer() {
 
   const counts = categoryCounts()
 
-  // Deep links from the navigation mega-menu: /courses?category=Coding
-  // and /courses?course=12 (opens that course's detail panel directly).
   useEffect(() => {
     if (typeof window === "undefined") return
     const params = new URLSearchParams(window.location.search)
     const cat = params.get("category")
     const courseId = params.get("course")
     if (cat && (cat === "All" || categories.some((c) => c.name === cat))) {
-      // One-shot read of the URL on mount; the router is the external store.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCategory(cat)
     }
@@ -74,7 +66,6 @@ export default function CoursesExplorer() {
     }
   }, [])
 
-  // Live hand-off from the navigation mega-menu when this page is already open.
   useEffect(() => {
     const onCatalogueNav = (event) => {
       const { category: cat, courseId } = event.detail || {}
@@ -145,9 +136,6 @@ export default function CoursesExplorer() {
     setSending(false)
   }
 
-  /*
-   * Online book downloads require email registration (with Privacy & Data Protection consent).
-   */
   function handleDownload(course) {
     if (!course.download) return
     if (!hasBookAccess) {
@@ -172,8 +160,7 @@ export default function CoursesExplorer() {
 
   return (
     <>
-      {/* BODY */}
-      <section className="section-frost" style={{ padding: "56px 0 96px" }}>
+      <section style={{ background: "#FFFFFF", padding: "56px 0 88px" }}>
         <div className="container">
           <div className="grid-sidebar">
 
@@ -181,70 +168,62 @@ export default function CoursesExplorer() {
             <aside>
               <div
                 style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--line)",
-                  borderRadius: "var(--radius-lg)",
-                  padding: "26px 22px",
+                  background: "#F5F7FA",
+                  padding: "24px 20px",
                   position: "sticky",
                   top: 126,
                 }}
               >
-                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>
-                  Categories
+                <div style={{ fontWeight: 700, fontSize: 13, color: "#0B1D51", marginBottom: 12 }}>
+                  Skill Tracks
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <button
+                    type="button"
                     onClick={() => setCategory("All")}
                     className="pill"
                     style={{
                       width: "100%",
                       justifyContent: "space-between",
-                      background: category === "All" ? "var(--navy)" : "transparent",
-                      borderColor: category === "All" ? "var(--navy)" : "var(--line-strong)",
-                      color: category === "All" ? "#fff" : "var(--ink)",
+                      background: category === "All" ? "#0B1D51" : "#FFFFFF",
+                      color: category === "All" ? "#FFFFFF" : "#0B1D51",
                     }}
                   >
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                      <Icon name="grid" size={14} /> All Courses
-                    </span>
-                    <span style={{ opacity: 0.7, fontWeight: 700 }}>{courses.length}</span>
+                    <span>All Courses</span>
+                    <span>{courses.length}</span>
                   </button>
                   {categories.map((cat) => (
                     <button
                       key={cat.name}
+                      type="button"
                       onClick={() => setCategory(cat.name)}
                       className="pill"
                       style={{
                         width: "100%",
                         justifyContent: "space-between",
-                        background: category === cat.name ? (cat.color || "var(--poster-blue)") : "#FFFFFF",
-                        borderColor: category === cat.name ? (cat.color || "var(--poster-blue)") : "var(--line-strong)",
-                        color: category === cat.name ? "#fff" : (cat.color || "var(--ink)"),
+                        background: category === cat.name ? "#0B1D51" : "#FFFFFF",
+                        color: category === cat.name ? "#FFFFFF" : "#0B1D51",
                       }}
                     >
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                        <Icon name={cat.icon} size={14} /> {cat.name}
-                      </span>
-                      <span style={{ opacity: 0.85, fontWeight: 800 }}>{counts[cat.name] || 0}</span>
+                      <span>{cat.name}</span>
+                      <span>{counts[cat.name] || 0}</span>
                     </button>
                   ))}
                 </div>
 
-                <div style={{ borderTop: "1px solid var(--line)", margin: "22px 0" }} />
-
-                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 12 }}>
+                <div style={{ fontWeight: 700, fontSize: 13, color: "#0B1D51", margin: "22px 0 10px" }}>
                   Level
                 </div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                   {levels.map((lv) => (
                     <button
                       key={lv}
+                      type="button"
                       onClick={() => setLevel(lv)}
                       className="pill pill-sm"
                       style={{
-                        background: level === lv ? "var(--navy)" : "transparent",
-                        borderColor: level === lv ? "var(--navy)" : "var(--line-strong)",
-                        color: level === lv ? "#fff" : "var(--ink)",
+                        background: level === lv ? "#0B1D51" : "#FFFFFF",
+                        color: level === lv ? "#FFFFFF" : "#0B1D51",
                       }}
                     >
                       {lv}
@@ -252,29 +231,8 @@ export default function CoursesExplorer() {
                   ))}
                 </div>
 
-                <div
-                  style={{
-                    marginTop: 24,
-                    background: "var(--navy)",
-                    borderRadius: 16,
-                    padding: "20px 18px",
-                    color: "#fff",
-                  }}
-                >
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", lineHeight: 1.15 }}>
-                    Not sure where to start?
-                  </div>
-                  <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.6)", margin: "8px 0 14px" }}>
-                    WhatsApp us and we&apos;ll match you with the right course for your goals.
-                  </p>
-                  <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ textDecoration: "none", width: "100%" }}>
-                    <Icon name="whatsapp" size={15} /> WhatsApp Us
-                  </a>
-                </div>
-
-                <div style={{ borderTop: "1px solid var(--line)", margin: "22px 0 14px" }} />
-                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
-                  Connected Study Hub
+                <div style={{ fontWeight: 700, fontSize: 13, color: "#0B1D51", margin: "22px 0 10px" }}>
+                  Study Resources
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   {slidesDeck && (
@@ -283,9 +241,9 @@ export default function CoursesExplorer() {
                       target="_blank"
                       rel="noreferrer"
                       className="pill pill-sm"
-                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                      style={{ background: "#FFFFFF", textDecoration: "none", justifyContent: "flex-start" }}
                     >
-                      <Icon name="play" size={13} /> Google Slides Track Guide
+                      Google Slides Track Guide
                     </a>
                   )}
                   {dropboxVault && (
@@ -294,9 +252,9 @@ export default function CoursesExplorer() {
                       target="_blank"
                       rel="noreferrer"
                       className="pill pill-sm"
-                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                      style={{ background: "#FFFFFF", textDecoration: "none", justifyContent: "flex-start" }}
                     >
-                      <Icon name="download" size={13} /> Dropbox Vault (19 PDFs)
+                      Dropbox Vault (19 PDFs)
                     </a>
                   )}
                   {notionHub && (
@@ -305,32 +263,24 @@ export default function CoursesExplorer() {
                       target="_blank"
                       rel="noreferrer"
                       className="pill pill-sm"
-                      style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                      style={{ background: "#FFFFFF", textDecoration: "none", justifyContent: "flex-start" }}
                     >
-                      <Icon name="book" size={13} /> Notion Curriculum Guide
+                      Notion Curriculum Guide
                     </a>
                   )}
                   <Link
                     href="/studio"
                     className="pill pill-sm"
-                    style={{ textDecoration: "none", justifyContent: "flex-start" }}
+                    style={{ background: "#FFFFFF", textDecoration: "none", justifyContent: "flex-start" }}
                   >
-                    <Icon name="robot" size={13} /> AI Prompt &amp; Voice Studio
+                    AI Creative &amp; Voice Studio
                   </Link>
                 </div>
 
-                <div style={{ borderTop: "1px solid var(--line)", margin: "22px 0 14px" }} />
-                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
-                  Teens AI Bootcamp Poster
+                <div style={{ fontWeight: 700, fontSize: 13, color: "#0B1D51", margin: "22px 0 10px" }}>
+                  Teens AI Bootcamp
                 </div>
-                <div
-                  style={{
-                    borderRadius: 14,
-                    overflow: "hidden",
-                    border: "1px solid var(--line)",
-                    boxShadow: "0 10px 24px rgba(0, 35, 51, 0.12)",
-                  }}
-                >
+                <div>
                   <Image
                     src="/posters/teens-ai-bootcamp-official.png"
                     alt="CHRISCO Teens AI & Projects Bootcamp Official Poster"
@@ -345,177 +295,94 @@ export default function CoursesExplorer() {
             {/* COURSE GRID */}
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 10 }}>
-                <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, color: "var(--muted)" }}>
-                  Showing <strong style={{ color: "var(--ink)" }}>{filtered.length}</strong> of {courses.length} courses
+                <span style={{ fontSize: 14, color: "#475569" }}>
+                  Showing <strong style={{ color: "#0B1D51" }}>{filtered.length}</strong> of {courses.length} courses
                 </span>
                 {(category !== "All" || level !== "All") && (
                   <button
+                    type="button"
                     onClick={clearFilters}
                     className="pill pill-sm"
-                    style={{ background: "var(--green-tint)", borderColor: "transparent", color: "var(--green-deep)" }}
+                    style={{ background: "#F5F7FA", color: "#003896" }}
                   >
-                    <Icon name="x" size={13} strokeWidth={2.4} /> Clear filters
+                    Clear filters
                   </button>
                 )}
               </div>
 
               {filtered.length === 0 ? (
-                <div className="card" style={{ padding: "60px 40px", textAlign: "center" }}>
-                  <span style={{ display: "inline-flex", width: 72, height: 72, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
-                    <Icon name="search" size={34} strokeWidth={1.6} />
-                  </span>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 8 }}>No courses match those filters</h3>
-                  <p style={{ color: "var(--muted)", fontSize: 14, marginBottom: 20 }}>Try a different category or level.</p>
-                  <button onClick={clearFilters} className="btn btn-navy btn-sm" style={{ cursor: "pointer" }}>
+                <div style={{ background: "#F5F7FA", padding: "56px 36px", textAlign: "center" }}>
+                  <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "#0B1D51", marginBottom: 8 }}>
+                    No courses match those filters
+                  </h3>
+                  <p style={{ color: "#475569", fontSize: 14, marginBottom: 20 }}>
+                    Try selecting a different skill track or level.
+                  </p>
+                  <button type="button" onClick={clearFilters} className="btn btn-navy btn-sm">
                     Show all courses
                   </button>
                 </div>
               ) : (
                 <div className="course-grid">
-                  {filtered.map((course) => {
-                    const accentColor = course.color?.[0] || "#084EC8"
-                    return (
-                      <div
-                        key={course.id}
-                        className="card"
-                        style={{
-                          overflow: "hidden",
-                          display: "flex",
-                          flexDirection: "column",
-                          cursor: "pointer",
-                          borderTop: `4px solid ${accentColor}`,
-                        }}
-                        onClick={() => openCourse(course)}
-                      >
-                        {/* Clean Poster Course Header — un-muddy photo + solid poster color badge */}
-                        <div style={{ background: "#0B1D51", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
-                          <Image
-                            src={imageFor(course)}
-                            alt=""
-                            fill
-                            sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
-                            style={{ objectFit: "cover" }}
-                          />
-                          <span
-                            className="pill pill-sm"
-                            style={{
-                              position: "absolute",
-                              top: 12,
-                              right: 12,
-                              background: accentColor,
-                              border: "none",
-                              color: "#FFFFFF",
-                              fontWeight: 800,
-                            }}
-                          >
-                            {course.category}
-                          </span>
-                          <span
-                            style={{
-                              position: "absolute",
-                              top: 12,
-                              left: 12,
-                              background: "#FFFFFF",
-                              color: "#0B1D51",
-                              fontSize: 10.5,
-                              fontWeight: 800,
-                              padding: "4px 10px",
-                              borderRadius: 999,
-                              textTransform: "uppercase",
-                              letterSpacing: "0.06em",
-                            }}
-                          >
-                            {course.level}
-                          </span>
+                  {filtered.map((course) => (
+                    <div
+                      key={course.id}
+                      style={{
+                        background: "#F5F7FA",
+                        display: "flex",
+                        flexDirection: "column",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => openCourse(course)}
+                    >
+                      <div style={{ background: "#0B1D51", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                        <Image
+                          src={imageFor(course)}
+                          alt={course.title}
+                          fill
+                          sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+
+                      <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: "#003896", marginBottom: 6 }}>
+                          {course.category} · {course.level} · {course.duration}
                         </div>
 
-                        {/* Body — Poster Circle Icon + Colored Heading + Clean Dividers */}
-                        <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
-                          <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 10 }}>
-                            <span
-                              style={{
-                                width: 38,
-                                height: 38,
-                                borderRadius: "50%",
-                                background: accentColor,
-                                color: "#FFFFFF",
-                                display: "inline-flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexShrink: 0,
-                              }}
-                            >
-                              <Icon name={course.icon} size={19} strokeWidth={1.8} />
-                            </span>
-                            <div>
-                              <h3 style={{ fontSize: "1.1rem", fontWeight: 800, color: accentColor, marginBottom: 3 }}>
-                                {course.title}
-                              </h3>
-                              <p style={{ fontFamily: "var(--font-head)", fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>
-                                {org.courseCredit}
-                              </p>
-                            </div>
-                          </div>
+                        <h3 style={{ fontSize: "1.12rem", fontWeight: 700, color: "#0B1D51", marginBottom: 8 }}>
+                          {course.title}
+                        </h3>
 
-                          <p style={{ fontSize: 13.5, color: "var(--body)", lineHeight: 1.6, marginBottom: 16, flex: 1 }}>
-                            {course.desc}
-                          </p>
+                        <p style={{ fontSize: 13.5, color: "#334155", lineHeight: 1.65, marginBottom: 18, flex: 1 }}>
+                          {course.desc}
+                        </p>
 
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 12,
-                              borderTop: "1px solid var(--line)",
-                              borderBottom: "1px solid var(--line)",
-                              padding: "9px 0",
-                              marginBottom: 16,
-                              fontSize: 12,
-                              fontWeight: 700,
-                              color: "var(--ink)",
-                            }}
+                        <div style={{ display: "flex", gap: 8 }}>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-sm"
+                            style={{ flex: 1, cursor: "pointer" }}
                           >
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#E60914" }}>
-                              <Icon name="clock" size={13} /> {course.duration}
-                            </span>
-                            <span style={{ color: "var(--line-strong)" }}>|</span>
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: "#084EC8" }}>
-                              <Icon name="star" size={13} /> {course.rating}
-                            </span>
-                            <span style={{ color: "var(--line-strong)" }}>|</span>
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#38A128" }}>
-                              <Icon name="users" size={13} /> {course.students}
-                            </span>
-                          </div>
-
-                          <div style={{ display: "flex", gap: 10 }}>
-                            <button
-                              className="btn btn-sm"
-                              style={{
-                                flex: 1,
-                                cursor: "pointer",
-                                fontSize: 13,
-                                background: accentColor,
-                                color: "#FFFFFF",
-                                borderColor: accentColor,
-                              }}
-                            >
-                              View Course →
-                            </button>
-                            <button
-                              onClick={(e) => { e.stopPropagation(); handleDownload(course) }}
-                              className="btn btn-outline btn-sm"
-                              title={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
-                              aria-label={hasBookAccess ? `Download ${course.title} handbook` : `Sign in to your account to download ${course.title} handbook`}
-                              style={{ cursor: "pointer", padding: "10px 16px" }}
-                            >
-                              <Icon name={hasBookAccess ? "download" : "lock"} size={16} />
-                            </button>
-                          </div>
+                            View Course
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleDownload(course)
+                            }}
+                            className="btn btn-outline btn-sm"
+                            title={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
+                            aria-label={hasBookAccess ? `Download ${course.title} handbook` : `Sign in to your account to download ${course.title} handbook`}
+                            style={{ cursor: "pointer", padding: "9px 14px" }}
+                          >
+                            <Icon name={hasBookAccess ? "download" : "lock"} size={15} />
+                          </button>
                         </div>
                       </div>
-                    )
-                  })}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -523,7 +390,6 @@ export default function CoursesExplorer() {
         </div>
       </section>
 
-      {/* ACCOUNT-GATED BOOK DOWNLOAD MODAL */}
       {lockedCourse && (
         <BookGateModal
           book={getBookByCourse(lockedCourse)}
@@ -534,104 +400,47 @@ export default function CoursesExplorer() {
       {selected && (
         <div className="overlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            {/* Header, photo + course-tone overlay */}
-            <div style={{ background: "var(--navy)", padding: "32px 32px 28px", position: "relative", overflow: "hidden" }}>
-              <Image
-                src={imageFor(selected)}
-                alt=""
-                fill
-                sizes="(min-width: 640px) 600px, 92vw"
-                style={{ objectFit: "cover" }}
-              />
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(148deg, rgba(0,35,51,0.68) 0%, rgba(0,35,51,0.38) 58%, rgba(1,58,79,0.2) 100%)" }} />
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(140deg, ${selected.color[0]}3D, transparent 68%)` }} />
-              <span
-                className="pill pill-sm"
-                style={{ position: "absolute", top: 18, right: 18, background: "rgba(255,255,255,0.94)", border: "none", color: "var(--ink)" }}
-              >
-                {selected.category}
-              </span>
-              <div style={{ display: "flex", alignItems: "center", gap: 18, position: "relative" }}>
-                <div
-                  style={{
-                    width: 68,
-                    height: 68,
-                    borderRadius: 20,
-                    background: "rgba(255,255,255,0.18)",
-                    border: "1px solid rgba(255,255,255,0.3)",
-                    color: "#fff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  <Icon name={selected.icon} size={34} strokeWidth={1.6} />
-                </div>
-                <div>
-                  <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: "1.4rem" }}>{selected.title}</h2>
-                  <p style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: "0.04em", color: "rgba(255,255,255,0.72)", marginTop: 8 }}>
-                    {org.courseCredit}
-                  </p>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
-                    <span className="modal-chip">{selected.level}</span>
-                    <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="clock" size={12} strokeWidth={2.2} /> {selected.duration}</span>
-                    <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="star" size={12} strokeWidth={2.2} /> {selected.rating}</span>
-                    <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="users" size={12} strokeWidth={2.2} /> {selected.students}</span>
-                  </div>
-                </div>
+            <div style={{ background: "#0B1D51", padding: "28px 30px 24px", color: "#FFFFFF" }}>
+              <div style={{ fontSize: 12.5, fontWeight: 600, color: "#F8C90E", marginBottom: 6 }}>
+                {selected.category} · {selected.level} · {selected.duration}
               </div>
+              <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 700, color: "#FFFFFF", fontSize: "1.45rem" }}>
+                {selected.title}
+              </h2>
+              <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.78)", marginTop: 6 }}>
+                {org.courseCredit}
+              </p>
             </div>
 
-            <div style={{ padding: "28px 32px 32px" }}>
-              <p style={{ color: "var(--body)", lineHeight: 1.7, marginBottom: 24 }}>{selected.desc}</p>
+            <div style={{ padding: "26px 30px 30px" }}>
+              <p style={{ color: "#334155", lineHeight: 1.7, marginBottom: 22 }}>{selected.desc}</p>
 
-              {/* Objectives */}
-              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
-                <Icon name="target" size={18} style={{ color: "var(--green-deep)" }} /> Course Objectives
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.02rem", marginBottom: 10, color: "#0B1D51" }}>
+                Course Objectives
               </h3>
               <ul className="course-objectives">
                 {(selected.objectives || []).map((objective) => (
                   <li key={objective}>
-                    <Icon name="checkCircle" size={15} strokeWidth={2.1} />
-                    <span>{objective}</span>
+                    <span>• {objective}</span>
                   </li>
                 ))}
               </ul>
 
-              {/* Outline */}
-              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
-                <Icon name="clipboard" size={18} style={{ color: "var(--green-deep)" }} /> Course Outline
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.02rem", marginBottom: 10, color: "#0B1D51" }}>
+                Course Outline
               </h3>
-              <div style={{ background: "#F4F6F4", borderRadius: 16, padding: "6px 18px", marginBottom: 24 }}>
+              <div style={{ background: "#F5F7FA", padding: "14px 18px", marginBottom: 22, display: "grid", gap: 10 }}>
                 {selected.syllabus.map((item, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "12px 0", borderBottom: i < selected.syllabus.length - 1 ? "1px solid var(--line)" : "none" }}>
-                    <span
-                      style={{
-                        background: "var(--navy)",
-                        color: "var(--green)",
-                        fontFamily: "var(--font-head)",
-                        fontWeight: 800,
-                        fontSize: 11,
-                        width: 26,
-                        height: 26,
-                        borderRadius: 9,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        marginTop: 1,
-                      }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
+                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                    <span style={{ fontWeight: 700, fontSize: 13, color: "#003896", minWidth: 24 }}>
+                      {String(i + 1).padStart(2, "0")}.
                     </span>
-                    <p style={{ color: "var(--ink)", fontSize: 14, lineHeight: 1.5 }}>{item}</p>
+                    <p style={{ color: "#0B1D51", fontSize: 14, lineHeight: 1.5 }}>{item}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="course-handbook-note">
-                <Icon name="book" size={15} strokeWidth={2} />
+              <div className="course-handbook-note" style={{ border: "none", background: "#F5F7FA" }}>
                 <span>
                   {hasBookAccess
                     ? "PDF handbook unlocked in your account and Dashboard."
@@ -653,60 +462,52 @@ export default function CoursesExplorer() {
                 <ShareBookBar book={getBookByCourse(selected)} />
               </div>
 
-              {/* Who for */}
-              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 10, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
-                <Icon name="target" size={18} style={{ color: "var(--green-deep)" }} /> Who Is This For?
+              <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.02rem", marginBottom: 8, color: "#0B1D51" }}>
+                Who Is This For?
               </h3>
-              <div
-                style={{
-                  background: "var(--layer-1)",
-                  border: "1px solid var(--line)",
-                  borderLeft: "3px solid var(--green-deep)",
-                  borderRadius: 14,
-                  padding: "16px 18px",
-                  marginBottom: 26,
-                }}
-              >
-                <p style={{ color: "var(--body)", fontSize: 14, lineHeight: 1.65, fontWeight: 500 }}>{selected.for}</p>
+              <div style={{ background: "#F5F7FA", padding: "14px 18px", marginBottom: 24 }}>
+                <p style={{ color: "#334155", fontSize: 14, lineHeight: 1.65 }}>{selected.for}</p>
               </div>
 
-              {/* Actions */}
               {!enrolling && !sent && (
-                <div style={{ display: "flex", gap: 12 }}>
+                <div style={{ display: "flex", gap: 10 }}>
                   <button
+                    type="button"
                     onClick={() => setEnrolling(selected)}
-                    className="btn btn-green"
+                    className="btn btn-primary"
                     style={{ flex: 1, cursor: "pointer" }}
                   >
-                    <Icon name="rocket" size={16} /> Enroll Now
+                    Enroll Now
                   </button>
                   <button
+                    type="button"
                     onClick={() => handleDownload(selected)}
                     className="btn btn-outline"
                     title={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
                     aria-label={hasBookAccess ? "Download course handbook" : "Sign in to your account to download handbook"}
-                    style={{ cursor: "pointer", padding: "14px 18px" }}
+                    style={{ cursor: "pointer", padding: "12px 16px" }}
                   >
-                    <Icon name={hasBookAccess ? "download" : "lock"} size={17} />
+                    <Icon name={hasBookAccess ? "download" : "lock"} size={16} />
                   </button>
                   <button
+                    type="button"
                     onClick={() => setSelected(null)}
                     aria-label="Close"
-                    style={{ background: "transparent", border: "1.5px solid var(--line-strong)", color: "var(--muted)", borderRadius: 999, padding: "14px 20px", cursor: "pointer", display: "inline-flex", alignItems: "center" }}
+                    className="btn btn-outline"
+                    style={{ cursor: "pointer", padding: "12px 16px" }}
                   >
                     <Icon name="x" size={15} />
                   </button>
                 </div>
               )}
 
-              {/* Enroll form */}
               {enrolling && !sent && (
                 <div>
-                  <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem", color: "var(--ink)", marginBottom: 18, display: "flex", alignItems: "center", gap: 9 }}>
-                    <Icon name="pen" size={17} style={{ color: "var(--green-deep)" }} /> Enroll in {enrolling.title}
+                  <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.05rem", color: "#0B1D51", marginBottom: 16 }}>
+                    Enroll in {enrolling.title}
                   </h3>
                   {enrollError && (
-                    <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "10px 14px", borderRadius: 10, fontSize: 13, marginBottom: 14 }}>
+                    <div style={{ background: "#FEECEC", color: "#B91C1C", padding: "10px 14px", fontSize: 13, marginBottom: 14 }}>
                       {enrollError}
                     </div>
                   )}
@@ -728,35 +529,32 @@ export default function CoursesExplorer() {
                     onChange={setNotRobot}
                   />
 
-                  <div style={{ display: "flex", gap: 12 }}>
+                  <div style={{ display: "flex", gap: 10 }}>
                     <button
+                      type="button"
                       onClick={() => handleEnroll(enrolling)}
                       disabled={sending}
-                      className="btn btn-green"
+                      className="btn btn-primary"
                       style={{ flex: 1, cursor: "pointer" }}
                     >
-                      {sending ? "Sending..." : <><Icon name="send" size={15} /> Submit Enrollment</>}
+                      {sending ? "Sending..." : "Submit Enrollment"}
                     </button>
-                    <button onClick={() => setEnrolling(null)} className="btn btn-outline" style={{ cursor: "pointer" }}>
+                    <button type="button" onClick={() => setEnrolling(null)} className="btn btn-outline" style={{ cursor: "pointer" }}>
                       Back
                     </button>
                   </div>
                 </div>
               )}
 
-              {/* Success */}
               {sent && (
-                <div style={{ textAlign: "center", background: "var(--layer-1)", border: "1px solid var(--line)", borderRadius: 20, padding: "40px 24px" }}>
-                  <span style={{ display: "inline-flex", width: 72, height: 72, borderRadius: "50%", background: "#fff", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "var(--shadow-sm)" }}>
-                    <Icon name="checkCircle" size={38} strokeWidth={1.6} />
-                  </span>
-                  <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.3rem", fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>
+                <div style={{ textAlign: "center", background: "#F5F7FA", padding: "36px 24px" }}>
+                  <h3 style={{ fontFamily: "var(--font-head)", fontSize: "1.25rem", fontWeight: 700, color: "#0B1D51", marginBottom: 8 }}>
                     Enrollment Sent!
                   </h3>
-                  <p style={{ color: "var(--body)", fontSize: 14, marginBottom: 20 }}>
+                  <p style={{ color: "#334155", fontSize: 14, marginBottom: 20 }}>
                     Our team at CHRISCO Youth Aflame will contact you soon on WhatsApp or email. Welcome to CHRISCO Digital Academy!
                   </p>
-                  <button onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
+                  <button type="button" onClick={() => setSelected(null)} className="btn btn-navy" style={{ cursor: "pointer" }}>
                     Close
                   </button>
                 </div>

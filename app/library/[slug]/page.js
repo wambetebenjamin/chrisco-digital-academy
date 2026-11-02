@@ -1,4 +1,7 @@
 import { notFound } from "next/navigation"
+import Navbar from "../../Navbar"
+import Footer from "../../components/Footer"
+import Chatbot from "../../Chatbot"
 import { allBooks, getBookBySlug } from "../../data/booksCatalogue"
 import { resolveServerOrigin, buildSocialMetadata } from "../../lib/siteOrigin"
 import BookDetailClient from "./BookDetailClient"
@@ -33,5 +36,12 @@ export default async function BookDetailPage({ params }) {
     .filter((b) => b.shelf === book.shelf && b.slug !== book.slug)
     .slice(0, 4)
 
-  return <BookDetailClient book={book} relatedBooks={relatedBooks} />
+  return (
+    <main style={{ minHeight: "100vh", background: "#FFFFFF", overflowX: "hidden" }}>
+      <Navbar />
+      <BookDetailClient book={book} relatedBooks={relatedBooks} />
+      <Footer />
+      <Chatbot />
+    </main>
+  )
 }
