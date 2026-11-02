@@ -26,8 +26,8 @@ const aboutLinks = [
 
 const programLinks = [
   { label: "Online Learning", desc: "Study from anywhere in Africa", href: "/courses", icon: "laptop" },
-  { label: "AI Prompt & Voice Studio", desc: "OpenHiggsfield, VoiceStudio & OpenSEO lab", href: "/studio", icon: "robot" },
-  { label: "In-Person Classes", desc: "Classroom cohorts, scheduled monthly", href: "/contact", icon: "pin" },
+  { label: "Teens AI & Projects Bootcamp", desc: "3rd Nov – 11th Dec 2026 holiday cohort", href: "/#teens-bootcamp", icon: "robot" },
+  { label: "In-Person Classes", desc: "Classroom cohorts in Jinja & Buikwe", href: "/contact", icon: "pin" },
   { label: "Youth & Community", desc: "CHRISCO Youth Aflame programmes", href: "/about", icon: "flame" },
   { label: "Corporate Training", desc: "Upskill your team with us", href: "/contact", icon: "briefcase" },
   { label: "Become a Tutor", desc: "Teach what you already do", href: "/become-a-tutor", icon: "send" },
@@ -35,7 +35,6 @@ const programLinks = [
 
 const studentLinks = [
   { label: "Student Dashboard", desc: "Your courses and progress", href: "/dashboard", icon: "grid" },
-  { label: "AI Prompt & Voice Studio", desc: "Image/video prompts, voice & SEO lab", href: "/studio", icon: "robot" },
   { label: "Christian & Faith Books", desc: "Prophetic & spiritual formation shelf", href: "/library?shelf=christian", icon: "flame" },
   { label: "Skill & Learning Books", desc: "All 19 illustrated course handbooks", href: "/library?shelf=learning", icon: "book" },
   { label: "Affiliate Programme", desc: "Share your link and earn", href: "/affiliates", icon: "cash" },
@@ -319,50 +318,44 @@ export default function Navbar() {
 
   return (
     <nav ref={navRef} className={`nav-shell${scrolled ? " is-scrolled" : ""}`}>
-      {/* UCU-style Royal Blue Top Utility Strip */}
+      {/* Top utility strip — CHRISCO Youth Aflame */}
       <div className="nav-utility">
         <div className="container nav-utility-inner">
           <span className="nav-utility-group">
-            <a href="tel:+254112272061" className="nav-utility-link" aria-label="Call us">
-              <Icon name="phone" size={14} strokeWidth={1.8} /> +254-112-272-061
+            <a href="tel:+254112272061" className="nav-utility-icon" aria-label="Call us">
+              <Icon name="phone" size={13} strokeWidth={2} />
             </a>
             <a href="mailto:chriscoyouthaflame2025@gmail.com" className="nav-utility-link" aria-label="Email us">
-              <Icon name="mail" size={14} strokeWidth={1.8} /> chriscoyouthaflame2025@gmail.com
+              <Icon name="mail" size={13} strokeWidth={2} /> chriscoyouthaflame2025@gmail.com
             </a>
+            <span className="nav-utility-item nav-utility-hours">
+              <Icon name="clock" size={12} strokeWidth={2} /> Mon to Sat, 8am to 6pm
+            </span>
           </span>
           <span className="nav-utility-group nav-utility-quicklinks">
-            <Link href="/courses" className="nav-utility-link">List of All Programmes</Link>
-            <Link href="/library" className="nav-utility-link">Library</Link>
-            <Link href="/studio" className="nav-utility-link">Studio</Link>
-            <Link href="/#teens-bootcamp" className="nav-utility-link">Teens Bootcamp</Link>
+            <Link href="/courses" className="nav-utility-link">19 Courses</Link>
+            <Link href="/library" className="nav-utility-link">Books &amp; Handbooks</Link>
+            <Link href="/#teens-bootcamp" className="nav-utility-link">Teens AI Bootcamp</Link>
             <Link href="/shop" className="nav-utility-link">PURSUE Shop</Link>
-            <Link href="/become-a-tutor" className="nav-utility-link">Careers</Link>
-            <Link href="/dashboard" className="nav-utility-link">e-Learning</Link>
+            <Link href="/become-a-tutor" className="nav-utility-link">Become a Tutor</Link>
+            <Link href="/dashboard" className="nav-utility-link">Dashboard</Link>
           </span>
         </div>
       </div>
 
-      {/* UCU-style Translucent Institutional Brand Bar */}
+      {/* Main brand bar — CHRISCO Digital Academy */}
       <div className="nav-bar">
         <div className="container nav-bar-inner">
-          {/* Institutional Shield Crest + Stacked Name */}
+          {/* Logo */}
           <Link href="/" className="nav-logo" onClick={closeAll}>
-            <span className="nav-logo-mark" aria-hidden="true">
-              <svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 1L2 5V14.5C2 21.8 6.7 27.6 13 29C19.3 27.6 24 21.8 24 14.5V5L13 1Z" fill="#003896" stroke="#F8C90E" strokeWidth="1.5"/>
-                <path d="M13 3.5V26.5M5 13.5H21" stroke="#E60914" strokeWidth="3"/>
-                <path d="M13 3.5V26.5M5 13.5H21" stroke="#FFFFFF" strokeWidth="1.2"/>
-              </svg>
-            </span>
+            <span className="nav-logo-mark" aria-hidden="true">C</span>
             <span className="nav-logo-text">
-              <span className="nav-logo-word">
-                CHRISCO DIGITAL<br />ACADEMY
-              </span>
-              <span className="nav-logo-sub">A Centre of Excellence in Practical Digital Skills</span>
+              <span className="nav-logo-word">CHRISCO Digital Academy</span>
+              <span className="nav-logo-sub">CHRISCO Youth Aflame · Learn, Build &amp; Impact</span>
             </span>
           </Link>
 
-          {/* Desktop menu — UCU structure: Home | Students | Research/Studio | Academics | About Us | Contact Us + Search */}
+          {/* Desktop menu */}
           <div className="nav-menu nav-desktop-only">
             <Link
               href="/"
@@ -371,32 +364,40 @@ export default function Navbar() {
               Home
             </Link>
 
-            <Dropdown id="students" label="Students" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
-              <div className="nav-panel-head">
-                <span className="nav-panel-eyebrow">Learner Hub</span>
-                <span className="nav-panel-head-title">Students &amp; e-Learning</span>
-              </div>
-              <PanelList items={studentLinks} onNavigate={closeAll} />
-            </Dropdown>
-
-            <Dropdown id="library" label="Studio & Books" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
-              <div className="nav-panel-head">
-                <span className="nav-panel-eyebrow">Digital Repository &amp; AI Lab</span>
-                <span className="nav-panel-head-title">20 Books &amp; Open-Source Studio</span>
-              </div>
-              <PanelList items={[...libraryLinks, ...programLinks.slice(0, 1)]} onNavigate={closeAll} />
-            </Dropdown>
-
-            <Dropdown id="courses" label="Academics" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu} wide>
-              <CoursesMega onNavigate={closeAll} pathname={pathname} />
-            </Dropdown>
-
             <Dropdown id="about" label="About Us" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
               <div className="nav-panel-head">
-                <span className="nav-panel-eyebrow">The Academy</span>
+                <span className="nav-panel-eyebrow">CHRISCO Youth Aflame</span>
                 <span className="nav-panel-head-title">Who We Are</span>
               </div>
               <PanelList items={aboutLinks} onNavigate={closeAll} />
+            </Dropdown>
+
+            <Dropdown id="courses" label="Courses" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu} wide>
+              <CoursesMega onNavigate={closeAll} pathname={pathname} />
+            </Dropdown>
+
+            <Dropdown id="library" label="Books" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
+              <div className="nav-panel-head">
+                <span className="nav-panel-eyebrow">Two Dedicated Shelves</span>
+                <span className="nav-panel-head-title">Christian &amp; Learning Books</span>
+              </div>
+              <PanelList items={libraryLinks} onNavigate={closeAll} />
+            </Dropdown>
+
+            <Dropdown id="programs" label="Programs" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
+              <div className="nav-panel-head">
+                <span className="nav-panel-eyebrow">How You Learn</span>
+                <span className="nav-panel-head-title">Programs &amp; Pathways</span>
+              </div>
+              <PanelList items={programLinks} onNavigate={closeAll} />
+            </Dropdown>
+
+            <Dropdown id="students" label="Students" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
+              <div className="nav-panel-head">
+                <span className="nav-panel-eyebrow">Learner Hub</span>
+                <span className="nav-panel-head-title">Your Account</span>
+              </div>
+              <PanelList items={studentLinks} onNavigate={closeAll} />
             </Dropdown>
 
             <Link
@@ -410,7 +411,7 @@ export default function Navbar() {
               href="/contact"
               className={`nav-link${isActive("/contact") ? " is-active" : ""}`}
             >
-              Contact Us
+              Contact
             </Link>
 
             {user ? (
@@ -434,22 +435,6 @@ export default function Navbar() {
                 Sign In
               </Link>
             )}
-
-            <Link
-              href="/courses"
-              aria-label="Search programmes"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 36,
-                height: 36,
-                color: "#111111",
-                marginLeft: 6,
-              }}
-            >
-              <Icon name="search" size={18} strokeWidth={2.2} />
-            </Link>
           </div>
 
           {/* Burger */}

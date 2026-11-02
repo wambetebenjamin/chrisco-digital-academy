@@ -785,23 +785,23 @@ img { display: block; max-width: 100%; }
   font-family: var(--font-head);
 }
 
-/* ---- Layer 1: UCU Royal Blue top utility bar ---- */
+/* ---- Layer 1: Top utility bar (Clean Royal Blue, no decorative lines) ---- */
 .nav-utility {
-  background: #003896;
+  background: #0B1D51;
   border-bottom: none;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.9);
 }
 .nav-utility-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 42px;
+  min-height: 40px;
   padding-top: 4px;
   padding-bottom: 4px;
   font-family: var(--font-body);
-  font-size: 13.5px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 500;
   flex-wrap: wrap;
 }
 .nav-utility-group { display: inline-flex; align-items: center; gap: 22px; flex-wrap: wrap; }
@@ -821,13 +821,13 @@ img { display: block; max-width: 100%; }
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
   transition: opacity 0.2s ease;
   white-space: nowrap;
 }
 .nav-utility-link svg { color: #FFFFFF; }
-.nav-utility-link:hover { opacity: 0.85; color: #F8C90E; }
+.nav-utility-link:hover { opacity: 0.8; color: #FFFFFF; }
 @media (max-width: 980px) {
   .nav-utility-quicklinks { display: none; }
 }
@@ -835,38 +835,38 @@ img { display: block; max-width: 100%; }
   .nav-utility { display: none; }
 }
 
-/* ---- Layer 2: UCU Translucent Header Bar over Hero ---- */
+/* ---- Layer 2: Clean Translucent Brand Bar (No extra lines or multi-color borders) ---- */
 .nav-bar {
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border-bottom: none;
   box-shadow: none;
   transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 .nav-shell.is-scrolled .nav-bar {
-  background: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 2px 12px rgba(11, 29, 81, 0.10);
+  background: #FFFFFF;
+  box-shadow: 0 2px 14px rgba(11, 29, 81, 0.08);
 }
 .nav-bar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  height: 82px;
+  height: 78px;
 }
 
-.nav-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.nav-logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
 .nav-logo-mark {
   width: 40px;
-  height: 46px;
-  border-radius: 3px 3px 20px 20px;
+  height: 40px;
+  border-radius: 8px;
   background: #003896;
-  border: 2px solid #E60914;
+  border: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.15rem;
   color: #FFFFFF;
@@ -875,27 +875,24 @@ img { display: block; max-width: 100%; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #F8C90E;
+  color: #FFFFFF;
   font-weight: 700;
 }
-.nav-logo-text { display: inline-flex; flex-direction: column; line-height: 1.08; }
+.nav-logo-text { display: inline-flex; flex-direction: column; line-height: 1.15; }
 .nav-logo-word {
-  font-family: var(--font-body);
-  font-weight: 700;
+  font-family: var(--font-head);
+  font-weight: 800;
   font-size: 15px;
-  color: #111111;
-  letter-spacing: 0.01em;
-  padding-bottom: 3px;
-  border-bottom: 1.5px solid #E60914;
+  color: #0B1D51;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 .nav-logo-sub {
-  font-family: Georgia, "Times New Roman", serif;
-  font-style: italic;
-  font-size: 10.5px;
-  font-weight: 400;
-  color: #E60914;
-  margin-top: 3px;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #475569;
+  margin-top: 2px;
 }
 
 /* ---- Menu items ---- */
@@ -914,10 +911,10 @@ img { display: block; max-width: 100%; }
   gap: 5px;
   background: transparent;
   border: 0;
-  color: #111111;
+  color: #0B1D51;
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 14.5px;
+  font-weight: 600;
   padding: 10px 12px;
   border-radius: 0;
   cursor: pointer;
@@ -928,11 +925,11 @@ img { display: block; max-width: 100%; }
 .nav-link:hover,
 .nav-trigger:hover,
 .nav-dd.is-open .nav-trigger { color: #003896; background: transparent; }
-.nav-link.is-active { color: #003896; }
+.nav-link.is-active { color: #003896; font-weight: 700; }
 .nav-link.is-active::after {
   display: none;
 }
-.nav-caret { transition: transform 0.22s ease; opacity: 0.9; color: #111111; }
+.nav-caret { transition: transform 0.22s ease; opacity: 0.75; color: #0B1D51; }
 .nav-dd.is-open .nav-caret { transform: rotate(180deg); color: #003896; }
 
 /* ---- Dropdown shells ---- */
