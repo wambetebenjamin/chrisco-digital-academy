@@ -5,45 +5,48 @@ import Link from "next/link"
 
 const SLIDES = [
   {
-    id: "teens-bootcamp",
-    title: "TEENS AI & PROJECTS BOOTCAMP AT CHRISCO DIGITAL ACADEMY",
-    subtitle: "The 5-week holiday cohort runs from 3rd November to 11th December 2026.",
+    id: "chrisco-academy",
+    title: "CHRISCO YOUTH AFLAME DIGITAL ACADEMY",
+    subtitle:
+      "Equipping young people across Jinja, Buikwe, and Africa with practical digital skills in design, coding, video, marketing, writing, and AI.",
     image: "/images/bg-home.jpg",
-    href: "#teens-bootcamp",
-  },
-  {
-    id: "digital-courses",
-    title: "19 PRACTICAL DIGITAL PROGRAMMES OPEN FOR ENROLLMENT",
-    subtitle: "Open to youth across Central and Eastern Districts, Nairobi, and online learners.",
-    image: "/images/bg-courses.jpg",
+    ctaLabel: "Explore Courses",
     href: "/courses",
   },
   {
-    id: "digital-library",
-    title: "20 FREE PDF HANDBOOKS & CHRISTIAN STUDY BOOKS PUBLISHED",
-    subtitle: "Learners urged to uphold Biblical integrity and build real-world portfolios.",
+    id: "teens-bootcamp",
+    title: "TEENS AI & PROJECTS BOOTCAMP (3RD NOV – 11TH DEC 2026)",
+    subtitle:
+      "Five weeks of hands-on holiday training in AI Prompt Engineering, Coding, Graphic Design, Video Production, and App Building.",
+    image: "/images/bg-courses.jpg",
+    ctaLabel: "View Bootcamp",
+    href: "#teens-bootcamp",
+  },
+  {
+    id: "practical-tracks",
+    title: "19 PRACTICAL COURSES ACROSS 7 SKILL TRACKS",
+    subtitle:
+      "Beginner-friendly, project-based learning under CHRISCO Fellowship of Churches International to help youth turn talent into income.",
+    image: "/images/workspace.jpg",
+    ctaLabel: "Browse Catalogue",
+    href: "/courses",
+  },
+  {
+    id: "christian-and-learning-books",
+    title: "CHRISTIAN & DIGITAL LEARNING LIBRARY",
+    subtitle:
+      "Study Joseph: 7 Lessons Every Emerging Seer Prophet Must Learn alongside 19 complete 28-page illustrated course handbooks.",
     image: "/images/campus-library-mentorship.jpg",
+    ctaLabel: "Open Library",
     href: "/library",
   },
   {
-    id: "ai-studio",
-    title: "ACADEMY LAUNCHES OPEN-HIGGSFIELD AI, VOICESTUDIO & SEO LAB",
-    subtitle: "The studio equips learners with prompt direction, voice narration, and technical SEO skills.",
-    image: "/images/hero-tile.jpg",
-    href: "/studio",
-  },
-  {
-    id: "software-track",
-    title: "SCHOOL OF CODING STRENGTHENS CAPACITY IN PYTHON & LLM ENGINEERING",
-    subtitle: "The training equips young developers to build modern web apps and AI workflows.",
-    image: "/images/cat-coding.jpg",
-    href: "/courses?category=Coding%20%26%20Tech",
-  },
-  {
-    id: "pursue-shop",
-    title: "PURSUE STUDIO COLLECTION SUPPORTS YOUTH DIGITAL TRAINING",
-    subtitle: "Official CHRISCO Youth Aflame merchandise funding free internet access and mentorship.",
-    image: "/images/workspace.jpg",
+    id: "pursue-collection",
+    title: "PURSUE MERCHANDISE COLLECTION (1 SAMUEL 30:8)",
+    subtitle:
+      "Official CHRISCO Youth Aflame hoodies, tees, caps, and accessories supporting youth digital training across our communities.",
+    image: "/images/bg-about.jpg",
+    ctaLabel: "Visit Shop",
     href: "/shop",
   },
 ]
@@ -64,11 +67,11 @@ export default function UcuHeroSlider() {
 
   return (
     <section
-      aria-label="Featured Highlights"
+      aria-label="CHRISCO Digital Academy Highlights"
       style={{
         position: "relative",
-        marginTop: 42,
-        minHeight: "clamp(520px, 78vh, 690px)",
+        marginTop: 40,
+        minHeight: "clamp(520px, 76vh, 680px)",
         display: "flex",
         alignItems: "flex-end",
         overflow: "hidden",
@@ -88,7 +91,7 @@ export default function UcuHeroSlider() {
         }}
       />
 
-      {/* Left / Right circular dark translucent arrows matching UCU screenshot */}
+      {/* Left / Right slider controls */}
       <button
         type="button"
         onClick={prevSlide}
@@ -96,16 +99,16 @@ export default function UcuHeroSlider() {
         style={{
           position: "absolute",
           left: 24,
-          top: "46%",
+          top: "48%",
           transform: "translateY(-50%)",
           zIndex: 4,
-          width: 38,
-          height: 38,
+          width: 40,
+          height: 40,
           borderRadius: "50%",
-          background: "rgba(0, 0, 0, 0.65)",
+          background: "rgba(11, 29, 81, 0.72)",
           border: "none",
           color: "#FFFFFF",
-          fontSize: 20,
+          fontSize: 18,
           lineHeight: 1,
           display: "inline-flex",
           alignItems: "center",
@@ -122,16 +125,16 @@ export default function UcuHeroSlider() {
         style={{
           position: "absolute",
           right: 24,
-          top: "46%",
+          top: "48%",
           transform: "translateY(-50%)",
           zIndex: 4,
-          width: 38,
-          height: 38,
+          width: 40,
+          height: 40,
           borderRadius: "50%",
-          background: "rgba(0, 0, 0, 0.65)",
+          background: "rgba(11, 29, 81, 0.72)",
           border: "none",
           color: "#FFFFFF",
-          fontSize: 20,
+          fontSize: 18,
           lineHeight: 1,
           display: "inline-flex",
           alignItems: "center",
@@ -142,68 +145,73 @@ export default function UcuHeroSlider() {
         &#10095;
       </button>
 
-      {/* Bottom wide translucent dark-blue band matching UCU screenshot */}
+      {/* Bottom caption band — calm navy, no extra borders or lines */}
       <div
         style={{
           position: "relative",
           zIndex: 3,
           width: "100%",
-          padding: "0 14px 20px",
+          padding: "0 20px 28px",
         }}
       >
         <div
+          className="container"
           style={{
-            maxWidth: 1180,
-            background: "rgba(8, 46, 118, 0.62)",
-            padding: "20px 24px 22px",
-            color: "#FFFFFF",
+            padding: 0,
           }}
         >
-          <h1
+          <div
             style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "clamp(20px, 2.35vw, 30px)",
-              fontWeight: 500,
-              lineHeight: 1.25,
+              maxWidth: 980,
+              background: "rgba(11, 29, 81, 0.82)",
+              padding: "28px 32px",
               color: "#FFFFFF",
-              margin: 0,
-              letterSpacing: "0.01em",
-              textTransform: "uppercase",
             }}
           >
-            {slide.title}
-          </h1>
+            <h1
+              style={{
+                fontFamily: "var(--font-head)",
+                fontSize: "clamp(22px, 2.5vw, 32px)",
+                fontWeight: 700,
+                lineHeight: 1.22,
+                color: "#FFFFFF",
+                margin: 0,
+                letterSpacing: "0.01em",
+              }}
+            >
+              {slide.title}
+            </h1>
 
-          <p
-            style={{
-              fontFamily: "Georgia, 'Times New Roman', serif",
-              fontSize: "clamp(17px, 1.85vw, 24px)",
-              fontWeight: 400,
-              lineHeight: 1.4,
-              color: "#FFFFFF",
-              margin: "14px 0 22px",
-            }}
-          >
-            {slide.subtitle}
-          </p>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "clamp(16px, 1.45vw, 19px)",
+                fontWeight: 400,
+                lineHeight: 1.6,
+                color: "rgba(255, 255, 255, 0.92)",
+                margin: "12px 0 22px",
+                maxWidth: 820,
+              }}
+            >
+              {slide.subtitle}
+            </p>
 
-          <Link
-            href={slide.href}
-            style={{
-              display: "inline-block",
-              padding: "10px 48px",
-              background: "#003896",
-              border: "1.5px solid #F8C90E",
-              borderRadius: 0,
-              color: "#FFFFFF",
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              fontWeight: 600,
-              textDecoration: "none",
-            }}
-          >
-            Read More
-          </Link>
+            <Link
+              href={slide.href}
+              style={{
+                display: "inline-block",
+                padding: "11px 32px",
+                background: "#F8C90E",
+                color: "#0B1D51",
+                fontFamily: "var(--font-head)",
+                fontSize: 14,
+                fontWeight: 800,
+                textDecoration: "none",
+              }}
+            >
+              {slide.ctaLabel}
+            </Link>
+          </div>
         </div>
       </div>
     </section>
