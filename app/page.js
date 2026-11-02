@@ -1,103 +1,265 @@
 import Link from "next/link"
-import Image from "next/image"
 import Navbar from "./Navbar"
 import Footer from "./components/Footer"
 import Chatbot from "./Chatbot"
-import PhotoBand from "./components/PhotoBand"
+import UcuHeroSlider from "./components/UcuHeroSlider"
 import Icon from "./components/Icon"
 import { courses, categories, categoryCounts, imageFor } from "./data/courses"
 import { org, tutor } from "./data/org"
 
-const skills = [
+const SCHOOL_CARDS = [
+  {
+    name: "Business",
+    schoolTitle: "School of Business, Freelancing & Sales",
+    color: "#E60914",
+    image: "/images/cat-business.jpg",
+    summary:
+      "Client acquisition, global freelancing platforms, high-ticket sales, affiliate systems, and contract negotiation.",
+  },
+  {
+    name: "Coding & Tech",
+    schoolTitle: "School of Coding & Software Engineering",
+    color: "#084EC8",
+    image: "/images/cat-coding.jpg",
+    summary:
+      "Python automation, modern full-stack web applications, software engineering workflows, and LLM integration.",
+  },
+  {
+    name: "Design",
+    schoolTitle: "School of Graphic Design & Print-on-Demand",
+    color: "#38A128",
+    image: "/images/cat-design.jpg",
+    summary:
+      "Brand identity, church and commercial poster systems, typography, and global print-on-demand e-commerce.",
+  },
+  {
+    name: "Video & AI",
+    schoolTitle: "School of Video Production & AI Media",
+    color: "#EE6816",
+    image: "/images/cat-video.jpg",
+    summary:
+      "YouTube automation, AI video storytelling, prompt engineering literacy, and short-form content production.",
+  },
+  {
+    name: "Marketing",
+    schoolTitle: "School of Digital & Growth Marketing",
+    color: "#D99B00",
+    image: "/images/cat-marketing.jpg",
+    summary:
+      "Full-funnel digital campaigns, social media growth systems, conversion funnels, and lifecycle email marketing.",
+  },
+  {
+    name: "Writing",
+    schoolTitle: "School of Copywriting & Editorial Publishing",
+    color: "#E60914",
+    image: "/images/cat-writing.jpg",
+    summary:
+      "Direct-response copywriting, executive ghostwriting, landing page persuasion, and digital book publishing.",
+  },
+  {
+    name: "Career",
+    schoolTitle: "School of Executive Leadership & Career Growth",
+    color: "#084EC8",
+    image: "/images/cat-career.jpg",
+    summary:
+      "Personal branding, high-trust professional networking, and executive communication for young Christian leaders.",
+  },
+]
+
+const JOURNEY_CARDS = [
+  {
+    title: "Join CHRISCO Digital Academy",
+    eyebrow: "19 Free Practical Courses",
+    color: "#E60914",
+    image: "/images/bg-home.jpg",
+    desc: "Enroll free of charge in any of our 19 practical digital tracks and build a real portfolio that opens doors.",
+    cta: "Apply Now",
+    href: "/sign-up",
+  },
+  {
+    title: "e-Learning & PDF Library",
+    eyebrow: "20 Free Textbooks & Handbooks",
+    color: "#084EC8",
+    image: "/images/bg-courses.jpg",
+    desc: "Download 19 step-by-step course handbooks plus our dedicated Christian & Faith youth leadership book shelf.",
+    cta: "Open e-Learning",
+    href: "/library",
+  },
+  {
+    title: "AI, Voice & SEO Studio",
+    eyebrow: "Hands-On Innovation Lab",
+    color: "#38A128",
+    image: "/images/hero-tile.jpg",
+    desc: "Practice prompt engineering with Open-Higgsfield, spoken narration with VoiceStudio, and live Open-SEO audits.",
+    cta: "Launch Studio",
+    href: "/studio",
+  },
+  {
+    title: "Teens AI & Projects Bootcamp",
+    eyebrow: "3 Nov – 11 Dec 2026 (5 Weeks)",
+    color: "#EE6816",
+    image: "/images/workspace.jpg",
+    desc: "Holiday practical bootcamp for teens: AI Prompt Engineering, Coding, Graphic Design, Video & App Building.",
+    cta: "Apply Now",
+    href: "https://forms.gle/ChriscoTeensAIBootcamp",
+    external: true,
+  },
+]
+
+const RESEARCH_AND_STUDIO_ITEMS = [
+  {
+    date: "OPEN-HIGGSFIELD ENGINE • AI PROMPT LAB",
+    color: "#E60914",
+    image: "/images/courses/ai-video-storytelling.jpg",
+    title: "Camera-Aware Visual Prompt Engineering & Multi-Shot Storyboard Direction Across 19 Courses",
+    href: "/studio",
+  },
+  {
+    date: "VOICESTUDIO NARRATOR • AUDIO HANDBOOKS",
+    color: "#084EC8",
+    image: "/images/courses/ai-literacy.jpg",
+    title: "Neural Spoken-Word Study Narration & Custom Voice Profiles for All 20 Academy Books",
+    href: "/studio",
+  },
+  {
+    date: "OPEN-SEO WORKSPACE • TECHNICAL AUDIT",
+    color: "#38A128",
+    image: "/images/courses/digital-marketing.jpg",
+    title: "100-Point Technical SEO Grader, SERP CTR Simulator & Automated JSON-LD Schema Generator",
+    href: "/studio",
+  },
+  {
+    date: "CHRISTIAN BOOKS SHELF • YOUTH DISCIPLESHIP",
+    color: "#EE6816",
+    image: "/images/campus-student-focus.jpg",
+    title: "Walking in Wisdom: A Christian Youth Guide to Purpose, Integrity & Digital Stewardship",
+    href: "/library/walking-in-wisdom",
+  },
+]
+
+const TESTIMONIALS = [
+  {
+    name: "Brian Mwangi",
+    school: "School of Coding & Software Engineering (Python & SWE/LLM Mastery)",
+    color: "#E60914",
+    image: "/images/campus-student-focus.jpg",
+    quote:
+      "Joining CHRISCO Digital Academy transformed how I build software. Within weeks of completing the Python and SWE/LLM modules, I automated client workflows and delivered my first paid web application.",
+  },
+  {
+    name: "Grace Wanjiku",
+    school: "School of Business & Digital Marketing (Freelancing & Social Media)",
+    color: "#084EC8",
+    image: "/images/bg-about.jpg",
+    quote:
+      "The step-by-step PDF handbooks and practical assignments helped me package my social media and copywriting services clearly. I now manage digital retainers for local businesses in Nairobi.",
+  },
+  {
+    name: "Kevin Otieno",
+    school: "School of Video Production & AI Media (YouTube Automation & AI Video)",
+    color: "#38A128",
+    image: "/images/hero-tile.jpg",
+    quote:
+      "Using the Open-Higgsfield Prompt Studio and VoiceStudio narrator on the portal, I launched a faceless educational channel and elevated our youth ministry media production.",
+  },
+]
+
+const COUNCIL_UNITS = [
   {
     num: "01",
-    icon: "palette",
-    title: "Graphic Design",
     color: "#E60914",
-    desc: "Branding, posters and visual identity with Canva and Adobe tools.",
+    title: "Curriculum & Practical Syllabus Board",
+    desc: "Designing project-based modules and real-world deliverables across all 19 courses.",
+    href: "/courses",
   },
   {
     num: "02",
-    icon: "code",
-    title: "Web Development",
     color: "#084EC8",
-    desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js.",
+    title: "AI, Voice & SEO Innovation Lab",
+    desc: "Maintaining Open-Higgsfield, VoiceStudio narration, and Open-SEO technical workspaces.",
+    href: "/studio",
   },
   {
     num: "03",
-    icon: "smartphone",
-    title: "Social Media",
     color: "#38A128",
-    desc: "Strategy, content creation and growth that gets real engagement.",
+    title: "Christian Youth Discipleship & Ethics",
+    desc: "Anchoring practical digital mastery in Biblical character under CHRISCO Youth Aflame.",
+    href: "/library?shelf=christian",
   },
   {
     num: "04",
-    icon: "clapper",
-    title: "Video Editing",
     color: "#EE6816",
-    desc: "Cinematic edits for YouTube, Reels and events, a skill in demand.",
+    title: "Teens AI & Projects Bootcamp Directorate",
+    desc: "Running the 5-week November–December holiday bootcamp for teens ages 13–19.",
+    href: "#teens-bootcamp",
   },
   {
     num: "05",
-    icon: "layers",
-    title: "Animation",
     color: "#D99B00",
-    desc: "Motion graphics and animated content that stops the scroll.",
+    title: "Digital Repository & Book Publishing",
+    desc: "Curating 20 free downloadable PDF handbooks and audio-narrated study guides.",
+    href: "/library",
   },
   {
     num: "06",
-    icon: "robot",
-    title: "AI Expertise",
     color: "#0B1D51",
-    desc: "Leveraging AI tools like ChatGPT for creativity and productivity.",
+    title: "Central & Eastern District Outreach",
+    desc: "Equipping over 500 young people across church districts with mentorship and skills.",
+    href: "/about",
   },
 ]
 
-const stats = [
-  { value: "500+", label: "Youth Trained", color: "#F8C90E" },
-  { value: "19", label: "Courses", color: "#EE6816" },
-  { value: "2", label: "Districts", color: "#38A128" },
-  { value: "100%", label: "Practical", color: "#FFFFFF" },
-]
-
-const featured = [
-  { ...courses[4], posterColor: "#E60914" },  // Freelancing -> Poster Red
-  { ...courses[0], posterColor: "#084EC8" },  // YouTube Automation -> Poster Royal Blue
-  { ...courses[10], posterColor: "#38A128" }, // SWE & LLM -> Poster Leaf Green
-]
-
-const steps = [
+const NEWS_ARTICLES = [
   {
-    num: "01",
-    icon: "search",
-    title: "Browse & Choose",
+    date: "NOVEMBER 2, 2026",
+    category: "ADMISSIONS & BOOTCAMP",
     color: "#E60914",
-    desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI.",
+    image: "/posters/teens-ai-bootcamp-official.png",
+    title: "Registration Now Open for the 5-Week Teens AI & Projects Bootcamp (3 Nov – 11 Dec 2026)",
+    excerpt:
+      "Teens and parents can now register online via our official Google Form for 5 weeks of hands-on AI Prompt Engineering, Coding, Design, Video Production, and App Building.",
+    href: "https://forms.gle/ChriscoTeensAIBootcamp",
+    external: true,
   },
   {
-    num: "02",
-    icon: "clipboard",
-    title: "Enroll in Minutes",
+    date: "OCTOBER 28, 2026",
+    category: "AI & INNOVATION STUDIO",
     color: "#084EC8",
-    desc: "Send an enrollment request, we confirm on WhatsApp or email within a day.",
+    image: "/images/courses/swe-llm-mastery.jpg",
+    title: "CHRISCO Digital Academy Integrates Open-Higgsfield, VoiceStudio & Open-SEO Workspaces",
+    excerpt:
+      "Learners across all 19 courses now have browser-native access to camera-aware AI prompt engineering, neural voice narration, and 100-point SEO auditing.",
+    href: "/studio",
   },
   {
-    num: "03",
-    icon: "rocket",
-    title: "Learn & Build",
+    date: "OCTOBER 20, 2026",
+    category: "DIGITAL LIBRARY",
     color: "#38A128",
-    desc: "Follow the hands-on syllabus, finish your real-world project portfolio, and start earning.",
+    image: "/images/campus-library-mentorship.jpg",
+    title: "All 20 Christian & Digital Skill Handbooks Available for Free PDF Download",
+    excerpt:
+      "Our dual-shelf digital repository pairs 19 complete course textbooks with our Christian youth leadership book shelf at zero cost.",
+    href: "/library",
+  },
+  {
+    date: "OCTOBER 14, 2026",
+    category: "PURSUE COLLECTION",
+    color: "#EE6816",
+    image: "/images/cat-design.jpg",
+    title: "Official PURSUE Studio Apparel Collection Supports Free Youth Digital Training",
+    excerpt:
+      "Explore 29 studio-crafted hoodies, tees, caps, mugs, and totes that directly sponsor free internet data, mentorship, and learning devices.",
+    href: "/shop",
   },
 ]
 
-const CATEGORY_POSTER_COLORS = [
-  "#E60914", // Red
-  "#084EC8", // Royal Blue
-  "#38A128", // Leaf Green
-  "#EE6816", // Flame Orange
-  "#D99B00", // Golden Yellow
-  "#E60914", // Red
-  "#084EC8", // Royal Blue
+const PARTNERS = [
+  { name: "CHRISCO Fellowship of Churches Int'l", badge: "Parent Fellowship", color: "#0B1D51" },
+  { name: "CHRISCO Youth Aflame", badge: "Central & Eastern Districts", color: "#E60914" },
+  { name: "Open-Higgsfield Studio", badge: "AI Prompt Lab", color: "#084EC8" },
+  { name: "VoiceStudio Neural Audio", badge: "Book Narration", color: "#38A128" },
+  { name: "Open-SEO Audit Engine", badge: "Technical SEO", color: "#EE6816" },
+  { name: "Chatwoot Live Desk", badge: "24/7 Student Support", color: "#D99B00" },
 ]
 
 export default function Home() {
@@ -107,70 +269,1634 @@ export default function Home() {
     <main style={{ minHeight: "100vh", overflowX: "hidden", background: "#F7F6F1" }}>
       <Navbar />
 
-      {/* ================= HERO (POSTER ROYAL BLUE & DEEP NAVY STAGE) ================= */}
+      {/* ================= 1. UCU-STYLE FULL-WIDTH PHOTOGRAPHIC HERO SLIDER ================= */}
+      <UcuHeroSlider />
+
+      {/* ================= 2. UCU-STYLE 3-COLUMN ADMISSIONS & WELCOME STRIP ================= */}
       <section
+        aria-label="Admissions and Student Pathways"
         style={{
-          padding: "clamp(116px, 15vw, 160px) 0 clamp(60px, 8vw, 92px)",
-          position: "relative",
-          overflow: "hidden",
-          background: "#003896",
-          borderBottom: "4px solid #F8C90E",
+          background: "#0B1D51",
+          borderBottom: "4px solid #E60914",
         }}
       >
         <div
-          aria-hidden
+          className="container"
           style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(125deg, #0B1D51 0%, #003896 58%, #084EC8 100%)",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
           }}
-        />
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        >
+          {/* Box 1: Call for Applications */}
+          <div
+            style={{
+              background: "#E60914",
+              color: "#FFFFFF",
+              padding: "30px 28px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#F8C90E",
+                  marginBottom: 8,
+                }}
+              >
+                NOVEMBER – DECEMBER 2026 INTAKE
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.45rem",
+                  lineHeight: 1.2,
+                  color: "#FFFFFF",
+                  marginBottom: 8,
+                }}
+              >
+                Call for Applications
+              </h2>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: "rgba(255,255,255,0.92)", margin: 0 }}>
+                We are now accepting applications for all 19 free digital courses and the 5-week Teens AI &amp; Projects Bootcamp.
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <Link
+                href="/sign-up"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: "#0B1D51",
+                  color: "#F8C90E",
+                  border: "2px solid #F8C90E",
+                  padding: "9px 18px",
+                  borderRadius: 6,
+                  fontFamily: "var(--font-head)",
+                  fontSize: 13,
+                  fontWeight: 800,
+                  textDecoration: "none",
+                }}
+              >
+                Apply Now →
+              </Link>
+              <a
+                href="https://forms.gle/ChriscoTeensAIBootcamp"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: "#FFFFFF",
+                  color: "#0B1D51",
+                  padding: "9px 16px",
+                  borderRadius: 6,
+                  fontFamily: "var(--font-head)",
+                  fontSize: 13,
+                  fontWeight: 800,
+                  textDecoration: "none",
+                }}
+              >
+                Teens Google Form →
+              </a>
+            </div>
+          </div>
+
+          {/* Box 2: Teens & Regional Cohorts (matches UCU International Students slot) */}
+          <div
+            style={{
+              background: "#003896",
+              color: "#FFFFFF",
+              padding: "30px 28px",
+              borderLeft: "1px solid rgba(255,255,255,0.14)",
+              borderRight: "1px solid rgba(255,255,255,0.14)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#F8C90E",
+                  marginBottom: 8,
+                }}
+              >
+                CENTRAL &amp; EASTERN DISTRICTS + ONLINE
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.45rem",
+                  lineHeight: 1.2,
+                  color: "#FFFFFF",
+                  marginBottom: 8,
+                }}
+              >
+                Youth &amp; Teens Cohorts
+              </h2>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: "rgba(255,255,255,0.88)", margin: 0 }}>
+                CHRISCO Digital Academy welcomes youth across our church districts in Kenya and online learners across East Africa.
+              </p>
+            </div>
+            <div>
+              <a
+                href="#teens-bootcamp"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  color: "#F8C90E",
+                  fontFamily: "var(--font-head)",
+                  fontSize: 13.5,
+                  fontWeight: 800,
+                  textDecoration: "none",
+                  borderBottom: "2px solid #F8C90E",
+                  paddingBottom: 2,
+                }}
+              >
+                read more →
+              </a>
+            </div>
+          </div>
+
+          {/* Box 3: Prospective Students */}
+          <div
+            style={{
+              background: "#38A128",
+              color: "#FFFFFF",
+              padding: "30px 28px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#FFFFFF",
+                  marginBottom: 8,
+                }}
+              >
+                7 PRACTICAL SCHOOLS • 19 COURSES
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.45rem",
+                  lineHeight: 1.2,
+                  color: "#FFFFFF",
+                  marginBottom: 8,
+                }}
+              >
+                Prospective Students
+              </h2>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: "rgba(255,255,255,0.92)", margin: 0 }}>
+                Interested in joining CHRISCO Digital Academy? Explore our 19 free courses, 20 PDF handbooks, and AI Studio.
+              </p>
+            </div>
+            <div>
+              <Link
+                href="/courses"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: "#0B1D51",
+                  color: "#FFFFFF",
+                  padding: "9px 18px",
+                  borderRadius: 6,
+                  fontFamily: "var(--font-head)",
+                  fontSize: 13,
+                  fontWeight: 800,
+                  textDecoration: "none",
+                }}
+              >
+                Learn more →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 3. UCU-STYLE "WHY CHRISCO DIGITAL ACADEMY" SPLIT SECTION ================= */}
+      <section
+        id="teens-bootcamp"
+        style={{
+          padding: "clamp(64px, 9vw, 108px) 0",
+          background: "#FFFFFF",
+          borderBottom: "3px solid #084EC8",
+        }}
+      >
+        <div className="container">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: 44,
+              alignItems: "stretch",
+            }}
+          >
+            {/* Left Column: UCU-style 2 side-by-side tall visual cards (Official Poster + Campus Lab Showcase) */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: 18,
+                alignItems: "stretch",
+              }}
+            >
+              {/* Card A: Official Uploaded Teens AI & Projects Bootcamp Poster */}
+              <div
+                style={{
+                  background: "#0B1D51",
+                  borderRadius: 10,
+                  border: "3px solid #E60914",
+                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ position: "relative", background: "#003896", padding: 10 }}>
+                  <img
+                    src="/posters/teens-ai-bootcamp-official.png"
+                    alt="CHRISCO Youth Aflame Digital Academy — Teens AI & Projects Bootcamp (3rd Nov - 11th Dec 2026)"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      display: "block",
+                      borderRadius: 6,
+                    }}
+                  />
+                </div>
+                <div style={{ padding: "16px 18px", background: "#0B1D51", color: "#FFFFFF" }}>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-head)",
+                      fontSize: 10.5,
+                      fontWeight: 800,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "#F8C90E",
+                      marginBottom: 4,
+                    }}
+                  >
+                    OFFICIAL BOOTCAMP POSTER
+                  </div>
+                  <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 15, marginBottom: 12 }}>
+                    Teens AI &amp; Projects Bootcamp (3 Nov – 11 Dec)
+                  </div>
+                  <a
+                    href="https://forms.gle/ChriscoTeensAIBootcamp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      padding: "10px 14px",
+                      background: "#E60914",
+                      color: "#FFFFFF",
+                      borderRadius: 6,
+                      fontFamily: "var(--font-head)",
+                      fontSize: 12.5,
+                      fontWeight: 800,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Register via Google Form →
+                  </a>
+                </div>
+              </div>
+
+              {/* Card B: Campus Digital Lab & Video Highlight (matches UCU second tall visual card) */}
+              <div
+                style={{
+                  background: "#003896",
+                  borderRadius: 10,
+                  border: "3px solid #F8C90E",
+                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    minHeight: 280,
+                    flex: 1,
+                    backgroundImage: "url('/images/campus-library-mentorship.jpg')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    display: "flex",
+                    alignItems: "flex-end",
+                    padding: 18,
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(180deg, rgba(11,29,81,0.12) 0%, rgba(11,29,81,0.86) 100%)",
+                    }}
+                  />
+                  <div style={{ position: "relative", zIndex: 1, color: "#FFFFFF" }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        background: "#38A128",
+                        color: "#FFFFFF",
+                        padding: "4px 10px",
+                        borderRadius: 4,
+                        fontFamily: "var(--font-head)",
+                        fontSize: 10.5,
+                        fontWeight: 800,
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        marginBottom: 8,
+                      }}
+                    >
+                      HANDS-ON MENTORSHIP
+                    </span>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "1.2rem",
+                        lineHeight: 1.25,
+                        color: "#FFFFFF",
+                        margin: 0,
+                      }}
+                    >
+                      Practical Labs, 20 PDF Handbooks &amp; AI Studio
+                    </h3>
+                  </div>
+                </div>
+
+                <div style={{ padding: "16px 18px", background: "#003896", color: "#FFFFFF" }}>
+                  <p style={{ fontSize: 13, lineHeight: 1.55, color: "rgba(255,255,255,0.88)", margin: "0 0 12px" }}>
+                    Every course combines guided mentorship with real-world portfolio projects and free PDF textbooks.
+                  </p>
+                  <Link
+                    href="/studio"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      padding: "10px 14px",
+                      background: "#F8C90E",
+                      color: "#0B1D51",
+                      borderRadius: 6,
+                      fontFamily: "var(--font-head)",
+                      fontSize: 12.5,
+                      fontWeight: 900,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Explore AI &amp; Voice Studio →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: UCU-style "Why CHRISCO Digital Academy" + 6 Bullet Links + Stat Counters + Apply Now */}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  color: "#E60914",
+                  fontFamily: "var(--font-head)",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  marginBottom: 10,
+                }}
+              >
+                <span style={{ width: 28, height: 3, background: "#E60914", display: "inline-block" }} />
+                A CENTRE OF EXCELLENCE IN DIGITAL SKILLS
+              </div>
+
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.85rem, 3.2vw, 2.65rem)",
+                  lineHeight: 1.12,
+                  color: "#0B1D51",
+                  marginBottom: 18,
+                }}
+              >
+                Why CHRISCO Digital Academy
+              </h2>
+
+              <p style={{ fontSize: 15.5, lineHeight: 1.75, color: "#1E293B", marginBottom: 14 }}>
+                CHRISCO Digital Academy is the practical digital training platform of{" "}
+                <strong>CHRISCO Youth Aflame</strong>, operating under{" "}
+                <strong>CHRISCO Fellowship of Churches International</strong>. Founded to bridge the gap between
+                classroom theory and real-world digital livelihoods, we equip young people across our church districts
+                and online with high-demand technical, creative, and entrepreneurial skills.
+              </p>
+
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: "#334155", marginBottom: 22 }}>
+                Every learner receives 100% free access to 19 structured courses, 20 downloadable PDF handbooks, neural
+                audio study guides, and direct mentorship from Lead Tutor <strong>{tutor.name}</strong>.
+              </p>
+
+              {/* UCU-style 2-Column Bulleted Programme Links (6 items) */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                  gap: "10px 20px",
+                  padding: "18px 20px",
+                  background: "#F7F6F1",
+                  borderLeft: "5px solid #084EC8",
+                  borderRadius: "0 8px 8px 0",
+                  marginBottom: 26,
+                }}
+              >
+                {[
+                  { label: "Coding, Python & SWE/LLM", href: "/courses?category=Coding%20%26%20Tech", color: "#084EC8" },
+                  { label: "Graphic Design & Print-on-Demand", href: "/courses?category=Design", color: "#E60914" },
+                  { label: "AI Literacy & Video Storytelling", href: "/courses?category=Video%20%26%20AI", color: "#38A128" },
+                  { label: "Digital, Social & Email Marketing", href: "/courses?category=Marketing", color: "#EE6816" },
+                  { label: "Freelancing, Sales & Affiliates", href: "/courses?category=Business", color: "#0B1D51" },
+                  { label: "Copywriting, Books & CEO Comms", href: "/courses?category=Writing", color: "#D99B00" },
+                ].map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 9,
+                      fontFamily: "var(--font-head)",
+                      fontSize: 13.5,
+                      fontWeight: 800,
+                      color: "#0B1D51",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 9,
+                        height: 9,
+                        borderRadius: "50%",
+                        background: item.color,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* UCU-style Large Counters + Apply Now Button */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 20,
+                  flexWrap: "wrap",
+                  paddingTop: 18,
+                  borderTop: "2px solid #DCE3F0",
+                }}
+              >
+                <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
+                  <div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "2.35rem",
+                        lineHeight: 1,
+                        color: "#E60914",
+                      }}
+                    >
+                      19
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 12,
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        color: "#0B1D51",
+                        marginTop: 4,
+                      }}
+                    >
+                      Programmes &amp; Courses
+                    </div>
+                  </div>
+
+                  <div style={{ borderLeft: "2px solid #DCE3F0", paddingLeft: 24 }}>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "2.35rem",
+                        lineHeight: 1,
+                        color: "#084EC8",
+                      }}
+                    >
+                      500+
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 12,
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        color: "#0B1D51",
+                        marginTop: 4,
+                      }}
+                    >
+                      Youth Trained
+                    </div>
+                  </div>
+
+                  <div style={{ borderLeft: "2px solid #DCE3F0", paddingLeft: 24 }}>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "2.35rem",
+                        lineHeight: 1,
+                        color: "#38A128",
+                      }}
+                    >
+                      20
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 12,
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        color: "#0B1D51",
+                        marginTop: 4,
+                      }}
+                    >
+                      Free PDF Books
+                    </div>
+                  </div>
+                </div>
+
+                <Link
+                  href="/sign-up"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    background: "#E60914",
+                    color: "#FFFFFF",
+                    padding: "13px 26px",
+                    borderRadius: 6,
+                    fontFamily: "var(--font-head)",
+                    fontSize: 14,
+                    fontWeight: 800,
+                    textDecoration: "none",
+                  }}
+                >
+                  Apply Now →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 4. UCU-STYLE "TO THE JOURNEY AHEAD / GAIN VALUABLE KNOWLEDGE AND EXPERIENCE" 4-CARD BAND ================= */}
+      <section
+        style={{
+          padding: "clamp(60px, 8vw, 96px) 0",
+          background: "#0B1D51",
+          color: "#FFFFFF",
+          borderBottom: "4px solid #F8C90E",
+        }}
+      >
+        <div className="container">
+          <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 44px" }}>
+            <div
+              style={{
+                fontFamily: "var(--font-head)",
+                fontSize: 12,
+                fontWeight: 800,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#F8C90E",
+                marginBottom: 8,
+              }}
+            >
+              To the Journey Ahead
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
+                lineHeight: 1.15,
+                color: "#FFFFFF",
+                margin: 0,
+              }}
+            >
+              Gain Valuable Knowledge and Experience
+            </h2>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gap: 22,
+            }}
+          >
+            {JOURNEY_CARDS.map((card) => (
+              <div
+                key={card.title}
+                style={{
+                  background: "#FFFFFF",
+                  color: "#0B1D51",
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  borderTop: `6px solid ${card.color}`,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      height: 175,
+                      backgroundImage: `url('${card.image}')`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      position: "relative",
+                    }}
+                  >
+                    <span
+                      style={{
+                        position: "absolute",
+                        bottom: 10,
+                        left: 12,
+                        background: card.color,
+                        color: "#FFFFFF",
+                        padding: "4px 10px",
+                        borderRadius: 4,
+                        fontFamily: "var(--font-head)",
+                        fontSize: 10.5,
+                        fontWeight: 800,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {card.eyebrow}
+                    </span>
+                  </div>
+                  <div style={{ padding: "20px 20px 14px" }}>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 18,
+                        fontWeight: 900,
+                        color: "#0B1D51",
+                        marginBottom: 8,
+                      }}
+                    >
+                      {card.title}
+                    </h3>
+                    <p style={{ fontSize: 13.8, lineHeight: 1.6, color: "#334155", margin: 0 }}>{card.desc}</p>
+                  </div>
+                </div>
+
+                <div style={{ padding: "0 20px 20px" }}>
+                  {card.external ? (
+                    <a
+                      href={card.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                        padding: "9px 16px",
+                        background: card.color,
+                        color: "#FFFFFF",
+                        borderRadius: 6,
+                        fontFamily: "var(--font-head)",
+                        fontSize: 12.5,
+                        fontWeight: 800,
+                        textDecoration: "none",
+                      }}
+                    >
+                      {card.cta} →
+                    </a>
+                  ) : (
+                    <Link
+                      href={card.href}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                        padding: "9px 16px",
+                        background: card.color,
+                        color: "#FFFFFF",
+                        borderRadius: 6,
+                        fontFamily: "var(--font-head)",
+                        fontSize: 12.5,
+                        fontWeight: 800,
+                        textDecoration: "none",
+                      }}
+                    >
+                      {card.cta} →
+                    </Link>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 5. UCU-STYLE "OUR RESEARCH / EXPLORE OUR DIGITAL STUDIO & REPOSITORY" SECTION ================= */}
+      <section
+        style={{
+          padding: "clamp(64px, 8.5vw, 100px) 0",
+          background: "#F7F6F1",
+          borderBottom: "3px solid #DCE3F0",
+        }}
+      >
+        <div className="container">
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
-              gap: 16,
+              alignItems: "flex-end",
+              gap: 24,
               flexWrap: "wrap",
-              borderBottom: "1px solid rgba(255,255,255,0.22)",
-              paddingBottom: 18,
-              marginBottom: 42,
+              marginBottom: 38,
             }}
           >
-            <span
+            <div style={{ maxWidth: 720 }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#E60914",
+                  marginBottom: 8,
+                }}
+              >
+                Our Research, Books &amp; Innovation
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)",
+                  lineHeight: 1.15,
+                  color: "#0B1D51",
+                  marginBottom: 10,
+                }}
+              >
+                Explore Our Digital Studio &amp; Book Repository
+              </h2>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: "#334155", margin: 0 }}>
+                At CHRISCO Digital Academy, we pair practical curriculum handbooks with open-source AI, Voice, and SEO
+                laboratories so students learn by publishing real work.
+              </p>
+            </div>
+            <Link
+              href="/studio"
               style={{
-                fontFamily: "var(--font-head)",
-                fontSize: 12.5,
-                fontWeight: 800,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "#F8C90E",
-              }}
-            >
-              CHRISCO YOUTH <span style={{ color: "#EE6816" }}>AFLAME</span> DIGITAL ACADEMY
-            </span>
-            <span
-              style={{
-                fontFamily: "var(--font-head)",
-                fontSize: 12.5,
-                fontWeight: 800,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: "#003896",
                 color: "#FFFFFF",
+                padding: "11px 20px",
+                borderRadius: 6,
+                fontFamily: "var(--font-head)",
+                fontSize: 13,
+                fontWeight: 800,
+                textDecoration: "none",
               }}
             >
-              • LEARN | BUILD | IMPACT
-            </span>
+              Read More →
+            </Link>
           </div>
 
-          <div className="hero-grid">
-            {/* Category sidebar — clean white poster sheet with hairline dividers */}
-            <aside className="hero-side" style={{ minWidth: 0 }}>
+          {/* 4-Card Research & Studio Grid */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gap: 22,
+              marginBottom: 32,
+            }}
+          >
+            {RESEARCH_AND_STUDIO_ITEMS.map((item) => (
+              <article
+                key={item.title}
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: 10,
+                  border: "1px solid #DCE3F0",
+                  borderTop: `5px solid ${item.color}`,
+                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      height: 170,
+                      backgroundImage: `url('${item.image}')`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <div style={{ padding: "18px 20px" }}>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: item.color,
+                        marginBottom: 8,
+                      }}
+                    >
+                      {item.date}
+                    </div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 16,
+                        fontWeight: 800,
+                        lineHeight: 1.4,
+                        color: "#0B1D51",
+                        margin: 0,
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+                </div>
+                <div style={{ padding: "0 20px 18px" }}>
+                  <Link
+                    href={item.href}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      fontFamily: "var(--font-head)",
+                      fontSize: 13,
+                      fontWeight: 800,
+                      color: item.color,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* UCU-style 2 Institutional Repository Buttons */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <Link
+              href="/studio"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                background: "#003896",
+                color: "#FFFFFF",
+                border: "2px solid #0B1D51",
+                padding: "13px 24px",
+                borderRadius: 6,
+                fontFamily: "var(--font-head)",
+                fontSize: 13.5,
+                fontWeight: 800,
+                textDecoration: "none",
+              }}
+            >
+              <Icon name="sparkles" size={16} /> CHRISCO AI, Voice &amp; SEO Studio →
+            </Link>
+
+            <Link
+              href="/library"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                background: "#E60914",
+                color: "#FFFFFF",
+                border: "2px solid #E60914",
+                padding: "13px 24px",
+                borderRadius: 6,
+                fontFamily: "var(--font-head)",
+                fontSize: 13.5,
+                fontWeight: 800,
+                textDecoration: "none",
+              }}
+            >
+              <Icon name="book" size={16} /> CHRISCO Digital Institutional Book Repository (20 PDFs) →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 6. UCU-STYLE "WE ARE OPEN FOR OPPORTUNITIES! + SCHOOLS & FACULTIES" GRID ================= */}
+      <section
+        style={{
+          padding: "clamp(64px, 8.5vw, 100px) 0",
+          background: "#FFFFFF",
+          borderBottom: "3px solid #003896",
+        }}
+      >
+        <div className="container">
+          {/* Top Callout Banner matching UCU "We Are Open For Opportunities!" */}
+          <div
+            style={{
+              background: "linear-gradient(125deg, #0B1D51 0%, #003896 60%, #084EC8 100%)",
+              border: "3px solid #F8C90E",
+              borderRadius: 12,
+              padding: "clamp(24px, 4vw, 38px)",
+              color: "#FFFFFF",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 24,
+              flexWrap: "wrap",
+              marginBottom: 44,
+            }}
+          >
+            <div style={{ maxWidth: 680 }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#F8C90E",
+                  marginBottom: 6,
+                }}
+              >
+                We Are Open For Opportunities!
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.6rem, 2.7vw, 2.25rem)",
+                  lineHeight: 1.18,
+                  color: "#FFFFFF",
+                  marginBottom: 8,
+                }}
+              >
+                Schools &amp; Practical Faculties at CHRISCO Digital Academy
+              </h2>
+              <p style={{ fontSize: 14.5, lineHeight: 1.65, color: "rgba(255,255,255,0.88)", margin: 0 }}>
+                We have 19 free practical programmes across 7 specialised schools designed to prepare you for remote
+                work, entrepreneurship, software engineering, and digital ministry.
+              </p>
+            </div>
+            <Link
+              href="/courses"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: "#E60914",
+                color: "#FFFFFF",
+                border: "2px solid #F8C90E",
+                padding: "13px 24px",
+                borderRadius: 6,
+                fontFamily: "var(--font-head)",
+                fontSize: 13.5,
+                fontWeight: 800,
+                textDecoration: "none",
+              }}
+            >
+              View All 19 Programmes →
+            </Link>
+          </div>
+
+          {/* 7 Schools & Faculties Grid */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: 24,
+            }}
+          >
+            {SCHOOL_CARDS.map((school) => {
+              const schoolCourses = courses.filter((c) => c.category === school.name)
+              return (
+                <div
+                  key={school.name}
+                  style={{
+                    background: "#F7F6F1",
+                    borderRadius: 10,
+                    border: "1px solid #DCE3F0",
+                    borderTop: `6px solid ${school.color}`,
+                    overflow: "hidden",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        height: 175,
+                        backgroundImage: `url('${school.image}')`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        position: "relative",
+                      }}
+                    >
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: 12,
+                          right: 12,
+                          background: school.color,
+                          color: "#FFFFFF",
+                          padding: "4px 10px",
+                          borderRadius: 4,
+                          fontFamily: "var(--font-head)",
+                          fontSize: 11,
+                          fontWeight: 800,
+                        }}
+                      >
+                        {counts[school.name] || schoolCourses.length} Programmes
+                      </span>
+                    </div>
+
+                    <div style={{ padding: "20px 22px 14px" }}>
+                      <h3
+                        style={{
+                          fontFamily: "var(--font-head)",
+                          fontSize: 18,
+                          fontWeight: 900,
+                          color: "#0B1D51",
+                          marginBottom: 8,
+                        }}
+                      >
+                        {school.schoolTitle}
+                      </h3>
+                      <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "#334155", marginBottom: 14 }}>
+                        {school.summary}
+                      </p>
+
+                      {/* Course list inside this school */}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
+                        {schoolCourses.map((c) => (
+                          <Link
+                            key={c.id}
+                            href={`/courses?category=${encodeURIComponent(school.name)}&course=${encodeURIComponent(c.id)}`}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              padding: "7px 10px",
+                              background: "#FFFFFF",
+                              border: "1px solid #E2E8F0",
+                              borderRadius: 6,
+                              fontFamily: "var(--font-head)",
+                              fontSize: 12.5,
+                              fontWeight: 700,
+                              color: "#0B1D51",
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>• {c.title}</span>
+                            <span style={{ color: school.color, fontSize: 11, fontWeight: 800 }}>{c.duration}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ padding: "0 22px 20px" }}>
+                    <Link
+                      href={`/courses?category=${encodeURIComponent(school.name)}`}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                        fontFamily: "var(--font-head)",
+                        fontSize: 13,
+                        fontWeight: 800,
+                        color: school.color,
+                        textDecoration: "none",
+                      }}
+                    >
+                      Explore {school.name} School →
+                    </Link>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 7. UCU-STYLE REGIONAL REACH ("SPREAD ACROSS DISTRICTS") + "TESTIMONIALS" SECTION ================= */}
+      <section
+        style={{
+          padding: "clamp(64px, 8.5vw, 100px) 0",
+          background: "#003896",
+          color: "#FFFFFF",
+          borderBottom: "4px solid #E60914",
+        }}
+      >
+        <div className="container">
+          {/* Regional Reach Header (matches UCU "Spread over 5 regions / We Are One Of The Largest...") */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 32,
+              alignItems: "center",
+              paddingBottom: 48,
+              marginBottom: 48,
+              borderBottom: "1px solid rgba(255,255,255,0.2)",
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#F8C90E",
+                  marginBottom: 8,
+                }}
+              >
+                Spread Across 2 CHRISCO Districts &amp; Online Across East Africa
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.75rem, 3vw, 2.4rem)",
+                  lineHeight: 1.15,
+                  color: "#FFFFFF",
+                  marginBottom: 14,
+                }}
+              >
+                We Are One Of The Most Practical Faith-Anchored Digital Academies
+              </h2>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: "rgba(255,255,255,0.88)", margin: 0 }}>
+                Operating under CHRISCO Fellowship of Churches International, our cohorts bring hands-on digital labs,
+                holiday teen bootcamps, and 24/7 online e-learning to youth across Central District, Eastern District,
+                Nairobi, and beyond.
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                gap: 14,
+              }}
+            >
+              {[
+                { title: "Central District Hub", sub: "Youth Aflame Training Centres", color: "#E60914" },
+                { title: "Eastern District Hub", sub: "Regional Practical Bootcamps", color: "#38A128" },
+                { title: "Nairobi Teens Cohort", sub: "3 Nov – 11 Dec 2026 Intake", color: "#EE6816" },
+                { title: "Online e-Learning", sub: "19 Courses • 20 Free PDF Books", color: "#F8C90E" },
+              ].map((hub) => (
+                <div
+                  key={hub.title}
+                  style={{
+                    background: "#0B1D51",
+                    borderLeft: `5px solid ${hub.color}`,
+                    padding: "16px 18px",
+                    borderRadius: "0 8px 8px 0",
+                  }}
+                >
+                  <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 15, color: "#FFFFFF" }}>
+                    {hub.title}
+                  </div>
+                  <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.78)", marginTop: 4 }}>{hub.sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Testimonials Section (matches UCU 3 Student Testimonial Cards) */}
+          <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 36px" }}>
+            <div
+              style={{
+                fontFamily: "var(--font-head)",
+                fontSize: 12,
+                fontWeight: 800,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#F8C90E",
+                marginBottom: 6,
+              }}
+            >
+              Testimonials
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.7rem, 2.8vw, 2.3rem)",
+                color: "#FFFFFF",
+                margin: 0,
+              }}
+            >
+              Voices From Our Students &amp; Youth Cohorts
+            </h2>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+              gap: 24,
+            }}
+          >
+            {TESTIMONIALS.map((t) => (
+              <div
+                key={t.name}
+                style={{
+                  background: "#FFFFFF",
+                  color: "#0B1D51",
+                  borderRadius: 10,
+                  borderTop: `6px solid ${t.color}`,
+                  padding: "26px 24px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  gap: 18,
+                }}
+              >
+                <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "#1E293B", fontStyle: "italic", margin: 0 }}>
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+
+                <div style={{ display: "flex", alignItems: "center", gap: 14, paddingTop: 14, borderTop: "1px solid #E2E8F0" }}>
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    style={{
+                      width: 54,
+                      height: 54,
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      border: `3px solid ${t.color}`,
+                      flexShrink: 0,
+                    }}
+                  />
+                  <div>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 900, fontSize: 15.5, color: "#0B1D51" }}>
+                      {t.name}
+                    </div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: t.color, marginTop: 2 }}>{t.school}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 8. UCU-STYLE "UPCOMING EVENTS" + "OFFICE OF THE LEAD TUTOR & MENTORSHIP COUNCIL" ================= */}
+      <section
+        style={{
+          padding: "clamp(64px, 8.5vw, 100px) 0",
+          background: "#F7F6F1",
+          borderBottom: "3px solid #DCE3F0",
+        }}
+      >
+        <div className="container">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: 40,
+              alignItems: "start",
+            }}
+          >
+            {/* Left Column: Upcoming Events (matches UCU Upcoming Events with Flyer + Date/Time/Venue) */}
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#E60914",
+                  marginBottom: 6,
+                }}
+              >
+                Academy Calendar
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.65rem, 2.6vw, 2.2rem)",
+                  color: "#0B1D51",
+                  marginBottom: 22,
+                }}
+              >
+                Upcoming Events
+              </h2>
+
+              {/* Event Card 1: Teens AI & Projects Bootcamp */}
               <div
                 style={{
                   background: "#FFFFFF",
-                  borderRadius: 12,
+                  borderRadius: 10,
+                  border: "2px solid #0B1D51",
+                  borderTop: "6px solid #E60914",
+                  overflow: "hidden",
+                  marginBottom: 20,
+                }}
+              >
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                  }}
+                >
+                  <div style={{ background: "#003896", padding: 12, display: "flex", alignItems: "center" }}>
+                    <img
+                      src="/posters/teens-ai-bootcamp-official.png"
+                      alt="Teens AI & Projects Bootcamp Event Poster"
+                      style={{ width: "100%", height: "auto", borderRadius: 6, display: "block" }}
+                    />
+                  </div>
+                  <div style={{ padding: "22px 22px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <div>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          background: "#E60914",
+                          color: "#FFFFFF",
+                          padding: "3px 10px",
+                          borderRadius: 4,
+                          fontFamily: "var(--font-head)",
+                          fontSize: 10.5,
+                          fontWeight: 800,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          marginBottom: 10,
+                        }}
+                      >
+                        FEATURED HOLIDAY BOOTCAMP
+                      </span>
+                      <h3
+                        style={{
+                          fontFamily: "var(--font-head)",
+                          fontSize: 18,
+                          fontWeight: 900,
+                          color: "#0B1D51",
+                          marginBottom: 12,
+                        }}
+                      >
+                        Teens AI &amp; Projects Bootcamp (5-Week Practical Cohort)
+                      </h3>
+
+                      <div style={{ fontSize: 13.5, lineHeight: 1.75, color: "#334155", marginBottom: 16 }}>
+                        <div>
+                          <strong style={{ color: "#0B1D51" }}>Date:</strong> 3rd November – 11th December 2026
+                        </div>
+                        <div>
+                          <strong style={{ color: "#0B1D51" }}>Time:</strong> Mon – Fri, 9:00 AM – 4:00 PM EAT
+                        </div>
+                        <div>
+                          <strong style={{ color: "#0B1D51" }}>Venue:</strong> CHRISCO Youth Aflame Digital Hubs &amp; Live Online
+                        </div>
+                        <div>
+                          <strong style={{ color: "#0B1D51" }}>Tracks:</strong> AI Prompt Engineering, Coding, Graphic Design, Video &amp; App Building
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                      <a
+                        href="https://forms.gle/ChriscoTeensAIBootcamp"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 6,
+                          background: "#38A128",
+                          color: "#FFFFFF",
+                          padding: "9px 16px",
+                          borderRadius: 6,
+                          fontFamily: "var(--font-head)",
+                          fontSize: 12.5,
+                          fontWeight: 800,
+                          textDecoration: "none",
+                        }}
+                      >
+                        Register on Google Form →
+                      </a>
+                      <Link
+                        href="/courses/ai-literacy"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 6,
+                          background: "#084EC8",
+                          color: "#FFFFFF",
+                          padding: "9px 16px",
+                          borderRadius: 6,
+                          fontFamily: "var(--font-head)",
+                          fontSize: 12.5,
+                          fontWeight: 800,
+                          textDecoration: "none",
+                        }}
+                      >
+                        View Syllabus →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Event Card 2: Weekly Saturday Portfolio & Freelancing Clinic */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: 10,
+                  border: "1px solid #DCE3F0",
+                  borderLeft: "6px solid #084EC8",
+                  padding: "18px 22px",
+                }}
+              >
+                <div style={{ fontFamily: "var(--font-head)", fontSize: 11, fontWeight: 800, color: "#084EC8", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                  WEEKLY PRACTICAL LAB • OPEN TO ALL ENROLLED STUDENTS
+                </div>
+                <h3 style={{ fontFamily: "var(--font-head)", fontSize: 16.5, fontWeight: 900, color: "#0B1D51", margin: "6px 0 8px" }}>
+                  Saturday Digital Portfolio, GitHub &amp; Freelance Pitch Review
+                </h3>
+                <div style={{ fontSize: 13, color: "#334155", lineHeight: 1.6 }}>
+                  <strong>Date:</strong> Every Saturday &nbsp;|&nbsp; <strong>Time:</strong> 9:00 AM – 1:00 PM EAT &nbsp;|&nbsp; <strong>Venue:</strong> Online &amp; District Hubs
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Office of the Lead Tutor + Numbered 01-06 Academy Mentorship Council (matches UCU Vice Chancellor + Senate) */}
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#084EC8",
+                  marginBottom: 6,
+                }}
+              >
+                Academic Leadership &amp; Governance
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.65rem, 2.6vw, 2.2rem)",
+                  color: "#0B1D51",
+                  marginBottom: 22,
+                }}
+              >
+                Office of the Lead Tutor
+              </h2>
+
+              {/* Lead Tutor Profile Box (matches UCU Office of the Vice Chancellor card) */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: 10,
+                  border: "1px solid #DCE3F0",
+                  borderTop: "6px solid #003896",
+                  padding: "22px",
+                  marginBottom: 24,
+                }}
+              >
+                <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap", marginBottom: 14 }}>
+                  <img
+                    src="/images/bg-contact.jpg"
+                    alt={tutor.name}
+                    style={{
+                      width: 84,
+                      height: 84,
+                      borderRadius: 10,
+                      objectFit: "cover",
+                      border: "3px solid #F8C90E",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <div style={{ flex: 1, minWidth: 200 }}>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "#E60914",
+                      }}
+                    >
+                      {tutor.role} • {tutor.Badge}
+                    </div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "1.35rem",
+                        color: "#0B1D51",
+                        margin: "4px 0",
+                      }}
+                    >
+                      {tutor.name}
+                    </h3>
+                    <div style={{ fontSize: 13, color: "#334155" }}>
+                      CHRISCO Youth Aflame Digital Academy • Central &amp; Eastern Districts
+                    </div>
+                  </div>
+                </div>
+
+                <p style={{ fontSize: 13.8, lineHeight: 1.65, color: "#334155", marginBottom: 16 }}>
+                  {tutor.bio}
+                </p>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 14,
+                    flexWrap: "wrap",
+                    paddingTop: 12,
+                    borderTop: "1px solid #E2E8F0",
+                  }}
+                >
+                  <Link href="/about" style={{ fontFamily: "var(--font-head)", fontSize: 12.5, fontWeight: 800, color: "#084EC8", textDecoration: "none" }}>
+                    Read More →
+                  </Link>
+                  <Link href="/become-a-tutor" style={{ fontFamily: "var(--font-head)", fontSize: 12.5, fontWeight: 800, color: "#E60914", textDecoration: "none" }}>
+                    Become a Tutor →
+                  </Link>
+                  <Link href="/contact" style={{ fontFamily: "var(--font-head)", fontSize: 12.5, fontWeight: 800, color: "#38A128", textDecoration: "none" }}>
+                    Contact Office →
+                  </Link>
+                </div>
+              </div>
+
+              {/* Academy Mentorship & Curriculum Council (matches UCU Senate 01-06 numbered list) */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: 10,
                   border: "1px solid #DCE3F0",
                   overflow: "hidden",
                 }}
@@ -179,204 +1905,57 @@ export default function Home() {
                   style={{
                     background: "#0B1D51",
                     color: "#F8C90E",
-                    padding: "12px 16px",
+                    padding: "13px 18px",
                     fontFamily: "var(--font-head)",
+                    fontSize: 12,
                     fontWeight: 800,
-                    fontSize: 11.5,
-                    letterSpacing: "0.16em",
+                    letterSpacing: "0.14em",
                     textTransform: "uppercase",
                   }}
                 >
-                  Explore by Category
+                  Academy Mentorship &amp; Curriculum Council (01 – 06)
                 </div>
+
                 <div>
-                  {categories.map((cat, idx) => {
-                    const cColor = CATEGORY_POSTER_COLORS[idx % CATEGORY_POSTER_COLORS.length]
-                    return (
-                      <Link
-                        key={cat.name}
-                        href={`/courses?category=${encodeURIComponent(cat.name)}`}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          padding: "11px 16px",
-                          borderBottom: "1px solid #E5E9F2",
-                          textDecoration: "none",
-                          color: "#0B1D51",
-                          fontWeight: 700,
-                          fontSize: 13.5,
-                        }}
-                      >
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-                          <span
-                            style={{
-                              width: 26,
-                              height: 26,
-                              borderRadius: "50%",
-                              background: cColor,
-                              color: "#FFFFFF",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Icon name={cat.icon} size={13} />
-                          </span>
-                          <span style={{ color: cColor, fontWeight: 800 }}>{cat.name}</span>
-                        </span>
-                        <span style={{ color: "#0B1D51", fontWeight: 800, fontSize: 12 }}>
-                          {counts[cat.name] || 0}
-                        </span>
-                      </Link>
-                    )
-                  })}
-                </div>
-                <div style={{ padding: "14px 16px", background: "#F7F6F1" }}>
-                  <Link
-                    href="/courses"
-                    className="btn btn-amber btn-sm"
-                    style={{ textDecoration: "none", width: "100%", fontWeight: 900 }}
-                  >
-                    Browse All 19 Courses →
-                  </Link>
-                </div>
-              </div>
-            </aside>
-
-            {/* Main hero content */}
-            <div style={{ minWidth: 0 }}>
-              <h1
-                className="display on-dark"
-                style={{ fontSize: "clamp(2.5rem, 5.8vw, 4.5rem)", lineHeight: 1.02 }}
-              >
-                <span style={{ color: "#F8C90E" }}>Learn skills</span>
-                <br />
-                that pay <span style={{ color: "#EE6816" }}>for life.</span>
-              </h1>
-
-              <p
-                className="lead on-dark"
-                style={{ maxWidth: 560, marginTop: 22, color: "rgba(255,255,255,0.92)" }}
-              >
-                CHRISCO Digital Academy is a practical learning platform for African youth — hands-on courses in
-                design, code, marketing, writing, video and AI, taught by our tutors at CHRISCO Youth Aflame.
-              </p>
-
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 30 }}>
-                <Link href="/courses" className="btn btn-amber btn-lg" style={{ textDecoration: "none" }}>
-                  Explore Courses →
-                </Link>
-                <Link href="/sign-up" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
-                  Apply Free →
-                </Link>
-                <Link href="/about#tutor" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
-                  Meet Our Tutor
-                </Link>
-              </div>
-
-              {/* Stats — divided with crisp white poster lines */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(2, 1fr)",
-                  gap: 0,
-                  borderTop: "1px solid rgba(255,255,255,0.24)",
-                  marginTop: 48,
-                }}
-              >
-                {stats.map((s, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: "20px 24px 20px 0",
-                      borderBottom: "1px solid rgba(255,255,255,0.24)",
-                      borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.24)" : "none",
-                      paddingLeft: i % 2 === 1 ? 24 : 0,
-                    }}
-                  >
-                    <div className="stat-num" style={{ color: s.color }}>{s.value}</div>
-                    <div
+                  {COUNCIL_UNITS.map((unit) => (
+                    <Link
+                      key={unit.num}
+                      href={unit.href}
                       style={{
-                        fontSize: 12,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.85)",
-                        fontWeight: 700,
-                        marginTop: 4,
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 14,
+                        padding: "13px 18px",
+                        borderBottom: "1px solid #E2E8F0",
+                        textDecoration: "none",
+                        color: "#0B1D51",
                       }}
                     >
-                      {s.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Hero image frame — clean poster frame, no floating AI badge */}
-            <div style={{ minWidth: 0 }}>
-              <div
-                style={{
-                  borderRadius: 12,
-                  overflow: "hidden",
-                  border: "3px solid #FFFFFF",
-                  background: "#FFFFFF",
-                }}
-              >
-                <div style={{ position: "relative", aspectRatio: "4/4.3" }}>
-                  <Image
-                    src="/images/hero-tile.jpg"
-                    alt="Young learner at CHRISCO Digital Academy"
-                    fill
-                    priority
-                    sizes="(min-width: 1100px) 400px, (min-width: 768px) 45vw, 92vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    padding: "14px 18px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    borderTop: "3px solid #E60914",
-                  }}
-                >
-                  <span
-                    style={{
-                      width: 38,
-                      height: 38,
-                      borderRadius: "50%",
-                      background: "#E60914",
-                      color: "#FFFFFF",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon name="cap" size={19} strokeWidth={1.9} />
-                  </span>
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14, color: "#0B1D51" }}>
-                      CHRISCO Youth Aflame
-                    </div>
-                    <div style={{ fontSize: 12, color: "#475569" }}>500+ youth trained across East Africa</div>
-                  </div>
-                  <span
-                    style={{
-                      marginLeft: "auto",
-                      background: "#38A128",
-                      color: "#FFFFFF",
-                      fontSize: 11,
-                      fontWeight: 800,
-                      padding: "4px 10px",
-                      borderRadius: 999,
-                    }}
-                  >
-                    Open
-                  </span>
+                      <span
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 6,
+                          background: unit.color,
+                          color: "#FFFFFF",
+                          fontFamily: "var(--font-display)",
+                          fontSize: 13,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {unit.num}
+                      </span>
+                      <div>
+                        <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14, color: "#0B1D51" }}>
+                          {unit.title}
+                        </div>
+                        <div style={{ fontSize: 12.5, color: "#475569", marginTop: 2 }}>{unit.desc}</div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
@@ -384,696 +1963,422 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= 4-ITEM POSTER INFO BAR (RED, BLUE, GREEN, ORANGE) ================= */}
-      <section style={{ background: "#FFFFFF", borderBottom: "1px solid var(--line)" }}>
-        <div className="container">
-          <div className="factstrip">
-            {[
-              { icon: "rocket", title: "Hands-on portfolio", desc: "Build real digital projects" },
-              { icon: "laptop", title: "Online & in-person", desc: "Learn from anywhere" },
-              { icon: "wrench", title: "Project-based", desc: "Learn by building real work" },
-              { icon: "whatsapp", title: "Fast support", desc: "Same-day help on WhatsApp" },
-            ].map((f) => (
-              <div key={f.title} className="factstrip-item">
-                <span className="factstrip-ico"><Icon name={f.icon} size={18} strokeWidth={2} /></span>
-                <div>
-                  <div className="factstrip-title">{f.title}</div>
-                  <div className="factstrip-desc">{f.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= OFFICIAL TEENS AI & PROJECTS BOOTCAMP POSTER ================= */}
-      <section className="section" style={{ background: "#F7F6F1", borderBottom: "1px solid var(--line)" }}>
+      {/* ================= 9. UCU-STYLE "APPLY FOR ADMISSION" BANNER + "A GLIMPSE OF CHRISCO DIGITAL ACADEMY" ================= */}
+      <section
+        style={{
+          padding: "clamp(56px, 7.5vw, 88px) 0",
+          background: "linear-gradient(125deg, #0B1D51 0%, #003896 55%, #084EC8 100%)",
+          color: "#FFFFFF",
+          borderBottom: "4px solid #F8C90E",
+        }}
+      >
         <div className="container">
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: 40,
+              gap: 36,
               alignItems: "center",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <div
+            {/* Left: Apply for Admission */}
+            <div>
+              <span
                 style={{
-                  width: "100%",
-                  maxWidth: 460,
-                  borderRadius: 12,
-                  overflow: "hidden",
-                  border: "2px solid #084EC8",
-                  background: "#FFFFFF",
+                  display: "inline-block",
+                  background: "#E60914",
+                  color: "#FFFFFF",
+                  padding: "5px 12px",
+                  borderRadius: 4,
+                  fontFamily: "var(--font-head)",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  marginBottom: 12,
                 }}
               >
-                <Image
-                  src="/posters/teens-ai-bootcamp-official.png"
-                  alt="CHRISCO Youth Aflame Digital Academy — Teens AI & Projects Bootcamp Poster"
-                  width={736}
-                  height={920}
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                />
+                ADMISSIONS OPEN • 100% FREE TUITION
+              </span>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.85rem, 3.2vw, 2.6rem)",
+                  lineHeight: 1.15,
+                  color: "#FFFFFF",
+                  marginBottom: 14,
+                }}
+              >
+                Apply for Admission to CHRISCO Digital Academy
+              </h2>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: "rgba(255,255,255,0.9)", marginBottom: 22 }}>
+                Create your free learner account to enroll in any of our 19 practical digital courses, download 20 PDF
+                handbooks, or register a teen for the 3rd November – 11th December 2026 Teens AI &amp; Projects Bootcamp.
+              </p>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <Link
+                  href="/sign-up"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    background: "#E60914",
+                    color: "#FFFFFF",
+                    border: "2px solid #F8C90E",
+                    padding: "13px 24px",
+                    borderRadius: 6,
+                    fontFamily: "var(--font-head)",
+                    fontSize: 14,
+                    fontWeight: 800,
+                    textDecoration: "none",
+                  }}
+                >
+                  Apply for Admission →
+                </Link>
+                <a
+                  href="https://forms.gle/ChriscoTeensAIBootcamp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    background: "#38A128",
+                    color: "#FFFFFF",
+                    padding: "13px 22px",
+                    borderRadius: 6,
+                    fontFamily: "var(--font-head)",
+                    fontSize: 14,
+                    fontWeight: 800,
+                    textDecoration: "none",
+                  }}
+                >
+                  Teens Bootcamp Google Form →
+                </a>
               </div>
             </div>
 
+            {/* Right: "A Glimpse of CHRISCO Digital Academy" Visual Showcase (matches UCU "A Glimpse of UCU") */}
+            <div
+              style={{
+                background: "#0B1D51",
+                borderRadius: 12,
+                border: "3px solid #F8C90E",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  height: 240,
+                  backgroundImage: "url('/images/workspace.jpg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "rgba(11, 29, 81, 0.45)",
+                  }}
+                />
+                <Link
+                  href="/studio"
+                  style={{
+                    position: "relative",
+                    zIndex: 1,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 10,
+                    background: "#E60914",
+                    color: "#FFFFFF",
+                    border: "2px solid #F8C90E",
+                    padding: "14px 24px",
+                    borderRadius: 999,
+                    fontFamily: "var(--font-head)",
+                    fontSize: 13.5,
+                    fontWeight: 800,
+                    textDecoration: "none",
+                    boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
+                  }}
+                >
+                  <Icon name="play" size={16} /> A Glimpse of CHRISCO Digital Academy
+                </Link>
+              </div>
+              <div
+                style={{
+                  padding: "16px 22px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 12,
+                  flexWrap: "wrap",
+                }}
+              >
+                <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 800, color: "#F8C90E" }}>
+                  LEARN • BUILD • IMPACT — Inside Our Practical Digital Labs
+                </span>
+                <Link
+                  href="/courses"
+                  style={{
+                    fontFamily: "var(--font-head)",
+                    fontSize: 12.5,
+                    fontWeight: 800,
+                    color: "#FFFFFF",
+                    textDecoration: "none",
+                  }}
+                >
+                  Browse All 19 Courses →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 10. UCU-STYLE "LATEST NEWS & ARTICLES" (4-CARD GRID) + "OUR PARTNERS" STRIP ================= */}
+      <section
+        style={{
+          padding: "clamp(64px, 8.5vw, 100px) 0",
+          background: "#FFFFFF",
+        }}
+      >
+        <div className="container">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              gap: 20,
+              flexWrap: "wrap",
+              marginBottom: 36,
+            }}
+          >
             <div>
               <div
                 style={{
                   fontFamily: "var(--font-head)",
                   fontSize: 12,
                   fontWeight: 800,
-                  letterSpacing: "0.14em",
+                  letterSpacing: "0.16em",
                   textTransform: "uppercase",
-                  color: "#0B1D51",
+                  color: "#E60914",
+                  marginBottom: 6,
                 }}
               >
-                CHRISCO YOUTH <span style={{ color: "#EE6816" }}>AFLAME</span> DIGITAL ACADEMY • LEARN | BUILD | IMPACT
+                Campus Updates &amp; Announcements
               </div>
-
               <h2
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(2rem, 4.2vw, 3.1rem)",
-                  lineHeight: 1.04,
-                  textTransform: "uppercase",
-                  marginTop: 10,
+                  fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)",
+                  color: "#0B1D51",
+                  margin: 0,
                 }}
               >
-                <span style={{ color: "#E60914" }}>TEENS AI &amp;</span>
-                <br />
-                <span style={{ color: "#084EC8" }}>PROJECTS BOOTCAMP!</span>
-              </h2>
-
-              <p style={{ fontSize: 16, fontWeight: 600, color: "#111827", lineHeight: 1.6, marginTop: 14 }}>
-                Fun AI learning &amp; creative digital projects designed for young minds.
-              </p>
-
-              {/* Exact Poster White Feature Sheet with Horizontal Dividers */}
-              <div className="poster-sheet" style={{ marginTop: 20, marginBottom: 20 }}>
-                <div className="poster-row">
-                  <span className="poster-circle-ico" style={{ background: "#E60914" }}>
-                    <Icon name="robot" size={20} />
-                  </span>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: 15, color: "#E60914" }}>
-                      • Learning AI &amp; Projects:
-                    </div>
-                    <div style={{ fontSize: 14, color: "#111827", marginTop: 2 }}>
-                      Teen-friendly tools, prompts &amp; hands-on builds
-                    </div>
-                  </div>
-                </div>
-
-                <div className="poster-row">
-                  <span className="poster-circle-ico" style={{ background: "#084EC8" }}>
-                    <Icon name="laptop" size={20} />
-                  </span>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: 15, color: "#084EC8" }}>
-                      • Access to Digital Media:
-                    </div>
-                    <div style={{ fontSize: 14, color: "#111827", marginTop: 2 }}>
-                      Laptop/tablet/phone required
-                    </div>
-                  </div>
-                </div>
-
-                <div className="poster-row">
-                  <span className="poster-circle-ico" style={{ background: "#38A128" }}>
-                    <Icon name="users" size={20} />
-                  </span>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: 15, color: "#38A128" }}>
-                      • Physical &amp; Team Activities:
-                    </div>
-                    <div style={{ fontSize: 14, color: "#111827", marginTop: 2 }}>
-                      Dates &amp; venues to be communicated
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Exact Poster 4-Item Info Strip */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-                  background: "#FFFFFF",
-                  border: "1px solid #DCE3F0",
-                  borderRadius: 999,
-                  padding: "12px 18px",
-                  gap: 10,
-                  marginBottom: 22,
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: 8, borderRight: "1px solid #DCE3F0", paddingRight: 8 }}>
-                  <span style={{ color: "#E60914", fontWeight: 900 }}>
-                    <Icon name="clock" size={18} />
-                  </span>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
-                    3 Nov –<br />11 Dec 2026
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", alignItems: "center", gap: 8, borderRight: "1px solid #DCE3F0", paddingRight: 8 }}>
-                  <span style={{ color: "#084EC8", fontWeight: 900 }}>
-                    <Icon name="clock" size={18} />
-                  </span>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
-                    6<br />Weeks
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", alignItems: "center", gap: 8, borderRight: "1px solid #DCE3F0", paddingRight: 8 }}>
-                  <span style={{ color: "#38A128", fontWeight: 900 }}>
-                    <Icon name="users" size={18} />
-                  </span>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
-                    Ages<br />13+
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ color: "#EE6816", fontWeight: 900 }}>
-                    <Icon name="globe" size={18} />
-                  </span>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: "#111827", lineHeight: 1.25 }}>
-                    Online<br />Classes
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-                <Link href="/courses" className="btn btn-amber" style={{ textDecoration: "none", fontWeight: 900 }}>
-                  Explore Courses &amp; Enroll →
-                </Link>
-                <Link href="/studio" className="btn btn-navy" style={{ textDecoration: "none" }}>
-                  Open AI Prompt &amp; Voice Studio →
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= SIX SKILL TRACKS (CLEAN POSTER SHEET, NO AI CARDS) ================= */}
-      <section className="section" style={{ background: "#FFFFFF", borderBottom: "1px solid var(--line)" }}>
-        <div className="container">
-          <div style={{ maxWidth: 640, marginBottom: 42 }}>
-            <span className="eyebrow" style={{ color: "#E60914" }}>What you&apos;ll master</span>
-            <h2 className="title" style={{ marginTop: 12 }}>
-              Six skill tracks. One mission: <span style={{ color: "#084EC8" }}>your future.</span>
-            </h2>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              background: "#FFFFFF",
-              border: "1px solid #DCE3F0",
-              borderRadius: 12,
-              overflow: "hidden",
-            }}
-          >
-            {skills.map((skill, i) => (
-              <div
-                key={skill.num}
-                style={{
-                  padding: "26px 24px",
-                  borderBottom: "1px solid #DCE3F0",
-                  borderRight: "1px solid #DCE3F0",
-                  borderTop: `4px solid ${skill.color}`,
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: 16,
-                }}
-              >
-                <span
-                  style={{
-                    width: 46,
-                    height: 46,
-                    borderRadius: "50%",
-                    background: skill.color,
-                    color: "#FFFFFF",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  <Icon name={skill.icon} size={22} />
-                </span>
-                <div>
-                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, color: skill.color, marginBottom: 6 }}>
-                    • {skill.title}
-                  </h3>
-                  <p style={{ fontSize: 14, color: "#1E293B", lineHeight: 1.6, marginBottom: 12 }}>
-                    {skill.desc}
-                  </p>
-                  <Link
-                    href="/courses"
-                    style={{
-                      fontFamily: "var(--font-head)",
-                      fontSize: 13,
-                      fontWeight: 800,
-                      color: "#0B1D51",
-                      textDecoration: "none",
-                    }}
-                  >
-                    Explore courses <span style={{ color: skill.color }}>→</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= FEATURED COURSES (POSTER RED, BLUE, GREEN) ================= */}
-      <section className="section" style={{ background: "#F7F6F1", borderBottom: "1px solid var(--line)" }}>
-        <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 40 }}>
-            <div>
-              <span className="eyebrow" style={{ color: "#EE6816" }}>Course catalogue</span>
-              <h2 className="title" style={{ marginTop: 12 }}>
-                Featured courses that <span style={{ color: "#38A128" }}>actually pay</span>
+                Latest News &amp; Articles
               </h2>
             </div>
-            <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>
-              View all 19 courses →
+
+            <Link
+              href="/courses"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: "#0B1D51",
+                color: "#FFFFFF",
+                padding: "10px 18px",
+                borderRadius: 6,
+                fontFamily: "var(--font-head)",
+                fontSize: 13,
+                fontWeight: 800,
+                textDecoration: "none",
+              }}
+            >
+              View All Updates →
             </Link>
           </div>
 
-          <div className="grid-3">
-            {featured.map((course) => (
-              <Link
-                key={course.id}
-                href={`/courses?course=${course.id}`}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(255px, 1fr))",
+              gap: 22,
+              marginBottom: 64,
+            }}
+          >
+            {NEWS_ARTICLES.map((news) => (
+              <article
+                key={news.title}
                 style={{
-                  textDecoration: "none",
-                  background: "#FFFFFF",
-                  border: "1px solid #DCE3F0",
-                  borderTop: `5px solid ${course.posterColor}`,
+                  background: "#F7F6F1",
                   borderRadius: 10,
+                  border: "1px solid #DCE3F0",
+                  borderTop: `5px solid ${news.color}`,
                   overflow: "hidden",
                   display: "flex",
                   flexDirection: "column",
+                  justifyContent: "space-between",
                 }}
               >
-                <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", background: "#0B1D51" }}>
-                  <Image
-                    src={imageFor(course)}
-                    alt={course.title}
-                    fill
-                    sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: 12,
-                      left: 12,
-                      background: course.posterColor,
-                      color: "#FFFFFF",
-                      fontSize: 11,
-                      fontWeight: 800,
-                      padding: "4px 12px",
-                      borderRadius: 999,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06em",
-                    }}
-                  >
-                    {course.category}
-                  </span>
-                </div>
-
-                <div style={{ padding: "22px 24px 24px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-                    <span
-                      style={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: "50%",
-                        background: course.posterColor,
-                        color: "#FFFFFF",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Icon name={course.icon} size={18} />
-                    </span>
-                    <div>
-                      <h3 style={{ fontSize: "1.1rem", fontWeight: 800, color: course.posterColor }}>
-                        {course.title}
-                      </h3>
-                      <div style={{ fontSize: 11, fontWeight: 700, color: "#475569", textTransform: "uppercase" }}>
-                        {course.level} · {course.duration}
-                      </div>
-                    </div>
-                  </div>
-
-                  <p style={{ fontSize: 13.8, color: "#1E293B", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>
-                    {course.desc}
-                  </p>
-
+                <div>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      borderTop: "1px solid #E5E9F2",
-                      paddingTop: 14,
-                      fontSize: 12.5,
-                      fontWeight: 800,
-                      color: "#0B1D51",
+                      height: 180,
+                      backgroundImage: `url('${news.image}')`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
                     }}
-                  >
-                    <span>{course.students} learners · ★ {course.rating}</span>
-                    <span style={{ color: course.posterColor }}>Open course →</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= TWO DEDICATED BOOK SHELVES (CLEAN DIVIDED SHEET) ================= */}
-      <section className="section" style={{ background: "#FFFFFF", borderBottom: "1px solid var(--line)" }}>
-        <div className="container">
-          <div style={{ maxWidth: 680, marginBottom: 36 }}>
-            <span className="eyebrow" style={{ color: "#E60914" }}>CHRISCO Online Library</span>
-            <h2 className="display" style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", color: "#0B1D51", marginTop: 12 }}>
-              <span style={{ color: "#E60914" }}>Christian Books</span> &amp;{" "}
-              <span style={{ color: "#084EC8" }}>Course Handbooks.</span>
-            </h2>
-            <p style={{ color: "#1E293B", fontSize: 15.5, lineHeight: 1.7, marginTop: 10 }}>
-              Sign in to read, save, and download Christian books and practical course handbooks from your Dashboard.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              background: "#FFFFFF",
-              border: "1px solid #DCE3F0",
-              borderRadius: 12,
-              overflow: "hidden",
-            }}
-          >
-            {/* Shelf A: Christian & Faith Books (Poster Red & Orange) */}
-            <div
-              style={{
-                padding: "32px 28px",
-                borderTop: "5px solid #E60914",
-                borderRight: "1px solid #DCE3F0",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                  <span className="poster-circle-ico" style={{ background: "#E60914" }}>
-                    <Icon name="flame" size={20} />
-                  </span>
-                  <span style={{ fontWeight: 800, fontSize: 13, color: "#E60914", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                    Christian &amp; Faith Shelf
-                  </span>
-                </div>
-                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "#0B1D51", marginBottom: 10 }}>
-                  Joseph: 7 Lessons Every Emerging Seer Prophet Must Learn
-                </h3>
-                <p style={{ fontSize: 14.2, color: "#1E293B", lineHeight: 1.7, marginBottom: 22 }}>
-                  A biblical study from Genesis 37 to 50 on dreams, character, private integrity, and appointed fulfillment, published by CHRISCO Youth Aflame.
-                </p>
-              </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <Link
-                  href="/library/joseph-7-lessons-emerging-seer-prophet"
-                  className="btn btn-red btn-sm"
-                  style={{ textDecoration: "none" }}
-                >
-                  Open &amp; Share Christian Book →
-                </Link>
-                <Link
-                  href="/library?shelf=christian"
-                  className="btn btn-outline btn-sm"
-                  style={{ textDecoration: "none" }}
-                >
-                  Christian Shelf
-                </Link>
-              </div>
-            </div>
-
-            {/* Shelf B: Digital Skill & Learning Books (Poster Royal Blue & Green) */}
-            <div
-              style={{
-                padding: "32px 28px",
-                borderTop: "5px solid #084EC8",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                  <span className="poster-circle-ico" style={{ background: "#084EC8" }}>
-                    <Icon name="cap" size={20} />
-                  </span>
-                  <span style={{ fontWeight: 800, fontSize: 13, color: "#084EC8", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                    Skill &amp; Learning Shelf
-                  </span>
-                </div>
-                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.4rem", color: "#0B1D51", marginBottom: 10 }}>
-                  19 Illustrated Digital Skill Course Handbooks
-                </h3>
-                <p style={{ fontSize: 14.2, color: "#1E293B", lineHeight: 1.7, marginBottom: 22 }}>
-                  Practical study guides for Python, AI, YouTube Automation, Executive Communication, Copywriting, Print on Demand, and 13 more digital tracks.
-                </p>
-              </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <Link
-                  href="/library?shelf=learning"
-                  className="btn btn-navy btn-sm"
-                  style={{ textDecoration: "none" }}
-                >
-                  Browse All 19 Learning Books →
-                </Link>
-                <Link
-                  href="/library"
-                  className="btn btn-outline-green btn-sm"
-                  style={{ textDecoration: "none" }}
-                >
-                  Full Library
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= TUTOR (POSTER ROYAL BLUE & GOLDEN YELLOW) ================= */}
-      <section
-        className="section"
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          background: "#003896",
-          color: "#FFFFFF",
-          borderBottom: "4px solid #EE6816",
-        }}
-      >
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="split" style={{ alignItems: "center" }}>
-            <div>
-              <span className="eyebrow on-dark" style={{ color: "#F8C90E" }}>Meet our tutor</span>
-              <h2 className="display on-dark" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 16 }}>
-                Taught by people who <span style={{ color: "#F8C90E" }}>do the work.</span>
-              </h2>
-              <p style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 13.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#EE6816", margin: "14px 0 22px" }}>
-                {tutor.role}, CHRISCO Youth Aflame
-              </p>
-              <p className="lead on-dark" style={{ maxWidth: 520, color: "rgba(255,255,255,0.9)" }}>
-                Every class is led by our lead tutor: a Computer Science graduate who works daily in design,
-                development, video and AI. CHRISCO Digital Academy is a learning platform of CHRISCO Youth Aflame,
-                operating under CHRISCO Fellowship of Churches International.
-              </p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "24px 0 32px" }}>
-                {[
-                  { name: "Graphic Design", bg: "#E60914" },
-                  { name: "Web Development", bg: "#084EC8" },
-                  { name: "Video Editing", bg: "#EE6816" },
-                  { name: "Animation", bg: "#38A128" },
-                  { name: "Social Media", bg: "#F8C90E", text: "#0B1D51" },
-                  { name: "AI", bg: "#0B1D51" },
-                ].map((t) => (
-                  <span
-                    key={t.name}
-                    style={{
-                      background: t.bg,
-                      color: t.text || "#FFFFFF",
-                      fontSize: 12,
-                      fontWeight: 800,
-                      padding: "6px 14px",
-                      borderRadius: 999,
-                    }}
-                  >
-                    {t.name}
-                  </span>
-                ))}
-              </div>
-              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <Link href="/contact" className="btn btn-amber" style={{ textDecoration: "none" }}>
-                  Get In Touch →
-                </Link>
-                <Link href="/become-a-tutor" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
-                  Become a Tutor
-                </Link>
-              </div>
-            </div>
-
-            <div>
-              <div
-                style={{
-                  borderRadius: 12,
-                  overflow: "hidden",
-                  border: "3px solid #FFFFFF",
-                  background: "#FFFFFF",
-                }}
-              >
-                <div style={{ position: "relative", aspectRatio: "4/3" }}>
-                  <Image
-                    src="/images/workspace.jpg"
-                    alt="Creative workspace, design, code and video"
-                    fill
-                    sizes="(min-width: 768px) 46vw, 92vw"
-                    style={{ objectFit: "cover" }}
                   />
-                </div>
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    color: "#0B1D51",
-                    padding: "14px 18px",
-                    display: "flex",
-                    gap: 14,
-                    alignItems: "center",
-                    borderTop: "3px solid #38A128",
-                  }}
-                >
-                  <span
-                    style={{
-                      width: 38,
-                      height: 38,
-                      borderRadius: "50%",
-                      background: "#38A128",
-                      color: "#FFFFFF",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon name="laptop" size={20} strokeWidth={1.9} />
-                  </span>
-                  <div>
-                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#38A128", fontSize: 14 }}>
-                      7+ Practical Skill Tracks
+                  <div style={{ padding: "18px 20px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8,
+                        fontFamily: "var(--font-head)",
+                        fontSize: 10.5,
+                        fontWeight: 800,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: news.color,
+                        marginBottom: 8,
+                      }}
+                    >
+                      <span>{news.date}</span>
+                      <span>•</span>
+                      <span>{news.category}</span>
                     </div>
-                    <div style={{ fontSize: 12, color: "#475569" }}>Hands-on project mentorship</div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 16,
+                        fontWeight: 900,
+                        lineHeight: 1.38,
+                        color: "#0B1D51",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {news.title}
+                    </h3>
+                    <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "#334155", margin: 0 }}>{news.excerpt}</p>
                   </div>
                 </div>
+
+                <div style={{ padding: "0 20px 18px" }}>
+                  {news.external ? (
+                    <a
+                      href={news.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 13,
+                        fontWeight: 800,
+                        color: news.color,
+                        textDecoration: "none",
+                      }}
+                    >
+                      Read More →
+                    </a>
+                  ) : (
+                    <Link
+                      href={news.href}
+                      style={{
+                        fontFamily: "var(--font-head)",
+                        fontSize: 13,
+                        fontWeight: 800,
+                        color: news.color,
+                        textDecoration: "none",
+                      }}
+                    >
+                      Read More →
+                    </Link>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* UCU-style "Our Partners" Institutional Strip */}
+          <div
+            style={{
+              borderTop: "2px solid #DCE3F0",
+              paddingTop: 40,
+            }}
+          >
+            <div style={{ textAlign: "center", marginBottom: 24 }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-head)",
+                  fontSize: 11.5,
+                  fontWeight: 800,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "#084EC8",
+                  marginBottom: 4,
+                }}
+              >
+                Institutional Fellowship &amp; Open-Source Ecosystem
               </div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.45rem",
+                  color: "#0B1D51",
+                  margin: 0,
+                }}
+              >
+                Our Partners &amp; Platforms
+              </h3>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                gap: 14,
+              }}
+            >
+              {PARTNERS.map((p) => (
+                <div
+                  key={p.name}
+                  style={{
+                    background: "#F7F6F1",
+                    border: "1px solid #DCE3F0",
+                    borderTop: `4px solid ${p.color}`,
+                    borderRadius: 8,
+                    padding: "14px 16px",
+                    textAlign: "center",
+                  }}
+                >
+                  <div style={{ fontFamily: "var(--font-head)", fontWeight: 900, fontSize: 13.5, color: "#0B1D51" }}>
+                    {p.name}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-head)",
+                      fontSize: 11,
+                      fontWeight: 800,
+                      color: p.color,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      marginTop: 4,
+                    }}
+                  >
+                    {p.badge}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
-
-      {/* ================= HOW IT WORKS (3-ITEM POSTER SHEET: RED, BLUE, GREEN) ================= */}
-      <section className="section" style={{ background: "#F7F6F1" }}>
-        <div className="container">
-          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 44px" }}>
-            <span className="eyebrow" style={{ justifyContent: "center", color: "#E60914" }}>How it works</span>
-            <h2 className="title" style={{ marginTop: 12 }}>
-              From zero to earning <span style={{ color: "#084EC8" }}>in 3 steps</span>
-            </h2>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              background: "#FFFFFF",
-              border: "1px solid #DCE3F0",
-              borderRadius: 12,
-              overflow: "hidden",
-            }}
-          >
-            {steps.map((step, i) => (
-              <div
-                key={step.num}
-                style={{
-                  padding: "30px 26px",
-                  borderRight: i < steps.length - 1 ? "1px solid #DCE3F0" : "none",
-                  borderTop: `5px solid ${step.color}`,
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: 16,
-                }}
-              >
-                <span
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: "50%",
-                    background: step.color,
-                    color: "#FFFFFF",
-                    fontFamily: "var(--font-display)",
-                    fontSize: "1.1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  {step.num}
-                </span>
-                <div>
-                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, color: step.color, marginBottom: 8 }}>
-                    • {step.title}
-                  </h3>
-                  <p style={{ fontSize: 14, color: "#1E293B", lineHeight: 1.68 }}>
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= CTA ================= */}
-      <PhotoBand
-        eyebrow="Start today"
-        title="Ready to build your digital career?"
-        body="Real skills. Real income. Real future. Join CHRISCO Digital Academy and start learning this week."
-      >
-        <Link href="/sign-up" className="btn btn-amber btn-lg" style={{ textDecoration: "none" }}>
-          Create Free Account →
-        </Link>
-        <a href="https://wa.me/254112272061" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
-          <Icon name="whatsapp" size={17} /> WhatsApp Us
-        </a>
-        <Link href="/courses" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
-          Browse Courses →
-        </Link>
-      </PhotoBand>
 
       <Footer />
       <Chatbot />
