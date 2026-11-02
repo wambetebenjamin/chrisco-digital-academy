@@ -256,6 +256,7 @@ export default function Shop({ initialCode = "" }) {
             width={640}
             height={800}
             className="merch-img"
+            style={item.originalArt ? { objectFit: "contain" } : undefined}
             sizes="(min-width: 1200px) 280px, (min-width: 768px) 32vw, 90vw"
           />
           <span className="merch-view">Quick view &amp; sizes</span>
@@ -534,6 +535,9 @@ export default function Shop({ initialCode = "" }) {
                   {formatKsh(priceKsh(active))} <span>· {formatUgx(priceUgx(active))} · {active.colour}</span>
                 </p>
                 <p className="shop-modal-desc">{active.desc}</p>
+                {active.originalArt && (
+                  <p className="shop-modal-desc"><a href={active.originalArt} target="_blank" rel="noreferrer">View the original uploaded design ↗</a></p>
+                )}
 
                 {activeSiblings.length > 1 && (
                   <div className="shop-field">

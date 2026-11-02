@@ -21,6 +21,7 @@ describe("PURSUE shop", () => {
     expect(screen.getByLabelText("View PURSUE Red Speedlines Tee (TS-16)")).toBeTruthy()
     expect(screen.queryByLabelText("View PURSUE Brush Burst Tee (TS-15)")).toBeNull()
     await user.click(screen.getByLabelText("View PURSUE Red Speedlines Tee (TS-16)"))
+    expect(screen.getByRole("link", { name: /view the original uploaded design/i }).getAttribute("href")).toBe("/merch/pursue-current/05-speedlines-original.png")
     await user.click(screen.getByRole("button", { name: "L" }))
     await user.click(screen.getByRole("button", { name: /add to order/i }))
     expect(within(await screen.findByLabelText("My order")).getByText(/TS-16/)).toBeTruthy()
