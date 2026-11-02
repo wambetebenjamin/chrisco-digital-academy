@@ -163,8 +163,8 @@ export default function About() {
 
           <div className="grid-2" style={{ alignItems: "stretch" }}>
             <div style={{ background: "var(--navy)", borderRadius: "var(--radius-xl)", padding: "48px 40px", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", background: "rgba(0,255,132,0.12)", top: -80, right: -80, filter: "blur(50px)" }} />
-              <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: 18, background: "rgba(0,255,132,0.14)", color: "var(--green)", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
+              <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", background: "rgba(248,201,14,0.12)", top: -80, right: -80, filter: "blur(50px)" }} />
+              <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: 18, background: "rgba(248,201,14,0.14)", color: "var(--green)", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
                 <Icon name="target" size={30} strokeWidth={1.7} />
               </span>
               <h3 style={{ fontFamily: "var(--font-display)", color: "var(--green)", fontSize: "1.3rem", marginBottom: 16 }}>OUR MISSION</h3>
@@ -253,7 +253,7 @@ export default function About() {
                     position: "absolute",
                     left: 20,
                     bottom: 20,
-                    background: "rgba(0,35,51,0.9)",
+                    background: "rgba(11,29,81,0.9)",
                     backdropFilter: "blur(12px)",
                     border: "1px solid rgba(255,255,255,0.14)",
                     borderRadius: 16,

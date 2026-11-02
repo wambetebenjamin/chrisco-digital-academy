@@ -42,11 +42,11 @@ export default function Home() {
       <Navbar />
 
       {/* ================= HERO ================= */}
-      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)" }}>
+      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "rgba(11,29,81,0.30)" }}>
         {/* The page-wide PageBackdrop supplies the photo; the hero only needs
             its dark scrim so the white display type stays legible. */}
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.90) 0%, rgba(0,35,51,0.72) 50%, rgba(1,58,79,0.50) 100%)" }} />
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(11,29,81,0.90) 0%, rgba(11,29,81,0.72) 50%, rgba(8,78,200,0.50) 100%)" }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(248,201,14,0.16), transparent 62%)" }} />
         <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
@@ -173,7 +173,7 @@ export default function Home() {
                     right: -10,
                     width: 120,
                     height: 120,
-                    background: "rgba(0,255,132,0.25)",
+                    background: "rgba(248,201,14,0.25)",
                     borderRadius: "50%",
                     filter: "blur(50px)",
                     zIndex: 0,
@@ -200,7 +200,7 @@ export default function Home() {
                   />
                   <span
                     className="pill pill-green pill-sm"
-                    style={{ position: "absolute", top: 18, left: 18, boxShadow: "0 6px 20px rgba(0,35,51,0.25)" }}
+                    style={{ position: "absolute", top: 18, left: 18, boxShadow: "0 6px 20px rgba(11,29,81,0.25)" }}
                   >
                     <Icon name="flame" size={13} strokeWidth={2.4} /> 500+ learners
                   </span>
@@ -438,7 +438,7 @@ export default function Home() {
       </section>
 
       {/* ================= FOUNDER ================= */}
-      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.92)", color: "rgba(255,255,255,0.72)" }}>
+      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(11,29,81,0.92)", color: "rgba(255,255,255,0.72)" }}>
         <div aria-hidden style={{ position: "absolute", inset: 0 }}>
           <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.08 }} />
         </div>
@@ -446,7 +446,7 @@ export default function Home() {
           <div className="split" style={{ alignItems: "center" }}>
             <div>
               <span className="eyebrow on-dark">Meet the founder</span>
-              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
+              <h2 className="display on-dark" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
                 Wambete <span className="accent-bright">Benjamin</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
@@ -481,7 +481,7 @@ export default function Home() {
                     width: 140,
                     height: 140,
                     borderRadius: "50%",
-                    background: "rgba(0,255,132,0.18)",
+                    background: "rgba(248,201,14,0.18)",
                     filter: "blur(60px)",
                   }}
                 />
@@ -499,7 +499,7 @@ export default function Home() {
                     position: "absolute",
                     left: 20,
                     bottom: 20,
-                    background: "rgba(0,35,51,0.9)",
+                    background: "rgba(11,29,81,0.9)",
                     backdropFilter: "blur(12px)",
                     border: "1px solid rgba(255,255,255,0.14)",
                     borderRadius: 16,

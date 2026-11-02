@@ -2,12 +2,12 @@ import Image from "next/image"
 
 export default function PhotoBand({ image = "/images/bg-cta.jpg", eyebrow, title, body, children, centered = false, imagePosition = "center 35%" }) {
   return (
-    <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)", padding: "104px 0" }}>
+    <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(11,29,81,0.30)", padding: "104px 0" }}>
       <div aria-hidden style={{ position: "absolute", inset: 0 }}>
         <Image src={image} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: imagePosition, opacity: 0.42 }} />
       </div>
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(0,35,51,0.95) 8%, rgba(0,35,51,0.82) 55%, rgba(1,58,79,0.74) 100%)" }} />
-      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(560px 300px at 92% 0%, rgba(0,255,132,0.20), transparent 60%)" }} />
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(11,29,81,0.95) 8%, rgba(0,56,150,0.84) 55%, rgba(8,78,200,0.74) 100%)" }} />
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(560px 300px at 92% 0%, rgba(248,201,14,0.22), transparent 60%), radial-gradient(480px 260px at 8% 100%, rgba(238,104,22,0.18), transparent 60%)" }} />
       <div className="container" style={{ position: "relative", zIndex: 1, textAlign: centered ? "center" : "left" }}>
         <div style={centered ? { maxWidth: 660, margin: "0 auto" } : { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 32, flexWrap: "wrap" }}>
           <div style={centered ? {} : { maxWidth: 620 }}>

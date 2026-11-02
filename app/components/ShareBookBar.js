@@ -131,7 +131,7 @@ export default function ShareBookBar({ book, compact = false }) {
           borderRadius: 12,
           overflow: "hidden",
           marginBottom: 12,
-          boxShadow: "0 4px 14px rgba(0,35,51,0.06)",
+          boxShadow: "0 4px 14px rgba(11,29,81,0.06)",
         }}
       >
         <div style={{ position: "relative", width: "100%", aspectRatio: "1200 / 630", background: "var(--navy)" }}>

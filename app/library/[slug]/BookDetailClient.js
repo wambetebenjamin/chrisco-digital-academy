@@ -52,7 +52,7 @@ export default function BookDetailClient({ book, relatedBooks = [] }) {
           background:
             book.shelf === "christian"
               ? "linear-gradient(135deg, #010C80 0%, #0D1B63 70%, #1C2B78 100%)"
-              : "linear-gradient(135deg, #14133B 0%, #1D2568 70%, #002333 100%)",
+              : "linear-gradient(135deg, #14133B 0%, #1D2568 70%, #0B1D51 100%)",
           color: "#fff",
           padding: "56px 0 64px",
         }}

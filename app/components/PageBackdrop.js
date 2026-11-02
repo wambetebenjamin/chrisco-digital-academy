@@ -42,17 +42,17 @@ export default function PageBackdrop({
         style={{
           position: "absolute",
           inset: 0,
-          background: `linear-gradient(180deg, rgba(250,250,246,${wash - 0.06}) 0%, rgba(250,250,246,${wash + 0.06}) 45%, rgba(250,250,246,${wash + 0.1}) 100%)`,
+          background: `linear-gradient(180deg, rgba(247,246,241,${wash - 0.06}) 0%, rgba(247,246,241,${wash + 0.06}) 45%, rgba(247,246,241,${wash + 0.1}) 100%)`,
         }}
       />
 
-      {/* Brand tint - a whisper of teal/green so it never reads as grey */}
+      {/* Brand tint - Teens AI Poster royal blue, golden yellow & green accents */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(900px 520px at 88% 4%, rgba(0,255,132,0.09), transparent 60%), radial-gradient(760px 620px at 4% 96%, rgba(1,58,79,0.10), transparent 62%)",
+            "radial-gradient(900px 520px at 88% 4%, rgba(248,201,14,0.10), transparent 60%), radial-gradient(760px 620px at 4% 96%, rgba(8,78,200,0.10), transparent 62%)",
         }}
       />
     </div>

@@ -82,7 +82,7 @@ export default function BecomeATutor() {
               Where we need <span className="accent">tutors</span>
             </h2>
             <p className="lead" style={{ marginTop: 16 }}>
-              You do not need a teaching certificate. You need a skill you can demonstrate and the patience to
+              You need a skill you can demonstrate and the patience to
               break it down for a beginner.
             </p>
           </div>
@@ -177,7 +177,7 @@ export default function BecomeATutor() {
               <div className="tutor-org-title">Who you would be teaching with</div>
               <p className="tutor-org-body">
                 {org.academy} is the learning platform of {org.programme}, operating under {org.umbrella}. All
-                courses, materials and certificates are issued under the {org.programme} brand, and every tutor is
+                courses and materials are provided under the {org.programme} brand, and every tutor is
                 approved by the academy before leading a cohort.
               </p>
             </div>

@@ -126,7 +126,7 @@ export function buildAutoReplyReceipt({
         `• All 20 Downloadable 28-Page PDF E-Books & Handbooks inside your Student Dashboard\n` +
         `• Interactive Google Slides Orientation & Track Guide\n` +
         `• Notion Learner Hub & 7-Track Operations Portal\n` +
-        `• Module Progress & Certificate Generator in your Dashboard\n\n` +
+        `• Module progress in your Dashboard\n\n` +
         `Need help choosing your first track? Write to us anytime at ${ORG.email}.\n\n` +
         `Warm regards,\n` +
         `${ORG.programme} Tutor Team\n` +
