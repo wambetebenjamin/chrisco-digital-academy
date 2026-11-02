@@ -1,18 +1,14 @@
 import Link from "next/link"
 import Icon from "./Icon"
-import { org } from "../data/org"
 
 const exploreLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Courses", href: "/courses" },
-  { label: "Christian & Faith Books", href: "/library?shelf=christian" },
-  { label: "Skill & Learning Books", href: "/library?shelf=learning" },
-  { label: "Become a Tutor", href: "/become-a-tutor" },
+  { label: "Books Library", href: "/library" },
   { label: "PURSUE Shop", href: "/shop" },
-  { label: "Affiliate Programme", href: "/affiliates" },
-  { label: "Privacy & Data Policy", href: "/privacy" },
   { label: "Contact", href: "/contact" },
+  { label: "Dashboard", href: "/dashboard" },
 ]
 
 const popularCourses = [
@@ -23,17 +19,40 @@ const popularCourses = [
   "Social Media Marketing",
 ]
 
+const socials = ["Facebook", "Instagram", "YouTube", "LinkedIn"]
+
 export default function Footer() {
   return (
     <footer
       style={{
-        background: "#0B1D51",
-        color: "rgba(255,255,255,0.85)",
+        background: "var(--navy)",
+        color: "rgba(255,255,255,0.6)",
         position: "relative",
         overflow: "hidden",
+        borderTop: "3px solid var(--green)",
       }}
     >
-      <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: 64, paddingBottom: 40 }}>
+      {/* Ghost wordmark */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          bottom: -42,
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontFamily: "var(--font-display)",
+          fontSize: "clamp(5rem, 18vw, 13rem)",
+          lineHeight: 1,
+          color: "rgba(255,255,255,0.025)",
+          whiteSpace: "nowrap",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      >
+        CHRISCO
+      </div>
+
+      <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: 80, paddingBottom: 36 }}>
         <div className="footer-grid">
           {/* Brand */}
           <div className="footer-col">
@@ -42,55 +61,45 @@ export default function Footer() {
                 style={{
                   width: 40,
                   height: 40,
-                  borderRadius: 8,
-                  background: "#003896",
+                  borderRadius: 12,
+                  background: "var(--green)",
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontFamily: "var(--font-display)",
-                  fontSize: "1.1rem",
-                  color: "#FFFFFF",
+                  fontSize: "1.15rem",
+                  color: "var(--navy)",
+                  transform: "rotate(-4deg)",
                   flexShrink: 0,
                 }}
               >
                 C
               </span>
               <span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-head)",
-                    fontWeight: 800,
-                    fontSize: "1rem",
-                    color: "#FFFFFF",
-                    display: "block",
-                    lineHeight: 1.15,
-                  }}
-                >
-                  CHRISCO Digital Academy
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", color: "#fff", letterSpacing: "0.01em", display: "block", lineHeight: 1.1 }}>
+                  CHRISCO
                 </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.75rem",
-                    fontWeight: 500,
-                    color: "#F8C90E",
-                    display: "block",
-                    marginTop: 2,
-                  }}
-                >
-                  CHRISCO Youth Aflame
+                <span style={{ fontFamily: "var(--font-head)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--green)" }}>
+                  Digital Academy
                 </span>
               </span>
             </Link>
-            <p style={{ fontSize: 14.5, lineHeight: 1.75, marginTop: 18, maxWidth: 320, color: "rgba(255,255,255,0.82)" }}>
-              The learning platform of {org.programme}, operating under {org.umbrella}, equipping young Africans with
-              practical digital skills that open real doors.
+            <p style={{ fontSize: 14, lineHeight: 1.75, marginTop: 20, maxWidth: 320 }}>
+              A youth-focused learning platform under CHRISCO Youth Aflame - equipping young Africans with practical
+              digital skills that open real doors.
             </p>
+            <div style={{ display: "flex", gap: 8, marginTop: 24, flexWrap: "wrap" }}>
+              {socials.map((s) => (
+                <span key={s} className="pill pill-dark pill-sm" style={{ cursor: "default" }}>
+                  {s}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Explore */}
           <nav className="footer-col" aria-label="Explore">
-            <h3 className="footer-heading" style={{ color: "#FFFFFF" }}>Explore</h3>
+            <h3 className="footer-heading">Explore</h3>
             <ul className="footer-list">
               {exploreLinks.map((l) => (
                 <li key={l.href}>
@@ -102,9 +111,9 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Popular Courses */}
+          {/* Popular courses */}
           <nav className="footer-col" aria-label="Popular courses">
-            <h3 className="footer-heading" style={{ color: "#FFFFFF" }}>Popular Courses</h3>
+            <h3 className="footer-heading">Popular Courses</h3>
             <ul className="footer-list">
               {popularCourses.map((c) => (
                 <li key={c}>
@@ -118,52 +127,37 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="footer-col">
-            <h3 className="footer-heading" style={{ color: "#FFFFFF" }}>Contact</h3>
+            <h3 className="footer-heading">Contact</h3>
             <ul className="footer-list footer-contact">
               <li>
                 <span className="footer-contact-icon"><Icon name="mail" size={15} /></span>
-                <a href={`mailto:${org.email}`} className="footer-link" style={{ wordBreak: "break-all" }}>
-                  {org.email}
+                <a href="mailto:shambetz@gmail.com" className="footer-link" style={{ wordBreak: "break-all" }}>
+                  shambetz@gmail.com
                 </a>
               </li>
               <li>
-                <a href={`tel:${org.phone}`} className="footer-contact-icon" aria-label="Call CHRISCO Digital Academy">
-                  <Icon name="phone" size={15} />
-                </a>
-                <a href={org.whatsapp} className="footer-link" aria-label="Chat with us on WhatsApp">
-                  <Icon name="whatsapp" size={15} />
-                </a>
+                <span className="footer-contact-icon"><Icon name="phone" size={15} /></span>
+                <span>+254 112 272 061</span>
+              </li>
+              <li>
+                <span className="footer-contact-icon"><Icon name="pin" size={15} /></span>
+                <span>Jinja, Uganda</span>
               </li>
             </ul>
-            <a
-              href={org.whatsapp}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                marginTop: 22,
-                background: "#F8C90E",
-                color: "#0B1D51",
-                padding: "10px 22px",
-                fontFamily: "var(--font-head)",
-                fontSize: 13.5,
-                fontWeight: 800,
-                textDecoration: "none",
-              }}
-            >
+            <a href="https://wa.me/254112272061" className="btn btn-green btn-sm" style={{ marginTop: 24 }}>
               <Icon name="whatsapp" size={15} /> WhatsApp Us
             </a>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="footer-bottom" style={{ borderTop: "none", paddingTop: 28 }}>
-          <span>© 2026 {org.programme}. All Rights Reserved.</span>
-          <span className="footer-bottom-right" style={{ display: "inline-flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-            <Link href="/privacy" className="footer-top-link">
-              Privacy &amp; Data Protection Policy
-            </Link>
-            <span>{org.ownership}</span>
+        <div className="footer-bottom">
+          <span>© 2026 CHRISCO Digital Academy. All Rights Reserved.</span>
+          <span className="footer-bottom-right">
+            <span>Founded by Wambete Benjamin · Jinja, Uganda</span>
+            <a href="#" className="footer-top-link">
+              Back to top ↑
+            </a>
           </span>
         </div>
       </div>

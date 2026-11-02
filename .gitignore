@@ -44,3 +44,4 @@ next-env.d.ts
 .venv/
 .venv-merch/
 scripts/__pycache__/
+pursue-tshirt-designs-print-ready/

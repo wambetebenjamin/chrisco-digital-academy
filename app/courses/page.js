@@ -2,7 +2,9 @@ import Link from "next/link"
 import Navbar from "../Navbar"
 import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
+import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
+import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 import CoursesExplorer from "./CoursesExplorer"
 import { courses } from "../data/courses"
@@ -35,37 +37,60 @@ export async function generateMetadata({ searchParams }) {
     origin,
     title: "19 Practical Digital Skills Courses | CHRISCO Digital Academy",
     description:
-      "Browse 19 practical, income-focused digital courses in coding, AI literacy, marketing, writing, design, video, and leadership at CHRISCO Digital Academy.",
+      "Browse 19 practical, income-focused digital courses in coding, AI literacy, marketing, writing, video, and leadership. Beginner-friendly, hands-on portfolio projects.",
     path: "/courses",
     bannerPath: "/og/courses.jpg",
   })
 }
 
+const heroPills = [
+  { icon: "clock", label: "8-week courses" },
+  { icon: "wrench", label: "Hands-on projects" },
+  { icon: "laptop", label: "Online & in-person" },
+]
+
 export default function Courses() {
   return (
-    <main style={{ minHeight: "100vh", background: "#FFFFFF", overflowX: "hidden" }}>
+    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <PageBackdrop image="/images/bg-courses.jpg" position="center 30%" />
       <Navbar />
 
+      {/* HERO */}
       <PhotoHero
         image="/images/bg-courses.jpg"
-        eyebrow="CHRISCO Youth Aflame Digital Academy · 19 Courses Across 7 Skill Tracks"
-        title="19 Practical Digital Skills Courses"
-        lead="Practical digital courses designed for young people across Africa — real skills, guided mentorship, and portfolio projects you can apply immediately."
-      />
+        eyebrow="Course catalogue, 19 courses"
+        title={
+          <>
+            Learn skills that <span className="accent-bright">actually pay</span>
+          </>
+        }
+        titleStyle={{ maxWidth: 780 }}
+        lead="Practical digital courses designed for African youth, real skills, real income, from anywhere on the continent. Pick a category, choose a course, and start this week."
+      >
+        <div className="fade-up fade-up-2" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 26 }}>
+          {heroPills.map((p) => (
+            <span key={p.label} className="pill pill-soft pill-sm">
+              <Icon name={p.icon} size={13} strokeWidth={2.2} /> {p.label}
+            </span>
+          ))}
+        </div>
+      </PhotoHero>
 
+      {/* Interactive catalogue (client island) */}
       <CoursesExplorer />
 
+      {/* CTA */}
       <PhotoBand
         centered
-        eyebrow="Course Guidance"
-        title="Not Sure Which Course to Pick?"
-        body="Contact our team at CHRISCO Youth Aflame and we will help you choose the right learning track for your goals."
+        eyebrow="Need guidance?"
+        title="Not sure which course to pick?"
+        body="WhatsApp us and we'll help you choose the right path for your goals, free and fast."
       >
-        <Link href="/contact" className="btn btn-amber" style={{ textDecoration: "none" }}>
-          Contact the Academy
-        </Link>
-        <Link href="/library" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
-          Browse Course Handbooks
+        <a href="https://wa.me/254112272061" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
+          <Icon name="whatsapp" size={17} /> WhatsApp Us
+        </a>
+        <Link href="/contact" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
+          Contact Us →
         </Link>
       </PhotoBand>
 

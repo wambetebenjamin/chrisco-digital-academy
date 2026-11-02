@@ -76,68 +76,39 @@ export default function SignIn() {
 
   return (
     <AuthShell subtitle="Sign in to track your courses, handbooks and learning progress across the academy.">
-      <span className="eyebrow" style={{ color: "#E60914" }}>Welcome back</span>
-      <h1
-        style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(1.9rem, 4vw, 2.6rem)",
-          color: "#0B1D51",
-          textTransform: "uppercase",
-          marginTop: 14,
-        }}
-      >
+      <span className="eyebrow">Welcome back</span>
+      <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4vw, 2.6rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14 }}>
         Sign in
       </h1>
       <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 28 }}>
         Don&apos;t have an account?{" "}
-        <Link href="/sign-up" style={{ color: "#084EC8", fontWeight: 800, textDecoration: "none" }}>
+        <Link href="/sign-up" style={{ color: "var(--cta-primary)", fontWeight: 700, textDecoration: "none" }}>
           Create one free →
         </Link>
       </p>
 
       {previewMode && (
-        <div className="auth-preview-note" style={{ borderLeftColor: "#084EC8" }}>
+        <div className="auth-preview-note">
           <strong>Preview mode.</strong> Supabase keys are not set, so accounts are stored in this browser only.
           Sign up once, then sign in with the same details.
         </div>
       )}
 
       {error && (
-        <div
-          style={{
-            background: "var(--danger-tint)",
-            border: "1px solid rgba(230,9,20,0.35)",
-            color: "#E60914",
-            padding: "12px 16px",
-            borderRadius: 10,
-            marginBottom: 18,
-            fontSize: 13.5,
-            fontWeight: 600,
-            textAlign: "center",
-          }}
-        >
+        <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, textAlign: "center" }}>
           {error}
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={handleGoogle}
-        disabled={loading}
-        className="btn btn-outline btn-block auth-google"
-        style={{ borderColor: "#084EC8", color: "#0B1D51" }}
-      >
-        <span className="auth-google-mark" style={{ borderColor: "#E60914", color: "#E60914" }}>
-          G
-        </span>{" "}
-        Continue with Google
+      <button type="button" onClick={handleGoogle} disabled={loading} className="btn btn-outline btn-block auth-google">
+        <span className="auth-google-mark">G</span> Continue with Google
       </button>
       <div className="auth-or">
         <span /> or with email <span />
       </div>
 
       <div className="field">
-        <label style={{ color: "#0B1D51", fontWeight: 700 }}>Email address</label>
+        <label>Email address</label>
         <input
           className="input"
           type="email"
@@ -148,7 +119,7 @@ export default function SignIn() {
         />
       </div>
       <div className="field">
-        <label style={{ color: "#0B1D51", fontWeight: 700 }}>Password</label>
+        <label>Password</label>
         <div style={{ position: "relative" }}>
           <input
             className="input"
@@ -170,8 +141,8 @@ export default function SignIn() {
               background: "transparent",
               border: "none",
               fontSize: 12,
-              fontWeight: 800,
-              color: "#084EC8",
+              fontWeight: 700,
+              color: "var(--muted)",
               cursor: "pointer",
             }}
           >
@@ -180,14 +151,12 @@ export default function SignIn() {
         </div>
       </div>
 
-      <RecaptchaCheck verified={notRobot} onChange={setNotRobot} />
+      <RecaptchaCheck
+        verified={notRobot}
+        onChange={setNotRobot}
+      />
 
-      <button
-        onClick={handleLogin}
-        disabled={loading}
-        className="btn btn-green btn-lg btn-block"
-        style={{ cursor: loading ? "default" : "pointer", marginTop: 4 }}
-      >
+      <button onClick={handleLogin} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 4 }}>
         {loading ? "Signing in..." : "Sign In →"}
       </button>
 
@@ -197,11 +166,7 @@ export default function SignIn() {
         <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
       </div>
 
-      <Link
-        href="/"
-        className="btn btn-outline btn-block"
-        style={{ textDecoration: "none", borderColor: "#084EC8", color: "#084EC8" }}
-      >
+      <Link href="/" className="btn btn-outline btn-block" style={{ textDecoration: "none" }}>
         ← Back to homepage
       </Link>
 

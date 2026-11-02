@@ -1,1011 +1,541 @@
 import Link from "next/link"
+import Image from "next/image"
 import Navbar from "./Navbar"
 import Footer from "./components/Footer"
 import Chatbot from "./Chatbot"
-import UcuHeroSlider from "./components/UcuHeroSlider"
-import { courses, categories, categoryCounts, categoryImages } from "./data/courses"
-import { christianBooks } from "./data/booksCatalogue"
-import { org, tutor } from "./data/org"
+import PhotoBand from "./components/PhotoBand"
+import PageBackdrop from "./components/PageBackdrop"
+import Icon from "./components/Icon"
+import { courses, categories, categoryCounts, imageFor } from "./data/courses"
 
-const CORE_SKILLS = [
-  {
-    title: "Graphic Design",
-    desc: "Build visual identities, church and commercial posters, and brand systems using Canva and Adobe tools.",
-    href: "/courses?category=Design",
-  },
-  {
-    title: "Web Development",
-    desc: "Create modern, responsive websites and web applications with HTML, CSS, JavaScript, React, and Next.js.",
-    href: "/courses?category=Coding",
-  },
-  {
-    title: "Social Media",
-    desc: "Plan content calendars, audience growth strategies, and campaigns that drive measurable engagement.",
-    href: "/courses?category=Marketing",
-  },
-  {
-    title: "Video Editing",
-    desc: "Produce clean, compelling edits for YouTube channels, short-form reels, and ministry or client events.",
-    href: "/courses?category=Video",
-  },
-  {
-    title: "Animation",
-    desc: "Craft motion graphics, explainer sequences, and visual storytelling that capture attention.",
-    href: "/courses?category=Video",
-  },
-  {
-    title: "AI Expertise",
-    desc: "Apply modern AI tools for research, writing, coding workflows, and creative production.",
-    href: "/courses?category=Coding",
-  },
+const skills = [
+  { num: "01", icon: "palette", title: "Graphic Design", desc: "Branding, posters and visual identity with Canva and Adobe tools." },
+  { num: "02", icon: "code", title: "Web Development", desc: "Modern websites and apps with HTML, CSS, JavaScript, React & Next.js." },
+  { num: "03", icon: "smartphone", title: "Social Media", desc: "Strategy, content creation and growth that gets real engagement." },
+  { num: "04", icon: "clapper", title: "Video Editing", desc: "Cinematic edits for YouTube, Reels and events - a skill in demand." },
+  { num: "05", icon: "layers", title: "Animation", desc: "Motion graphics and animated content that stops the scroll." },
+  { num: "06", icon: "robot", title: "AI Expertise", desc: "Leveraging AI tools like ChatGPT for creativity and productivity." },
 ]
 
-const VALUES = [
-  {
-    title: "Accessible",
-    desc: "Beginner-friendly digital education designed for every young person in Jinja, Buikwe, and across Africa.",
-  },
-  {
-    title: "Practical",
-    desc: "Every course is built around hands-on assignments and ends with a real project you can show and use to earn.",
-  },
-  {
-    title: "Mentorship",
-    desc: "Learn directly from working practitioners in software development, design, media production, and AI.",
-  },
-  {
-    title: "Community",
-    desc: "Grow alongside a supportive fellowship of young Christian creators, developers, and entrepreneurs.",
-  },
+const stats = [
+  { value: "500+", label: "Youth Trained" },
+  { value: "19", label: "Courses" },
+  { value: "2", label: "Districts" },
+  { value: "100%", label: "Practical" },
 ]
 
-const STEPS = [
-  {
-    step: "Step 1",
-    title: "Browse & Choose",
-    desc: "Select from 19 practical courses across Business, Marketing, Coding, Writing, Design, Video, and Career.",
-  },
-  {
-    step: "Step 2",
-    title: "Enroll in Minutes",
-    desc: "Create your learner account or submit an enrollment request and receive confirmation via WhatsApp or email.",
-  },
-  {
-    step: "Step 3",
-    title: "Learn & Build",
-    desc: "Follow the structured 8-week syllabus, study the 28-page course handbook, and complete your portfolio project.",
-  },
+const featured = [courses[4], courses[0], courses[10]] // Freelancing, YouTube Automation, SWE & LLM
+
+
+const steps = [
+  { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI." },
+  { num: "02", icon: "clipboard", title: "Enroll in Minutes", desc: "Send an enrollment request - we confirm on WhatsApp or email within a day." },
+  { num: "03", icon: "rocket", title: "Learn & Earn", desc: "Follow the hands-on syllabus, finish your project, build your portfolio - and start earning." },
 ]
 
 export default function Home() {
   const counts = categoryCounts()
-  const featuredCourses = [courses[4], courses[0], courses[10]] // Freelancing, YouTube Automation, SWE & LLM Mastery
-  const josephBook = christianBooks[0]
 
   return (
-    <main style={{ minHeight: "100vh", overflowX: "hidden", background: "#FFFFFF", color: "#1E293B" }}>
+    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <PageBackdrop image="/images/bg-home.jpg" position="center 30%" />
       <Navbar />
 
-      {/* ================= 1. HERO SLIDER ================= */}
-      <UcuHeroSlider />
-
-      {/* ================= 2. 3-COLUMN CHRISCO YOUTH AFLAME PATHWAYS STRIP ================= */}
-      <section aria-label="CHRISCO Digital Academy Pathways" style={{ width: "100%" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-            width: "100%",
-          }}
-        >
+      {/* ================= HERO ================= */}
+      <section style={{ padding: "150px 0 120px", position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.30)" }}>
+        {/* The page-wide PageBackdrop supplies the photo; the hero only needs
+            its dark scrim so the white display type stays legible. */}
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.90) 0%, rgba(0,35,51,0.72) 50%, rgba(1,58,79,0.50) 100%)" }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
+        <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div
             style={{
-              background: "#0B1D51",
-              color: "#FFFFFF",
-              padding: "40px 34px",
-              textAlign: "center",
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: "var(--font-head)",
-                fontSize: 23,
-                fontWeight: 700,
-                color: "#FFFFFF",
-                margin: "0 0 14px",
-              }}
-            >
-              19 Practical Courses
-            </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: 15,
-                lineHeight: 1.75,
-                color: "rgba(255, 255, 255, 0.88)",
-                margin: "0 auto 22px",
-                maxWidth: 400,
-              }}
-            >
-              Structured, beginner-friendly training across seven digital skill tracks designed to help young people turn
-              talent and ambition into real income.
-            </p>
-            <Link
-              href="/courses"
-              style={{
-                display: "inline-block",
-                padding: "10px 26px",
-                background: "#F8C90E",
-                color: "#0B1D51",
-                fontFamily: "var(--font-head)",
-                fontSize: 13.5,
-                fontWeight: 800,
-                textDecoration: "none",
-              }}
-            >
-              Explore Courses
-            </Link>
-          </div>
-
-          <div
-            style={{
-              background: "#003896",
-              color: "#FFFFFF",
-              padding: "40px 34px",
-              textAlign: "center",
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: "var(--font-head)",
-                fontSize: 23,
-                fontWeight: 700,
-                color: "#FFFFFF",
-                margin: "0 0 14px",
-              }}
-            >
-              Teens AI &amp; Projects Bootcamp
-            </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: 15,
-                lineHeight: 1.75,
-                color: "rgba(255, 255, 255, 0.9)",
-                margin: "0 auto 22px",
-                maxWidth: 400,
-              }}
-            >
-              Our five-week holiday cohort (3rd November – 11th December 2026) equipping teens with AI Prompt
-              Engineering, Coding, Graphic Design, Video Production, and App Building.
-            </p>
-            <a
-              href="https://forms.gle/ChriscoTeensAIBootcamp"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-block",
-                padding: "10px 26px",
-                background: "#FFFFFF",
-                color: "#0B1D51",
-                fontFamily: "var(--font-head)",
-                fontSize: 13.5,
-                fontWeight: 800,
-                textDecoration: "none",
-              }}
-            >
-              Register Teen
-            </a>
-          </div>
-
-          <div
-            style={{
-              background: "#0B1D51",
-              color: "#FFFFFF",
-              padding: "40px 34px",
-              textAlign: "center",
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: "var(--font-head)",
-                fontSize: 23,
-                fontWeight: 700,
-                color: "#FFFFFF",
-                margin: "0 0 14px",
-              }}
-            >
-              Christian &amp; Learning Books
-            </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: 15,
-                lineHeight: 1.75,
-                color: "rgba(255, 255, 255, 0.88)",
-                margin: "0 auto 22px",
-                maxWidth: 400,
-              }}
-            >
-              Access two dedicated shelves: our Christian prophetic study guide on the life of Joseph and 19 illustrated
-              28-page course handbooks.
-            </p>
-            <Link
-              href="/library"
-              style={{
-                display: "inline-block",
-                padding: "10px 26px",
-                background: "#F8C90E",
-                color: "#0B1D51",
-                fontFamily: "var(--font-head)",
-                fontSize: 13.5,
-                fontWeight: 800,
-                textDecoration: "none",
-              }}
-            >
-              Open Library
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 3. WHO WE ARE — CHRISCO DIGITAL ACADEMY ================= */}
-      <section
-        id="teens-bootcamp"
-        style={{
-          padding: "80px 0",
-          background: "#FFFFFF",
-        }}
-      >
-        <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
-              gap: 48,
+              display: "flex",
+              justifyContent: "space-between",
               alignItems: "center",
+              gap: 16,
+              flexWrap: "wrap",
+              borderBottom: "1px solid rgba(255,255,255,0.16)",
+              paddingBottom: 20,
+              marginBottom: 48,
             }}
           >
-            {/* Left: Official Teens AI & Projects Bootcamp Poster + Learner Workspace Photo */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
-                gap: 20,
-                alignItems: "stretch",
-              }}
-            >
-              <a
-                href="https://forms.gle/ChriscoTeensAIBootcamp"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: "block", textDecoration: "none" }}
-              >
-                <img
-                  src="/posters/teens-ai-bootcamp-official.png"
-                  alt="CHRISCO Youth Aflame — Teens AI & Projects Bootcamp (3rd Nov - 11th Dec 2026)"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-              </a>
+            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy - Jinja, Uganda</span>
+            <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
+              Under CHRISCO Youth Aflame
+            </span>
+          </div>
+
+          <div className="hero-grid">
+            {/* Category sidebar */}
+            <aside className="hero-side" style={{ minWidth: 0 }}>
+              <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>
+                Explore by Category
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {categories.map((cat) => (
+                  <Link
+                    key={cat.name}
+                    href="/courses"
+                    className="pill pill-dark"
+                    style={{ justifyContent: "space-between", width: "100%", textDecoration: "none" }}
+                  >
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+                      <Icon name={cat.icon} size={15} /> {cat.name}
+                    </span>
+                    <span style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>{counts[cat.name] || 0}</span>
+                  </Link>
+                ))}
+              </div>
 
               <div
                 style={{
-                  minHeight: 360,
-                  backgroundImage: "url('/images/hero-tile.jpg')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                aria-label="Learner at CHRISCO Digital Academy"
-              />
-            </div>
-
-            {/* Right: Authentic CHRISCO Youth Aflame Story & Stats */}
-            <div>
-              <h2
-                style={{
-                  fontFamily: "var(--font-head)",
-                  fontSize: "clamp(26px, 2.8vw, 34px)",
-                  fontWeight: 800,
-                  color: "#0B1D51",
-                  margin: "0 0 18px",
-                  lineHeight: 1.2,
+                  marginTop: 20,
+                  background: "var(--navy)",
+                  border: "1px solid rgba(255,255,255,0.14)",
+                  borderRadius: 18,
+                  padding: "20px 18px",
+                  color: "#fff",
                 }}
               >
-                Born From a Passion to See Youth Thrive
-              </h2>
+                <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", lineHeight: 1 }}>
+                  19<span style={{ color: "var(--green)", fontSize: "1rem" }}> courses</span>
+                </div>
+                <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", margin: "8px 0 14px" }}>
+                  All built for real income.
+                </div>
+                <Link href="/courses" className="btn btn-green btn-sm" style={{ textDecoration: "none", width: "100%" }}>
+                  Browse All →
+                </Link>
+              </div>
+            </aside>
 
-              <p
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: 16,
-                  lineHeight: 1.8,
-                  color: "#334155",
-                  margin: "0 0 16px",
-                }}
-              >
-                We exist to bridge the digital divide. Too many young people have talent and ambition, but lack the
-                practical skills required to turn that potential into sustainable income.{" "}
-                <strong>{org.academy}</strong> was built to solve that gap.
+            {/* Main hero content */}
+            <div style={{ minWidth: 0 }}>
+              <h1 className="display on-dark fade-up" style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)" }}>
+                Learn skills
+                <br />
+                that <span className="outline" style={{ WebkitTextStrokeColor: "rgba(255,255,255,0.85)" }}>pay</span>{" "}
+                <span className="accent-bright">for life.</span>
+              </h1>
+
+              <p className="lead on-dark fade-up fade-up-1" style={{ maxWidth: 560, marginTop: 26 }}>
+                CHRISCO Digital Academy is a modern learning platform for African youth - practical courses in
+                design, code, marketing, writing, video and AI, taught by Wambete Benjamin.
               </p>
 
-              <p
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: 16,
-                  lineHeight: 1.8,
-                  color: "#334155",
-                  margin: "0 0 26px",
-                }}
-              >
-                {org.academy} is the learning platform of <strong>{org.programme}</strong>, operating under{" "}
-                <strong>{org.umbrella}</strong>, serving young people across Jinja and Buikwe Districts and online
-                across Africa.
-              </p>
+              <div className="fade-up fade-up-2" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 34 }}>
+                <Link href="/courses" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
+                  Explore Courses →
+                </Link>
+                <Link href="/about" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
+                  Meet the Founder
+                </Link>
+              </div>
 
-              {/* 4 Authentic Stats */}
+              {/* Stats */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))",
-                  gap: 20,
-                  marginBottom: 30,
-                  padding: "20px 24px",
-                  background: "#F5F7FA",
+                  gridTemplateColumns: "repeat(2, 1fr)",
+                  gap: 0,
+                  borderTop: "1px solid rgba(255,255,255,0.16)",
+                  marginTop: 56,
                 }}
               >
-                <div>
-                  <div style={{ fontSize: 30, fontWeight: 800, color: "#003896", lineHeight: 1 }}>500+</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#475569", marginTop: 6 }}>Youth Trained</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 30, fontWeight: 800, color: "#003896", lineHeight: 1 }}>19</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#475569", marginTop: 6 }}>Courses</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 30, fontWeight: 800, color: "#003896", lineHeight: 1 }}>2</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#475569", marginTop: 6 }}>Districts</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 30, fontWeight: 800, color: "#003896", lineHeight: 1 }}>100%</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#475569", marginTop: 6 }}>Practical</div>
-                </div>
-              </div>
-
-              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <Link
-                  href="/courses"
-                  style={{
-                    display: "inline-block",
-                    background: "#003896",
-                    color: "#FFFFFF",
-                    padding: "12px 28px",
-                    fontFamily: "var(--font-head)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textDecoration: "none",
-                  }}
-                >
-                  Browse All 19 Courses
-                </Link>
-                <Link
-                  href="/about"
-                  style={{
-                    display: "inline-block",
-                    background: "#F5F7FA",
-                    color: "#0B1D51",
-                    padding: "12px 28px",
-                    fontFamily: "var(--font-head)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textDecoration: "none",
-                  }}
-                >
-                  More About Us
-                </Link>
+                {stats.map((s, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: "22px 24px 22px 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.16)",
+                      borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.16)" : "none",
+                      paddingRight: i % 2 === 0 ? 24 : 0,
+                    }}
+                  >
+                    <div className="stat-num" style={{ color: "#fff" }}>{s.value}</div>
+                    <div style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 600, marginTop: 4 }}>
+                      {s.label}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ================= 4. MISSION, VISION & VALUES — CHRISCO YOUTH AFLAME ================= */}
-      <section
-        style={{
-          padding: "80px 0",
-          background: "#0B1D51",
-          color: "#FFFFFF",
-        }}
-      >
-        <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: 36,
-              marginBottom: 56,
-            }}
-          >
-            <div style={{ background: "rgba(255, 255, 255, 0.06)", padding: "32px 30px" }}>
-              <h3 style={{ fontFamily: "var(--font-head)", fontSize: 20, fontWeight: 800, color: "#F8C90E", margin: "0 0 12px" }}>
-                Our Mission
-              </h3>
-              <p style={{ fontSize: 16, lineHeight: 1.8, color: "rgba(255, 255, 255, 0.9)", margin: 0 }}>
-                To bridge the digital divide by providing accessible, affordable, and practical digital education to
-                youth across Africa and beyond.
-              </p>
-            </div>
-
-            <div style={{ background: "rgba(255, 255, 255, 0.06)", padding: "32px 30px" }}>
-              <h3 style={{ fontFamily: "var(--font-head)", fontSize: 20, fontWeight: 800, color: "#F8C90E", margin: "0 0 12px" }}>
-                Our Vision
-              </h3>
-              <p style={{ fontSize: 16, lineHeight: 1.8, color: "rgba(255, 255, 255, 0.9)", margin: 0 }}>
-                A generation of digitally empowered African youth creating solutions, building businesses, and leading
-                transformation across the continent.
-              </p>
-            </div>
-          </div>
-
-          <h2 style={{ fontFamily: "var(--font-head)", fontSize: 24, fontWeight: 800, color: "#FFFFFF", margin: "0 0 28px" }}>
-            The Values Behind Every Course
-          </h2>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
-              gap: 28,
-            }}
-          >
-            {VALUES.map((v) => (
-              <div key={v.title}>
-                <h4 style={{ fontFamily: "var(--font-head)", fontSize: 18, fontWeight: 700, color: "#F8C90E", margin: "0 0 10px" }}>
-                  {v.title}
-                </h4>
-                <p style={{ fontSize: 14.5, lineHeight: 1.75, color: "rgba(255, 255, 255, 0.85)", margin: 0 }}>
-                  {v.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 5. 6 CORE DIGITAL SKILLS WE TEACH ================= */}
-      <section style={{ padding: "80px 0", background: "#F5F7FA" }}>
-        <div className="container">
-          <div style={{ maxWidth: 680, marginBottom: 44 }}>
-            <h2
-              style={{
-                fontFamily: "var(--font-head)",
-                fontSize: "clamp(26px, 2.8vw, 34px)",
-                fontWeight: 800,
-                color: "#0B1D51",
-                margin: "0 0 12px",
-              }}
-            >
-              Practical Digital Skills That Open Real Doors
-            </h2>
-            <p style={{ fontSize: 16, lineHeight: 1.75, color: "#475569", margin: 0 }}>
-              Our curriculum focuses on six core disciplines taught by practitioners who use these workflows every day.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-              gap: 24,
-            }}
-          >
-            {CORE_SKILLS.map((skill) => (
-              <div
-                key={skill.title}
-                style={{
-                  background: "#FFFFFF",
-                  padding: "30px 28px",
-                }}
-              >
-                <h3
+            {/* Hero image tile */}
+            <div className="fade-up fade-up-1" style={{ minWidth: 0 }}>
+              <div style={{ position: "relative" }}>
+                <div
                   style={{
-                    fontFamily: "var(--font-head)",
-                    fontSize: 19,
-                    fontWeight: 800,
-                    color: "#0B1D51",
-                    margin: "0 0 10px",
+                    position: "absolute",
+                    top: -18,
+                    right: -10,
+                    width: 120,
+                    height: 120,
+                    background: "rgba(0,255,132,0.25)",
+                    borderRadius: "50%",
+                    filter: "blur(50px)",
+                    zIndex: 0,
                   }}
-                >
-                  {skill.title}
-                </h3>
-                <p style={{ fontSize: 15, lineHeight: 1.7, color: "#475569", margin: "0 0 18px" }}>{skill.desc}</p>
-                <Link
-                  href={skill.href}
-                  style={{
-                    fontFamily: "var(--font-head)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    color: "#003896",
-                    textDecoration: "none",
-                  }}
-                >
-                  View Track
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 6. 7 SKILL TRACKS & FEATURED COURSES ================= */}
-      <section style={{ padding: "80px 0", background: "#FFFFFF" }}>
-        <div className="container">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-              gap: 24,
-              flexWrap: "wrap",
-              marginBottom: 38,
-            }}
-          >
-            <div style={{ maxWidth: 680 }}>
-              <h2
-                style={{
-                  fontFamily: "var(--font-head)",
-                  fontSize: "clamp(26px, 2.8vw, 34px)",
-                  fontWeight: 800,
-                  color: "#0B1D51",
-                  margin: "0 0 12px",
-                }}
-              >
-                19 Courses Across 7 Skill Tracks
-              </h2>
-              <p style={{ fontSize: 16, lineHeight: 1.75, color: "#475569", margin: 0 }}>
-                Choose a track below to view course objectives, 8-week outlines, and downloadable study handbooks.
-              </p>
-            </div>
-            <Link
-              href="/courses"
-              style={{
-                display: "inline-block",
-                background: "#003896",
-                color: "#FFFFFF",
-                padding: "12px 26px",
-                fontFamily: "var(--font-head)",
-                fontSize: 14,
-                fontWeight: 700,
-                textDecoration: "none",
-              }}
-            >
-              View All 19 Courses
-            </Link>
-          </div>
-
-          {/* 7 Category Photo Tiles */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: 20,
-              marginBottom: 64,
-            }}
-          >
-            {categories.map((cat) => (
-              <Link
-                key={cat.name}
-                href={`/courses?category=${encodeURIComponent(cat.name)}`}
-                style={{ textDecoration: "none", display: "block" }}
-              >
+                />
                 <div
                   style={{
                     position: "relative",
-                    height: 200,
-                    backgroundImage: `url('${categoryImages[cat.name] || "/images/bg-courses.jpg"}')`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    display: "flex",
-                    alignItems: "flex-end",
+                    zIndex: 1,
+                    borderRadius: "var(--radius-xl)",
+                    overflow: "hidden",
+                    border: "1px solid var(--line)",
+                    boxShadow: "var(--shadow-lg)",
+                    aspectRatio: "4/4.4",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "100%",
-                      background: "rgba(11, 29, 81, 0.84)",
-                      padding: "14px 18px",
-                      color: "#FFFFFF",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
+                  <Image
+                    src="/images/hero-tile.jpg"
+                    alt="Young learner at CHRISCO Digital Academy"
+                    fill
+                    priority
+                    sizes="(min-width: 1100px) 400px, (min-width: 768px) 45vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <span
+                    className="pill pill-green pill-sm"
+                    style={{ position: "absolute", top: 18, left: 18, boxShadow: "0 6px 20px rgba(0,35,51,0.25)" }}
                   >
-                    <span style={{ fontFamily: "var(--font-head)", fontSize: 16, fontWeight: 700 }}>{cat.name}</span>
-                    <span style={{ fontSize: 13, color: "#F8C90E", fontWeight: 700 }}>
-                      {counts[cat.name] || 0} {counts[cat.name] === 1 ? "Course" : "Courses"}
-                    </span>
-                  </div>
+                    <Icon name="flame" size={13} strokeWidth={2.4} /> 500+ learners
+                  </span>
                 </div>
-              </Link>
-            ))}
-          </div>
 
-          {/* 3 Featured Courses */}
-          <h3
-            style={{
-              fontFamily: "var(--font-head)",
-              fontSize: 24,
-              fontWeight: 800,
-              color: "#0B1D51",
-              margin: "0 0 26px",
-            }}
-          >
-            Featured Courses
-          </h3>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-              gap: 26,
-            }}
-          >
-            {featuredCourses.map((course) => (
-              <div key={course.id} style={{ background: "#F5F7FA" }}>
+                {/* Overlay caption card */}
                 <div
                   style={{
-                    height: 195,
-                    backgroundImage: `url('${course.img}')`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    position: "relative",
+                    zIndex: 2,
+                    marginTop: -46,
+                    marginLeft: 18,
+                    marginRight: 18,
+                    background: "var(--navy)",
+                    borderRadius: 18,
+                    padding: "18px 22px",
+                    color: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                    boxShadow: "var(--shadow-md)",
                   }}
-                />
-                <div style={{ padding: "24px 24px 26px" }}>
-                  <div style={{ fontSize: 12.5, fontWeight: 700, color: "#003896", marginBottom: 6 }}>
-                    {course.category} · {course.duration} · {course.level}
+                >
+                  <span
+                    style={{
+                      width: 46,
+                      height: 46,
+                      borderRadius: 14,
+                      background: "var(--green)",
+                      color: "var(--navy)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontFamily: "var(--font-display)",
+                      fontSize: 16,
+                      flexShrink: 0,
+                    }}
+                  >
+                    WB
+                  </span>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14.5 }}>Wambete Benjamin</div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>Founder & Lead Instructor</div>
                   </div>
-                  <h4
+                  <span
                     style={{
-                      fontFamily: "var(--font-head)",
-                      fontSize: 19,
-                      fontWeight: 800,
-                      color: "#0B1D51",
-                      margin: "0 0 10px",
-                    }}
-                  >
-                    {course.title}
-                  </h4>
-                  <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "#475569", margin: "0 0 18px" }}>{course.desc}</p>
-                  <Link
-                    href={`/courses?category=${encodeURIComponent(course.category)}&course=${course.id}`}
-                    style={{
-                      fontFamily: "var(--font-head)",
-                      fontSize: 14,
+                      marginLeft: "auto",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      fontSize: 11.5,
                       fontWeight: 700,
-                      color: "#003896",
-                      textDecoration: "none",
+                      color: "var(--green)",
+                      flexShrink: 0,
                     }}
                   >
-                    View Course Outline
-                  </Link>
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--green)" }} />
+                    Open
+                  </span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= SKILLS ================= */}
+      <section className="section section-frost">
+        <div className="container">
+          <div style={{ maxWidth: 640, marginBottom: 56 }}>
+            <span className="eyebrow">What you&apos;ll master</span>
+            <h2 className="title" style={{ marginTop: 16 }}>
+              Six skill tracks. One mission: <span className="accent">your future.</span>
+            </h2>
+          </div>
+
+          <div className="grid-3">
+            {skills.map((skill, i) => (
+              <div key={i} className="card card-hover" style={{ padding: "30px 28px", position: "relative" }}>
+                <div className="ghost-num">{skill.num}</div>
+                <div
+                  style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: 16,
+                    background: "var(--green-tint)",
+                    color: "var(--green-deep)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 20,
+                  }}
+                >
+                  <Icon name={skill.icon} size={26} />
+                </div>
+                <h3 style={{ fontSize: "1.15rem", fontWeight: 800, marginBottom: 10 }}>{skill.title}</h3>
+                <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.65, marginBottom: 20 }}>{skill.desc}</p>
+                <Link href="/courses" className="link-arrow" style={{ fontSize: 13 }}>
+                  Explore courses <span className="arr">→</span>
+                </Link>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ================= 7. CHRISTIAN & LEARNING BOOKS LIBRARY ================= */}
-      <section style={{ padding: "80px 0", background: "#F5F7FA" }}>
+      {/* ================= FEATURED COURSES ================= */}
+      <section className="section section-frost-alt">
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
-              gap: 44,
-              alignItems: "center",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 48 }}>
             <div>
-              <h2
-                style={{
-                  fontFamily: "var(--font-head)",
-                  fontSize: "clamp(26px, 2.8vw, 34px)",
-                  fontWeight: 800,
-                  color: "#0B1D51",
-                  margin: "0 0 16px",
-                }}
-              >
-                Two Dedicated Shelves: Christian &amp; Skill Handbooks
+              <span className="eyebrow">Course catalogue</span>
+              <h2 className="title" style={{ marginTop: 16 }}>
+                Featured courses that <span className="accent">actually pay</span>
               </h2>
-              <p style={{ fontSize: 16, lineHeight: 1.8, color: "#334155", margin: "0 0 16px" }}>
-                Our library brings together spiritual formation and practical digital mastery under{" "}
-                <strong>{org.programme}</strong>.
-              </p>
-              <p style={{ fontSize: 15.5, lineHeight: 1.8, color: "#475569", margin: "0 0 26px" }}>
-                On the <strong>Christian &amp; Faith Shelf</strong>, read{" "}
-                <em>{josephBook.title}</em> — a 28-page Scripture-anchored study on Genesis 37 to 50. On the{" "}
-                <strong>Skill &amp; Learning Shelf</strong>, download 28-page illustrated handbooks for all 19 courses.
-              </p>
-              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <Link
-                  href="/library?shelf=christian"
-                  style={{
-                    display: "inline-block",
-                    background: "#0B1D51",
-                    color: "#FFFFFF",
-                    padding: "12px 24px",
-                    fontFamily: "var(--font-head)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textDecoration: "none",
-                  }}
-                >
-                  Christian &amp; Faith Shelf
-                </Link>
-                <Link
-                  href="/library?shelf=learning"
-                  style={{
-                    display: "inline-block",
-                    background: "#003896",
-                    color: "#FFFFFF",
-                    padding: "12px 24px",
-                    fontFamily: "var(--font-head)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textDecoration: "none",
-                  }}
-                >
-                  19 Course Handbooks
-                </Link>
-              </div>
             </div>
+            <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>
+              View all 19 courses →
+            </Link>
+          </div>
 
-            <div style={{ background: "#FFFFFF", padding: "32px 30px" }}>
-              <div style={{ fontSize: 12.5, fontWeight: 700, color: "#003896", marginBottom: 8 }}>
-                {josephBook.shelfLabel} · {josephBook.pages} Pages
-              </div>
-              <h3
-                style={{
-                  fontFamily: "var(--font-head)",
-                  fontSize: 21,
-                  fontWeight: 800,
-                  color: "#0B1D51",
-                  margin: "0 0 12px",
-                  lineHeight: 1.3,
-                }}
-              >
-                {josephBook.title}
-              </h3>
-              <p style={{ fontSize: 14.8, lineHeight: 1.75, color: "#475569", margin: "0 0 20px" }}>
-                {josephBook.subtitle}
-              </p>
+          <div className="grid-3">
+            {featured.map((course) => (
               <Link
-                href={josephBook.sharePath}
-                style={{
-                  fontFamily: "var(--font-head)",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: "#003896",
-                  textDecoration: "none",
-                }}
+                key={course.id}
+                href="/courses"
+                className="card card-hover"
+                style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
               >
-                Read Book Details
+                {/* Card header */}
+                <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "28px 26px", position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                  <Image
+                    src={imageFor(course)}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1200px) 380px, (min-width: 768px) 45vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${course.color[0]}AD, ${course.color[1]}80)` }} />
+                  <span
+                    className="pill pill-sm"
+                    style={{ position: "absolute", top: 16, right: 16, background: "rgba(255,255,255,0.92)", border: "none", color: "var(--ink)" }}
+                  >
+                    {course.category}
+                  </span>
+                  <div
+                    style={{
+                      position: "relative",
+                      width: 60,
+                      height: 60,
+                      borderRadius: 18,
+                      background: "rgba(255,255,255,0.18)",
+                      border: "1px solid rgba(255,255,255,0.3)",
+                      color: "#fff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Icon name={course.icon} size={30} strokeWidth={1.7} />
+                  </div>
+                </div>
+
+                {/* Card body */}
+                <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
+                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
+                  <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{course.desc}</p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+                    <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
+                    <span className="pill pill-soft pill-sm"><Icon name="star" size={13} strokeWidth={2.2} /> {course.rating}</span>
+                    <span className="pill pill-soft pill-sm"><Icon name="users" size={13} strokeWidth={2.2} /> {course.students}</span>
+                  </div>
+                  <span className="link-arrow" style={{ fontSize: 13.5 }}>
+                    View course <span className="arr">→</span>
+                  </span>
+                </div>
               </Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ================= 8. TEENS BOOTCAMP + MEET OUR TUTOR & TEACH WITH US ================= */}
-      <section style={{ padding: "80px 0", background: "#FFFFFF" }}>
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="section section-frost">
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
-              gap: 44,
-              alignItems: "start",
-            }}
-          >
-            {/* Left: Teens AI & Projects Bootcamp */}
-            <div style={{ background: "#F5F7FA", padding: "34px 32px" }}>
-              <h2
-                style={{
-                  fontFamily: "var(--font-head)",
-                  fontSize: 24,
-                  fontWeight: 800,
-                  color: "#0B1D51",
-                  margin: "0 0 14px",
-                }}
-              >
-                Teens AI &amp; Projects Bootcamp
-              </h2>
-              <p style={{ fontSize: 15, lineHeight: 1.75, color: "#334155", margin: "0 0 18px" }}>
-                Our five-week holiday programme (3rd November – 11th December 2026) equips teens with practical project
-                experience across five hands-on areas:
-              </p>
-              <ul style={{ paddingLeft: 20, margin: "0 0 24px", lineHeight: 1.9, color: "#334155", fontSize: 15 }}>
-                <li>AI Prompt Engineering</li>
-                <li>Coding &amp; Web Foundations</li>
-                <li>Graphic Design</li>
-                <li>Video Production</li>
-                <li>Practical App Building</li>
-              </ul>
-              <a
-                href="https://forms.gle/ChriscoTeensAIBootcamp"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-block",
-                  background: "#003896",
-                  color: "#FFFFFF",
-                  padding: "12px 26px",
-                  fontFamily: "var(--font-head)",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  textDecoration: "none",
-                }}
-              >
-                Register via Google Form
-              </a>
-            </div>
-
-            {/* Right: Meet Our Tutor & Become a Tutor */}
-            <div style={{ background: "#F5F7FA", padding: "34px 32px" }}>
-              <h2
-                style={{
-                  fontFamily: "var(--font-head)",
-                  fontSize: 24,
-                  fontWeight: 800,
-                  color: "#0B1D51",
-                  margin: "0 0 14px",
-                }}
-              >
-                Taught by People Who Do the Work
-              </h2>
-              <p style={{ fontSize: 15, lineHeight: 1.75, color: "#334155", margin: "0 0 14px" }}>
-                Our Lead Tutor is a Computer Science graduate who works daily in graphic design, web development, video
-                editing, animation, social media, and AI, teaching the exact practical workflows our learners use on
-                real projects.
-              </p>
-              <p style={{ fontSize: 15, lineHeight: 1.75, color: "#334155", margin: "0 0 24px" }}>
-                <strong>Want to become a tutor?</strong> {org.programme} welcomes practitioners in design, development,
-                marketing, writing, video, and AI who have a heart to mentor young people.
-              </p>
-              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <Link
-                  href="/about#tutor"
-                  style={{
-                    display: "inline-block",
-                    background: "#0B1D51",
-                    color: "#FFFFFF",
-                    padding: "12px 24px",
-                    fontFamily: "var(--font-head)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textDecoration: "none",
-                  }}
-                >
-                  Meet Our Tutor
-                </Link>
-                <Link
-                  href="/become-a-tutor"
-                  style={{
-                    display: "inline-block",
-                    background: "#003896",
-                    color: "#FFFFFF",
-                    padding: "12px 24px",
-                    fontFamily: "var(--font-head)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textDecoration: "none",
-                  }}
-                >
-                  Apply to Teach
-                </Link>
-              </div>
-            </div>
+          <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
+            <span className="eyebrow" style={{ justifyContent: "center" }}>How it works</span>
+            <h2 className="title" style={{ marginTop: 16 }}>
+              From zero to earning - <span className="accent">in 3 steps</span>
+            </h2>
           </div>
-        </div>
-      </section>
 
-      {/* ================= 9. HOW IT WORKS (3 STEPS) + PURSUE SHOP CALLOUT ================= */}
-      <section style={{ padding: "80px 0", background: "#0B1D51", color: "#FFFFFF" }}>
-        <div className="container">
-          <h2
-            style={{
-              fontFamily: "var(--font-head)",
-              fontSize: "clamp(26px, 2.8vw, 34px)",
-              fontWeight: 800,
-              color: "#FFFFFF",
-              margin: "0 0 36px",
-            }}
-          >
-            How Learning Works at {org.academy}
-          </h2>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-              gap: 32,
-              marginBottom: 60,
-            }}
-          >
-            {STEPS.map((s) => (
-              <div key={s.step} style={{ background: "rgba(255, 255, 255, 0.06)", padding: "28px 26px" }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#F8C90E", marginBottom: 8 }}>{s.step}</div>
-                <h3 style={{ fontFamily: "var(--font-head)", fontSize: 20, fontWeight: 700, color: "#FFFFFF", margin: "0 0 10px" }}>
-                  {s.title}
-                </h3>
-                <p style={{ fontSize: 14.8, lineHeight: 1.75, color: "rgba(255, 255, 255, 0.86)", margin: 0 }}>
-                  {s.desc}
-                </p>
+          <div className="grid-3" style={{ alignItems: "stretch" }}>
+            {steps.map((step, i) => (
+              <div key={i} style={{ position: "relative" }}>
+                <div className="card card-hover" style={{ padding: "34px 30px", height: "100%" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "2.2rem",
+                        color: "var(--green-deep)",
+                      }}
+                    >
+                      {step.num}
+                    </span>
+                    <span style={{ color: "var(--ink)" }}>
+                      <Icon name={step.icon} size={30} strokeWidth={1.6} />
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 10 }}>{step.title}</h3>
+                  <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7 }}>{step.desc}</p>
+                </div>
+                {i < steps.length - 1 && (
+                  <span
+                    className="hide-mobile"
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: -34,
+                      zIndex: 2,
+                      fontFamily: "var(--font-display)",
+                      color: "var(--line-strong)",
+                      fontSize: "1.4rem",
+                      transform: "translateY(-50%)",
+                    }}
+                  >
+                    →
+                  </span>
+                )}
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* PURSUE Shop & Enrollment Callout */}
-          <div
-            style={{
-              background: "#003896",
-              padding: "36px 34px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 24,
-              flexWrap: "wrap",
-            }}
-          >
-            <div style={{ maxWidth: 660 }}>
-              <h3 style={{ fontFamily: "var(--font-head)", fontSize: 22, fontWeight: 800, color: "#FFFFFF", margin: "0 0 8px" }}>
-                Your Future Is Digital — Let&apos;s Build It Together
-              </h3>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: "rgba(255, 255, 255, 0.9)", margin: 0 }}>
-                Create your free learner account today, or support our youth training mission through the official
-                PURSUE merchandise collection anchored on 1 Samuel 30:8.
+      {/* ================= FOUNDER ================= */}
+      <section className="section" style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.92)", color: "rgba(255,255,255,0.72)" }}>
+        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
+          <Image src="/images/bg-about.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 30%", opacity: 0.08 }} />
+        </div>
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="split" style={{ alignItems: "center" }}>
+            <div>
+              <span className="eyebrow on-dark">Meet the founder</span>
+              <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
+                Wambete <span className="accent-bright">Benjamin</span>
+              </h2>
+              <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
+                CS Graduate · Designer · Developer · Video Editor · AI Expert
               </p>
+              <p className="lead on-dark" style={{ maxWidth: 520 }}>
+                Founder of CHRISCO Digital Academy under CHRISCO Youth Aflame. He built this platform so that every
+                young person in Africa can learn real, practical digital skills - and turn them into real income.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
+                {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t) => (
+                  <span key={t} className="pill pill-dark pill-sm">{t}</span>
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                <Link href="/contact" className="btn btn-green" style={{ textDecoration: "none" }}>
+                  Get In Touch →
+                </Link>
+                <Link href="/about" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
+                  Read Our Story
+                </Link>
+              </div>
             </div>
-            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-              <Link
-                href="/sign-up"
-                style={{
-                  display: "inline-block",
-                  background: "#F8C90E",
-                  color: "#0B1D51",
-                  padding: "12px 28px",
-                  fontFamily: "var(--font-head)",
-                  fontSize: 14,
-                  fontWeight: 800,
-                  textDecoration: "none",
-                }}
-              >
-                Create Learner Account
-              </Link>
-              <Link
-                href="/shop"
-                style={{
-                  display: "inline-block",
-                  background: "#FFFFFF",
-                  color: "#0B1D51",
-                  padding: "12px 26px",
-                  fontFamily: "var(--font-head)",
-                  fontSize: 14,
-                  fontWeight: 800,
-                  textDecoration: "none",
-                }}
-              >
-                Visit PURSUE Shop
-              </Link>
+
+            <div>
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    left: -20,
+                    width: 140,
+                    height: 140,
+                    borderRadius: "50%",
+                    background: "rgba(0,255,132,0.18)",
+                    filter: "blur(60px)",
+                  }}
+                />
+                <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
+                  <Image
+                    src="/images/workspace.jpg"
+                    alt="Creative workspace - design, code and video"
+                    fill
+                    sizes="(min-width: 768px) 46vw, 92vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 20,
+                    bottom: 20,
+                    background: "rgba(0,35,51,0.9)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255,255,255,0.14)",
+                    borderRadius: 16,
+                    padding: "14px 18px",
+                    display: "flex",
+                    gap: 14,
+                    alignItems: "center",
+                  }}
+                >
+                  <span style={{ color: "var(--green)" }}>
+                    <Icon name="laptop" size={26} strokeWidth={1.7} />
+                  </span>
+                  <div>
+                    <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: 13.5 }}>7+ skill areas</div>
+                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)" }}>taught hands-on</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* ================= CTA ================= */}
+      <PhotoBand
+        eyebrow="Start today"
+        title="Ready to build your digital career?"
+        body="Real skills. Real income. Real future. Join CHRISCO Digital Academy and start learning this week."
+      >
+        <a href="https://wa.me/254112272061" className="btn btn-green btn-lg" style={{ textDecoration: "none" }}>
+          <Icon name="whatsapp" size={17} /> WhatsApp Us
+        </a>
+        <Link href="/courses" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
+          Browse Courses →
+        </Link>
+      </PhotoBand>
 
       <Footer />
       <Chatbot />

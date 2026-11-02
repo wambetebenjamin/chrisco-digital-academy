@@ -128,34 +128,14 @@ export default function SignUp() {
     <AuthShell subtitle="Join thousands of young Africans building real, practical digital skills, for free, forever.">
       {success ? (
         <div style={{ textAlign: "center", padding: "24px 0" }}>
-          <span
-            style={{
-              display: "inline-flex",
-              width: 76,
-              height: 76,
-              borderRadius: "50%",
-              background: "#38A128",
-              color: "#FFFFFF",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 18,
-            }}
-          >
+          <span style={{ display: "inline-flex", width: 76, height: 76, borderRadius: "50%", background: "var(--green-tint)", color: "var(--green-deep)", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
             <Icon name="checkCircle" size={38} strokeWidth={1.6} />
           </span>
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "1.9rem",
-              color: "#0B1D51",
-              textTransform: "uppercase",
-              marginBottom: 12,
-            }}
-          >
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.9rem", color: "var(--ink)", textTransform: "uppercase", marginBottom: 12 }}>
             Account Created!
           </h1>
           <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.7, marginBottom: 24 }}>
-            Your email <strong style={{ color: "#0B1D51" }}>{form.email}</strong> has been verified and your learner account is ready.
+            Your email <strong style={{ color: "var(--ink)" }}>{form.email}</strong> has been verified and your learner account is ready.
           </p>
           <Link href="/dashboard" className="btn btn-green" style={{ textDecoration: "none" }}>
             Open Dashboard →
@@ -163,9 +143,9 @@ export default function SignUp() {
         </div>
       ) : (
         <>
-          <span className="eyebrow" style={{ color: "#E60914" }}>Join the academy</span>
+          <span className="eyebrow">Join the academy</span>
           {previewMode && (
-            <div className="auth-preview-note" style={{ borderLeftColor: "#084EC8" }}>
+            <div className="auth-preview-note">
               <strong>Preview mode.</strong> Accounts are stored in this browser until Supabase keys are added.
             </div>
           )}
@@ -174,60 +154,31 @@ export default function SignUp() {
               <Icon name="users" size={14} strokeWidth={2} /> Referred by <strong>{ref}</strong>
             </div>
           )}
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(1.9rem, 4vw, 2.6rem)",
-              color: "#0B1D51",
-              textTransform: "uppercase",
-              marginTop: 14,
-            }}
-          >
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4vw, 2.6rem)", color: "var(--ink)", textTransform: "uppercase", marginTop: 14 }}>
             Create account
           </h1>
           <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, marginBottom: 28 }}>
             Already have an account?{" "}
-            <Link href="/sign-in" style={{ color: "#084EC8", fontWeight: 800, textDecoration: "none" }}>
+            <Link href="/sign-in" style={{ color: "var(--cta-primary)", fontWeight: 700, textDecoration: "none" }}>
               Sign In →
             </Link>
           </p>
 
           {error && (
-            <div
-              style={{
-                background: "var(--danger-tint)",
-                border: "1px solid rgba(230,9,20,0.35)",
-                color: "#E60914",
-                padding: "12px 16px",
-                borderRadius: 10,
-                marginBottom: 18,
-                fontSize: 13.5,
-                fontWeight: 600,
-                textAlign: "center",
-              }}
-            >
+            <div style={{ background: "var(--danger-tint)", border: "1px solid rgba(229,72,77,0.3)", color: "var(--danger)", padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, textAlign: "center" }}>
               {error}
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={handleGoogle}
-            disabled={loading}
-            className="btn btn-outline btn-block auth-google"
-            style={{ borderColor: "#084EC8", color: "#0B1D51" }}
-          >
-            <span className="auth-google-mark" style={{ borderColor: "#E60914", color: "#E60914" }}>
-              G
-            </span>{" "}
-            Continue with Google
+          <button type="button" onClick={handleGoogle} disabled={loading} className="btn btn-outline btn-block auth-google">
+            <span className="auth-google-mark">G</span> Continue with Google
           </button>
           <div className="auth-or">
             <span /> or with email <span />
           </div>
 
           <div className="field">
-            <label style={{ color: "#0B1D51", fontWeight: 700 }}>Full name</label>
+            <label>Full name</label>
             <input
               className="input"
               type="text"
@@ -239,7 +190,7 @@ export default function SignUp() {
           </div>
 
           <div className="field">
-            <label style={{ color: "#0B1D51", fontWeight: 700 }}>Email address &amp; verification</label>
+            <label>Email address &amp; verification</label>
             <div style={{ display: "flex", gap: 8 }}>
               <input
                 className="input"
@@ -271,7 +222,6 @@ export default function SignUp() {
                   borderRadius: 10,
                   background: "var(--layer-1)",
                   border: "1px solid var(--line)",
-                  borderLeft: "3px solid #38A128",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
@@ -280,8 +230,7 @@ export default function SignUp() {
                 }}
               >
                 <span style={{ color: "var(--body)" }}>
-                  Email verified with code{" "}
-                  <strong style={{ fontFamily: "monospace", color: "#084EC8" }}>{verificationCode}</strong>
+                  Email verified with code <strong style={{ fontFamily: "monospace", color: "var(--ink)" }}>{verificationCode}</strong>
                 </span>
                 {!emailVerified && (
                   <button type="button" onClick={handleConfirmCode} className="btn btn-navy btn-sm">
@@ -293,7 +242,7 @@ export default function SignUp() {
           </div>
 
           <div className="field">
-            <label style={{ color: "#0B1D51", fontWeight: 700 }}>Create password (min 6 characters)</label>
+            <label>Create password (min 6 characters)</label>
             <div style={{ position: "relative" }}>
               <input
                 className="input"
@@ -315,8 +264,8 @@ export default function SignUp() {
                   background: "transparent",
                   border: "none",
                   fontSize: 12,
-                  fontWeight: 800,
-                  color: "#084EC8",
+                  fontWeight: 700,
+                  color: "var(--muted)",
                   cursor: "pointer",
                 }}
               >
@@ -325,14 +274,12 @@ export default function SignUp() {
             </div>
           </div>
 
-          <RecaptchaCheck verified={notRobot} onChange={setNotRobot} />
+          <RecaptchaCheck
+            verified={notRobot}
+            onChange={setNotRobot}
+          />
 
-          <button
-            onClick={handleSignUp}
-            disabled={loading}
-            className="btn btn-green btn-lg btn-block"
-            style={{ cursor: loading ? "default" : "pointer", marginTop: 4 }}
-          >
+          <button onClick={handleSignUp} disabled={loading} className="btn btn-green btn-lg btn-block" style={{ cursor: loading ? "default" : "pointer", marginTop: 4 }}>
             {loading ? "Creating account..." : "Create Account →"}
           </button>
 
