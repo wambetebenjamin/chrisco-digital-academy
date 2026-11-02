@@ -319,51 +319,50 @@ export default function Navbar() {
 
   return (
     <nav ref={navRef} className={`nav-shell${scrolled ? " is-scrolled" : ""}`}>
-      {/* UCU-style Top Dark Navy Utility Strip */}
+      {/* UCU-style Royal Blue Top Utility Strip */}
       <div className="nav-utility">
         <div className="container nav-utility-inner">
           <span className="nav-utility-group">
             <a href="tel:+254112272061" className="nav-utility-link" aria-label="Call us">
-              <Icon name="phone" size={12} strokeWidth={2} /> +254 112 272 061
+              <Icon name="phone" size={14} strokeWidth={1.8} /> +254-112-272-061
             </a>
-            <span className="nav-utility-sep">|</span>
             <a href="mailto:chriscoyouthaflame2025@gmail.com" className="nav-utility-link" aria-label="Email us">
-              <Icon name="mail" size={12} strokeWidth={2} /> chriscoyouthaflame2025@gmail.com
+              <Icon name="mail" size={14} strokeWidth={1.8} /> chriscoyouthaflame2025@gmail.com
             </a>
           </span>
           <span className="nav-utility-group nav-utility-quicklinks">
-            <Link href="/courses" className="nav-utility-link">List of All 19 Programmes</Link>
-            <span className="nav-utility-sep">|</span>
-            <Link href="/library" className="nav-utility-link">Library (20 Books)</Link>
-            <span className="nav-utility-sep">|</span>
-            <Link href="/studio" className="nav-utility-link">AI &amp; Voice Studio</Link>
-            <span className="nav-utility-sep">|</span>
-            <Link href="/#teens-bootcamp" className="nav-utility-link" style={{ color: "#F8C90E", fontWeight: 800 }}>Teens AI Bootcamp</Link>
-            <span className="nav-utility-sep">|</span>
+            <Link href="/courses" className="nav-utility-link">List of All Programmes</Link>
+            <Link href="/library" className="nav-utility-link">Library</Link>
+            <Link href="/studio" className="nav-utility-link">Studio</Link>
+            <Link href="/#teens-bootcamp" className="nav-utility-link">Teens Bootcamp</Link>
             <Link href="/shop" className="nav-utility-link">PURSUE Shop</Link>
-            <span className="nav-utility-sep">|</span>
-            <Link href="/become-a-tutor" className="nav-utility-link">Become a Tutor</Link>
-            <span className="nav-utility-sep">|</span>
+            <Link href="/become-a-tutor" className="nav-utility-link">Careers</Link>
             <Link href="/dashboard" className="nav-utility-link">e-Learning</Link>
           </span>
         </div>
       </div>
 
-      {/* UCU-style Institutional Crest Brand Bar */}
+      {/* UCU-style Translucent Institutional Brand Bar */}
       <div className="nav-bar">
         <div className="container nav-bar-inner">
           {/* Institutional Shield Crest + Stacked Name */}
           <Link href="/" className="nav-logo" onClick={closeAll}>
             <span className="nav-logo-mark" aria-hidden="true">
-              <span className="nav-logo-crest-inner">C</span>
+              <svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 1L2 5V14.5C2 21.8 6.7 27.6 13 29C19.3 27.6 24 21.8 24 14.5V5L13 1Z" fill="#003896" stroke="#F8C90E" strokeWidth="1.5"/>
+                <path d="M13 3.5V26.5M5 13.5H21" stroke="#E60914" strokeWidth="3"/>
+                <path d="M13 3.5V26.5M5 13.5H21" stroke="#FFFFFF" strokeWidth="1.2"/>
+              </svg>
             </span>
             <span className="nav-logo-text">
-              <span className="nav-logo-word">CHRISCO DIGITAL ACADEMY</span>
+              <span className="nav-logo-word">
+                CHRISCO DIGITAL<br />ACADEMY
+              </span>
               <span className="nav-logo-sub">A Centre of Excellence in Practical Digital Skills</span>
             </span>
           </Link>
 
-          {/* Desktop menu — UCU structure: Home | Students | Studio & Books | Academics | About Us | Shop | Contact Us */}
+          {/* Desktop menu — UCU structure: Home | Students | Research/Studio | Academics | About Us | Contact Us + Search */}
           <div className="nav-menu nav-desktop-only">
             <Link
               href="/"
@@ -380,7 +379,7 @@ export default function Navbar() {
               <PanelList items={studentLinks} onNavigate={closeAll} />
             </Dropdown>
 
-            <Dropdown id="library" label="Books & Studio" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
+            <Dropdown id="library" label="Studio & Books" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
               <div className="nav-panel-head">
                 <span className="nav-panel-eyebrow">Digital Repository &amp; AI Lab</span>
                 <span className="nav-panel-head-title">20 Books &amp; Open-Source Studio</span>
@@ -390,14 +389,6 @@ export default function Navbar() {
 
             <Dropdown id="courses" label="Academics" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu} wide>
               <CoursesMega onNavigate={closeAll} pathname={pathname} />
-            </Dropdown>
-
-            <Dropdown id="programs" label="Programmes" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
-              <div className="nav-panel-head">
-                <span className="nav-panel-eyebrow">How You Learn</span>
-                <span className="nav-panel-head-title">7 Schools &amp; Bootcamps</span>
-              </div>
-              <PanelList items={programLinks} onNavigate={closeAll} />
             </Dropdown>
 
             <Dropdown id="about" label="About Us" open={openMenu} setOpen={setOpenMenu} pinned={pinnedMenu} setPinned={setPinnedMenu}>
@@ -422,59 +413,43 @@ export default function Navbar() {
               Contact Us
             </Link>
 
-            {user && (
-              <Link href="/dashboard" className={`nav-link${isActive("/dashboard") ? " is-active" : ""}`}>
-                Dashboard
-              </Link>
-            )}
-          </div>
-
-          {/* Auth actions */}
-          <div className="nav-actions nav-desktop-only">
             {user ? (
               <>
-                <div className="nav-user">
-                  <span className="nav-user-avatar">
-                    {(profile?.name || user?.email || "U")[0].toUpperCase()}
-                  </span>
-                  <span className="nav-user-name">
-                    {profile?.name || user?.email?.split("@")[0]}
-                  </span>
-                </div>
-                <button onClick={logout} className="pill pill-dark pill-sm" style={{ cursor: "pointer", fontFamily: "var(--font-head)" }}>
+                <Link href="/dashboard" className={`nav-link${isActive("/dashboard") ? " is-active" : ""}`}>
+                  Dashboard
+                </Link>
+                <button
+                  onClick={logout}
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                >
                   Sign Out
                 </button>
               </>
             ) : (
-              <>
-                <Link
-                  href="/sign-in"
-                  className="btn btn-sm"
-                  style={{
-                    textDecoration: "none",
-                    background: "#003896",
-                    color: "#FFFFFF",
-                    border: "1.5px solid #003896",
-                    fontWeight: 800,
-                  }}
-                >
-                  Log In
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="btn btn-sm"
-                  style={{
-                    textDecoration: "none",
-                    background: "#E60914",
-                    color: "#FFFFFF",
-                    border: "1.5px solid #E60914",
-                    fontWeight: 800,
-                  }}
-                >
-                  Apply Now →
-                </Link>
-              </>
+              <Link
+                href="/sign-in"
+                className={`nav-link${isActive("/sign-in") ? " is-active" : ""}`}
+              >
+                Sign In
+              </Link>
             )}
+
+            <Link
+              href="/courses"
+              aria-label="Search programmes"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 36,
+                height: 36,
+                color: "#111111",
+                marginLeft: 6,
+              }}
+            >
+              <Icon name="search" size={18} strokeWidth={2.2} />
+            </Link>
           </div>
 
           {/* Burger */}
