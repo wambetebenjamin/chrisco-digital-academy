@@ -25,6 +25,7 @@ const COLOUR_SWATCHES = {
   Cocoa: "#5A4232",
   Cream: "#EFE6D4",
   Black: "#191A1C",
+  Grey: "#808080",
   Ink: "#191A1C",
   White: "#F6F4EF",
   Chalk: "#F6F4EF",
@@ -341,7 +342,7 @@ export default function Shop({ initialCode = "" }) {
                 Wear the <span className="accent">pursuit</span>
               </h2>
               <p className="shop-head-sub">
-                35 studio-crafted pieces across four collections in Cocoa, Cream, Ink, Chalk, Sand and Deep Teal.
+                Explore our latest PURSUE T-shirts and faith-inspired merchandise. Mockups are illustrative; availability and details are confirmed on order.
               </p>
             </div>
             <button

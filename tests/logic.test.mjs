@@ -159,14 +159,14 @@ test("every merchandise item has a unique code, sizes and a price", () => {
     assert.ok(item.img.startsWith("/merch/"), `${item.code} has a mockup`)
   }
   assert.equal(shop.merch.filter((m) => m.category === "Hoodies").length, 4)
-  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 11)
+  assert.equal(shop.merch.filter((m) => m.category === "T-shirts").length, 17)
   assert.equal(shop.merch.filter((m) => m.category === "Polos").length, 3)
-  assert.equal(shop.merch.length, 29)
+  assert.equal(shop.merch.length, 35)
 })
 
 test("every colourway of each product has its own code", () => {
   const pursueTees = shop.merch.filter((m) => m.category === "T-shirts" && m.collection === "pursue")
-  assert.deepEqual(pursueTees.map((t) => t.colour), ["Brown", "Cream", "Black", "White"])
+  assert.deepEqual(pursueTees.map((t) => t.colour), ["White", "Black", "Grey", "Black", "Grey", "Black", "Brown", "Cream", "Black", "White"])
 })
 
 test("apparel runs from S to XXL", () => {
@@ -202,7 +202,7 @@ test("the catalogue spans every collection and a wide colour range", () => {
   const pursue = shop.merch.filter((m) => m.collection === "pursue")
   const faith = shop.merch.filter((m) => m.collection === "faith")
   const scripture = shop.merch.filter((m) => m.collection === "scripture")
-  assert.equal(pursue.length, 12)
+  assert.equal(pursue.length, 18)
   assert.equal(faith.length, 7)
   assert.equal(scripture.length, 10)
   for (const id of shop.collections.map((c) => c.id)) {
