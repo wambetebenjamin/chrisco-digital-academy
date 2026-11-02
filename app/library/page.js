@@ -1,3 +1,7 @@
+import Navbar from "../Navbar"
+import Footer from "../components/Footer"
+import Chatbot from "../Chatbot"
+import PhotoHero from "../components/PhotoHero"
 import LibraryClient from "./LibraryClient"
 import { resolveServerOrigin, buildSocialMetadata } from "../lib/siteOrigin"
 
@@ -27,5 +31,18 @@ export async function generateMetadata({ searchParams }) {
 }
 
 export default function LibraryPage() {
-  return <LibraryClient />
+  return (
+    <main style={{ minHeight: "100vh", background: "#FFFFFF", overflowX: "hidden" }}>
+      <Navbar />
+      <PhotoHero
+        image="/images/bg-home.jpg"
+        eyebrow="CHRISCO Youth Aflame · Christian Books & 19 Course Handbooks"
+        title="Digital E-Book Library"
+        lead="Scripture-grounded Christian studies and 19 illustrated 28-page course handbooks published by CHRISCO Youth Aflame. Sign in to download and save books to your student dashboard."
+      />
+      <LibraryClient />
+      <Footer />
+      <Chatbot />
+    </main>
+  )
 }

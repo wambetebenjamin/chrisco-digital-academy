@@ -38,10 +38,8 @@ const LANGUAGE_PRESETS = [
   { code: "sw-KE", label: "Kiswahili (East Africa)" },
 ]
 
-const CHUNK_POSTER_COLORS = ["#E60914", "#084EC8", "#38A128", "#EE6816", "#D99B00"]
-
 export default function VoiceStudioNarrator({
-  title = "VoiceStudio · AI Audio Narrator & Paste-and-Split",
+  title = "Audio Script Narrator & Study Notes",
   initialText = "Welcome to CHRISCO Youth Aflame Digital Academy. Learn practical digital skills, AI tools, coding, design, and creative projects designed for young minds.",
   compact = false,
 }) {
@@ -130,7 +128,7 @@ export default function VoiceStudioNarrator({
       setDictatedNotes((prev) =>
         prev
           ? prev
-          : "Voice dictation uses Web Speech Recognition in supported browsers (Chrome/Edge). Type your study notes below!"
+          : "Voice dictation uses Web Speech Recognition in supported browsers (Chrome/Edge). Type your study notes below."
       )
       return
     }
@@ -157,12 +155,9 @@ export default function VoiceStudioNarrator({
   return (
     <div
       style={{
-        background: "#FFFFFF",
+        background: compact ? "#FFFFFF" : "#F5F7FA",
         color: "#0B1D51",
-        borderRadius: 12,
-        padding: compact ? "16px 18px" : "24px 24px",
-        border: "1px solid #DCE3F0",
-        borderTop: "5px solid #084EC8",
+        padding: compact ? "18px" : "26px",
       }}
     >
       <div
@@ -173,28 +168,13 @@ export default function VoiceStudioNarrator({
           justifyContent: "space-between",
           gap: 12,
           marginBottom: 14,
-          paddingBottom: 12,
-          borderBottom: "1px solid #DCE3F0",
         }}
       >
         <div>
-          <span
-            style={{
-              display: "inline-block",
-              background: "#084EC8",
-              color: "#FFFFFF",
-              fontSize: 11,
-              fontWeight: 800,
-              padding: "3px 12px",
-              borderRadius: 999,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              marginBottom: 5,
-            }}
-          >
-            VoiceStudio · AI Narration &amp; Paste-and-Split
-          </span>
-          <div style={{ fontWeight: 900, fontSize: "1.08rem", color: "#0B1D51" }}>{title}</div>
+          <div style={{ fontSize: 12.5, fontWeight: 600, color: "#003896", marginBottom: 4 }}>
+            CHRISCO Digital Academy · Audio Narration
+          </div>
+          <div style={{ fontWeight: 700, fontSize: "1.1rem", color: "#0B1D51" }}>{title}</div>
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
@@ -203,13 +183,12 @@ export default function VoiceStudioNarrator({
             value={lang}
             onChange={(e) => setLang(e.target.value)}
             style={{
-              background: "#F7F6F1",
+              background: "#FFFFFF",
               color: "#0B1D51",
-              border: "1px solid #C2CEE3",
-              borderRadius: 8,
-              padding: "6px 10px",
-              fontSize: 12,
-              fontWeight: 700,
+              border: "none",
+              padding: "8px 12px",
+              fontSize: 12.5,
+              fontWeight: 600,
             }}
           >
             {LANGUAGE_PRESETS.map((p) => (
@@ -224,13 +203,12 @@ export default function VoiceStudioNarrator({
             value={rate}
             onChange={(e) => setRate(Number(e.target.value))}
             style={{
-              background: "#F7F6F1",
+              background: "#FFFFFF",
               color: "#0B1D51",
-              border: "1px solid #C2CEE3",
-              borderRadius: 8,
-              padding: "6px 10px",
-              fontSize: 12,
-              fontWeight: 700,
+              border: "none",
+              padding: "8px 12px",
+              fontSize: 12.5,
+              fontWeight: 600,
             }}
           >
             <option value={0.85}>0.85x Calm</option>
@@ -243,53 +221,29 @@ export default function VoiceStudioNarrator({
             <button
               type="button"
               onClick={handlePlay}
-              style={{
-                background: "#38A128",
-                color: "#FFFFFF",
-                border: "none",
-                borderRadius: 999,
-                padding: "8px 16px",
-                fontWeight: 800,
-                fontSize: 12.5,
-                cursor: "pointer",
-              }}
+              className="btn btn-primary btn-sm"
+              style={{ cursor: "pointer" }}
             >
-              ▶ Listen Aloud ({estimatedSeconds}s)
+              Listen Aloud ({estimatedSeconds}s)
             </button>
           ) : (
             <button
               type="button"
               onClick={handleStop}
-              style={{
-                background: "#E60914",
-                color: "#FFFFFF",
-                border: "none",
-                borderRadius: 999,
-                padding: "8px 16px",
-                fontWeight: 800,
-                fontSize: 12.5,
-                cursor: "pointer",
-              }}
+              className="btn btn-navy btn-sm"
+              style={{ cursor: "pointer" }}
             >
-              ■ Stop Narration
+              Stop Narration
             </button>
           )}
 
           <button
             type="button"
             onClick={() => setShowStudioPanel((v) => !v)}
-            style={{
-              background: "#F8C90E",
-              color: "#0B1D51",
-              border: "none",
-              borderRadius: 999,
-              padding: "7px 14px",
-              fontWeight: 800,
-              fontSize: 12,
-              cursor: "pointer",
-            }}
+            className="btn btn-outline btn-sm"
+            style={{ cursor: "pointer" }}
           >
-            {showStudioPanel ? "Hide Chunks" : `Paste & Split (${chunks.length})`}
+            {showStudioPanel ? "Hide Script" : `Script Chunks (${chunks.length})`}
           </button>
         </div>
       </div>
@@ -303,53 +257,44 @@ export default function VoiceStudioNarrator({
             marginTop: 14,
           }}
         >
-          {/* Paste & Split Script Editor */}
-          <div style={{ background: "#F7F6F1", padding: 14, borderRadius: 10, border: "1px solid #DCE3F0" }}>
+          {/* Script Editor */}
+          <div style={{ background: "#FFFFFF", padding: 18 }}>
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                fontSize: 12,
-                color: "#E60914",
-                marginBottom: 6,
-                fontWeight: 800,
+                fontSize: 12.5,
+                color: "#0B1D51",
+                marginBottom: 8,
+                fontWeight: 700,
               }}
             >
-              <span>• Paste &amp; Split Script</span>
-              <span style={{ color: "#084EC8" }}>
-                {wordCount} words · {chunks.length} sentence chunks
+              <span>Study Script</span>
+              <span style={{ color: "#475569", fontWeight: 500 }}>
+                {wordCount} words · {chunks.length} sentences
               </span>
             </div>
             <textarea
               rows={4}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Paste any study passage or lesson script here to automatically split into narratable sentence chunks..."
-              style={{
-                width: "100%",
-                background: "#FFFFFF",
-                color: "#0B1D51",
-                border: "1px solid #C2CEE3",
-                borderRadius: 8,
-                padding: 10,
-                fontSize: 13,
-                lineHeight: 1.5,
-              }}
+              placeholder="Paste any study passage or lesson script here..."
+              className="input"
+              style={{ fontSize: 13, lineHeight: 1.5 }}
             />
 
-            {/* Sentence Chunks List — Poster Divider Rows */}
             <div
               style={{
                 maxHeight: 165,
                 overflowY: "auto",
                 marginTop: 10,
-                background: "#FFFFFF",
-                border: "1px solid #DCE3F0",
-                borderRadius: 8,
+                background: "#F5F7FA",
+                padding: 8,
+                display: "grid",
+                gap: 6,
               }}
             >
               {chunks.map((c, idx) => {
-                const cColor = CHUNK_POSTER_COLORS[idx % CHUNK_POSTER_COLORS.length]
                 const isActive = activeChunkIndex === idx
                 return (
                   <button
@@ -359,17 +304,15 @@ export default function VoiceStudioNarrator({
                     style={{
                       width: "100%",
                       textAlign: "left",
-                      background: isActive ? "#FEF9E3" : "#FFFFFF",
-                      color: "#0B1D51",
+                      background: isActive ? "#0B1D51" : "#FFFFFF",
+                      color: isActive ? "#FFFFFF" : "#0B1D51",
                       border: "none",
-                      borderBottom: "1px solid #E5E9F2",
-                      borderLeft: `4px solid ${cColor}`,
                       padding: "8px 12px",
-                      fontSize: 12,
+                      fontSize: 12.5,
                       cursor: "pointer",
                     }}
                   >
-                    <strong style={{ color: cColor, marginRight: 6 }}>
+                    <strong style={{ color: isActive ? "#F8C90E" : "#003896", marginRight: 6 }}>
                       [{c.id}]
                     </strong>
                     {c.text}
@@ -380,34 +323,26 @@ export default function VoiceStudioNarrator({
           </div>
 
           {/* Voice Dictation & Study Notes */}
-          <div style={{ background: "#F7F6F1", padding: 14, borderRadius: 10, border: "1px solid #DCE3F0" }}>
+          <div style={{ background: "#FFFFFF", padding: 18 }}>
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontSize: 12,
-                color: "#38A128",
-                marginBottom: 6,
-                fontWeight: 800,
+                fontSize: 12.5,
+                color: "#0B1D51",
+                marginBottom: 8,
+                fontWeight: 700,
               }}
             >
-              <span>• Voice Dictation &amp; Study Notes</span>
+              <span>Voice Dictation &amp; Study Notes</span>
               <button
                 type="button"
                 onClick={handleStartDictation}
-                style={{
-                  background: isDictating ? "#E60914" : "#EE6816",
-                  color: "#FFFFFF",
-                  border: "none",
-                  borderRadius: 999,
-                  padding: "4px 12px",
-                  fontSize: 11.5,
-                  fontWeight: 800,
-                  cursor: "pointer",
-                }}
+                className="btn btn-primary btn-sm"
+                style={{ padding: "5px 12px", fontSize: 12, cursor: "pointer" }}
               >
-                {isDictating ? "● Listening..." : "🎤 Dictate Note"}
+                {isDictating ? "Listening..." : "Dictate Note"}
               </button>
             </div>
             <textarea
@@ -415,19 +350,11 @@ export default function VoiceStudioNarrator({
               value={dictatedNotes}
               onChange={(e) => setDictatedNotes(e.target.value)}
               placeholder="Click 'Dictate Note' to transcribe spoken reflections, or type your study summary here..."
-              style={{
-                width: "100%",
-                background: "#FFFFFF",
-                color: "#0B1D51",
-                border: "1px solid #C2CEE3",
-                borderRadius: 8,
-                padding: 10,
-                fontSize: 13,
-                lineHeight: 1.5,
-              }}
+              className="input"
+              style={{ fontSize: 13, lineHeight: 1.5 }}
             />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
-              <label style={{ fontSize: 11.5, color: "#0B1D51", fontWeight: 700 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 10 }}>
+              <label style={{ fontSize: 12, color: "#0B1D51", fontWeight: 600 }}>
                 Voice Pitch ({pitch.toFixed(1)}):
                 <input
                   type="range"
@@ -436,7 +363,7 @@ export default function VoiceStudioNarrator({
                   step="0.1"
                   value={pitch}
                   onChange={(e) => setPitch(Number(e.target.value))}
-                  style={{ marginLeft: 8, verticalAlign: "middle", accentColor: "#084EC8" }}
+                  style={{ marginLeft: 8, verticalAlign: "middle", accentColor: "#003896" }}
                 />
               </label>
               <button
@@ -451,16 +378,8 @@ export default function VoiceStudioNarrator({
                   a.click()
                   URL.revokeObjectURL(url)
                 }}
-                style={{
-                  background: "#084EC8",
-                  color: "#FFFFFF",
-                  border: "none",
-                  borderRadius: 999,
-                  padding: "5px 12px",
-                  fontSize: 11.5,
-                  fontWeight: 800,
-                  cursor: "pointer",
-                }}
+                className="btn btn-outline btn-sm"
+                style={{ padding: "6px 12px", fontSize: 12, cursor: "pointer" }}
               >
                 Export Notes (.txt)
               </button>

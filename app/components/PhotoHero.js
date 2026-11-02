@@ -1,6 +1,6 @@
 /*
- * PhotoHero renders the UCU-style full-width institutional banner with a
- * clean translucent blue caption band over the hero photograph.
+ * PhotoHero renders a clean institutional banner with a dark navy/photo
+ * background and a calm translucent navy caption block.
  */
 export default function PhotoHero({ image, eyebrow, title, lead, children, imagePosition = "center 30%", titleStyle }) {
   return (
@@ -9,7 +9,7 @@ export default function PhotoHero({ image, eyebrow, title, lead, children, image
         position: "relative",
         overflow: "hidden",
         background: "#0B1D51",
-        padding: "clamp(140px, 17vw, 184px) 0 28px",
+        padding: "clamp(136px, 16vw, 176px) 0 36px",
       }}
     >
       {image && (
@@ -21,15 +21,16 @@ export default function PhotoHero({ image, eyebrow, title, lead, children, image
             backgroundImage: `url('${image}')`,
             backgroundSize: "cover",
             backgroundPosition: imagePosition,
+            opacity: 0.35,
           }}
         />
       )}
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div
           style={{
-            maxWidth: 1120,
-            background: "rgba(8, 46, 118, 0.64)",
-            padding: "22px 26px 24px",
+            maxWidth: 1080,
+            background: "rgba(11, 29, 81, 0.78)",
+            padding: "24px 28px 26px",
             color: "#FFFFFF",
           }}
         >
@@ -48,13 +49,13 @@ export default function PhotoHero({ image, eyebrow, title, lead, children, image
           )}
           <h1
             style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 500,
+              fontFamily: "var(--font-head)",
+              fontWeight: 700,
               color: "#FFFFFF",
-              fontSize: "clamp(22px, 2.6vw, 32px)",
+              fontSize: "clamp(24px, 2.8vw, 34px)",
               textTransform: "uppercase",
               margin: 0,
-              lineHeight: 1.25,
+              lineHeight: 1.22,
               ...titleStyle,
             }}
           >
@@ -67,9 +68,9 @@ export default function PhotoHero({ image, eyebrow, title, lead, children, image
                 maxWidth: 780,
                 marginTop: 12,
                 marginBottom: 0,
-                color: "#FFFFFF",
-                fontSize: "clamp(17px, 1.7vw, 22px)",
-                lineHeight: 1.45,
+                color: "rgba(255, 255, 255, 0.92)",
+                fontSize: "clamp(16px, 1.55vw, 20px)",
+                lineHeight: 1.5,
               }}
             >
               {lead}

@@ -4,22 +4,20 @@ import { useState, useMemo } from "react"
 
 export const KEYWORD_RESEARCH_CATALOG = [
   {
-    keyword: "teens ai bootcamp kenya",
+    keyword: "teens ai bootcamp uganda",
     volume: 2400,
     difficulty: 22,
     cpc: "$0.85",
     intent: "Transactional",
-    aiVisibility: "96% Cited (ChatGPT & Perplexity)",
-    color: "#E60914",
+    aiVisibility: "96% Indexed",
   },
   {
-    keyword: "digital skills training nairobi",
+    keyword: "digital skills training east africa",
     volume: 5100,
     difficulty: 34,
     cpc: "$1.20",
     intent: "Commercial",
-    aiVisibility: "91% Cited (Google AI Overviews)",
-    color: "#084EC8",
+    aiVisibility: "91% Indexed",
   },
   {
     keyword: "coding and ai projects for teens",
@@ -27,8 +25,7 @@ export const KEYWORD_RESEARCH_CATALOG = [
     difficulty: 27,
     cpc: "$0.95",
     intent: "Informational",
-    aiVisibility: "94% Cited (ChatGPT Search)",
-    color: "#38A128",
+    aiVisibility: "94% Indexed",
   },
   {
     keyword: "python programming course east africa",
@@ -36,17 +33,15 @@ export const KEYWORD_RESEARCH_CATALOG = [
     difficulty: 31,
     cpc: "$1.10",
     intent: "Transactional",
-    aiVisibility: "89% Cited (Perplexity)",
-    color: "#EE6816",
+    aiVisibility: "89% Indexed",
   },
   {
-    keyword: "youtube automation course kenya",
+    keyword: "youtube automation course",
     volume: 6700,
     difficulty: 29,
     cpc: "$0.75",
     intent: "Commercial",
-    aiVisibility: "92% Cited (ChatGPT & Gemini)",
-    color: "#D99B00",
+    aiVisibility: "92% Indexed",
   },
   {
     keyword: "freelancing skills for african youth",
@@ -54,8 +49,7 @@ export const KEYWORD_RESEARCH_CATALOG = [
     difficulty: 25,
     cpc: "$0.65",
     intent: "Informational",
-    aiVisibility: "95% Cited (All AI Engines)",
-    color: "#0B1D51",
+    aiVisibility: "95% Indexed",
   },
 ]
 
@@ -92,7 +86,7 @@ export default function OpenSeoWorkspace() {
     "CHRISCO Youth Aflame Digital Academy · Teens AI & Projects Bootcamp"
   )
   const [metaInput, setMetaInput] = useState(
-    "Fun AI learning and creative digital projects designed for young minds (Ages 13+). Join the 6-week CHRISCO Digital Academy Teens AI & Projects Bootcamp online."
+    "Practical AI learning and creative digital projects designed for young minds (Ages 13+). Join the 6-week CHRISCO Digital Academy Teens AI & Projects Bootcamp online."
   )
   const [targetKeyword, setTargetKeyword] = useState("teens ai")
 
@@ -119,11 +113,8 @@ export default function OpenSeoWorkspace() {
   return (
     <section
       style={{
-        background: "#FFFFFF",
-        border: "1px solid #DCE3F0",
-        borderTop: "5px solid #38A128",
-        borderRadius: 12,
-        padding: "26px 24px",
+        background: "#F5F7FA",
+        padding: "28px 26px",
       }}
     >
       <div
@@ -133,37 +124,22 @@ export default function OpenSeoWorkspace() {
           alignItems: "center",
           justifyContent: "space-between",
           gap: 12,
-          marginBottom: 18,
-          paddingBottom: 14,
-          borderBottom: "1px solid #DCE3F0",
+          marginBottom: 20,
         }}
       >
         <div>
-          <span
-            style={{
-              display: "inline-block",
-              background: "#38A128",
-              color: "#FFFFFF",
-              fontSize: 11,
-              fontWeight: 800,
-              padding: "4px 12px",
-              borderRadius: 999,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              marginBottom: 6,
-            }}
-          >
-            OpenSEO · Search &amp; AI Visibility Lab
-          </span>
+          <div style={{ fontSize: 12.5, fontWeight: 600, color: "#003896", marginBottom: 4 }}>
+            CHRISCO Digital Academy · Content &amp; Search Audit Lab
+          </div>
           <h3
             style={{
-              fontSize: "1.35rem",
-              fontWeight: 900,
+              fontSize: "1.3rem",
+              fontWeight: 700,
               color: "#0B1D51",
               margin: 0,
             }}
           >
-            Live On-Page SEO Audit, Keyword Explorer &amp; AI Citations
+            On-Page Search Audit &amp; Keyword Practice
           </h3>
         </div>
 
@@ -171,16 +147,16 @@ export default function OpenSeoWorkspace() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 12,
-            background: "#F8C90E",
-            padding: "8px 18px",
-            borderRadius: 999,
+            gap: 10,
+            background: "#0B1D51",
+            color: "#FFFFFF",
+            padding: "8px 16px",
           }}
         >
-          <span style={{ fontSize: 12, fontWeight: 800, color: "#0B1D51" }}>
-            Technical &amp; AI SEO Score:
+          <span style={{ fontSize: 12.5, fontWeight: 600 }}>
+            Audit Score:
           </span>
-          <span style={{ fontSize: "1.2rem", fontWeight: 900, color: "#0B1D51" }}>
+          <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#F8C90E" }}>
             {audit.score}/100
           </span>
         </div>
@@ -192,7 +168,7 @@ export default function OpenSeoWorkspace() {
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
           gap: 16,
-          marginBottom: 18,
+          marginBottom: 16,
         }}
       >
         <div>
@@ -200,25 +176,19 @@ export default function OpenSeoWorkspace() {
             style={{
               display: "block",
               fontSize: 12.5,
-              fontWeight: 800,
-              color: "#E60914",
+              fontWeight: 700,
+              color: "#0B1D51",
               marginBottom: 6,
             }}
           >
-            • Page Title ({audit.titleLen} chars · optimal 40–70)
+            Page Title ({audit.titleLen} chars · optimal 40–70)
           </label>
           <input
             type="text"
             value={titleInput}
             onChange={(e) => setTitleInput(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "10px 12px",
-              borderRadius: 8,
-              border: "1.5px solid #C2CEE3",
-              fontSize: 13.5,
-              color: "#0B1D51",
-            }}
+            className="input"
+            style={{ fontSize: 13.5 }}
           />
         </div>
 
@@ -227,63 +197,46 @@ export default function OpenSeoWorkspace() {
             style={{
               display: "block",
               fontSize: 12.5,
-              fontWeight: 800,
-              color: "#084EC8",
+              fontWeight: 700,
+              color: "#0B1D51",
               marginBottom: 6,
             }}
           >
-            • Target Focus Keyword
+            Target Focus Keyword
           </label>
           <input
             type="text"
             value={targetKeyword}
             onChange={(e) => setTargetKeyword(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "10px 12px",
-              borderRadius: 8,
-              border: "1.5px solid #C2CEE3",
-              fontSize: 13.5,
-              color: "#0B1D51",
-            }}
+            className="input"
+            style={{ fontSize: 13.5 }}
           />
         </div>
       </div>
 
-      <div style={{ marginBottom: 18 }}>
+      <div style={{ marginBottom: 20 }}>
         <label
           style={{
             display: "block",
             fontSize: 12.5,
-            fontWeight: 800,
-            color: "#38A128",
+            fontWeight: 700,
+            color: "#0B1D51",
             marginBottom: 6,
           }}
         >
-          • Meta Description ({audit.descLen} chars · optimal 110–170)
+          Meta Description ({audit.descLen} chars · optimal 110–170)
         </label>
         <textarea
           rows={2}
           value={metaInput}
           onChange={(e) => setMetaInput(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "10px 12px",
-            borderRadius: 8,
-            border: "1.5px solid #C2CEE3",
-            fontSize: 13.5,
-            color: "#0B1D51",
-          }}
+          className="input"
+          style={{ fontSize: 13.5 }}
         />
       </div>
 
-      {/* Live Keyword Explorer — Poster Color Rows */}
-      <div
-        style={{
-          borderTop: "1px solid #DCE3F0",
-          paddingTop: 16,
-        }}
-      >
+      {/* Keyword Table */}
+      <div style={{ background: "#FFFFFF", padding: 18 }}>
         <div
           style={{
             display: "flex",
@@ -291,73 +244,56 @@ export default function OpenSeoWorkspace() {
             alignItems: "center",
             justifyContent: "space-between",
             gap: 10,
-            marginBottom: 12,
+            marginBottom: 14,
           }}
         >
-          <div style={{ fontWeight: 900, fontSize: 14, color: "#0B1D51" }}>
-            East Africa Keyword &amp; AI Visibility Matrix
+          <div style={{ fontWeight: 700, fontSize: 14, color: "#0B1D51" }}>
+            East Africa Digital Skills Keyword Reference
           </div>
           <input
             type="search"
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
             placeholder="Filter keywords..."
-            style={{
-              padding: "7px 14px",
-              borderRadius: 999,
-              border: "1.5px solid #C2CEE3",
-              background: "#F7F6F1",
-              fontSize: 12.5,
-              color: "#0B1D51",
-            }}
+            className="input"
+            style={{ maxWidth: 240, padding: "8px 12px", fontSize: 12.5 }}
           />
         </div>
 
-        <div style={{ overflowX: "auto", border: "1px solid #DCE3F0", borderRadius: 10 }}>
+        <div style={{ overflowX: "auto" }}>
           <table
             style={{
               width: "100%",
               borderCollapse: "collapse",
-              fontSize: 12.8,
+              fontSize: 13,
               textAlign: "left",
             }}
           >
             <thead>
-              <tr style={{ background: "#003896", color: "#FFFFFF" }}>
+              <tr style={{ background: "#0B1D51", color: "#FFFFFF" }}>
                 <th style={{ padding: "10px 12px" }}>Keyword</th>
                 <th style={{ padding: "10px 12px" }}>Monthly Vol</th>
                 <th style={{ padding: "10px 12px" }}>KD %</th>
                 <th style={{ padding: "10px 12px" }}>Search Intent</th>
-                <th style={{ padding: "10px 12px" }}>AI Visibility</th>
+                <th style={{ padding: "10px 12px" }}>Status</th>
               </tr>
             </thead>
             <tbody>
               {filteredKeywords.map((row) => (
-                <tr key={row.keyword} style={{ borderBottom: "1px solid #DCE3F0", background: "#FFFFFF" }}>
-                  <td style={{ padding: "10px 12px", fontWeight: 800, color: row.color }}>
-                    • {row.keyword}
+                <tr key={row.keyword} style={{ background: "#FFFFFF" }}>
+                  <td style={{ padding: "10px 12px", fontWeight: 600, color: "#0B1D51" }}>
+                    {row.keyword}
                   </td>
-                  <td style={{ padding: "10px 12px", fontWeight: 700, color: "#0B1D51" }}>
+                  <td style={{ padding: "10px 12px", color: "#334155" }}>
                     {row.volume.toLocaleString()}
                   </td>
-                  <td style={{ padding: "10px 12px", fontWeight: 700, color: "#084EC8" }}>
+                  <td style={{ padding: "10px 12px", color: "#334155" }}>
                     {row.difficulty}
                   </td>
-                  <td style={{ padding: "10px 12px" }}>
-                    <span
-                      style={{
-                        background: row.color,
-                        color: "#FFFFFF",
-                        padding: "3px 10px",
-                        borderRadius: 999,
-                        fontSize: 11,
-                        fontWeight: 800,
-                      }}
-                    >
-                      {row.intent}
-                    </span>
+                  <td style={{ padding: "10px 12px", color: "#003896", fontWeight: 600 }}>
+                    {row.intent}
                   </td>
-                  <td style={{ padding: "10px 12px", color: "#38A128", fontWeight: 800 }}>
+                  <td style={{ padding: "10px 12px", color: "#334155" }}>
                     {row.aiVisibility}
                   </td>
                 </tr>
