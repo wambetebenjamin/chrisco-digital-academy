@@ -37,7 +37,7 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 200,
-        background: "rgba(0, 35, 51, 0.94)",
+        background: "rgba(11, 29, 81, 0.94)",
         backdropFilter: "blur(14px)",
         borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
       }}
