@@ -4,7 +4,6 @@ import "@fontsource-variable/archivo"
 import "@fontsource-variable/inter"
 import { AuthProvider } from "./AuthProvider"
 import { resolveServerOrigin, buildSocialMetadata } from "./lib/siteOrigin"
-import JsonLdSchema from "./components/JsonLdSchema"
 
 export async function generateMetadata() {
   const origin = await resolveServerOrigin()
@@ -12,7 +11,7 @@ export async function generateMetadata() {
     origin,
     title: "CHRISCO Digital Academy · Learn Practical Skills That Pay For Life",
     description:
-      "Equipping African youth with 19 practical digital skills courses, the Teens AI & Projects Bootcamp, Christian study books, and Dashboard e-book access under CHRISCO Youth Aflame.",
+      "Equipping African youth with 19 practical digital skills courses, Christian study books, handbooks, and Dashboard e-book access under CHRISCO Youth Aflame.",
     path: "/",
     bannerPath: "/og/default.jpg",
   })
@@ -46,7 +45,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="antialiased">
-        <JsonLdSchema />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

@@ -31,6 +31,7 @@ export default function Dashboard() {
   const [expandedCourse, setExpandedCourse] = useState(null)
   const [quickCourseTitle, setQuickCourseTitle] = useState(courses[0]?.title || "")
   const [enrollingQuick, setEnrollingQuick] = useState(false)
+  const [activeCertificate, setActiveCertificate] = useState(null)
   const [showSlidesEmbed, setShowSlidesEmbed] = useState(true)
   const [bookSearch, setBookSearch] = useState("")
   const [bookCategory, setBookCategory] = useState("All")
@@ -127,75 +128,67 @@ export default function Dashboard() {
   })
 
   const stats = [
-    { label: "Books Unlocked", value: "20 PDFs" },
-    { label: "Courses Enrolled", value: loading ? "..." : enrollments.length },
-    { label: "Completed Courses", value: loading ? "..." : String(completedCount) },
-    { label: "Learning Status", value: "Active" },
+    { icon: "book", label: "Books Unlocked", value: "20 PDFs" },
+    { icon: "checkCircle", label: "Courses Enrolled", value: loading ? "..." : enrollments.length },
+    { icon: "trophy", label: "Completed Courses", value: loading ? "..." : String(completedCount) },
+    { icon: "flame", label: "Learning Progress", value: "Active" },
   ]
 
   return (
-    <main style={{ background: "#FFFFFF", minHeight: "100vh", overflowX: "hidden" }}>
+    <main style={{ background: "var(--paper)", minHeight: "100vh", overflowX: "hidden" }}>
       <Navbar />
 
       {/* Header */}
-      <section style={{ background: "#0B1D51", padding: "140px 0 64px", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: "var(--navy)", padding: "140px 0 96px", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden style={{ position: "absolute", inset: 0 }}>
+          <Image src="/images/bg-cta.jpg" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 35%", opacity: 0.12 }} />
+        </div>
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: "#F8C90E", marginBottom: 8 }}>
-                Student Dashboard · {org.programme}
-              </div>
-              <h1 style={{ fontFamily: "var(--font-head)", fontWeight: 700, color: "#FFFFFF", fontSize: "clamp(1.8rem, 3.4vw, 2.6rem)", lineHeight: 1.15 }}>
+              <span className="eyebrow on-dark" style={{ marginBottom: 14 }}>Welcome back</span>
+              <h1 style={{ fontFamily: "var(--font-display)", color: "#fff", fontSize: "clamp(1.9rem, 4vw, 3rem)", lineHeight: 1.05, textTransform: "uppercase" }}>
                 {displayName}
               </h1>
-              <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "1rem", marginTop: 10 }}>
+              <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "1rem", marginTop: 12 }}>
                 Continue your digital learning journey with {org.academy} ({org.programme})
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 18 }}>
-                <a href="#books" className="btn btn-amber btn-sm" style={{ textDecoration: "none" }}>
+                <a href="#books" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
                   <Icon name="download" size={15} /> My Books &amp; PDF Downloads (20)
                 </a>
                 <Link href="/library" className="btn btn-outline-light btn-sm" style={{ textDecoration: "none" }}>
-                  Browse Public Library
+                  Browse Public Library →
                 </Link>
               </div>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 14, background: "rgba(255,255,255,0.08)", padding: "14px 20px" }}>
-              <span style={{ width: 42, height: 42, background: "#003896", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "14px 20px" }}>
+              <span style={{ width: 46, height: 46, borderRadius: "50%", background: "var(--cta-primary)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.1rem", flexShrink: 0 }}>
                 {displayName[0]?.toUpperCase() || "U"}
               </span>
               <div>
-                <div style={{ color: "#FFFFFF", fontWeight: 700, fontSize: 14 }}>{displayName}</div>
-                <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 12.5 }}>{user?.email}</div>
+                <div style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>{displayName}</div>
+                <div style={{ color: "rgba(255,255,255,0.55)", fontSize: 12 }}>{user?.email}</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Band */}
-      <section style={{ background: "#F5F7FA", padding: "28px 0" }}>
+      {/* Stats */}
+      <section style={{ marginTop: -56, padding: "0 0 16px" }}>
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: 20,
-            }}
-          >
+          <div className="grid-4">
             {stats.map((stat, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "#FFFFFF",
-                  padding: "20px 22px",
-                }}
-              >
-                <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.45rem", color: "#0B1D51" }}>
-                  {stat.value}
+              <div key={i} className="card card-hover" style={{ padding: "24px 22px", display: "flex", alignItems: "center", gap: 16 }}>
+                <span style={{ width: 54, height: 54, borderRadius: 16, background: "var(--green-tint)", color: "var(--green-deep)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon name={stat.icon} size={24} />
+                </span>
+                <div>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", color: "var(--ink)" }}>{stat.value}</div>
+                  <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>{stat.label}</div>
                 </div>
-                <div style={{ fontSize: 12.5, color: "#475569", fontWeight: 600, marginTop: 4 }}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -237,9 +230,6 @@ export default function Dashboard() {
               </button>
               <Link href="/courses" className="btn btn-outline btn-sm" style={{ textDecoration: "none" }}>
                 Catalogue →
-              </Link>
-              <Link href="/studio" className="btn btn-navy btn-sm" style={{ textDecoration: "none" }}>
-                AI Studio →
               </Link>
             </form>
           </div>
@@ -405,6 +395,29 @@ export default function Dashboard() {
                           PDF Handbook
                         </a>
                       )}
+                      {pct >= 100 && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setActiveCertificate({
+                              courseTitle: enrollment.course_title,
+                              studentName: displayName,
+                              date: new Date().toLocaleDateString("en-KE", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              }),
+                              code:
+                                enrollment.certificate_code ||
+                                `CERT-CDA-${String(user?.id || "2026").slice(0, 4).toUpperCase()}-${courseMeta?.id || 10}`,
+                            })
+                          }
+                          className="btn btn-green btn-sm"
+                          style={{ cursor: "pointer", fontSize: 12 }}
+                        >
+                          <Icon name="award" size={14} /> Course Summary
+                        </button>
+                      )}
                     </div>
                   </div>
                 )
@@ -522,18 +535,23 @@ export default function Dashboard() {
           {/* Dedicated Christian & Faith Shelf inside Dashboard */}
           <div
             style={{
-              background: "#0B1D51",
+              background: "linear-gradient(135deg, #010C80 0%, #0A1854 70%, #162266 100%)",
+              borderRadius: 22,
               padding: "26px 26px",
-              color: "#FFFFFF",
+              color: "#fff",
               marginBottom: 32,
+              boxShadow: "0 16px 40px rgba(1,12,128,0.16)",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 18 }}>
               <div>
-                <div style={{ fontSize: 12.5, fontWeight: 600, color: "#F8C90E", marginBottom: 4 }}>
+                <span
+                  className="pill pill-sm"
+                  style={{ background: "#FA3F26", color: "#fff", border: "none", marginBottom: 8 }}
+                >
                   CHRISCO Youth Aflame
-                </div>
-                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.25rem", color: "#FFFFFF" }}>
+                </span>
+                <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "#fff" }}>
                   Christian Books
                 </h3>
               </div>
@@ -543,8 +561,9 @@ export default function Dashboard() {
               <div
                 key={book.slug}
                 style={{
-                  background: "#FFFFFF",
-                  color: "#0B1D51",
+                  background: "rgba(255,255,255,0.97)",
+                  color: "var(--ink)",
+                  borderRadius: 18,
                   padding: "22px",
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
@@ -558,7 +577,9 @@ export default function Dashboard() {
                       width: 155,
                       height: 220,
                       position: "relative",
+                      borderRadius: 12,
                       overflow: "hidden",
+                      boxShadow: "0 14px 30px rgba(1,12,128,0.22)",
                     }}
                   >
                     <Image
@@ -572,13 +593,15 @@ export default function Dashboard() {
                 </div>
 
                 <div style={{ gridColumn: "span 2" }}>
-                  <div style={{ fontSize: 12.5, fontWeight: 600, color: "#003896", marginBottom: 6 }}>
-                    {book.category} · {book.pages} Pages · {book.illustrations} Visual Diagrams
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
+                    <span className="pill pill-soft pill-sm">{book.category}</span>
+                    <span className="pill pill-soft pill-sm">{book.pages} Pages</span>
+                    <span className="pill pill-soft pill-sm">{book.illustrations} Visual Diagrams</span>
                   </div>
-                  <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.25rem", color: "#0B1D51", lineHeight: 1.25 }}>
+                  <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "#010C80", lineHeight: 1.25 }}>
                     {book.title}
                   </h4>
-                  <p style={{ color: "#334155", fontSize: 13.8, lineHeight: 1.65, margin: "8px 0 16px" }}>
+                  <p style={{ color: "var(--body)", fontSize: 13.8, lineHeight: 1.65, margin: "8px 0 16px" }}>
                     {book.desc}
                   </p>
                   <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -586,8 +609,13 @@ export default function Dashboard() {
                       href={book.downloadPath}
                       target="_blank"
                       rel="noreferrer"
-                      className="btn btn-primary btn-sm"
-                      style={{ textDecoration: "none" }}
+                      className="btn btn-sm"
+                      style={{
+                        background: "#FA3F26",
+                        color: "#fff",
+                        border: "none",
+                        textDecoration: "none",
+                      }}
                     >
                       <Icon name="download" size={15} /> Download 28-Page Christian E-Book (PDF)
                     </a>
@@ -934,6 +962,57 @@ export default function Dashboard() {
           </div>
         </div>
       </section>
+
+      {/* Certificate Modal */}
+      {activeCertificate && (
+        <div className="overlay" onClick={() => setActiveCertificate(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 640, padding: "36px 32px", textAlign: "center", border: "4px double var(--green-deep)" }}>
+            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--green-deep)", marginBottom: 8 }}>
+              {org.umbrella}
+            </div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "2rem", color: "var(--navy)", textTransform: "uppercase", marginBottom: 6 }}>
+              {org.academy}
+            </h2>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", marginBottom: 24 }}>
+              Practical Completion Summary · {org.programme}
+            </div>
+            <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 8 }}>This certifies that</p>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", color: "var(--ink)", borderBottom: "2px solid var(--line)", display: "inline-block", padding: "0 24px 8px", marginBottom: 18 }}>
+              {activeCertificate.studentName}
+            </div>
+            <p style={{ fontSize: 14, color: "var(--body)", lineHeight: 1.6, maxWidth: 460, margin: "0 auto 20px" }}>
+              has completed all syllabus modules and practical requirements for the course{" "}
+              <strong style={{ color: "var(--navy)" }}>{activeCertificate.courseTitle}</strong>.
+            </p>
+            <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap", gap: 16, fontSize: 12.5, color: "var(--muted)", borderTop: "1px solid var(--line)", paddingTop: 18, marginBottom: 24 }}>
+              <div>
+                <strong>Issued:</strong> {activeCertificate.date}
+              </div>
+              <div>
+                <strong>Completion ID:</strong> <code>{activeCertificate.code}</code>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+              <button
+                type="button"
+                onClick={() => typeof window !== "undefined" && window.print()}
+                className="btn btn-green btn-sm"
+                style={{ cursor: "pointer" }}
+              >
+                Print / Save PDF
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveCertificate(null)}
+                className="btn btn-navy btn-sm"
+                style={{ cursor: "pointer" }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </main>

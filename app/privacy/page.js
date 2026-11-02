@@ -1,8 +1,5 @@
 import Link from "next/link"
-import Navbar from "../Navbar"
-import Footer from "../components/Footer"
-import Chatbot from "../Chatbot"
-import PhotoHero from "../components/PhotoHero"
+import Icon from "../components/Icon"
 import { CONSENT_POLICY_VERSION } from "../data/booksCatalogue"
 import PrivacyControlsClient from "./PrivacyControlsClient"
 
@@ -17,7 +14,7 @@ const sections = [
     id: "controller",
     title: "1. Data Controller & Stewardship Commitment",
     body: [
-      "CHRISCO Digital Academy and the CHRISCO Youth Aflame Library are operated by CHRISCO Youth Aflame under CHRISCO Fellowship of Churches International ('we', 'us', or 'the Academy'). We treat personal information as a sacred trust and handle every reader and learner record with transparency, security, and strict confidentiality.",
+      "CHRISCO Digital Academy and the CHRISCO Youth Aflame Library are operated by CHRISCO Youth Aflame under CHRISCO FELLOWSHIP OF CHURCHES ('we', 'us', or 'the Academy'). We treat personal information as a sacred trust and handle every reader and learner record with transparency, security, and strict confidentiality.",
       "For any privacy inquiry, data access request, correction, or erasure request, contact our Data Protection Desk directly at chriscoyouthaflame2025@gmail.com.",
     ],
   },
@@ -69,24 +66,37 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "#FFFFFF", overflowX: "hidden" }}>
-      <Navbar />
+    <>
+      <section
+        style={{
+          background: "linear-gradient(135deg, var(--navy) 0%, #0d2346 100%)",
+          color: "#fff",
+          padding: "72px 0 56px",
+        }}
+      >
+        <div className="container" style={{ maxWidth: 880 }}>
+          <span className="pill pill-dark pill-sm" style={{ marginBottom: 14 }}>
+            <Icon name="shield" size={14} /> Policy Version {CONSENT_POLICY_VERSION} · Effective October 2026
+          </span>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 1.1, marginBottom: 14 }}>
+            Privacy &amp; Data Protection Policy
+          </h1>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.8)", lineHeight: 1.7 }}>
+            How <strong>CHRISCO Youth Aflame</strong> and <strong>CHRISCO Digital Academy</strong> (under{" "}
+            <strong>CHRISCO FELLOWSHIP OF CHURCHES</strong>) safeguard reader emails, uphold strict data minimization,
+            and protect your privacy rights.
+          </p>
+        </div>
+      </section>
 
-      <PhotoHero
-        image="/images/bg-about.jpg"
-        eyebrow={`Policy Version ${CONSENT_POLICY_VERSION} · CHRISCO Youth Aflame`}
-        title="Privacy & Data Protection Policy"
-        lead="How CHRISCO Youth Aflame and CHRISCO Digital Academy safeguard reader emails, uphold strict data minimization, and protect your privacy rights."
-      />
-
-      <section style={{ background: "#FFFFFF", padding: "56px 0 88px" }}>
+      <section className="section-frost" style={{ padding: "56px 0 92px" }}>
         <div className="container" style={{ maxWidth: 880 }}>
           <PrivacyControlsClient />
 
-          <div style={{ display: "grid", gap: 20 }}>
+          <div style={{ display: "grid", gap: 22 }}>
             {sections.map((sec) => (
-              <article key={sec.id} id={sec.id} style={{ background: "#F5F7FA", padding: "28px 30px" }}>
-                <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.15rem", color: "#0B1D51", marginBottom: 12 }}>
+              <article key={sec.id} id={sec.id} className="card" style={{ padding: "28px 30px" }}>
+                <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.18rem", color: "var(--ink)", marginBottom: 12 }}>
                   {sec.title}
                 </h2>
                 {sec.body.map((para, idx) => (
@@ -94,7 +104,7 @@ export default function PrivacyPolicyPage() {
                     key={idx}
                     style={{
                       fontSize: 14.2,
-                      color: "#334155",
+                      color: "var(--body)",
                       lineHeight: 1.75,
                       whiteSpace: "pre-line",
                       marginBottom: idx < sec.body.length - 1 ? 12 : 0,
@@ -109,21 +119,18 @@ export default function PrivacyPolicyPage() {
 
           <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
             <Link href="/library" className="btn btn-navy btn-sm" style={{ textDecoration: "none" }}>
-              Return to Books &amp; Library
+              ← Return to Books &amp; Library
             </Link>
             <a
               href="mailto:chriscoyouthaflame2025@gmail.com?subject=Data%20Protection%20Inquiry"
               className="btn btn-outline btn-sm"
               style={{ textDecoration: "none" }}
             >
-              Contact Data Protection Desk
+              <Icon name="mail" size={14} /> Contact Data Protection Desk
             </a>
           </div>
         </div>
       </section>
-
-      <Footer />
-      <Chatbot />
-    </main>
+    </>
   )
 }

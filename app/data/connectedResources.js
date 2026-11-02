@@ -8,7 +8,7 @@ export const CONNECTED_RESOURCES = [
     title: "Learner Orientation & 19-Course Track Guide",
     category: "Orientation & Slides",
     description:
-      "Interactive 5-slide Google Slides deck covering all 7 CHRISCO Digital Academy tracks, how your learning journey works, and how to earn your certificate.",
+      "Interactive 5-slide Google Slides deck covering all 7 CHRISCO Digital Academy tracks, how your learning journey works, and how to complete your practical projects.",
     url: "https://docs.google.com/presentation/d/1PZLmMuF77_TlX6aPZqmO-7cbmv_OaxFHtNCsbNWvd4k/edit",
     embed_url:
       "https://docs.google.com/presentation/d/1PZLmMuF77_TlX6aPZqmO-7cbmv_OaxFHtNCsbNWvd4k/embed?start=false&loop=false&delayms=5000",

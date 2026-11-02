@@ -1,7 +1,9 @@
 import Navbar from "../Navbar"
 import Footer from "../components/Footer"
 import Chatbot from "../Chatbot"
+import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
+import PageBackdrop from "../components/PageBackdrop"
 import PhotoBand from "../components/PhotoBand"
 import Link from "next/link"
 import Shop from "./Shop"
@@ -44,29 +46,39 @@ export default async function ShopPage({ searchParams }) {
   const initialCode = typeof params.item === "string" ? params.item.toUpperCase() : ""
 
   return (
-    <main style={{ minHeight: "100vh", background: "#FFFFFF", overflowX: "hidden" }}>
+    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <PageBackdrop image="/images/bg-courses.jpg" position="center 40%" />
       <Navbar />
 
       <PhotoHero
-        image="/images/bg-courses.jpg"
-        eyebrow="CHRISCO Youth Aflame · 1 Samuel 30:8"
-        title="PURSUE Merchandise Collection"
-        lead="Official CHRISCO Youth Aflame apparel and study essentials in Brown, Cream, Black, White, and Natural. Anchored on 1 Samuel 30:8 with pricing in KSh and UGX."
-      />
+        eyebrow="Merchandise"
+        title={
+          <>
+            Wear the <span className="accent-bright">word.</span>
+          </>
+        }
+        titleStyle={{ maxWidth: 820 }}
+        lead="Official CHRISCO Youth Aflame merchandise in cocoa, cream, ink, chalk, sand and deep teal, one harmonious family of colourways. Four collections: the PURSUE artwork, quieter Christian affirmations, statement pieces built on 1 Samuel 30:8, and the supplied design drops printed exactly as drawn."
+      >
+        <div className="fade-up fade-up-2" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 26 }}>
+          {["S to XXL", "KSh and UGX pricing", "Order by code on WhatsApp"].map((p) => (
+            <span key={p} className="pill pill-soft pill-sm">
+              <Icon name="checkCircle" size={13} strokeWidth={2.2} /> {p}
+            </span>
+          ))}
+        </div>
+      </PhotoHero>
 
       <Shop initialCode={initialCode} />
 
       <PhotoBand
         centered
-        eyebrow="Youth Fellowships & Teams"
-        title="Bulk Orders for Churches, Youth Groups & Schools"
-        body="Youth groups, worship teams, schools, and fellowships can order in bulk by product code and size run."
+        eyebrow="Teams and churches"
+        title="Dress your whole team in the word."
+        body="Youth groups, worship teams, schools and fellowships can order in bulk by code and size run. Message the codes on WhatsApp and we will build the quotation."
       >
-        <Link href="/affiliates" className="btn btn-amber" style={{ textDecoration: "none" }}>
-          Become an Affiliate
-        </Link>
-        <Link href="/contact" className="btn btn-outline-light" style={{ textDecoration: "none" }}>
-          Contact the Academy
+        <Link href="/affiliates" className="btn btn-outline-light btn-lg" style={{ textDecoration: "none" }}>
+          Become an Affiliate →
         </Link>
       </PhotoBand>
 

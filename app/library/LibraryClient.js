@@ -17,6 +17,7 @@ export default function LibraryClient() {
   const [categoryFilter, setCategoryFilter] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
 
+  // Strict account-only rule: ALL Christian books and Course Handbooks require a logged-in account
   const isUnlocked = Boolean(user?.email)
 
   function handleDownloadClick(book) {
@@ -51,11 +52,13 @@ export default function LibraryClient() {
   return (
     <div>
       {/* ACCOUNT STATUS BAR */}
-      <div className="container" style={{ marginTop: 36 }}>
+      <div className="container" style={{ marginTop: 28 }}>
         <div
           style={{
-            background: "#F5F7FA",
-            padding: "18px 24px",
+            background: isUnlocked ? "var(--green-tint)" : "var(--surface)",
+            border: "1px solid var(--line)",
+            borderRadius: 16,
+            padding: "16px 22px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -63,43 +66,60 @@ export default function LibraryClient() {
             gap: 14,
           }}
         >
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 14.5, color: "#0B1D51" }}>
-              {isUnlocked
-                ? `Signed in (${user.email})`
-                : "Sign in to download and save books"}
-            </div>
-            <div style={{ fontSize: 13, color: "#475569", marginTop: 2 }}>
-              {isUnlocked ? (
-                <>
-                  All 20 books are unlocked here and in your{" "}
-                  <Link href="/dashboard#books" style={{ color: "#003896", fontWeight: 600 }}>
-                    Dashboard
-                  </Link>
-                  .{" "}
-                  <Link href="/privacy" style={{ color: "#003896", fontWeight: 600 }}>
-                    Privacy Policy
-                  </Link>
-                </>
-              ) : (
-                <>
-                  Use your Google account or email to unlock PDF downloads and save books to your Dashboard.{" "}
-                  <Link href="/privacy" style={{ color: "#003896", fontWeight: 600 }}>
-                    Privacy Policy
-                  </Link>
-                </>
-              )}
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 12,
+                background: isUnlocked ? "var(--green)" : "var(--navy)",
+                color: isUnlocked ? "var(--navy)" : "#fff",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <Icon name={isUnlocked ? "checkCircle" : "lock"} size={20} />
+            </span>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: 14, color: "var(--ink)" }}>
+                {isUnlocked
+                  ? `Signed in (${user.email})`
+                  : "Sign in to download and save books"}
+              </div>
+              <div style={{ fontSize: 12.6, color: "var(--body)" }}>
+                {isUnlocked ? (
+                  <>
+                    All books are available here and in your{" "}
+                    <Link href="/dashboard#books" style={{ color: "var(--green-deep)", fontWeight: 700 }}>
+                      Dashboard
+                    </Link>
+                    .{" "}
+                    <Link href="/privacy" style={{ color: "var(--green-deep)", fontWeight: 700 }}>
+                      Privacy Policy
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    Use Google or email to unlock downloads and save books to your Dashboard.{" "}
+                    <Link href="/privacy" style={{ color: "var(--green-deep)", fontWeight: 700 }}>
+                      Privacy Policy
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {isUnlocked ? (
-              <Link href="/dashboard#books" className="btn btn-primary btn-sm" style={{ textDecoration: "none" }}>
-                Open Dashboard Vault ({savedBooks.length} Saved)
+              <Link href="/dashboard#books" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
+                <Icon name="bookmark" size={14} /> Open Dashboard Vault ({savedBooks.length} Saved)
               </Link>
             ) : (
               <>
-                <Link href="/sign-up?next=/library" className="btn btn-primary btn-sm" style={{ textDecoration: "none" }}>
+                <Link href="/sign-up?next=/library" className="btn btn-green btn-sm" style={{ textDecoration: "none" }}>
                   Create Free Account
                 </Link>
                 <Link href="/sign-in?next=/library" className="btn btn-outline btn-sm" style={{ textDecoration: "none" }}>
@@ -111,34 +131,53 @@ export default function LibraryClient() {
         </div>
       </div>
 
-      {/* DEDICATED SHELF 1: CHRISTIAN & FAITH BOOKS */}
-      <section id="christian-books" style={{ padding: "48px 0 40px" }}>
+      {/* =================================================================
+          DEDICATED SHELF 1: CHRISTIAN & FAITH BOOKS (CHRISCO Youth Aflame)
+          ================================================================= */}
+      <section id="christian-books" style={{ padding: "56px 0 40px" }}>
         <div className="container">
           <div
             style={{
-              background: "#0B1D51",
-              padding: "36px 32px",
-              color: "#FFFFFF",
+              background: "linear-gradient(135deg, #010C80 0%, #0A1854 68%, #162266 100%)",
+              borderRadius: 28,
+              padding: "40px 36px",
+              color: "#fff",
+              boxShadow: "0 22px 54px rgba(1,12,128,0.18)",
+              position: "relative",
+              overflow: "hidden",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#F8C90E", marginBottom: 6 }}>
-                  CHRISCO Youth Aflame · Shelf 01
-                </div>
-                <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "clamp(1.6rem, 2.8vw, 2.15rem)", lineHeight: 1.2, color: "#FFFFFF" }}>
+                <span
+                  className="pill pill-sm"
+                  style={{
+                    background: "#FA3F26",
+                    color: "#fff",
+                    border: "none",
+                    marginBottom: 10,
+                  }}
+                >
+                  CHRISCO Youth Aflame
+                </span>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.7rem, 3vw, 2.35rem)", lineHeight: 1.15 }}>
                   Christian &amp; Prophetic Study Books
                 </h2>
-                <p style={{ color: "rgba(255,255,255,0.86)", fontSize: 14.5, maxWidth: 620, marginTop: 8 }}>
-                  Scripture-grounded studies on character, discernment, and spiritual growth published by CHRISCO Youth Aflame.
+                <p style={{ color: "rgba(255,255,255,0.8)", fontSize: 14.5, maxWidth: 620, marginTop: 8 }}>
+                  Scripture-grounded studies on character, discernment, and spiritual growth.
                 </p>
               </div>
               <a
                 href="#learning-handbooks"
-                className="btn btn-amber btn-sm"
-                style={{ textDecoration: "none" }}
+                className="btn btn-sm"
+                style={{
+                  background: "rgba(255,255,255,0.14)",
+                  color: "#fff",
+                  border: "1px solid rgba(255,255,255,0.28)",
+                  textDecoration: "none",
+                }}
               >
-                View 19 Learning Handbooks
+                Jump to 19 Learning Handbooks ↓
               </a>
             </div>
 
@@ -146,8 +185,9 @@ export default function LibraryClient() {
               <div
                 key={book.slug}
                 style={{
-                  background: "#FFFFFF",
-                  color: "#0B1D51",
+                  background: "rgba(255,255,255,0.97)",
+                  color: "var(--ink)",
+                  borderRadius: 22,
                   padding: "28px",
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
@@ -159,10 +199,12 @@ export default function LibraryClient() {
                   <Link
                     href={book.sharePath}
                     style={{
-                      width: 210,
-                      height: 296,
+                      width: 220,
+                      height: 310,
                       position: "relative",
+                      borderRadius: 14,
                       overflow: "hidden",
+                      boxShadow: "0 18px 38px rgba(1,12,128,0.24)",
                       display: "block",
                     }}
                   >
@@ -177,36 +219,45 @@ export default function LibraryClient() {
                 </div>
 
                 <div style={{ gridColumn: "span 2" }}>
-                  <div style={{ fontSize: 12.5, fontWeight: 600, color: "#003896", marginBottom: 8 }}>
-                    {book.category} · {book.pages} Pages · {book.illustrations} Visual Diagrams · {book.edition}
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
+                    <span className="pill pill-soft pill-sm">{book.category}</span>
+                    <span className="pill pill-soft pill-sm">{book.pages} Pages</span>
+                    <span className="pill pill-soft pill-sm">{book.illustrations} Visual Diagrams</span>
+                    <span className="pill pill-soft pill-sm">{book.edition}</span>
                   </div>
 
                   <Link href={book.sharePath} style={{ textDecoration: "none", color: "inherit" }}>
-                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.45rem", color: "#0B1D51", lineHeight: 1.25 }}>
+                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.5rem", color: "#010C80", lineHeight: 1.2 }}>
                       {book.title}
                     </h3>
                   </Link>
 
-                  <p style={{ color: "#334155", fontSize: 14.5, lineHeight: 1.7, marginTop: 10, marginBottom: 16 }}>
+                  <p style={{ color: "var(--body)", fontSize: 14.5, lineHeight: 1.7, marginTop: 10, marginBottom: 16 }}>
                     {book.desc}
                   </p>
 
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 8, marginBottom: 20 }}>
                     {book.highlights.map((item) => (
-                      <div key={item} style={{ fontSize: 13.5, color: "#334155", lineHeight: 1.5 }}>
-                        • {item}
+                      <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "var(--ink)" }}>
+                        <Icon name="checkCircle" size={16} style={{ color: "#FA3F26", flexShrink: 0, marginTop: 2 }} />
+                        <span>{item}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                  <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
                     <button
                       type="button"
                       onClick={() => handleDownloadClick(book)}
-                      className="btn btn-primary"
-                      style={{ cursor: "pointer" }}
+                      className="btn"
+                      style={{
+                        background: "#FA3F26",
+                        color: "#fff",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
                     >
-                      <Icon name={isUnlocked ? "download" : "lock"} size={15} />
+                      <Icon name={isUnlocked ? "download" : "lock"} size={16} />
                       {isUnlocked ? "Download 28-Page E-Book (PDF)" : "Sign In / Register to Download"}
                     </button>
 
@@ -214,14 +265,19 @@ export default function LibraryClient() {
                       type="button"
                       onClick={() => handleSaveClick(book)}
                       className="btn btn-outline"
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        background: isBookSaved?.(book.slug) ? "var(--green-tint)" : "transparent",
+                        color: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--ink)",
+                        borderColor: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--line-strong)",
+                      }}
                     >
                       <Icon name="bookmark" size={15} />
                       {isBookSaved?.(book.slug) ? "Saved in Library" : "Save Book"}
                     </button>
 
                     <Link href={book.sharePath} className="btn btn-navy" style={{ textDecoration: "none" }}>
-                      Read Book Overview
+                      Read Book Overview &amp; Share Link →
                     </Link>
 
                     <button
@@ -230,7 +286,7 @@ export default function LibraryClient() {
                       className="btn btn-outline"
                       style={{ cursor: "pointer" }}
                     >
-                      Share Book
+                      <Icon name="send" size={15} /> Share Book
                     </button>
                   </div>
 
@@ -246,19 +302,21 @@ export default function LibraryClient() {
         </div>
       </section>
 
-      {/* DEDICATED SHELF 2: PRACTICAL DIGITAL SKILLS & LEARNING HANDBOOKS */}
-      <section id="learning-handbooks" style={{ background: "#FFFFFF", padding: "36px 0 88px" }}>
+      {/* =================================================================
+          DEDICATED SHELF 2: PRACTICAL DIGITAL SKILLS & LEARNING HANDBOOKS
+          ================================================================= */}
+      <section id="learning-handbooks" className="section-frost" style={{ padding: "48px 0 96px" }}>
         <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 18, marginBottom: 24 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 18, marginBottom: 28 }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: "#003896", marginBottom: 6 }}>
-                CHRISCO Digital Academy · Shelf 02
-              </div>
-              <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "clamp(1.6rem, 2.6vw, 2.1rem)", color: "#0B1D51" }}>
+              <span className="pill pill-soft pill-sm" style={{ marginBottom: 10 }}>
+                CHRISCO Digital Academy
+              </span>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.65rem, 2.8vw, 2.25rem)", color: "var(--ink)" }}>
                 Practical Skill &amp; Learning Handbooks
               </h2>
-              <p style={{ color: "#334155", fontSize: 14.5, maxWidth: 620, marginTop: 6 }}>
-                19 illustrated 28-page study guides with clear diagrams, East African case studies, and practical exercises.
+              <p style={{ color: "var(--body)", fontSize: 14.5, maxWidth: 620, marginTop: 6 }}>
+                Study guides with clear diagrams, local case studies, and practical exercises.
               </p>
             </div>
 
@@ -273,15 +331,17 @@ export default function LibraryClient() {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 28 }}>
+          {/* Category filter pills */}
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
             <button
               type="button"
               onClick={() => setCategoryFilter("All")}
               className="pill pill-sm"
               style={{
                 cursor: "pointer",
-                background: categoryFilter === "All" ? "#0B1D51" : "#F5F7FA",
-                color: categoryFilter === "All" ? "#FFFFFF" : "#0B1D51",
+                background: categoryFilter === "All" ? "var(--navy)" : "var(--surface)",
+                color: categoryFilter === "All" ? "#fff" : "var(--ink)",
+                borderColor: categoryFilter === "All" ? "var(--navy)" : "var(--line-strong)",
               }}
             >
               All 19 Handbooks
@@ -294,8 +354,9 @@ export default function LibraryClient() {
                 className="pill pill-sm"
                 style={{
                   cursor: "pointer",
-                  background: categoryFilter === cat.name ? "#0B1D51" : "#F5F7FA",
-                  color: categoryFilter === cat.name ? "#FFFFFF" : "#0B1D51",
+                  background: categoryFilter === cat.name ? "var(--navy)" : "var(--surface)",
+                  color: categoryFilter === cat.name ? "#fff" : "var(--ink)",
+                  borderColor: categoryFilter === cat.name ? "var(--navy)" : "var(--line-strong)",
                 }}
               >
                 {cat.name}
@@ -303,21 +364,23 @@ export default function LibraryClient() {
             ))}
           </div>
 
+          {/* Handbooks Grid */}
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
-              gap: 20,
+              gap: 24,
             }}
           >
             {filteredCourseBooks.map((book) => (
               <div
                 key={book.slug}
+                className="card"
                 style={{
-                  background: "#F5F7FA",
                   display: "flex",
                   flexDirection: "column",
                   overflow: "hidden",
+                  padding: 0,
                 }}
               >
                 <Link
@@ -325,7 +388,8 @@ export default function LibraryClient() {
                   style={{
                     display: "flex",
                     gap: 16,
-                    padding: "20px 20px 14px",
+                    padding: "20px 20px 16px",
+                    background: "linear-gradient(155deg, #F6F7FB 0%, #ECEFFA 100%)",
                     textDecoration: "none",
                     color: "inherit",
                     alignItems: "center",
@@ -333,11 +397,13 @@ export default function LibraryClient() {
                 >
                   <div
                     style={{
-                      width: 80,
-                      height: 114,
+                      width: 88,
+                      height: 124,
                       position: "relative",
+                      borderRadius: 8,
                       overflow: "hidden",
                       flexShrink: 0,
+                      boxShadow: "0 10px 22px rgba(20,19,59,0.18)",
                     }}
                   >
                     <Image
@@ -349,20 +415,20 @@ export default function LibraryClient() {
                     />
                   </div>
                   <div>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: "#003896", marginBottom: 4 }}>
+                    <span className="pill pill-soft pill-sm" style={{ marginBottom: 6 }}>
                       {book.category}
-                    </div>
-                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "1.02rem", color: "#0B1D51", lineHeight: 1.3 }}>
+                    </span>
+                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", color: "var(--ink)", lineHeight: 1.28 }}>
                       {book.title}
                     </h3>
-                    <div style={{ fontSize: 12, color: "#475569", marginTop: 6 }}>
+                    <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>
                       {book.pages} Pages · {book.illustrations} Diagrams · {book.level}
                     </div>
                   </div>
                 </Link>
 
-                <div style={{ padding: "8px 20px 20px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <p style={{ fontSize: 13.5, color: "#334155", lineHeight: 1.6, flex: 1, marginBottom: 16 }}>
+                <div style={{ padding: "16px 20px 20px", display: "flex", flexDirection: "column", flex: 1 }}>
+                  <p style={{ fontSize: 13.3, color: "var(--body)", lineHeight: 1.6, flex: 1, marginBottom: 16 }}>
                     {book.subtitle || book.desc}
                   </p>
 
@@ -370,7 +436,7 @@ export default function LibraryClient() {
                     <button
                       type="button"
                       onClick={() => handleDownloadClick(book)}
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-navy btn-sm"
                       style={{ flex: 1, cursor: "pointer" }}
                     >
                       <Icon name={isUnlocked ? "download" : "lock"} size={14} />
@@ -382,7 +448,13 @@ export default function LibraryClient() {
                       className="btn btn-outline btn-sm"
                       title={isBookSaved?.(book.slug) ? "Saved in your Dashboard" : "Save book to your Dashboard"}
                       aria-label={isBookSaved?.(book.slug) ? `Unsave ${book.title}` : `Save ${book.title}`}
-                      style={{ cursor: "pointer", padding: "9px 12px" }}
+                      style={{
+                        cursor: "pointer",
+                        padding: "9px 12px",
+                        background: isBookSaved?.(book.slug) ? "var(--green-tint)" : "transparent",
+                        color: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--ink)",
+                        borderColor: isBookSaved?.(book.slug) ? "var(--green-deep)" : "var(--line-strong)",
+                      }}
                     >
                       <Icon name="bookmark" size={14} />
                       {isBookSaved?.(book.slug) ? "Saved" : "Save"}
@@ -393,7 +465,7 @@ export default function LibraryClient() {
                       title="Open shareable book page"
                       style={{ textDecoration: "none", padding: "9px 12px" }}
                     >
-                      Overview
+                      Share →
                     </Link>
                   </div>
                 </div>

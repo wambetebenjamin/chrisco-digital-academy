@@ -1,83 +1,21 @@
 /*
- * PhotoHero renders a clean institutional banner with a dark navy/photo
- * background and a calm translucent navy caption block.
+ * PhotoHero renders the hero scrim only. The route-level PageBackdrop paints
+ * the photograph across the whole page, so the hero deliberately does NOT
+ * render its own <Image> -- that would load the same asset twice and stack two
+ * different opacities over each other. `image`/`imagePosition` remain in the
+ * signature for call-site compatibility.
  */
 export default function PhotoHero({ image, eyebrow, title, lead, children, imagePosition = "center 30%", titleStyle }) {
   return (
-    <section
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        background: "#0B1D51",
-        padding: "clamp(136px, 16vw, 176px) 0 36px",
-      }}
-    >
-      {image && (
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: `url('${image}')`,
-            backgroundSize: "cover",
-            backgroundPosition: imagePosition,
-            opacity: 0.35,
-          }}
-        />
-      )}
+    <section style={{ position: "relative", overflow: "hidden", background: "rgba(0,35,51,0.34)", padding: "158px 0 76px" }}>
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(112deg, rgba(0,35,51,0.92) 0%, rgba(0,35,51,0.76) 46%, rgba(1,58,79,0.56) 100%)" }} />
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: "radial-gradient(640px 320px at 88% 8%, rgba(0,255,132,0.16), transparent 62%)" }} />
+      <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 110, background: "linear-gradient(0deg, rgba(250,250,246,0.55), transparent)" }} />
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
-        <div
-          style={{
-            maxWidth: 1080,
-            background: "rgba(11, 29, 81, 0.78)",
-            padding: "24px 28px 26px",
-            color: "#FFFFFF",
-          }}
-        >
-          {eyebrow && (
-            <div
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: 13,
-                fontWeight: 600,
-                color: "#F8C90E",
-                marginBottom: 6,
-              }}
-            >
-              {eyebrow}
-            </div>
-          )}
-          <h1
-            style={{
-              fontFamily: "var(--font-head)",
-              fontWeight: 700,
-              color: "#FFFFFF",
-              fontSize: "clamp(24px, 2.8vw, 34px)",
-              textTransform: "uppercase",
-              margin: 0,
-              lineHeight: 1.22,
-              ...titleStyle,
-            }}
-          >
-            {title}
-          </h1>
-          {lead && (
-            <p
-              style={{
-                fontFamily: "Georgia, 'Times New Roman', serif",
-                maxWidth: 780,
-                marginTop: 12,
-                marginBottom: 0,
-                color: "rgba(255, 255, 255, 0.92)",
-                fontSize: "clamp(16px, 1.55vw, 20px)",
-                lineHeight: 1.5,
-              }}
-            >
-              {lead}
-            </p>
-          )}
-          {children}
-        </div>
+        {eyebrow && <span className="eyebrow on-dark fade-up">{eyebrow}</span>}
+        <h1 className="display on-dark fade-up fade-up-1" style={{ marginTop: 20, ...titleStyle }}>{title}</h1>
+        {lead && <p className="lead fade-up fade-up-2" style={{ maxWidth: 620, marginTop: 24, color: "rgba(255,255,255,0.78)" }}>{lead}</p>}
+        {children}
       </div>
     </section>
   )
