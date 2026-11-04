@@ -67,7 +67,7 @@ export default function Footer() {
                       </Link>
                     </div>
                     <p style={{ color: "rgba(255,255,255,0.68)", fontSize: 14, lineHeight: 1.75 }}>
-                      CHRISCO Digital Academy is a youth-led movement creating safe spaces for learning and ensuring every young African has a chance at practical digital education — starting in Jinja, reaching everywhere.
+                      CHRISCO Digital Academy is a learning platform of CHRISCO Youth Aflame — equipping young Africans with practical digital skills that open real opportunities.
                     </p>
                     <div className="social-icons">
                       <ul style={{ display: "flex", gap: 10, listStyle: "none", margin: "18px 0 0", padding: 0 }}>
@@ -189,7 +189,7 @@ export default function Footer() {
             <div className="separator" style={{ display: "none" }} />
             <div className="col col-xs-12">
               <p className="copyright" style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", margin: 0 }}>
-                © Copyright <a href="/" style={{ color: "#fff", textDecoration: "none" }}>CHRISCO Digital Academy</a> | All rights reserved. &nbsp;·&nbsp; Founded by Wambete Benjamin · Jinja, Uganda &nbsp;·&nbsp; <a href="#" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none" }}>Back to top ↑</a>
+                © Copyright <a href="/" style={{ color: "#fff", textDecoration: "none" }}>CHRISCO Digital Academy</a> | All rights reserved. &nbsp;·&nbsp; CHRISCO Youth Aflame &nbsp;·&nbsp; <a href="#" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none" }}>Back to top ↑</a>
               </p>
             </div>
           </div>

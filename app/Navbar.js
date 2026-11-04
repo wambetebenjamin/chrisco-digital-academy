@@ -52,8 +52,8 @@ export default function Navbar() {
               </a>
             </li>
             <li className="hide-mobile">
-              <Icon name="pin" size={14} style={{ color: "#F74F22" }} />
-              <span>Jinja, Uganda</span>
+              <Icon name="flame" size={14} style={{ color: "#F74F22" }} />
+              <span style={{ fontWeight: 700, letterSpacing: "0.04em" }}>CHRISCO Youth Aflame</span>
             </li>
           </ul>
           <div className="contact-into">
@@ -136,13 +136,7 @@ export default function Navbar() {
                         </li>
                       )
                     })}
-                    {/* Free Training external like KYN */}
-                    <li>
-                      <a href="https://lms.kibrayouthnetwork.org/" target="_blank" rel="noopener noreferrer" className="kyn-nav-link" style={{ fontFamily: "var(--font-head)", fontWeight: 600, fontSize: 14, color: "#1A2B26", padding: "10px 11px", textDecoration: "none", whiteSpace: "nowrap" }}>
-                        Free Training
-                      </a>
-                    </li>
-                    {/* Donate / Join — KYN orange pill */}
+                    {/* Primary CTA */}
                     <li className="kyn-donate" style={{ marginLeft: 8 }}>
                       {user ? (
                         <Link href="/dashboard" className="btn-kyn-donate" style={{ background: "#F74F22", color: "#fff", borderRadius: 999, padding: "11px 18px", fontWeight: 800, fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
@@ -272,22 +266,7 @@ export default function Navbar() {
                 </Link>
               )
             })}
-            <a
-              href="https://lms.kibrayouthnetwork.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                padding: "13px 14px",
-                borderRadius: 12,
-                fontFamily: "var(--font-head)",
-                fontSize: 15,
-                fontWeight: 600,
-                color: "#061408",
-                textDecoration: "none",
-              }}
-            >
-              Free Training ↗
-            </a>
+
           </div>
 
           <div style={{ borderTop: "1px solid #E8EDE9", marginTop: 16, paddingTop: 16, display: "flex", flexDirection: "column", gap: 10 }}>

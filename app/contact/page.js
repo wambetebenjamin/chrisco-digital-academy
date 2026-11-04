@@ -13,10 +13,10 @@ export const metadata = {
 }
 
 const infoItems = [
-  { icon: "mail", label: "Email", value: "shambetz@gmail.com" },
+  { icon: "mail", label: "Email", value: "chriscoyouthaflame2025@gmail.com" },
   { icon: "phone", label: "Phone & WhatsApp", value: "+254 112 272 061" },
-  { icon: "pin", label: "Location", value: "Jinja, Uganda" },
   { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame" },
+  { icon: "globe", label: "Reach", value: "Serving youth across Africa" },
 ]
 
 export default function Contact() {

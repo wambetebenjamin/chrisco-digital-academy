@@ -35,24 +35,24 @@ const steps = [
 const heroSlides = [
   {
     image: "/images/bg-home.jpg",
-    eyebrow: "From Jinja to the World",
+    eyebrow: "Practical Skills for Real Life",
     title: "Empowering Youth,",
     accent: "Transforming Futures",
-    lead: "CHRISCO Digital Academy is a modern learning platform for African youth — practical courses in design, code, marketing, writing, video and AI.",
+    lead: "CHRISCO Digital Academy is a modern learning platform for young creators — practical courses in design, code, marketing, writing, video and AI.",
   },
   {
     image: "/images/bg-about.jpg",
     eyebrow: "One Community, Endless Possibilities",
     title: "Youth inspiring",
     accent: "change beyond boundaries",
-    lead: "Learn practical skills that actually pay. 19 courses, hands-on projects, mentorship from Wambete Benjamin and the CHRISCO Youth Aflame team.",
+    lead: "Learn practical skills that actually pay. 19 courses, hands-on projects, mentorship from the CHRISCO Youth Aflame tutor team.",
   },
   {
     image: "/images/bg-courses.jpg",
     eyebrow: "Building stronger futures",
     title: "Design, Code &",
     accent: "AI Skills",
-    lead: "Education, creativity and mentorship — bridging the digital divide for the next generation of African creators and builders.",
+    lead: "Education, creativity and mentorship — bridging the digital divide for the next generation of creators and builders.",
   },
 ]
 
@@ -239,7 +239,7 @@ export default function Home() {
               <div className="kyn-about-media-main" style={{ position: "relative", borderRadius: 20, overflow: "hidden", aspectRatio: "4/3.1", border: "1px solid #E8EDE9", boxShadow: "0 12px 32px rgba(24,50,46,0.08)" }}>
                 <Image src="/images/hero-tile.jpg" alt="Learner at CHRISCO Digital Academy" fill sizes="(min-width: 900px) 560px, 92vw" style={{ objectFit: "cover" }} />
                 <span className="kyn-about-badge" style={{ position: "absolute", top: 18, left: 18, background: "#18322E", color: "#fff", padding: "8px 14px", borderRadius: 999, fontSize: 12, fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 7 }}>
-                  <Icon name="pin" size={13} /> Made in Uganda
+                  <Icon name="cap" size={13} /> Learn by Doing
                 </span>
               </div>
               {/* Since badge */}
@@ -257,14 +257,14 @@ export default function Home() {
             {/* Content */}
             <div className="right-content">
               <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 14, letterSpacing: "0.14em", textTransform: "uppercase", color: "#F74F22", margin: 0, display: "inline-flex", alignItems: "center", gap: 8 }}>
-                <Image src="https://kibrayouthnetwork.org/wp-content/uploads/2024/11/healthcare.svg" alt="" width={18} height={18} style={{ width: 18, height: 18 }} />
-                Kibra Youth Network · CHRISCO Digital Academy
+                <Icon name="flame" size={16} style={{ color: "#F74F22" }} />
+                CHRISCO Youth Aflame · CHRISCO Digital Academy
               </h2>
               <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)", lineHeight: 1.08, color: "#061408", margin: "10px 0 0" }}>
                 Empowering Youth, Building Stronger <span style={{ color: "#F74F22" }}>Communities</span>
               </h3>
               <p style={{ fontSize: 15, lineHeight: 1.75, color: "#2E3B35", marginTop: 16 }}>
-                Helping young people unlock potential creates a brighter future for all. At CHRISCO Digital Academy, under CHRISCO Youth Aflame, we provide practical digital education, mentorship, life skills, and community-driven opportunities. By equipping youth with knowledge, resilience, and creativity, we inspire transformation that extends beyond Jinja to the world.
+                Helping young people unlock potential creates a brighter future for all. At CHRISCO Digital Academy, under CHRISCO Youth Aflame, we provide practical digital education, mentorship, life skills, and community-driven opportunities. By equipping youth with knowledge, resilience, and creativity, we inspire transformation that reaches far beyond the classroom.
               </p>
               <div className="about-tab" style={{ marginTop: 22 }}>
                 <div className="tab-wrap" style={{ display: "flex", gap: 18, alignItems: "center" }}>
@@ -328,7 +328,7 @@ export default function Home() {
           <div className="section-title section-title-s3 kyn-h1-title" style={{ textAlign: "left", maxWidth: 560, margin: "0 0 40px" }}>
             <span className="subtitle" style={{ color: "#F74F22", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", fontSize: 12 }}>Our projects</span>
             <h1 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "clamp(2rem, 4vw, 2.8rem)", lineHeight: 1.08, color: "#061408", margin: 0 }}>
-              What we are <span style={{ color: "#F74F22" }}>building</span> in Jinja
+              What we are <span style={{ color: "#F74F22" }}>building</span> together
             </h1>
           </div>
 
@@ -405,38 +405,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= KIBERA TOURS — repurposed as Jinja / Campus ================= */}
+      {/* ================= COMMUNITY — Learn With Us ================= */}
       <section className="section" style={{ background: "#FAF9F6", padding: "64px 0" }}>
         <div className="container" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
           <div className="kyn-tours" style={{ display: "grid", gap: 0, gridTemplateColumns: "1.15fr 1fr", background: "#fff", border: "1px solid #E8EDE9", borderRadius: 20, overflow: "hidden", boxShadow: "0 12px 32px rgba(24,50,46,0.08)" }}>
             <div className="kyn-tours-media" style={{ position: "relative", minHeight: 380, background: "#E8EDE9" }}>
-              <Image src="/images/bg-cta.jpg" alt="Jinja community" fill sizes="(min-width: 900px) 640px, 92vw" style={{ objectFit: "cover" }} />
+              <Image src="/images/bg-cta.jpg" alt="Learning community" fill sizes="(min-width: 900px) 640px, 92vw" style={{ objectFit: "cover" }} />
             </div>
             <div className="kyn-tours-body" style={{ padding: "36px 32px" }}>
-              <h3 style={{ fontWeight: 800, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#F74F22", margin: "0 0 10px" }}>Visit Us in Jinja</h3>
+              <h3 style={{ fontWeight: 800, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#F74F22", margin: "0 0 10px" }}>Learn With Our Community</h3>
               <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "clamp(1.6rem, 3vw, 2.2rem)", lineHeight: 1.1, color: "#061408", margin: "0 0 14px" }}>
-                See CHRISCO <span style={{ color: "#F74F22" }}>with local youth</span>
+                Grow <span style={{ color: "#F74F22" }}>with mentors</span> who guide you
               </h2>
               <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "#2E3B35", margin: "0 0 18px" }}>
-                Take a campus walk led by young people who learn here. Meet traders and artisans, visit CHRISCO projects and hear real stories behind Jinja, told with respect.
+                Join small cohorts guided by practitioners who teach what they do — design, code, video and AI. Learn through real projects and supportive feedback.
               </p>
               <ul style={{ listStyle: "none", margin: "0 0 22px", padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
                 <li style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 13.5, fontWeight: 600, color: "#061408" }}>
-                  <Icon name="check" size={14} style={{ color: "#F74F22" }} /> Led by local youth guides
+                  <Icon name="check" size={14} style={{ color: "#F74F22" }} /> Led by experienced practitioners
                 </li>
                 <li style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 13.5, fontWeight: 600, color: "#061408" }}>
-                  <Icon name="check" size={14} style={{ color: "#F74F22" }} /> Small groups, hands-on demos
+                  <Icon name="check" size={14} style={{ color: "#F74F22" }} /> Small groups, hands-on projects
                 </li>
                 <li style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 13.5, fontWeight: 600, color: "#061408" }}>
-                  <Icon name="check" size={14} style={{ color: "#F74F22" }} /> Open to visitors, schools and groups
+                  <Icon name="check" size={14} style={{ color: "#F74F22" }} /> Open to beginners, students and teams
                 </li>
               </ul>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <a href="https://wa.me/254112272061" className="theme-btn" style={{ background: "#F74F22", color: "#fff", borderRadius: 999, padding: "12px 20px", fontWeight: 800, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
-                  <Icon name="whatsapp" size={16} /> Book on WhatsApp
-                </a>
-                <Link href="/about" style={{ background: "#fff", border: "1.5px solid #E8EDE9", color: "#061408", borderRadius: 999, padding: "12px 20px", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
-                  Tour details →
+                <Link href="/courses" className="theme-btn" style={{ background: "#F74F22", color: "#fff", borderRadius: 999, padding: "12px 20px", fontWeight: 800, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  Explore Courses →
+                </Link>
+                <Link href="/contact" style={{ background: "#fff", border: "1.5px solid #E8EDE9", color: "#061408", borderRadius: 999, padding: "12px 20px", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  Contact Us →
                 </Link>
               </div>
             </div>
@@ -564,7 +564,7 @@ export default function Home() {
         <div className="container" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap", marginBottom: 32 }}>
             <div>
-              <span style={{ fontWeight: 800, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "#F74F22" }}>Moments from Jinja</span>
+              <span style={{ fontWeight: 800, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "#F74F22" }}>Moments from Our Community</span>
               <h2 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "2rem", color: "#061408", margin: "8px 0 0" }}>
                 Our <span style={{ color: "#F74F22" }}>Gallery</span>
               </h2>

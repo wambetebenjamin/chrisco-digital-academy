@@ -22,7 +22,7 @@ const sections = [
     id: "data-protection",
     title: "2. Applicable Data Protection Frameworks & Core Principles",
     body: [
-      "Our data protection practices are designed in alignment with the Kenya Data Protection Act, 2019, the Uganda Data Protection and Privacy Act, 2019, and internationally recognized GDPR principles:",
+      "Our data protection practices are designed in alignment with applicable data protection laws, including the Kenya Data Protection Act, 2019, and internationally recognized GDPR principles:",
       "• Lawfulness, Fairness & Transparency: We explain clearly why your account details are requested before you submit them.\n• Purpose Limitation: Data collected to create your learner account and unlock book downloads is never repurposed for unrelated profiling.\n• Data Minimization: We request only the minimum details necessary for your student account and library access.\n• Storage Limitation & Security: Access tokens expire automatically and store salted cryptographic hashes rather than plaintext emails in cookies.",
     ],
   },
