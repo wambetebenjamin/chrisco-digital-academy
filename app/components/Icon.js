@@ -359,6 +359,30 @@ const paths = {
   bookmark: (
     <path d="M6 3.5h12a1.5 1.5 0 0 1 1.5 1.5v16l-7.5-4.4L4.5 21V5A1.5 1.5 0 0 1 6 3.5z" />
   ),
+  facebook: (
+    <path d="M14.2 8.2h2.3V4.8c-.4-.06-1.7-.18-3.2-.18-3.2 0-5.4 1.95-5.4 5.5v3.1H4.6v3.8h3.3v9h4.1v-9h3.2l.5-3.8h-3.7v-2.7c0-1.1.3-1.9 1.9-1.9z" fill="currentColor" stroke="none" />
+  ),
+  instagram: (
+    <>
+      <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="4.5" />
+      <circle cx="12" cy="12" r="3.8" />
+      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+    </>
+  ),
+  linkedin: (
+    <>
+      <path d="M5.8 8.2h3.6v9H5.8z" fill="currentColor" stroke="none" />
+      <circle cx="7.6" cy="5.6" r="1.6" fill="currentColor" stroke="none" />
+      <path d="M11.6 8.2h3.4v1.3h.05c.47-.9 1.62-1.84 3.33-1.84 3.56 0 4.22 2.34 4.22 5.38v6.2h-3.6v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.91v5.6h-3.6v-9z" fill="currentColor" stroke="none" />
+    </>
+  ),
+  linked: (
+    <>
+      <path d="M5.8 8.2h3.6v9H5.8z" fill="currentColor" stroke="none" />
+      <circle cx="7.6" cy="5.6" r="1.6" fill="currentColor" stroke="none" />
+      <path d="M11.6 8.2h3.4v1.3h.05c.47-.9 1.62-1.84 3.33-1.84 3.56 0 4.22 2.34 4.22 5.38v6.2h-3.6v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.91v5.6h-3.6v-9z" fill="currentColor" stroke="none" />
+    </>
+  ),
 }
 
 export default function Icon({ name, size = 18, strokeWidth = 1.9, style, className, ...rest }) {
