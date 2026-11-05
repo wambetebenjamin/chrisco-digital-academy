@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Chrisco Digital Academy — TikTok Campaign (19 Courses)</title>
+<style>
+:root{--navy:#0D2056;--magenta:#D60062;--yellow:#FFD600;--blue:#0B46DA}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:#f6f7fb;color:#111}
+header{padding:28px 20px;text-align:center;background:white;border-bottom:4px solid var(--yellow)}
+header h1{margin:0;color:var(--navy);font-size:28px}
+header p{margin:8px 0 0;color:#555}
+.grid{max-width:1200px;margin:28px auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(13,32,86,.08);border:1px solid #eee}
+.card video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#000}
+.card .meta{padding:14px}
+.card .meta h3{margin:0 0 6px;font-size:15px;color:var(--navy);line-height:1.25}
+.card .meta p{margin:0;color:#666;font-size:13px}
+.badge{display:inline-block;margin-bottom:6px;font-size:11px;font-weight:800;letter-spacing:.06em;color:white;background:var(--magenta);padding:4px 8px;border-radius:999px}
+.badge.blue{background:var(--blue)}
+.pill{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--magenta);border:1px solid var(--magenta);padding:5px 10px;border-radius:999px;text-decoration:none}
+footer{max-width:1200px;margin:0 auto;padding:24px 20px;color:#888;font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div style="color:#E10B7A;font-size:20px;letter-spacing:.2em">● ● ●</div>
+  <h1>UNLOCK THE POWER — TikTok Campaign</h1>
+  <p>19 vertical videos • 1080×1920 • 10s • H.264 + AAC • no-watermark photography • template-accurate design + original background music</p>
+  <p style="margin-top:6px"><a href="/" style="color:#0B46DA;font-weight:700;text-decoration:none">← Back to Chrisco Digital Academy</a> &nbsp; • &nbsp; <span style="color:#0D2056;font-weight:700">Ready to post to TikTok / Reels / Shorts</span></p>
+</header>
+<div class="grid" id="grid"></div>
+<footer>Generated 2026-11-05 from <code>scripts/generate-tiktok-videos.py</code> • Template: <code>tiktok courses.mp4</code> • Music: original C-G-Am-F lo-fi loop (44.1kHz stereo) • Contact: chriscoyouthaflame2025@gmail.com</footer>
+<script>
+const courses=[
+ ["youtube-automation","YouTube Automation","8 WEEKS • BEGINNER","Build faceless channels that earn while you sleep."],
+ ["python-programming","Python Programming","8 WEEKS • BEGINNER","Learn to code from zero and build real, useful tools."],
+ ["print-on-demand","Print on Demand","8 WEEKS • BEGINNER","Sell custom-designed products worldwide, with zero inventory."],
+ ["ghostwriting","Ghostwriting","8 WEEKS • INTERMEDIATE","Get paid well to write, while someone else takes the credit."],
+ ["freelancing","Freelancing","8 WEEKS • BEGINNER","Turn your skills into online income, from anywhere in Africa."],
+ ["digital-marketing","Digital Marketing","8 WEEKS • BEGINNER","Grow any business online, with strategy, not guesswork."],
+ ["copywriting","Copywriting","8 WEEKS • BEGINNER","Write words that sell, and get paid for every one."],
+ ["email-marketing","Email Marketing","8 WEEKS • INTERMEDIATE","Build a list and turn subscribers into loyal customers."],
+ ["affiliate-marketing","Affiliate Marketing","8 WEEKS • BEGINNER","Earn commissions promoting products you don't have to make."],
+ ["social-media-marketing","Social Media Marketing","8 WEEKS • BEGINNER","Grow brands and businesses on the platforms people live on."],
+ ["swe-llm-mastery","SWE & LLM Mastery","8 WEEKS • INTERMEDIATE","Build real, AI-powered software with modern engineering."],
+ ["communicate-like-a-ceo","Communicate Like a CEO","6 WEEKS • ALL LEVELS","Speak with the clarity, calm and authority of the top 1%."],
+ ["master-negotiation","Master Negotiation","6 WEEKS • ALL LEVELS","Win better deals, raise your rates, and keep the relationship."],
+ ["ai-video-storytelling","AI Video Storytelling","6 WEEKS • BEGINNER","Turn ideas into videos that hook, move and travel across every feed."],
+ ["personal-branding-visibility-is-currency","Personal Branding: Visibility Is Currency","6 WEEKS • ALL LEVELS","Become the name people remember, trust and call first."],
+ ["ai-literacy-for-work-productivity","AI Literacy for Work & Productivity","5 WEEKS • BEGINNER","Use AI tools to work faster, learn quicker and get more done."],
+ ["content-creation-mastery","Content Creation Mastery","6 WEEKS • BEGINNER","Create content people stop for, with nothing but a phone."],
+ ["sales-marketing-full-course","Sales & Marketing Full Course","8 WEEKS • ALL LEVELS","Attract customers, pitch with confidence, and close the sale."],
+ ["networking-like-the-top-1","Networking Like the Top 1%","5 WEEKS • ALL LEVELS","Build relationships that open doors, even if you're an introvert."],
+];
+const grid=document.getElementById('grid');
+for(const [slug,title,meta,tag] of courses){
+  const card=document.createElement('div');
+  card.className='card';
+  card.innerHTML=`
+    <video controls preload="metadata" playsinline poster="" src="${slug}.mp4"></video>
+    <div class="meta">
+      <span class="badge">TIKTOK 9:16</span> <span class="badge blue">10s</span>
+      <h3>${title}</h3>
+      <p>${meta}</p>
+      <p style="margin-top:6px;font-style:italic;color:#D60062">“${tag}”</p>
+      <a class="pill" href="${slug}.mp4" download>Download MP4 ↗</a>
+    </div>`;
+  grid.appendChild(card);
+}
+</script>
+</body>
+</html>
