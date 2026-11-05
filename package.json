@@ -12,7 +12,9 @@
     "films:align": "python3 tools/promo/batch.py align",
     "films:render": "python3 tools/promo/batch.py render",
     "films:package": "python3 tools/promo/batch.py package",
-    "films:status": "python3 tools/promo/batch.py status"
+    "films:status": "python3 tools/promo/batch.py status",
+    "films:verify": "python3 tools/promo/verify.py",
+    "films:publish": "python3 tools/promo/publish.py"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.97.1",

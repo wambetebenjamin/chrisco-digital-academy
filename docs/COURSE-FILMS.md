@@ -16,6 +16,30 @@ Rendered films and their assets live in the `course-films-v1` release:
 https://github.com/wambetebenjamin/chrisco-digital-academy/releases/tag/course-films-v1
 ```
 
+## Publishing (and why not from the sandbox)
+
+GitHub's asset upload host (`uploads.github.com`) is unreachable from the agent
+sandbox, so the films are published by running:
+
+```bash
+python tools/promo/media_snapshot.py build   # stage films + one-click zips
+python tools/promo/publish.py                # upload anything missing
+python tools/promo/publish.py --verify       # HEAD-check every download link
+```
+
+`publish.py` reads what is actually on disk, uploads only what the release does
+not already have, and rewrites `RELEASE-LINKS.md` from the files it verified —
+so a link in the docs can never point at an asset that was not uploaded.
+
+## Quality gate
+
+```bash
+python tools/promo/verify.py film-render/digital-marketing.mp4
+```
+
+Checks container/codec/frame size, AAC 48 kHz, loudness (−14 LUFS ±2),
+duration (85–96 s), and rejects any film with a black gap longer than 0.5 s.
+
 ## Rebuilding
 
 ```bash

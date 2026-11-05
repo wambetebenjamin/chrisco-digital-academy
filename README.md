@@ -72,8 +72,10 @@ as GitHub Release assets rather than repository files:
 https://github.com/wambetebenjamin/chrisco-digital-academy/releases/tag/course-films-v1
 ```
 
-Rebuild with `npm run films:texts`, `films:align`, `films:render`,
-`films:package` — full notes in [docs/COURSE-FILMS.md](./docs/COURSE-FILMS.md).
+Download them all from **[/films](https://chrisco-digital-academy.vercel.app/films)**
+or straight from the release. Rebuild with `npm run films:texts`, `films:align`,
+`films:render`, `films:verify`, `films:publish` — full notes in
+[docs/COURSE-FILMS.md](./docs/COURSE-FILMS.md).
 
 ## 🧪 Tests
 
