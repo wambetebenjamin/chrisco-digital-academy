@@ -17,7 +17,7 @@ COPY = {
     "youtube-automation": {
         "hook_display": ["WHAT IF YOUR", "CHANNEL MADE", "MONEY WHILE", "YOU SLEEP?"],
         "outcome_lines": ["A CHANNEL", "THAT PAYS YOU", "WHILE YOU SLEEP"],
-        "cta": "Nineteen practical courses. Seven tracks. One academy built for African youth. Enrol today at CHRISCO Digital Academy, where skills pay.",
+        "cta": "Your channel can start this week. Enrol today at CHRISCO Digital Academy, where skills pay.",
         "narration": {
             "hook": "What if your channel could earn while you sleep, without your face on camera? That is YouTube automation. And it is a system, not luck.",
             "curriculum": "Over eight weeks you go from a blank channel to a monetised machine. You pick a profitable niche, research and script videos, produce voiceover and footage, then optimise titles, thumbnails and search.",

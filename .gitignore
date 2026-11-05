@@ -53,3 +53,6 @@ tools/promo/vo/
 # python cache
 tools/promo/__pycache__/
 __pycache__/
+
+# media staging for release publishing (large binaries, never in history)
+/media/
