@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test tests/*.test.mjs && vitest run"
+    "test": "node --test tests/*.test.mjs && vitest run",
+    "films:texts": "python3 tools/promo/batch.py texts",
+    "films:align": "python3 tools/promo/batch.py align",
+    "films:render": "python3 tools/promo/batch.py render",
+    "films:package": "python3 tools/promo/batch.py package",
+    "films:status": "python3 tools/promo/batch.py status"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.97.1",

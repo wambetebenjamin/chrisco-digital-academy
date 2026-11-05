@@ -62,6 +62,19 @@ Setup for restoring the database and enabling Google sign-in is documented in
 - Referral links look like `/?ref=YOURCODE`. The code is stored for 60 days,
   attached to sign-ups, and summarised on the Affiliates page.
 
+## 🎬 Course Films
+
+Every course has a ~90-second vertical promo film (1080 × 1920, narrated,
+captioned). They are built from the same course data as the site and published
+as GitHub Release assets rather than repository files:
+
+```
+https://github.com/wambetebenjamin/chrisco-digital-academy/releases/tag/course-films-v1
+```
+
+Rebuild with `npm run films:texts`, `films:align`, `films:render`,
+`films:package` — full notes in [docs/COURSE-FILMS.md](./docs/COURSE-FILMS.md).
+
 ## 🧪 Tests
 
 ```bash

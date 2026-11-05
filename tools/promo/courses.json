@@ -1,0 +1,648 @@
+[
+  {
+    "id": 1,
+    "icon": "play",
+    "title": "YouTube Automation",
+    "img": "/images/courses/youtube-automation.jpg",
+    "category": "Video",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.9",
+    "students": "50+",
+    "color": [
+      "#E60914",
+      "#EE6816"
+    ],
+    "objectives": [
+      "Set up a faceless channel in a profitable niche",
+      "Script and produce videos with voiceover and stock footage",
+      "Optimise titles, thumbnails and SEO for search",
+      "Reach monetisation and plan a scaling routine"
+    ],
+    "desc": "Build and grow automated YouTube channels that earn money without showing your face.",
+    "syllabus": [
+      "Introduction to YouTube Automation",
+      "Finding profitable niches",
+      "Content research and scripting",
+      "Voiceover and video creation tools",
+      "Uploading and SEO optimization",
+      "Monetization strategies",
+      "Outsourcing and scaling",
+      "Final project: Launch your channel"
+    ],
+    "for": "Anyone who wants to earn online through YouTube without appearing on camera.",
+    "download": "/books/youtube-automation.pdf"
+  },
+  {
+    "id": 2,
+    "icon": "braces",
+    "title": "Python Programming",
+    "img": "/images/courses/python-programming.jpg",
+    "category": "Coding",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.8",
+    "students": "70+",
+    "color": [
+      "#084EC8",
+      "#003896"
+    ],
+    "objectives": [
+      "Read and write Python syntax confidently",
+      "Use conditions, loops and functions to solve problems",
+      "Work with files, data and simple APIs",
+      "Ship an automation script as a final project"
+    ],
+    "desc": "Learn programming fundamentals with Python. Build real projects and problem-solving skills.",
+    "syllabus": [
+      "Introduction to programming",
+      "Python syntax and variables",
+      "Conditions and loops",
+      "Functions and modules",
+      "Working with files and data",
+      "Introduction to APIs",
+      "Building automation scripts",
+      "Final project: Python tool"
+    ],
+    "for": "Anyone who wants to start coding and build a foundation for a tech career.",
+    "download": "/books/python-programming.pdf"
+  },
+  {
+    "id": 3,
+    "icon": "tshirt",
+    "title": "Print on Demand",
+    "img": "/images/courses/print-on-demand.jpg",
+    "category": "Design",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.6",
+    "students": "40+",
+    "color": [
+      "#38A128",
+      "#297D1C"
+    ],
+    "objectives": [
+      "Pick a niche that sells without inventory",
+      "Prepare print-ready artwork for products",
+      "Publish listings that convert on print-on-demand platforms",
+      "Market and scale a store to steady sales"
+    ],
+    "desc": "Sell custom designed products online without holding any inventory.",
+    "syllabus": [
+      "Introduction to print on demand",
+      "Choosing your niche",
+      "Design basics for POD",
+      "Setting up on Redbubble",
+      "Creating listings that sell",
+      "Marketing your store",
+      "Scaling your income",
+      "Final project: Live POD store"
+    ],
+    "for": "Designers and creatives who want to sell products online passively.",
+    "download": "/books/print-on-demand.pdf"
+  },
+  {
+    "id": 4,
+    "icon": "feather",
+    "title": "Ghostwriting",
+    "img": "/images/courses/ghostwriting.jpg",
+    "category": "Writing",
+    "level": "Intermediate",
+    "duration": "8 Weeks",
+    "rating": "4.9",
+    "students": "35+",
+    "color": [
+      "#EE6816",
+      "#E60914"
+    ],
+    "objectives": [
+      "Write in a client's voice across formats",
+      "Find and pitch ghostwriting clients",
+      "Price work and handle simple contracts",
+      "Build a portfolio that wins repeat work"
+    ],
+    "desc": "Get paid to write content for others, blogs, books, scripts and social media.",
+    "syllabus": [
+      "What is ghostwriting",
+      "Finding ghostwriting clients",
+      "Writing in someone else's voice",
+      "Blog and article ghostwriting",
+      "Social media ghostwriting",
+      "Scriptwriting for YouTube",
+      "Pricing and contracts",
+      "Final project: Full portfolio"
+    ],
+    "for": "Writers who want to earn good money writing content for businesses and influencers.",
+    "download": "/books/ghostwriting.pdf"
+  },
+  {
+    "id": 5,
+    "icon": "briefcase",
+    "title": "Freelancing",
+    "img": "/images/courses/freelancing.jpg",
+    "category": "Career",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.8",
+    "students": "110+",
+    "color": [
+      "#D99B00",
+      "#F8C90E"
+    ],
+    "objectives": [
+      "Package a service you can sell today",
+      "Price, pitch and close your first clients",
+      "Set up profiles on freelance marketplaces",
+      "Manage delivery, feedback and repeat business"
+    ],
+    "desc": "Build a freelancing career and earn money online using your digital skills.",
+    "syllabus": [
+      "Introduction to freelancing",
+      "Choosing your freelance skill",
+      "Setting up on Fiverr and Upwork",
+      "Creating a winning profile",
+      "Pricing your services",
+      "Landing your first client",
+      "Delivering quality work",
+      "Final project: Live profile"
+    ],
+    "for": "Anyone who wants to earn money online using their skills from anywhere in Africa.",
+    "download": "/books/freelancing.pdf"
+  },
+  {
+    "id": 6,
+    "icon": "bars",
+    "title": "Digital Marketing",
+    "img": "/images/courses/digital-marketing.jpg",
+    "category": "Marketing",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.8",
+    "students": "60+",
+    "color": [
+      "#084EC8",
+      "#0B1D51"
+    ],
+    "objectives": [
+      "Build a simple, fast website from scratch",
+      "Structure pages with HTML and style them with CSS",
+      "Add interactivity with modern JavaScript",
+      "Publish a portfolio site you can share"
+    ],
+    "desc": "Master digital marketing strategies to grow businesses and brands online.",
+    "syllabus": [
+      "Introduction to digital marketing",
+      "SEO fundamentals",
+      "Content marketing",
+      "Social media advertising",
+      "Google Ads basics",
+      "Email marketing",
+      "Analytics and reporting",
+      "Final project: Full campaign"
+    ],
+    "for": "Entrepreneurs, marketers and anyone who wants to grow a business online.",
+    "download": "/books/digital-marketing.pdf"
+  },
+  {
+    "id": 7,
+    "icon": "pen",
+    "title": "Copywriting",
+    "img": "/images/courses/copywriting.jpg",
+    "category": "Writing",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.8",
+    "students": "65+",
+    "color": [
+      "#38A128",
+      "#084EC8"
+    ],
+    "objectives": [
+      "Plan a content calendar that stays consistent",
+      "Create photos, reels and carousels from a phone",
+      "Write captions and hooks that convert",
+      "Read insights and grow an engaged audience"
+    ],
+    "desc": "Write words that sell. Learn the art of persuasive writing for businesses.",
+    "syllabus": [
+      "What is copywriting",
+      "Psychology of persuasion",
+      "Writing headlines",
+      "Email copywriting",
+      "Social media copy",
+      "Sales page writing",
+      "SEO copywriting basics",
+      "Final project: Full portfolio"
+    ],
+    "for": "Anyone who loves writing and wants to get paid for it online.",
+    "download": "/books/copywriting.pdf"
+  },
+  {
+    "id": 8,
+    "icon": "mail",
+    "title": "Email Marketing",
+    "img": "/images/courses/email-marketing.jpg",
+    "category": "Marketing",
+    "level": "Intermediate",
+    "duration": "8 Weeks",
+    "rating": "4.8",
+    "students": "55+",
+    "color": [
+      "#EE6816",
+      "#E60914"
+    ],
+    "objectives": [
+      "Understand how digital channels work together",
+      "Build a simple funnel from advert to sale",
+      "Run and read a basic paid campaign",
+      "Report results in numbers a client understands"
+    ],
+    "desc": "Build email lists and create campaigns that convert subscribers into customers.",
+    "syllabus": [
+      "Introduction to email marketing",
+      "Building your email list",
+      "Choosing an email platform",
+      "Writing compelling emails",
+      "Automating email sequences",
+      "Segmentation and personalization",
+      "Analytics and optimization",
+      "Final project: Full campaign"
+    ],
+    "for": "Marketers, entrepreneurs and freelancers who want to master email marketing.",
+    "download": "/books/email-marketing.pdf"
+  },
+  {
+    "id": 9,
+    "icon": "cash",
+    "title": "Affiliate Marketing",
+    "img": "/images/courses/affiliate-marketing.jpg",
+    "category": "Marketing",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.7",
+    "students": "45+",
+    "color": [
+      "#38A128",
+      "#297D1C"
+    ],
+    "objectives": [
+      "Build and clean an email list ethically",
+      "Write sequences that welcome and convert",
+      "Set up automation in a standard email tool",
+      "Measure opens, clicks and revenue"
+    ],
+    "desc": "Learn how to earn commissions by promoting other people's products online.",
+    "syllabus": [
+      "What is affiliate marketing",
+      "Choosing the right niche",
+      "Finding affiliate programs",
+      "Building a platform",
+      "Creating content that converts",
+      "SEO for affiliate marketers",
+      "Email list building",
+      "Final project: Live campaign"
+    ],
+    "for": "Anyone who wants to earn passive income online from anywhere.",
+    "download": "/books/affiliate-marketing.pdf"
+  },
+  {
+    "id": 10,
+    "icon": "smartphone",
+    "title": "Social Media Marketing",
+    "img": "/images/courses/social-media-marketing.jpg",
+    "category": "Marketing",
+    "level": "Beginner",
+    "duration": "8 Weeks",
+    "rating": "4.7",
+    "students": "150+",
+    "color": [
+      "#E60914",
+      "#EE6816"
+    ],
+    "objectives": [
+      "Choose products and platforms that fit your audience",
+      "Create honest, high-converting affiliate content",
+      "Track clicks and commissions",
+      "Scale without spamming your audience"
+    ],
+    "desc": "Grow brands and businesses using digital platforms. Learn strategy, content and analytics.",
+    "syllabus": [
+      "Social media platforms overview",
+      "Content strategy and planning",
+      "Creating engaging content",
+      "Instagram and Facebook marketing",
+      "TikTok and YouTube basics",
+      "Analytics and insights",
+      "Paid advertising basics",
+      "Final project: Social media campaign"
+    ],
+    "for": "Entrepreneurs, business owners and anyone who wants to grow an online presence.",
+    "download": "/books/social-media-marketing.pdf"
+  },
+  {
+    "id": 11,
+    "icon": "cpu",
+    "title": "SWE & LLM Mastery",
+    "img": "/images/courses/swe-llm-mastery.jpg",
+    "category": "Coding",
+    "level": "Intermediate",
+    "duration": "8 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#084EC8",
+      "#003896"
+    ],
+    "objectives": [
+      "Grow a page with a clear content strategy",
+      "Produce a month of content in one sitting",
+      "Use scheduling and community tools",
+      "Report growth to a client or employer"
+    ],
+    "desc": "Learn software engineering combined with Large Language Models to build AI-powered applications.",
+    "syllabus": [
+      "Software engineering basics",
+      "Understanding LLMs",
+      "Prompt engineering",
+      "Building with APIs",
+      "AI-powered app development",
+      "Testing and deployment",
+      "Real world projects",
+      "Final project: AI app"
+    ],
+    "for": "Developers and tech enthusiasts who want to build AI-powered software.",
+    "download": "/books/swe-llm-mastery.pdf"
+  },
+  {
+    "id": 12,
+    "icon": "mic",
+    "title": "Communicate Like a CEO",
+    "img": "/images/courses/communicate-like-a-ceo.jpg",
+    "category": "Business",
+    "level": "All Levels",
+    "duration": "6 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#084EC8",
+      "#0B1D51"
+    ],
+    "objectives": [
+      "Design with type, colour and grid",
+      "Use Canva and Adobe tools for real briefs",
+      "Build a small brand identity system",
+      "Deliver a portfolio-ready project"
+    ],
+    "desc": "Speak with the authority, clarity and presence of the top 1%. Master executive communication that commands the room.",
+    "syllabus": [
+      "Executive presence and mindset",
+      "Speaking with clarity and authority",
+      "Body language and vocal power",
+      "Public speaking and presentations",
+      "Persuasive, confident messaging",
+      "Handling difficult conversations",
+      "Communicating on camera and online",
+      "Final project: Deliver a CEO-level talk"
+    ],
+    "for": "Ambitious youth, founders and professionals who want to speak and lead like the elite.",
+    "download": "/books/communicate-like-a-ceo.pdf"
+  },
+  {
+    "id": 13,
+    "icon": "target",
+    "title": "Master Negotiation",
+    "img": "/images/courses/negotiation.jpg",
+    "category": "Business",
+    "level": "All Levels",
+    "duration": "6 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#EE6816",
+      "#D99B00"
+    ],
+    "objectives": [
+      "Write copy for ads, pages and social",
+      "Research an audience and shape an offer",
+      "Edit for clarity and persuasion",
+      "Test and improve copy with data"
+    ],
+    "desc": "Negotiate like the world's best, win deals, raise your rates and get what you're worth without conflict.",
+    "syllabus": [
+      "Negotiation psychology and mindset",
+      "Preparation and knowing your worth",
+      "Anchoring and framing",
+      "Tactical empathy and listening",
+      "Handling objections and pushback",
+      "Salary, rates and business deals",
+      "Closing win-win agreements",
+      "Final project: Live negotiation simulation"
+    ],
+    "for": "Anyone who wants to earn more and win better deals in work, business and life.",
+    "download": "/books/negotiation.pdf"
+  },
+  {
+    "id": 14,
+    "icon": "video",
+    "title": "AI Video Storytelling",
+    "img": "/images/courses/ai-video-storytelling.jpg",
+    "category": "Video",
+    "level": "Beginner",
+    "duration": "6 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#E60914",
+      "#EE6816"
+    ],
+    "objectives": [
+      "Write fiction and non-fiction that holds attention",
+      "Shape story structure, voice and pacing",
+      "Edit a draft to a publishable standard",
+      "Publish your own writing online"
+    ],
+    "desc": "Use AI to create videos and stories, then package them for every audience across social media.",
+    "syllabus": [
+      "Story fundamentals that hook attention",
+      "AI tools for video creation",
+      "Scriptwriting with AI",
+      "Generating visuals, voice and music",
+      "Editing and short-form formats",
+      "Packaging for TikTok, Reels, YouTube and X",
+      "Storytelling for different audiences",
+      "Final project: Publish an AI story series"
+    ],
+    "for": "Creators and entrepreneurs who want to tell powerful stories with AI and grow on social.",
+    "download": "/books/ai-video-storytelling.pdf"
+  },
+  {
+    "id": 15,
+    "icon": "star",
+    "title": "Personal Branding: Visibility Is Currency",
+    "img": "/images/courses/personal-branding.jpg",
+    "category": "Business",
+    "level": "All Levels",
+    "duration": "6 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#E60914",
+      "#084EC8"
+    ],
+    "objectives": [
+      "Edit video with clean cuts, sound and colour",
+      "Build a project from raw footage to export",
+      "Create short-form video for social platforms",
+      "Deliver client work on a deadline"
+    ],
+    "desc": "Stand out and become known. Build a magnetic personal brand, because visibility is currency.",
+    "syllabus": [
+      "Personal brand foundations",
+      "Finding your niche and unique voice",
+      "Positioning and messaging",
+      "Building a standout online presence",
+      "Content that grows your authority",
+      "Networking your brand",
+      "Monetizing your personal brand",
+      "Final project: Launch your brand kit"
+    ],
+    "for": "Youth, creators and professionals who want to be seen, trusted and remembered.",
+    "download": "/books/personal-branding.pdf"
+  },
+  {
+    "id": 16,
+    "icon": "robot",
+    "title": "AI Literacy for Work & Productivity",
+    "img": "/images/courses/ai-literacy.jpg",
+    "category": "Business",
+    "level": "Beginner",
+    "duration": "5 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#084EC8",
+      "#38A128"
+    ],
+    "objectives": [
+      "Speak with structure and confidence",
+      "Handle questions and difficult rooms",
+      "Present numbers and ideas clearly",
+      "Build a personal presence people trust"
+    ],
+    "desc": "AI basics everyone needs, use AI tools to work faster, smarter and get more done every day.",
+    "syllabus": [
+      "What AI is (and isn't)",
+      "The essential AI toolkit",
+      "Writing effective prompts",
+      "AI for writing and research",
+      "AI for images, docs and data",
+      "Automating everyday tasks",
+      "Using AI responsibly and safely",
+      "Final project: Build your AI productivity workflow"
+    ],
+    "for": "Complete beginners who want to use AI confidently for work, study and business.",
+    "download": "/books/ai-literacy.pdf"
+  },
+  {
+    "id": 17,
+    "icon": "layers",
+    "title": "Content Creation Mastery",
+    "img": "/images/courses/content-creation.jpg",
+    "category": "Marketing",
+    "level": "Beginner",
+    "duration": "6 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#38A128",
+      "#297D1C"
+    ],
+    "objectives": [
+      "Prepare and open a negotiation",
+      "Trade concessions without losing value",
+      "Handle pushback and deadlock",
+      "Close agreements in writing"
+    ],
+    "desc": "Create scroll-stopping content consistently, photos, videos, captions and carousels that grow any brand.",
+    "syllabus": [
+      "Content strategy and planning",
+      "Creating with just a phone",
+      "Photo and video basics",
+      "Writing captions that convert",
+      "Design tools and templates",
+      "Batching and a content calendar",
+      "Growing and engaging an audience",
+      "Final project: A 30-day content plan"
+    ],
+    "for": "Anyone who wants to create consistent, high-quality content for themselves or clients.",
+    "download": "/books/content-creation.pdf"
+  },
+  {
+    "id": 18,
+    "icon": "cash",
+    "title": "Sales & Marketing Full Course",
+    "img": "/images/courses/sales-and-marketing.jpg",
+    "category": "Marketing",
+    "level": "All Levels",
+    "duration": "8 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#084EC8",
+      "#003896"
+    ],
+    "objectives": [
+      "Define a clear personal brand",
+      "Write a bio, positioning and message",
+      "Publish content that builds authority",
+      "Turn visibility into opportunities"
+    ],
+    "desc": "The complete course on selling and marketing, attract customers, pitch with confidence and close sales.",
+    "syllabus": [
+      "Marketing fundamentals",
+      "Understanding your customer",
+      "Building an irresistible offer",
+      "Digital marketing channels",
+      "The psychology of selling",
+      "Sales conversations and closing",
+      "Funnels, follow-up and retention",
+      "Final project: Full go-to-market plan"
+    ],
+    "for": "Entrepreneurs, freelancers and job seekers who want to sell anything with confidence.",
+    "download": "/books/sales-and-marketing.pdf"
+  },
+  {
+    "id": 19,
+    "icon": "users",
+    "title": "Networking Like the Top 1%",
+    "img": "/images/courses/networking-secrets.jpg",
+    "category": "Business",
+    "level": "All Levels",
+    "duration": "5 Weeks",
+    "rating": "5.0",
+    "students": "New",
+    "color": [
+      "#EE6816",
+      "#E60914"
+    ],
+    "objectives": [
+      "Use AI tools safely and effectively at work",
+      "Write prompts that produce usable output",
+      "Automate everyday writing, research and data tasks",
+      "Build a personal AI workflow"
+    ],
+    "desc": "Build powerful relationships and open doors, network like the top 1%, even if you're an introvert.",
+    "syllabus": [
+      "The networking mindset",
+      "Networking as an introvert",
+      "Crafting your intro and story",
+      "Online networking (LinkedIn and X)",
+      "Adding value first",
+      "Building real relationships",
+      "Following up and staying memorable",
+      "Final project: Your 90-day network plan"
+    ],
+    "for": "Introverts and ambitious youth who want to build a network that creates opportunities.",
+    "download": "/books/networking-secrets.pdf"
+  }
+]
