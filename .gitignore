@@ -48,6 +48,8 @@ pursue-tshirt-designs-print-ready/
 
 # rendered course films (published as GitHub release assets, not repo content)
 /film-render/
+!/v1/
+/v1/RELEASE-LINKS.md
 tools/promo/vo/
 
 # python cache

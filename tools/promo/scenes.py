@@ -304,10 +304,16 @@ def build_syllabus(course, duration=16.0):
     head2 = text_layer("WILL BUILD", font("black", 92), INK, line_gap=0.94)
     accent_bar = Image.new("RGBA", (168, 14), GREEN + (255,))
     kicker = tracked_label("THE CURRICULUM", size=27, fill=GREEN_DEEP, tracking=9)
-    step_font = font("archivo", 46, weight=700)
+    step_max_w = W - 214 - 84
+    step_size = 46
+    while step_size > 30 and max(
+        font("archivo", step_size, weight=700).getlength(s) for s in steps
+    ) > step_max_w:
+        step_size -= 1
+    step_font = font("archivo", step_size, weight=700)
     step_layers, num_layers = [], []
     for i, s in enumerate(steps):
-        lines = wrap(s, step_font, 700)
+        lines = wrap(s, step_font, step_max_w)
         step_layers.append(text_layer("", step_font, INK, lines=lines, line_gap=1.06))
         num_layers.append(text_layer(f"{i + 1:02d}", font("black", 54), TEAL,
                                      line_gap=1.0))
