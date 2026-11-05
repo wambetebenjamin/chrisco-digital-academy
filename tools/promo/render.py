@@ -356,11 +356,12 @@ def render_frames(seq, total, on_frame, start_t=0.0, end_t=None):
         frame, sc = compose(seq, t)
         frame = frame.convert("RGBA")
         frame.alpha_composite(_PLATE)
-        if sc["vo"]:
+        cap_y = sc["scene"].cap_y
+        if sc["vo"] and cap_y is not None:
             groups = sc["_groups"].get(sc["vo"])
             if groups:
                 local = t - _scene_start(seq, t) - VO_LEAD
-                lay = caption_frame(local, groups)
+                lay = caption_frame(local, groups, y_center=cap_y)
                 if lay is not None:
                     frame.alpha_composite(lay)
         progress_bar(frame, t, total)

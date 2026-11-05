@@ -37,6 +37,7 @@ class Scene:
     draw: object          # callable(t_local) -> Image.Image (RGB)
     overlay: object = None  # optional static RGBA layer
     fade: float = 0.32    # cross-fade + dip handled by the compositor
+    cap_y: int | None = 1462   # caption anchor; None = no captions this scene
 
 
 def _scratch():
@@ -149,7 +150,7 @@ def build_cold_open(course, duration=2.1):
         frame.alpha_composite(lay, (int(W / 2 - line_a.width / 2), 1600))
         return frame
 
-    return Scene("cold-open", duration, draw, fade=0.5)
+    return Scene("cold-open", duration, draw, fade=0.5, cap_y=None)
 
 
 # ---------------------------------------------------------------------------
@@ -217,11 +218,11 @@ def build_hook(course, duration=10.0, hook_lines=None):
         lay = meta.copy()
         a2 = seg(t, 1.1, 0.6)
         lay.putalpha(lay.split()[3].point(lambda v: int(v * a2 * 235)))
-        frame.alpha_composite(lay, (84, 1372))
+        frame.alpha_composite(lay, (84, 1296))
         brand_footer(frame, t, ink_col=PAPER, opacity=seg(t, 1.4, 0.6))
         return frame
 
-    return Scene("hook", duration, draw, fade=0.55)
+    return Scene("hook", duration, draw, fade=0.55, cap_y=1462)
 
 
 # ---------------------------------------------------------------------------
@@ -288,7 +289,7 @@ def build_title(course, duration=6.5):
         brand_footer(frame, t, ink_col=PAPER, opacity=seg(t, 1.0, 0.6))
         return frame
 
-    return Scene("title", duration, draw, fade=0.45)
+    return Scene("title", duration, draw, fade=0.45, cap_y=None)
 
 
 # ---------------------------------------------------------------------------
@@ -322,8 +323,8 @@ def build_syllabus(course, duration=16.0):
         growth = ease_in_out_cubic(seg(t, 0.4, 0.7))
         d2 = ImageDraw.Draw(frame)
         d2.rectangle((150, 620, 153, int(620 + 700 * growth)), fill=GREEN_DEEP + (255,))
-        y = 604
-        spacing = 150
+        y = 600
+        spacing = 136
         for i, lay in enumerate(step_layers):
             start = 0.6 + i * 0.52
             k = seg(t, start, 0.5)
@@ -342,7 +343,7 @@ def build_syllabus(course, duration=16.0):
         brand_footer(frame, t, opacity=seg(t, 0.8, 0.6))
         return frame
 
-    return Scene("syllabus", duration, draw, fade=0.4)
+    return Scene("syllabus", duration, draw, fade=0.4, cap_y=1584)
 
 
 # ---------------------------------------------------------------------------
@@ -393,7 +394,7 @@ def build_outcomes(course, duration=9.0):
         brand_footer(frame, t, ink_col=TEAL, opacity=seg(t, 0.9, 0.6))
         return frame
 
-    return Scene("outcomes", duration, draw, fade=0.4)
+    return Scene("outcomes", duration, draw, fade=0.4, cap_y=1500)
 
 
 # ---------------------------------------------------------------------------
@@ -486,7 +487,7 @@ def build_montage(course, duration=8.0):
         brand_footer(frame, t, opacity=seg(t, 0.6, 0.6))
         return frame
 
-    return Scene("montage", duration, draw, fade=0.4)
+    return Scene("montage", duration, draw, fade=0.4, cap_y=1584)
 
 
 # ---------------------------------------------------------------------------
@@ -533,11 +534,11 @@ def build_proof(course, duration=5.0):
             row.alpha_composite(lab, (int(num.width) + 34, 118))
             row.putalpha(row.split()[3].point(lambda v: int(v * clamp(k * 1.5))))
             frame.alpha_composite(row, (84, int(y + 60 * (1 - ease_out_cubic(k)))))
-            y += 210
+            y += 188
         brand_footer(frame, t, ink_col=PAPER, opacity=seg(t, 0.6, 0.6))
         return frame
 
-    return Scene("proof", duration, draw, fade=0.4)
+    return Scene("proof", duration, draw, fade=0.4, cap_y=1584)
 
 
 # ---------------------------------------------------------------------------
@@ -600,7 +601,7 @@ def build_cta(course, duration=9.0):
                 frame.alpha_composite(lab, (int((W - scan.width) / 2), qy + qr.height + 20))
         return frame
 
-    return Scene("cta", duration, draw, fade=0.5)
+    return Scene("cta", duration, draw, fade=0.5, cap_y=None)
 
 
 # ---------------------------------------------------------------------------
@@ -676,4 +677,4 @@ def build_outro(course, duration=6.0):
         frame.alpha_composite(lay, (80, 548))
         return frame
 
-    return Scene("outro", duration, draw, fade=0.5)
+    return Scene("outro", duration, draw, fade=0.5, cap_y=None)

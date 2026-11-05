@@ -49,13 +49,13 @@ def align_all():
         print("missing narration:", ", ".join(missing))
 
 
-def render(slugs, preset="medium", crf=19):
+def render(slugs, preset="medium", crf=19, force=False):
     courses = load_courses()
     todo = [c for c in courses if not slugs or c["slug"] in slugs]
     t0 = time.time()
     for i, c in enumerate(todo, 1):
         out = OUT_DIR / f"{c['slug']}.mp4"
-        if out.exists() and out.stat().st_size > 5_000_000:
+        if not force and out.exists() and out.stat().st_size > 5_000_000:
             print(f"[{i}/{len(todo)}] skip {c['slug']} (already rendered)")
             continue
         print(f"[{i}/{len(todo)}] {c['title']} → {out.name}", flush=True)
@@ -113,7 +113,11 @@ if __name__ == "__main__":
     elif cmd == "align":
         align_all()
     elif cmd == "render":
-        render(sys.argv[2:])
+        args = sys.argv[2:]
+        force = "--force" in args
+        render([a for a in args if not a.startswith("--")], force=force)
+    elif cmd == "render-all":
+        render([], force="--force" in sys.argv[2:])
     elif cmd == "package":
         package()
     else:
