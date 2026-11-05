@@ -193,12 +193,12 @@ COPY = {
     "content-creation-mastery": {
         "hook_display": ["CONSISTENCY", "BEATS TALENT.", "POST LIKE A", "PROFESSIONAL."],
         "outcome_lines": ["A THIRTY DAY", "PLAN READY", "TO PUBLISH."],
-        "cta": "Stop guessing what to post. Enrol today at CHRISCO Digital Academy and build a content system.",
+        "cta": "Stop guessing what to post. Enrol today at CHRISCO Digital Academy and build a content system you control.",
         "narration": {
-            "hook": "Consistency beats talent. The accounts that grow are not the most creative, they are the most reliable, and reliability is a system you can learn.",
-            "curriculum": "In six weeks you build content strategy and planning, create with just a phone, master photo and video basics, write captions that convert, use design tools and templates, batch your work, and grow an engaged audience.",
-            "outcomes": "You finish with a thirty day content plan ready to publish, and the workflow to keep producing without burning out.",
-            "proof": "CHRISCO Digital Academy. Seven skill tracks, nineteen courses, and a project at the end of every one.",
+            "hook": "You do not need a big budget, a studio, or a following to start. You need a system. Every brand you admire started with one post nobody saw. Content marketing is how attention becomes customers. Consistency beats talent. The accounts that grow are not the most creative, they are the most reliable, and reliability is a system you can learn.",
+            "curriculum": "In six weeks you build this system from scratch. First, content strategy and planning, so you know exactly who you are talking to and what you want them to do. Then creating with just a phone, because the camera in your pocket is enough. Photo and video basics that make your work look expensive. Captions that convert readers into buyers. Design tools and templates that keep every post on brand. Batching your work so a whole month of content is made in one afternoon. And growing an engaged audience that comes back for more.",
+            "outcomes": "You finish with a thirty day content plan ready to publish, and the workflow to keep producing without burning out. You will know what to post, when to post it, and why it works.",
+            "proof": "This is not theory. Every week you publish real posts, get feedback, and fix what is not working before the next week begins. By the end you are not copying trends, you are setting them. CHRISCO Digital Academy. One course, six weeks, and a content system you keep for good.",
         },
     },
     "sales-marketing-full-course": {
