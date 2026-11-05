@@ -2,7 +2,20 @@ import { courses } from "../data/courses"
 import { buildSocialMetadata, resolveServerOrigin } from "../lib/siteOrigin"
 import "./films.css"
 
-const RELEASE = "https://github.com/wambetebenjamin/chrisco-digital-academy/releases/download/course-films-v1"
+// Films live in the repository under /v1. GitHub serves committed .mp4 files as
+// application/octet-stream with X-Content-Type-Options: nosniff, so every link
+// downloads instead of streaming — which is exactly what this page promises.
+const REPO = "wambetebenjamin/chrisco-digital-academy"
+const BRANCH = "arena/5440d692-chrisco-digital-academy"
+const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/v1`
+
+function filmHref(slug) {
+  return `${RAW}/${slug}.mp4`
+}
+
+function posterHref(slug) {
+  return `${RAW}/posters/${slug}.jpg`
+}
 
 function slugify(title) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
@@ -25,8 +38,8 @@ export default function FilmsPage() {
     return {
       ...course,
       slug,
-      mp4: `${RELEASE}/${slug}.mp4`,
-      zip: `${RELEASE}/chrisco-${slug}.zip`,
+      mp4: filmHref(slug),
+      poster: posterHref(slug),
     }
   })
 
@@ -39,7 +52,8 @@ export default function FilmsPage() {
         </h1>
         <p className="films-lead">
           Vertical, narrated, captioned and ready to post. 1080 × 1920, about ninety
-          seconds each. Tap a title to download the MP4 directly — no account needed.
+          seconds each. Tap a title to download the MP4 directly — no account, no
+          player, no waiting.
         </p>
         <p className="films-meta">1080 × 1920 · 30 fps · H.264 + AAC · −14 LUFS</p>
       </header>
@@ -61,8 +75,12 @@ export default function FilmsPage() {
             <a className="films-download" href={film.mp4} download>
               MP4
             </a>
-            <a className="films-download films-download-ghost" href={film.zip} download>
-              ZIP
+            <a
+              className="films-download films-download-ghost"
+              href={film.poster}
+              download
+            >
+              JPG
             </a>
           </li>
         ))}
