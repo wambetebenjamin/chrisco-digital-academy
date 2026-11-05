@@ -46,8 +46,8 @@ export const courses = [
     objectives: [
       "Set up a faceless channel in a profitable niche",
       "Script and produce videos with voiceover and stock footage",
-      "Optimise titles, thumbnails and SEO for search",
-      "Reach monetisation and plan a scaling routine",
+      "Optimise titles, thumbnails and search for discovery",
+      "Reach monetisation and build an outsourcing routine",
     ],
     desc: "Build and grow automated YouTube channels that earn money without showing your face.",
     syllabus: [
@@ -106,10 +106,10 @@ export const courses = [
     students: "40+",
     color: ["#38A128", "#297D1C"],
     objectives: [
-      "Pick a niche that sells without inventory",
+      "Choose a niche that sells without holding inventory",
       "Prepare print-ready artwork for products",
-      "Publish listings that convert on print-on-demand platforms",
-      "Market and scale a store to steady sales",
+      "Publish listings that convert on Redbubble and similar platforms",
+      "Market a store and scale to steady sales",
     ],
     desc: "Sell custom designed products online without holding any inventory.",
     syllabus: [
@@ -137,8 +137,8 @@ export const courses = [
     students: "35+",
     color: ["#EE6816", "#E60914"],
     objectives: [
-      "Write in a client's voice across formats",
-      "Find and pitch ghostwriting clients",
+      "Write in a client's voice across blogs, scripts and social",
+      "Find ghostwriting clients and pitch them",
       "Price work and handle simple contracts",
       "Build a portfolio that wins repeat work",
     ],
@@ -169,8 +169,8 @@ export const courses = [
     color: ["#D99B00", "#F8C90E"],
     objectives: [
       "Package a service you can sell today",
+      "Set up profiles on Fiverr and Upwork that get attention",
       "Price, pitch and close your first clients",
-      "Set up profiles on freelance marketplaces",
       "Manage delivery, feedback and repeat business",
     ],
     desc: "Build a freelancing career and earn money online using your digital skills.",
@@ -199,10 +199,10 @@ export const courses = [
     students: "60+",
     color: ["#084EC8", "#0B1D51"],
     objectives: [
-      "Build a simple, fast website from scratch",
-      "Structure pages with HTML and style them with CSS",
-      "Add interactivity with modern JavaScript",
-      "Publish a portfolio site you can share",
+      "Plan a campaign from audience to measurable result",
+      "Apply SEO, content and social advertising fundamentals",
+      "Run a small paid budget across Google Ads and social",
+      "Read analytics and report numbers a client understands",
     ],
     desc: "Master digital marketing strategies to grow businesses and brands online.",
     syllabus: [
@@ -230,10 +230,10 @@ export const courses = [
     students: "65+",
     color: ["#38A128", "#084EC8"],
     objectives: [
-      "Plan a content calendar that stays consistent",
-      "Create photos, reels and carousels from a phone",
-      "Write captions and hooks that convert",
-      "Read insights and grow an engaged audience",
+      "Use the psychology of persuasion to shape an offer",
+      "Write headlines that stop a scroll",
+      "Write email, social and long-form sales copy",
+      "Test and improve copy using real data",
     ],
     desc: "Write words that sell. Learn the art of persuasive writing for businesses.",
     syllabus: [
@@ -261,10 +261,10 @@ export const courses = [
     students: "55+",
     color: ["#EE6816", "#E60914"],
     objectives: [
-      "Understand how digital channels work together",
-      "Build a simple funnel from advert to sale",
-      "Run and read a basic paid campaign",
-      "Report results in numbers a client understands",
+      "Build an email list ethically and keep it clean",
+      "Write emails and sequences people actually open",
+      "Automate welcome and nurture flows in a standard tool",
+      "Measure opens, clicks and revenue",
     ],
     desc: "Build email lists and create campaigns that convert subscribers into customers.",
     syllabus: [
@@ -292,10 +292,10 @@ export const courses = [
     students: "45+",
     color: ["#38A128", "#297D1C"],
     objectives: [
-      "Build and clean an email list ethically",
-      "Write sequences that welcome and convert",
-      "Set up automation in a standard email tool",
-      "Measure opens, clicks and revenue",
+      "Choose a niche and the right affiliate programs",
+      "Build a platform and create content that converts",
+      "Use search and an email list to compound commissions",
+      "Track clicks and commissions without spamming an audience",
     ],
     desc: "Learn how to earn commissions by promoting other people's products online.",
     syllabus: [
@@ -323,10 +323,10 @@ export const courses = [
     students: "150+",
     color: ["#E60914", "#EE6816"],
     objectives: [
-      "Choose products and platforms that fit your audience",
-      "Create honest, high-converting affiliate content",
-      "Track clicks and commissions",
-      "Scale without spamming your audience",
+      "Build a platform-by-platform content strategy",
+      "Create engaging posts and short video from a phone",
+      "Use insights to report growth to a brand or employer",
+      "Run paid advertising basics with a small budget",
     ],
     desc: "Grow brands and businesses using digital platforms. Learn strategy, content and analytics.",
     syllabus: [
@@ -354,10 +354,10 @@ export const courses = [
     students: "New",
     color: ["#084EC8", "#003896"],
     objectives: [
-      "Grow a page with a clear content strategy",
-      "Produce a month of content in one sitting",
-      "Use scheduling and community tools",
-      "Report growth to a client or employer",
+      "Apply software engineering fundamentals to real projects",
+      "Understand how large language models work",
+      "Write prompts and build with APIs in production",
+      "Test, deploy and ship an AI-powered application",
     ],
     desc: "Learn software engineering combined with Large Language Models to build AI-powered applications.",
     syllabus: [
@@ -385,10 +385,10 @@ export const courses = [
     students: "New",
     color: ["#084EC8", "#0B1D51"],
     objectives: [
-      "Design with type, colour and grid",
-      "Use Canva and Adobe tools for real briefs",
-      "Build a small brand identity system",
-      "Deliver a portfolio-ready project",
+      "Speak with clarity, authority and executive presence",
+      "Use body language and vocal power deliberately",
+      "Present ideas and numbers to a room",
+      "Handle difficult conversations and on-camera delivery",
     ],
     desc: "Speak with the authority, clarity and presence of the top 1%. Master executive communication that commands the room.",
     syllabus: [
@@ -416,10 +416,10 @@ export const courses = [
     students: "New",
     color: ["#EE6816", "#D99B00"],
     objectives: [
-      "Write copy for ads, pages and social",
-      "Research an audience and shape an offer",
-      "Edit for clarity and persuasion",
-      "Test and improve copy with data",
+      "Prepare a negotiation and know your worth",
+      "Use anchoring, framing and tactical empathy",
+      "Handle objections, pushback and deadlock",
+      "Close win-win agreements in writing",
     ],
     desc: "Negotiate like the world's best, win deals, raise your rates and get what you're worth without conflict.",
     syllabus: [
@@ -447,10 +447,10 @@ export const courses = [
     students: "New",
     color: ["#E60914", "#EE6816"],
     objectives: [
-      "Write fiction and non-fiction that holds attention",
-      "Shape story structure, voice and pacing",
-      "Edit a draft to a publishable standard",
-      "Publish your own writing online",
+      "Structure stories that hook and hold attention",
+      "Script with AI and generate visuals, voice and music",
+      "Edit for short-form on TikTok, Reels and YouTube",
+      "Publish a repeatable AI story series",
     ],
     desc: "Use AI to create videos and stories, then package them for every audience across social media.",
     syllabus: [
@@ -478,10 +478,10 @@ export const courses = [
     students: "New",
     color: ["#E60914", "#084EC8"],
     objectives: [
-      "Edit video with clean cuts, sound and colour",
-      "Build a project from raw footage to export",
-      "Create short-form video for social platforms",
-      "Deliver client work on a deadline",
+      "Define a clear personal brand and niche",
+      "Write a bio, positioning and message people remember",
+      "Publish content that builds authority",
+      "Turn visibility into real opportunities",
     ],
     desc: "Stand out and become known. Build a magnetic personal brand, because visibility is currency.",
     syllabus: [
@@ -509,10 +509,10 @@ export const courses = [
     students: "New",
     color: ["#084EC8", "#38A128"],
     objectives: [
-      "Speak with structure and confidence",
-      "Handle questions and difficult rooms",
-      "Present numbers and ideas clearly",
-      "Build a personal presence people trust",
+      "Explain what AI is and is not at work",
+      "Write prompts that produce usable output",
+      "Use AI for writing, research, images and data",
+      "Automate everyday tasks safely and responsibly",
     ],
     desc: "AI basics everyone needs, use AI tools to work faster, smarter and get more done every day.",
     syllabus: [
@@ -540,10 +540,10 @@ export const courses = [
     students: "New",
     color: ["#38A128", "#297D1C"],
     objectives: [
-      "Prepare and open a negotiation",
-      "Trade concessions without losing value",
-      "Handle pushback and deadlock",
-      "Close agreements in writing",
+      "Plan a content calendar that stays consistent",
+      "Create photos, reels and carousels from a phone",
+      "Write captions and hooks that convert",
+      "Batch a month of content in one sitting",
     ],
     desc: "Create scroll-stopping content consistently, photos, videos, captions and carousels that grow any brand.",
     syllabus: [
@@ -571,10 +571,10 @@ export const courses = [
     students: "New",
     color: ["#084EC8", "#003896"],
     objectives: [
-      "Define a clear personal brand",
-      "Write a bio, positioning and message",
-      "Publish content that builds authority",
-      "Turn visibility into opportunities",
+      "Understand your customer and build an irresistible offer",
+      "Choose the digital channels that fit the business",
+      "Run a sales conversation and close with confidence",
+      "Build a funnel, follow up and retain customers",
     ],
     desc: "The complete course on selling and marketing, attract customers, pitch with confidence and close sales.",
     syllabus: [
@@ -602,10 +602,10 @@ export const courses = [
     students: "New",
     color: ["#EE6816", "#E60914"],
     objectives: [
-      "Use AI tools safely and effectively at work",
-      "Write prompts that produce usable output",
-      "Automate everyday writing, research and data tasks",
-      "Build a personal AI workflow",
+      "Adopt a networking mindset that works for introverts",
+      "Craft your introduction and your story",
+      "Network on LinkedIn and X by adding value first",
+      "Follow up and stay memorable with a 90-day plan",
     ],
     desc: "Build powerful relationships and open doors, network like the top 1%, even if you're an introvert.",
     syllabus: [
