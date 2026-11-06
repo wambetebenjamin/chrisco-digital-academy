@@ -23,9 +23,18 @@ import tiktok as T  # noqa: E402
 from render import (  # noqa: E402
     FFMPEG, FPS, H, W, build_audio, vo_durations, load_courses,
 )
-import tiktok_motion as M  # noqa: E402
+import tiktok_cinema as TC  # noqa: E402
+import cinema as CIN  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
+_GRAIN = None
+_VIG = None
+PUSH = 0.62
+
+
+def _ease_io(x):
+    x = max(0.0, min(1.0, x))
+    return 4 * x ** 3 if x < 0.5 else 1 - (-2 * x + 2) ** 3 / 2
 ROOT = HERE.parent.parent
 IMG = ROOT / "public" / "images"
 VO_DIR = HERE / "vo"
@@ -135,10 +144,14 @@ def render_film(course, out_path: Path, crf=19, preset="medium", log=print):
     meta = json.loads((VO_DIR / slug / "meta.json").read_text())
     total = round(max(v["offset"] + v["duration"] for v in meta.values()) + 1.15, 2)
 
-    log(f"  building {len(CARDS)} animated cards")
+    log(f"  building {len(CARDS)} cinematic cards")
     plan = plan_cards(meta)
-    plates = [M.build_layers(spec, (plan[i]["end"] or total) - plan[i]["start"] + M.PUSH)
-              for i, spec in enumerate(CARDS)]
+    plates = []
+    for i, spec in enumerate(CARDS):
+        dur = (plan[i]["end"] or total) - plan[i]["start"]
+        t0 = time.time()
+        plates.append(TC.Card(spec, dur + 0.8, seed=i * 7))
+        log(f"    card {i + 1}/{len(CARDS)} built in {time.time() - t0:.1f}s")
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
@@ -153,6 +166,11 @@ def render_film(course, out_path: Path, crf=19, preset="medium", log=print):
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     t0 = time.time()
     frames = int(round(total * FPS))
+    global _GRAIN, _VIG
+    if _GRAIN is None:
+        _GRAIN = CIN.grain_layers(6, 7)
+    if _VIG is None:
+        _VIG = CIN.vignette(0.40)
 
     for n in range(frames):
         t = n / FPS
@@ -163,25 +181,37 @@ def render_film(course, out_path: Path, crf=19, preset="medium", log=print):
                 break
         c = plan[i]
         local = t - c["start"]
-        img = M.paint_card(plates[i], local)
+        img = plates[i].paint(local)
 
         # carousel push: the current card leaves by sliding up while the next
         # one rides in from below. No crossfade, so two headlines never mix.
         if i + 1 < len(plan) and c["end"] is not None:
             to = c["end"] - t
-            if 0 < to < M.PUSH:
-                p = M.ease_in_out_cubic(1 - to / M.PUSH)
-                nxt = M.paint_card(plates[i + 1], 0.0, animate=False)
-                canvas = Image.new("RGB", (W, H), (255, 255, 255))
-                canvas.paste(img, (0, -int(H * p)))
-                canvas.paste(nxt, (0, H - int(H * p)))
-                # soft seam where the two cards meet
-                seam = int(H - H * p)
+            if 0 < to < PUSH:
+                e = _ease_io(1 - to / PUSH)
+                nxt = plates[i + 1].paint(0.0, animate=False)
+                canvas = Image.new("RGB", (W, H), (10, 12, 20))
+                canvas.paste(img, (0, -int(H * e)))
+                canvas.paste(nxt, (0, H - int(H * e)))
+                img = canvas
+                # a thin light seam where the two cards meet
+                seam = int(H - H * e)
                 if 0 <= seam < H:
-                    d = ImageDraw.Draw(canvas)
-                    d.rectangle((0, seam - 3, W, seam + 3), fill=(255, 255, 255))
+                    d = ImageDraw.Draw(canvas, "RGBA")
+                    d.rectangle((0, seam - 2, W, seam + 2),
+                                fill=(255, 226, 160, 190))
                 img = canvas
 
+        # --- optical grade: the part that makes it read as shot, not drawn
+        img = CIN.bloom(img, threshold=190, radius=22, gain=1.45)
+        img = CIN.tone(img, lift=(7, 3, -5), gamma=1.015)
+        img = CIN.chromatic(img, amount=1)
+        img = Image.composite(img, Image.new("RGB", (W, H), (0, 0, 0)),
+                              _VIG)
+        gmask = _GRAIN[(n // 2) % len(_GRAIN)].point(
+            lambda v: int(abs(v - 128) * 0.50))
+        img = Image.composite(Image.new("RGB", (W, H), (255, 255, 255)), img,
+                              gmask.point(lambda v: v // 2))
         proc.stdin.write(img.tobytes())
         if (n + 1) % 300 == 0:
             log(f"  {n + 1} frames  ({t:5.1f}s / {total:.1f}s)  "
