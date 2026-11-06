@@ -15,7 +15,7 @@ import sys
 import time
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -23,6 +23,7 @@ import tiktok as T  # noqa: E402
 from render import (  # noqa: E402
     FFMPEG, FPS, H, W, build_audio, vo_durations, load_courses,
 )
+import tiktok_motion as M  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
@@ -103,20 +104,26 @@ def build_card_image(spec) -> Image.Image:
                                headline=spec["headline"], bar=spec["bar"]))
 
 
-def plan_cards(total: float):
-    """Spread the cards across the narration, weighted to the script beats."""
-    n = len(CARDS)
-    # hook gets a touch longer, the CTA card a touch longer
-    weights = [1.05, 1.0, 0.98, 1.0, 0.98, 1.0, 1.02, 1.0, 1.12]
-    span = total / sum(weights)
-    out, acc = [], 0.0
-    for w in weights:
-        d = span * w
-        out.append({"start": acc, "dur": d})
-        acc += d
-    # snap the last card to the exact runtime
-    out[-1]["dur"] += total - acc
-    return out
+def plan_cards(meta) -> list[dict]:
+    """Cut points follow the narration: a new card lands on each script beat."""
+    hook = meta["hook"]["duration"]
+    curr = meta["curriculum"]
+    out = meta["outcomes"]
+    proof = meta["proof"]
+    cta = meta["cta"]["offset"]
+
+    starts = [0.0, hook * 0.54]
+    for f in (0.0, 0.24, 0.47, 0.70):
+        starts.append(curr["offset"] + curr["duration"] * f)
+    starts.append(out["offset"])
+    starts.append(proof["offset"])
+    starts.append(cta)
+    starts.sort()
+    cards = []
+    for i, st in enumerate(starts):
+        cards.append({"start": st,
+                      "end": starts[i + 1] if i + 1 < len(starts) else None})
+    return cards
 
 
 # ---------------------------------------------------------------------------
@@ -128,9 +135,10 @@ def render_film(course, out_path: Path, crf=19, preset="medium", log=print):
     meta = json.loads((VO_DIR / slug / "meta.json").read_text())
     total = round(max(v["offset"] + v["duration"] for v in meta.values()) + 1.15, 2)
 
-    log(f"  building {len(CARDS)} cards")
-    plates = [build_card_image(s) for s in CARDS]
-    plan = plan_cards(total)
+    log(f"  building {len(CARDS)} animated cards")
+    plan = plan_cards(meta)
+    plates = [M.build_layers(spec, (plan[i]["end"] or total) - plan[i]["start"] + M.PUSH)
+              for i, spec in enumerate(CARDS)]
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
@@ -148,33 +156,31 @@ def render_film(course, out_path: Path, crf=19, preset="medium", log=print):
 
     for n in range(frames):
         t = n / FPS
-        # active card
         i = len(plan) - 1
         for k, c in enumerate(plan):
-            if t < c["start"] + c["dur"]:
+            if c["end"] is None or t < c["end"]:
                 i = k
                 break
         c = plan[i]
         local = t - c["start"]
-        img = plates[i]
+        img = M.paint_card(plates[i], local)
 
-        # crossfade in from the previous card
-        if i > 0 and local < FADE:
-            k = local / FADE
-            k = k * k * (3 - 2 * k)
-            img = Image.blend(plates[i - 1], img, k)
-        # crossfade out into the next
-        elif i < len(plan) - 1 and (c["dur"] - local) < FADE:
-            k = (c["dur"] - local) / FADE
-            k = k * k * (3 - 2 * k)
-            img = Image.blend(plates[i + 1], img, k)
-
-        # slow push-in on the whole plate, so stills never read as dead
-        k = min(1.0, local / max(c["dur"], 1e-3))
-        zoom = 1.0 + 0.035 * k
-        cw, ch = int(W / zoom), int(H / zoom)
-        x, y = (W - cw) // 2, (H - ch) // 2
-        img = img.crop((x, y, x + cw, y + ch)).resize((W, H), Image.LANCZOS)
+        # carousel push: the current card leaves by sliding up while the next
+        # one rides in from below. No crossfade, so two headlines never mix.
+        if i + 1 < len(plan) and c["end"] is not None:
+            to = c["end"] - t
+            if 0 < to < M.PUSH:
+                p = M.ease_in_out_cubic(1 - to / M.PUSH)
+                nxt = M.paint_card(plates[i + 1], 0.0, animate=False)
+                canvas = Image.new("RGB", (W, H), (255, 255, 255))
+                canvas.paste(img, (0, -int(H * p)))
+                canvas.paste(nxt, (0, H - int(H * p)))
+                # soft seam where the two cards meet
+                seam = int(H - H * p)
+                if 0 <= seam < H:
+                    d = ImageDraw.Draw(canvas)
+                    d.rectangle((0, seam - 3, W, seam + 3), fill=(255, 255, 255))
+                img = canvas
 
         proc.stdin.write(img.tobytes())
         if (n + 1) % 300 == 0:
