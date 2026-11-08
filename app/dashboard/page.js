@@ -319,7 +319,7 @@ export default function Dashboard() {
                     {isExpanded && (
                       <div
                         style={{
-                          background: "#F4F6F4",
+                          background: "var(--bone-2)",
                           borderRadius: 12,
                           padding: "12px 14px",
                           marginBottom: 16,

@@ -48,7 +48,7 @@ export default function Footer() {
                             height: 42,
                             borderRadius: 12,
                             background: "#fff",
-                            color: "#18322E",
+                            color: "var(--ink-900)",
                             display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
@@ -62,7 +62,7 @@ export default function Footer() {
                         </span>
                         <span>
                           <span style={{ fontFamily: "var(--font-head)", fontWeight: 800, color: "#fff", fontSize: "1.05rem", display: "block", lineHeight: 1.05 }}>CHRISCO</span>
-                          <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#F74F22", display: "block" }}>Digital Academy</span>
+                          <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--oxblood)", display: "block" }}>Digital Academy</span>
                         </span>
                       </Link>
                     </div>
@@ -162,7 +162,7 @@ export default function Footer() {
                       </p>
                       <div className="form-fild" style={{ display: "flex", alignItems: "center", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 999, padding: 4, marginTop: 14 }}>
                         <input type="email" name="EMAIL" placeholder="Email Address" className="fild" required style={{ flex: 1, background: "transparent", border: "none", color: "#fff", padding: "10px 16px", fontSize: 14, outline: "none" }} />
-                        <button type="submit" aria-label="Subscribe" style={{ width: 40, height: 40, borderRadius: "50%", background: "#F74F22", border: "none", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
+                        <button type="submit" aria-label="Subscribe" style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--oxblood)", border: "none", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
                           <Icon name="send" size={14} />
                         </button>
                       </div>
@@ -172,7 +172,7 @@ export default function Footer() {
                     <a href="mailto:chriscoyouthaflame2025@gmail.com" style={{ color: "rgba(255,255,255,0.72)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
                       <Icon name="mail" size={14} /> chriscoyouthaflame2025@gmail.com
                     </a>
-                    <a href="https://wa.me/254112272061" style={{ color: "#fff", background: "#F74F22", borderRadius: 999, padding: "10px 16px", display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", fontWeight: 700, width: "fit-content", marginTop: 6 }}>
+                    <a href="https://wa.me/254112272061" style={{ color: "#fff", background: "var(--oxblood)", borderRadius: 999, padding: "10px 16px", display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", fontWeight: 700, width: "fit-content", marginTop: 6 }}>
                       <Icon name="whatsapp" size={14} /> WhatsApp Us
                     </a>
                   </div>

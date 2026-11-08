@@ -200,7 +200,7 @@ export default function Chatbot() {
           </div>
 
           {/* Messages */}
-          <div style={{ height: 280, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: 12, background: "#F4F6F4" }}>
+          <div style={{ height: 280, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bone-2)" }}>
             {messages.map((msg, i) => (
               <div key={i} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start" }}>
                 <div className={`msg-bubble ${msg.role === "user" ? "msg-user" : "msg-assistant"}`}>{msg.content}</div>
