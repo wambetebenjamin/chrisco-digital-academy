@@ -54,7 +54,7 @@
   --danger: #8C2F26;
   --danger-tint: #F5E6E3;
 
-  /* Typography — Archivo for display, Inter for body. No Nunito. */
+  /* Typography — Archivo for display, Inter for body. */
   --font-display: 'Archivo Black', 'Archivo Variable', sans-serif;
   --font-head: 'Archivo Variable', 'Archivo', sans-serif;
   --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
