@@ -42,8 +42,8 @@ CONF = {
     "location": "Jinja, Uganda",
     "status": "Open to opportunities",
     # Dates below are the most likely thing to need correcting.
-    "chrisco_from": "2024", "chrisco_to": "Present",
-    "freelance_from": "2023", "freelance_to": "Present",
+    "chrisco_from": "2025", "chrisco_to": "2026",
+    "freelance_from": "2025", "freelance_to": "2026",
 }
 
 
@@ -273,7 +273,7 @@ def main() -> None:
     ly = body_text(LEFT_X, LEFT_W, ly, [
         "Figma · Adobe Photoshop · Illustrator · Canva",
         "Next.js · React · Tailwind CSS · HTML / CSS",
-        "Python · Supabase · Git",
+        "Python · Google Apps Script · Git",
         "CapCut · After Effects · FFmpeg",
     ], size=8.0, gap=1.4)
 

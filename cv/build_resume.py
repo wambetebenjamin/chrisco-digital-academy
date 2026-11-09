@@ -69,15 +69,15 @@ SKILLS = [
 TOOLS = ["Figma · Photoshop · Illustrator · Canva",
          "CapCut · InDesign · After Effects",
          "Next.js · React · Tailwind CSS",
-         "Python · Supabase · Git · FFmpeg"]
+         "Python · Google Apps Script · Git · FFmpeg"]
 
 WORK = [
-    ("Founder, designer & developer", "CHRISCO Digital Academy", "2024 – Present", [
+    ("Founder, designer & developer", "CHRISCO Digital Academy", "2025 – 2026", [
         "Designed the brand, wordmark and type system.",
         "Built the platform: 19 courses, library and shop.",
         "Laid out 20 print-ready guides and the launch film.",
     ]),
-    ("Graphic designer", "Freelance & community projects", "2023 – Present", [
+    ("Graphic designer", "Freelance & community projects", "2025 – 2026", [
         "Brand and campaign visuals for small businesses.",
         "Posters, flyers, thumbnails and social kits.",
     ]),
