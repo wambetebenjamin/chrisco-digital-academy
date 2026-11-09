@@ -1,6 +1,8 @@
 "use client"
+import { useState } from "react"
 import Link from "next/link"
 import Icon from "./Icon"
+import { backend } from "../lib/googleSheets"
 
 const exploreLinks = [
   { label: "Home", href: "/" },
@@ -29,6 +31,33 @@ const usefulLinks = [
 ]
 
 export default function Footer() {
+  const [subscribed, setSubscribed] = useState("")
+  const [sending, setSending] = useState(false)
+
+  async function handleSubscribe(e) {
+    e.preventDefault()
+    const fd = new FormData(e.currentTarget)
+    const email = String(fd.get("EMAIL") || "").trim().toLowerCase()
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      setSubscribed("Please enter a valid email address.")
+      return
+    }
+    setSending(true)
+    const result = await backend.newsletter({
+      action: "newsletter_signup",
+      email,
+      source: "footer",
+      created_at: new Date().toISOString(),
+    })
+    setSending(false)
+    setSubscribed(
+      result?.ok
+        ? "You are subscribed. Thank you!"
+        : "We could not save that just now. Please try again."
+    )
+    if (result?.ok) e.target.reset()
+  }
+
   return (
     <footer className="wpo-site-footer clearfix">
       <div className="wpo-upper-footer">
@@ -149,12 +178,7 @@ export default function Footer() {
                   </div>
                   <form
                     className="mc4wp-form"
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      const fd = new FormData(e.currentTarget)
-                      const email = fd.get("EMAIL")
-                      if (email) window.location.href = `mailto:chriscoyouthaflame2025@gmail.com?subject=Subscribe&body=${encodeURIComponent(email)}`
-                    }}
+                    onSubmit={handleSubscribe}
                   >
                     <div className="mc4wp-form-fields">
                       <p style={{ fontSize: 14, lineHeight: 1.65, color: "rgba(255,255,255,0.68)", margin: "0 0 14px" }}>
@@ -162,10 +186,15 @@ export default function Footer() {
                       </p>
                       <div className="form-fild" style={{ display: "flex", alignItems: "center", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 999, padding: 4, marginTop: 14 }}>
                         <input type="email" name="EMAIL" placeholder="Email Address" className="fild" required style={{ flex: 1, background: "transparent", border: "none", color: "#fff", padding: "10px 16px", fontSize: 14, outline: "none" }} />
-                        <button type="submit" aria-label="Subscribe" style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--oxblood)", border: "none", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
+                        <button type="submit" aria-label="Subscribe" disabled={sending} style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--oxblood)", border: "none", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: sending ? "wait" : "pointer", flexShrink: 0, opacity: sending ? 0.6 : 1 }}>
                           <Icon name="send" size={14} />
                         </button>
                       </div>
+                      {subscribed ? (
+                        <p role="status" style={{ fontSize: 13, margin: "10px 0 0", color: "rgba(255,255,255,0.85)" }}>
+                          {subscribed}
+                        </p>
+                      ) : null}
                     </div>
                   </form>
                   <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>

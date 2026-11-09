@@ -1,6 +1,5 @@
 "use client"
 import { useState, useEffect } from "react"
-import emailjs from "@emailjs/browser"
 import Image from "next/image"
 import Link from "next/link"
 import Icon from "../components/Icon"
@@ -9,7 +8,7 @@ import { org } from "../data/org"
 import { CONNECTED_RESOURCES } from "../data/connectedResources"
 import { useAuth } from "../AuthProvider"
 import { readRef } from "../lib/referral"
-import { submitAcademyIntake } from "../lib/intakeClient"
+import { sendAcademyIntake } from "../lib/intakeClient"
 import RecaptchaCheck from "../components/RecaptchaCheck"
 import BookGateModal from "../components/BookGateModal"
 import ShareBookBar from "../components/ShareBookBar"
@@ -124,7 +123,7 @@ export default function CoursesExplorer() {
           phone: form.phone.trim(),
         })
       }
-      await submitAcademyIntake({
+      await sendAcademyIntake({
         action: "course_application",
         name: form.name.trim(),
         email: form.email.trim(),

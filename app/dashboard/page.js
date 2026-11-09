@@ -11,7 +11,7 @@ import { christianBooks, learningBooks, allBooks } from "../data/booksCatalogue"
 import ShareBookBar from "../components/ShareBookBar"
 import { org } from "../data/org"
 import { CONNECTED_RESOURCES, CONNECTED_APPS_SUMMARY } from "../data/connectedResources"
-import { submitAcademyIntake } from "../lib/intakeClient"
+import { sendAcademyIntake } from "../lib/intakeClient"
 
 export default function Dashboard() {
   const {
@@ -67,7 +67,7 @@ export default function Dashboard() {
         category: courseObj?.category,
         level: courseObj?.level,
       })
-      await submitAcademyIntake({
+      await sendAcademyIntake({
         action: "course_application",
         name: displayName,
         email: user.email || "",

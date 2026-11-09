@@ -2,7 +2,7 @@
 import { useState } from "react"
 import Icon from "./components/Icon"
 import { org } from "./data/org"
-import { submitAcademyIntake } from "./lib/intakeClient"
+import { sendAcademyIntake } from "./lib/intakeClient"
 
 const menuOptions = [
   { number: "1", label: "View Courses" },
@@ -98,7 +98,7 @@ export default function Chatbot() {
     if (!form.name || !form.message) return
     setSending(true)
     try {
-      await submitAcademyIntake({
+      await sendAcademyIntake({
         action: "contact",
         name: form.name,
         email: form.email,

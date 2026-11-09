@@ -1,7 +1,8 @@
 import { courses } from "./data/courses"
 import { allBooks } from "./data/booksCatalogue"
+import { DEFAULT_SITE_ORIGIN } from "./lib/siteOrigin"
 
-const BASE_URL = "https://chrisco-digital-academy.vercel.app"
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_ORIGIN
 
 export default function sitemap() {
   const now = new Date().toISOString()

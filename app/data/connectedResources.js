@@ -80,10 +80,10 @@ export const CONNECTED_RESOURCES = [
 
 export const CONNECTED_APPS_SUMMARY = [
   {
-    slug: "supabase",
-    name: "Supabase Backend & Auth",
+    slug: "google_apps_script",
+    name: "Google Apps Script Web App",
     status: "Active",
-    detail: "Postgres DB (profiles, enrollments, contacts, email_notifications, affiliates) + Google OAuth + academy-intake Edge Function",
+    detail: "Single doGet/doPost endpoint in front of the Google Sheet — every form and every read goes through it",
   },
   {
     slug: "google_slides",
@@ -105,14 +105,14 @@ export const CONNECTED_APPS_SUMMARY = [
   },
   {
     slug: "google_sheets",
-    name: "Google Sheets CRM",
+    name: "Google Sheets Database",
     status: "Active",
-    detail: "4-Tab Live Admissions, Contacts, Learner Directory & Merch Workbook",
+    detail: "Source of truth: Contacts, Enrolments, Learners, TutorApplications, Progress, Affiliates, BookReaders, Newsletter",
   },
   {
-    slug: "vercel",
-    name: "Vercel Production Cloud",
+    slug: "render",
+    name: "Render Frontend Hosting",
     status: "Active",
-    detail: "chrisco-digital-academy.vercel.app connected to Supabase Production",
+    detail: "Next.js frontend on Render, reading and writing the Google Sheet through Apps Script",
   },
 ]

@@ -1,7 +1,7 @@
 /*
  * Preview authentication.
  *
- * Real sign-in runs on Supabase. When the Supabase environment variables are
+ * Real sign-in is a row in the Google Sheet. When the Apps Script URL is
  * missing (local preview, fresh clone, CI), this module keeps the auth screens
  * usable by storing accounts in localStorage under a clearly separate key.
  * It is intentionally simple: it exists so the flows can be exercised and

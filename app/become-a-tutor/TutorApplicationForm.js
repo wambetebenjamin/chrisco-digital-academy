@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Icon from "../components/Icon"
 import { org, whatsappLink } from "../data/org"
 import { useAuth } from "../AuthProvider"
-import { submitAcademyIntake } from "../lib/intakeClient"
+import { sendAcademyIntake } from "../lib/intakeClient"
 import RecaptchaCheck from "../components/RecaptchaCheck"
 
 const TRACK_OPTIONS = [
@@ -60,7 +60,7 @@ export default function TutorApplicationForm({ initialTrack = "" }) {
     setSending(true)
     setError("")
     try {
-      await submitAcademyIntake({
+      await sendAcademyIntake({
         action: "tutor_application",
         name: name.trim(),
         email: email.trim(),
