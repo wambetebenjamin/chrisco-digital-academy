@@ -116,7 +116,7 @@ def main() -> None:
     pdf.rect(0, 0, W, H, style="F")
 
     # crumpled paper over the whole sheet
-    pdf.image(str(IMG / "wrinkle.png"), x=-40, y=0, w=W + 90, h=H, keep_aspect_ratio=False)
+    pdf.image(str(IMG / "wrinkle.jpg"), x=-40, y=0, w=W + 90, h=H, keep_aspect_ratio=False)
     # torn kraft, top-left (same slot as the template)
     pdf.image(str(IMG / "torn-corner.png"), x=-140, y=-178, w=510, h=650)
     # gingham strip, top-right
