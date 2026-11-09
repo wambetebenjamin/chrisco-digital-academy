@@ -37,7 +37,7 @@ CONF = {
     "name": "WAMBETE BENJAMIN",
     "role": "GRAPHIC DESIGNER  ·  WEB & PRODUCT DESIGNER",
     "email": "shambetz@gmail.com",
-    "phone": "+256 763 393 021",
+    "phone": "+254 112 272 061",
     "phone_alt": "+256 755 467 513",
     "location": "Jinja, Uganda",
     "status": "Open to opportunities",
@@ -233,10 +233,8 @@ def main() -> None:
             pdf.set_font("Inter", "", 8.2)
             pdf.set_text_color(*INK_SOFT)
             pdf.set_xy(x, yy)
-            pdf.cell(2.6, 3.8, "·")
-            pdf.set_xy(x + 2.6, yy)
-            pdf.multi_cell(w - 2.6, 3.8, b, align="L")
-            yy = pdf.get_y() + 1.0
+            pdf.multi_cell(w, 3.9, b, align="L")
+            yy = pdf.get_y() + 1.4
         return yy + 2.6
 
     DIV_BOTTOM = 258.0  # provisional; refined after both columns are measured
@@ -390,7 +388,7 @@ def main() -> None:
     pdf.set_font("Inter", "", 7.6)
     pdf.set_text_color(*INK_SOFT)
     pdf.set_xy(A4[0] - M - 70, fy + 7.4)
-    pdf.cell(70, 4, "shambetz@gmail.com  ·  +256 763 393 021", align="R")
+    pdf.cell(70, 4, "shambetz@gmail.com  ·  +254 112 272 061", align="R")
 
     pdf.output(str(OUT))
     print(f"wrote {OUT}  ({OUT.stat().st_size / 1024:.0f} KB)")

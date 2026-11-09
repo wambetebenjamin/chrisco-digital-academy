@@ -22,18 +22,21 @@ from fpdf import FPDF
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 FONTS = ROOT / "tools" / "promo" / "fonts"
-IMG = HERE / "assets"
+IMG = HERE / "assets-green"
 OUT = ROOT / "assets" / "Wambete-Benjamin-Resume.pdf"
 
 W, H = 595.5, 842.25
 
 # ---------------------------------------------------------------- palette
-PAPER = (250, 248, 243)
+# Sampled from the reference PDF's own fills, so this is the template's palette:
+#   bars #A3CE55   skill fills #B7D966   skill tracks #E9EEDD   art #B7D966
+PAPER = (255, 255, 255)
 INK = (26, 24, 21)
 SOFT = (92, 86, 76)
-BLOOD = (122, 46, 42)
-BLOOD_DK = (94, 33, 30)
-TINT = (233, 222, 214)
+GREEN = (163, 206, 85)          # #A3CE55 section bars / contact block
+GREEN_LT = (183, 217, 102)      # #B7D966 skill fills / accents
+GREEN_PALE = (233, 238, 221)    # #E9EEDD skill tracks
+GREEN_DK = (133, 176, 55)       # #85B037 the template uses for the name
 WHITE = (255, 255, 255)
 
 # ---------------------------------------------------------------- geometry
@@ -49,7 +52,7 @@ CONF = {
     "last": "BENJAMIN",
     "role": "GRAPHIC DESIGNER",
     "email": "shambetz@gmail.com",
-    "phone": "+256 763 393 021",
+    "phone": "+254 112 272 061",
     "about": "Designer and builder working across brand identity, print and "
              "social. I design the identity and then build the thing it lives "
              "on, so a brand ships as a working product, not a folder of files.",
@@ -70,20 +73,18 @@ TOOLS = ["Figma · Photoshop · Illustrator · Canva",
 
 WORK = [
     ("Founder, designer & developer", "CHRISCO Digital Academy", "2024 – Present", [
-        "Designed the brand: wordmark, palette, type system.",
-        "Built the platform: 19 courses, library, shop.",
-        "Laid out and published 20 print-ready guides.",
-        "Produced the launch film and poster artwork.",
+        "Designed the brand, wordmark and type system.",
+        "Built the platform: 19 courses, library and shop.",
+        "Laid out 20 print-ready guides and the launch film.",
     ]),
     ("Graphic designer", "Freelance & community projects", "2023 – Present", [
         "Brand and campaign visuals for small businesses.",
-        "Posters, flyers, thumbnails, social kits.",
-        "Report and evidence-pack design.",
+        "Posters, flyers, thumbnails and social kits.",
     ]),
 ]
 
 EDUCATION = [
-    ("Self-directed study", "Design, typography & front-end development"),
+    ("Self-directed study", "Design, typography and front-end"),
 ]
 
 SELECTED = [
@@ -135,10 +136,10 @@ def main() -> None:
 
     # ============================================================ monogram
     cx, cy, r = 35.6 + 120.5, 83.8 + 120.5, 106.0
-    pdf.set_fill_color(*BLOOD)
+    pdf.set_fill_color(*GREEN_LT)
     pdf.ellipse(cx - r, cy - r, 2 * r, 2 * r, style="F")
     pdf.set_font("Black", "", 60)
-    pdf.set_text_color(*PAPER)
+    pdf.set_text_color(*WHITE)
     pdf.set_xy(cx - 60, cy - 29)
     pdf.cell(120, 58, "WB", align="C")
 
@@ -155,7 +156,7 @@ def main() -> None:
     NAME_MAX_W = RIGHT_EDGE - 297.0 - 6.0    # keep it inside the right margin
 
     def shadowed(text: str, x: float, base_y: float, size: float,
-                 rot: float, color=BLOOD, off: float = 3.0) -> None:
+                 rot: float, color=GREEN_DK, off: float = 3.0) -> None:
         pdf.set_font("Black", "", size)
         pdf.set_text_color(*WHITE)
         with pdf.rotation(rot, x, base_y):
@@ -177,7 +178,7 @@ def main() -> None:
 
     # ============================================================ role bar
     ROLE_Y, ROLE_H = 247.0, 72.2
-    pdf.set_fill_color(*BLOOD)
+    pdf.set_fill_color(*GREEN)
     pdf.rect(306.6, ROLE_Y, 219.4, ROLE_H, style="F")
     rs = 20.9
     pdf.set_font("Black", "", rs)
@@ -191,8 +192,18 @@ def main() -> None:
         pdf.cell(tw + 2, rs, CONF["role"])
 
     # ============================================================ section bars
+    def fit(text: str, max_w: float, size: float, font: str = "Inter",
+            floor: float = 7.5) -> float:
+        """Shrink a single line until it fits, so nothing runs past the margin."""
+        while size > floor:
+            pdf.set_font(font, "", size)
+            if pdf.get_string_width(text) <= max_w:
+                break
+            size -= 0.2
+        return size
+
     def bar(x: float, y: float, label: str, w: float = LW) -> None:
-        pdf.set_fill_color(*BLOOD)
+        pdf.set_fill_color(*GREEN)
         pdf.rect(x, y, w, BAR_H, style="F")
         size = 18.9
         pad = 18.0
@@ -223,10 +234,10 @@ def main() -> None:
         pdf.set_text_color(*INK)
         pdf.set_xy(LX + 1.4, py)
         pdf.cell(LW, 11, name)
-        pdf.set_fill_color(*TINT)
+        pdf.set_fill_color(*GREEN_PALE)
         pdf.rect(LX + 0.8, py + 14.2, LW, 11.0, style="F",
                  round_corners=True, corner_radius=5.5)
-        pdf.set_fill_color(*BLOOD)
+        pdf.set_fill_color(*GREEN)
         pdf.rect(LX + 0.8, py + 14.2, LW * val, 11.0, style="F",
                  round_corners=True, corner_radius=5.5)
         py += 27.5
@@ -250,44 +261,53 @@ def main() -> None:
     wy = WORK_Y + BAR_H + 16.0
     for title, org, when, bullets in WORK:
         pdf.set_font("Archivo", "", 12.2)
-        pdf.set_text_color(*BLOOD_DK)
+        pdf.set_text_color(*INK)
         pdf.set_xy(RX + 0.9, wy)
         pdf.cell(RW, 13, title)
         wy += 13.5
-        pdf.set_font("Inter", "", 10.9)
+        os_ = fit(org, RW * 0.62, 10.9)
+        pdf.set_font("Inter", "", os_)
         pdf.set_text_color(*SOFT)
         pdf.set_xy(RX + 0.9, wy)
         pdf.cell(RW, 12, org)
-        pdf.set_xy(RX + 0.9 + pdf.get_string_width(org) + 8, wy)
-        pdf.cell(RW, 12, when)
-        wy += 15.0
+        org_w = pdf.get_string_width(org)
+        pdf.set_font("Inter", "", 10.2)
+        when_w = pdf.get_string_width(when)
+        if RX + 0.9 + org_w + 10 + when_w <= RIGHT_EDGE:
+            pdf.set_xy(RIGHT_EDGE - when_w, wy + 0.4)
+            pdf.cell(when_w + 1, 11, when)
+            wy += 15.4
+        else:
+            wy += 12.2
+            pdf.set_xy(RX + 0.9, wy)
+            pdf.cell(RW, 11, when)
+            wy += 12.4
         for b in bullets:
-            pdf.set_font("Inter", "", 10.3)
+            pdf.set_font("Inter", "", 9.9)
             pdf.set_text_color(*INK)
-            pdf.set_xy(RX + 2.0, wy)
-            pdf.cell(8, 11.6, "\u2022")
-            pdf.set_xy(RX + 10.0, wy)
-            pdf.multi_cell(RW - 10.0, 11.6, b, align="L")
-            wy = pdf.get_y() + 2.4
-        wy += 7.0
+            pdf.set_xy(RX + 0.9, wy)
+            pdf.multi_cell(RW - 0.9, 10.9, b, align="L")
+            wy = pdf.get_y() + 2.2
+        wy += 5.0
 
-    ED_Y = wy + 8.0
+    ED_Y = min(wy + 8.0, H - 150.0)
     bar(RX, ED_Y, "EDUCATION")
     ey = ED_Y + BAR_H + 16.0
     for title, detail in EDUCATION:
         pdf.set_font("Archivo", "", 12.0)
-        pdf.set_text_color(*BLOOD_DK)
+        pdf.set_text_color(*INK)
         pdf.set_xy(RX + 0.9, ey)
         pdf.cell(RW, 13, title)
-        pdf.set_font("Inter", "", 10.6)
+        pdf.set_font("Inter", "", 10.4)
         pdf.set_text_color(*SOFT)
         pdf.set_xy(RX + 0.9, ey + 13)
-        pdf.cell(RW, 12, detail)
-        ey += 31.0
+        pdf.multi_cell(RW - 0.9, 11.6, detail, align="L")
+        ey_line = pdf.get_y()
+        ey = max(ey + 31.0, ey_line + 8.0)
 
     # contact block: after education, but never overrunning the page foot
     CONTACT_Y = H - 74.0
-    pdf.set_fill_color(*BLOOD)
+    pdf.set_fill_color(*GREEN)
     pdf.rect(RX - 6, CONTACT_Y, 216, 66, style="F")
     pdf.set_font("Inter", "", 11.2)
     pdf.set_text_color(*PAPER)
@@ -334,10 +354,10 @@ def main() -> None:
             pdf.set_font("Inter", "", 10.0)
             pdf.set_text_color(*INK)
             pdf.set_xy(RX + 0.9, sy)
-            pdf.cell(RW, 10.6, "\u2022  " + name)
+            pdf.cell(RW, 10.6, name)
             pdf.set_text_color(*SOFT)
-            pdf.set_xy(RX + 8.9, sy + 9.4)
-            pdf.cell(RW - 8.9, 9.6, detail)
+            pdf.set_xy(RX + 0.9, sy + 9.4)
+            pdf.cell(RW - 0.9, 9.6, detail)
             sy += 20.0
 
     pdf.output(str(OUT))
