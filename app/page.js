@@ -18,10 +18,10 @@ const skills = [
 ]
 
 const stats = [
-  { value: "500+", label: "Youth Trained" },
   { value: "19", label: "Courses" },
-  { value: "2", label: "Districts" },
-  { value: "100%", label: "Practical" },
+  { value: "7", label: "Skill areas" },
+  { value: "5–8", label: "Weeks per course" },
+  { value: "Free", label: "To browse & apply" },
 ]
 
 const featured = [courses[4], courses[0], courses[10]]
@@ -45,7 +45,7 @@ const heroSlides = [
     eyebrow: "One Community, Endless Possibilities",
     title: "Youth inspiring",
     accent: "change beyond boundaries",
-    lead: "Learn practical skills that actually pay. 19 courses, hands-on projects, mentorship from Wambete Benjamin and the CHRISCO Youth Aflame team.",
+    lead: "Learn practical skills that actually pay. 19 courses, hands-on projects and mentorship from the CHRISCO Youth Aflame team.",
   },
   {
     image: "/images/bg-courses.jpg",
@@ -244,10 +244,10 @@ export default function Home() {
               </div>
               {/* Since badge */}
               <div className="ed-split-since" style={{ position: "absolute", right: -14, bottom: 28, background: "#fff", border: "1px solid var(--rule)", borderRadius: 16, padding: "14px 18px", display: "flex", alignItems: "center", gap: 12, boxShadow: "0 12px 32px rgba(24,50,46,0.10)" }}>
-                <span style={{ width: 48, height: 48, borderRadius: 12, background: "var(--oxblood-tint)", color: "var(--oxblood)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800 }}>WB</span>
+                <span style={{ width: 48, height: 48, borderRadius: 12, background: "var(--oxblood-tint)", color: "var(--oxblood)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 15 }}>CD</span>
                 <div>
-                  <strong style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 22, color: "var(--ink-900)", lineHeight: 1, display: "block" }}>500+</strong>
-                  <span style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-500)", fontWeight: 700 }}>Youth Impacted</span>
+                  <strong style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 22, color: "var(--ink-900)", lineHeight: 1, display: "block" }}>19</strong>
+                  <span style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-500)", fontWeight: 700 }}>Practical Courses</span>
                 </div>
               </div>
               {/* Decorative blur */}
@@ -278,33 +278,22 @@ export default function Home() {
                   </div>
                   <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 10 }}>
                     <li style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 700, fontSize: 13.5, color: "var(--ink-900)" }}>
-                      <Icon name="checkCircle" size={16} style={{ color: "var(--oxblood)" }} /> Empowering 500+ Youth
+                      <Icon name="checkCircle" size={16} style={{ color: "var(--oxblood)" }} /> 19 practical courses across 7 skill areas
                     </li>
                     <li style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 700, fontSize: 13.5, color: "var(--ink-900)" }}>
-                      <Icon name="checkCircle" size={16} style={{ color: "var(--oxblood)" }} /> 19 Creative & Skills Courses
+                      <Icon name="checkCircle" size={16} style={{ color: "var(--oxblood)" }} /> Projects reviewed by working practitioners
                     </li>
                     <li style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 700, fontSize: 13.5, color: "var(--ink-900)" }}>
-                      <Icon name="checkCircle" size={16} style={{ color: "var(--oxblood)" }} /> Recognized Youth Organization
+                      <Icon name="checkCircle" size={16} style={{ color: "var(--oxblood)" }} /> Run under CHRISCO Youth Aflame
                     </li>
                   </ul>
                 </div>
               </div>
               <div className="author-wrap" style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap", marginTop: 28, paddingTop: 22, borderTop: "1px solid var(--rule)" }}>
-                <ul className="author-img" style={{ display: "flex", listStyle: "none", margin: 0, padding: 0 }}>
-                  <li style={{ marginLeft: 0, border: "2px solid #fff", borderRadius: "50%", overflow: "hidden", width: 42, height: 42, display: "block" }}>
-                    <Image src="/images/hero-tile.jpg" alt="" width={42} height={42} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </li>
-                  <li style={{ marginLeft: -10, border: "2px solid #fff", borderRadius: "50%", overflow: "hidden", width: 42, height: 42 }}>
-                    <Image src="/images/workspace.jpg" alt="" width={42} height={42} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </li>
-                  <li style={{ marginLeft: -10, border: "2px solid #fff", borderRadius: "50%", overflow: "hidden", width: 42, height: 42 }}>
-                    <Image src="/images/bg-about.jpg" alt="" width={42} height={42} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </li>
-                </ul>
                 <div className="author-text" style={{ fontWeight: 800, color: "var(--ink-900)" }}>
-                  500+ Youth Impacted
+                  Taught by working practitioners
                   <div className="shape" style={{ marginTop: 6, opacity: 0.6 }}>
-                    <span style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-500)" }}>Trusted by learners in 2 districts</span>
+                    <span style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-500)" }}>Designers, developers and editors</span>
                   </div>
                 </div>
                 <a className="contact" href="tel:+254112272061" style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 10, background: "var(--bone)", border: "1px solid var(--rule)", borderRadius: 999, padding: "10px 16px", textDecoration: "none" }}>
@@ -452,15 +441,15 @@ export default function Home() {
         <div className="container" style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
           <div className="split" style={{ display: "grid", gap: 56, gridTemplateColumns: "1fr 1fr", alignItems: "center" }}>
             <div>
-              <span className="eyebrow on-dark" style={{ color: "var(--ochre-tint)", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", fontSize: 12 }}>Meet the founder</span>
+              <span className="eyebrow on-dark" style={{ color: "var(--ochre-tint)", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", fontSize: 12 }}>Who teaches you</span>
               <h2 className="display on-dark" style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18, color: "#fff", lineHeight: 1 }}>
-                Wambete <span className="accent-bright" style={{ color: "var(--oxblood)" }}>Benjamin</span>
+                A working <span className="accent-bright" style={{ color: "var(--oxblood)" }}>team</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 24px" }}>
-                CS Graduate · Designer · Developer · Video Editor · AI Expert
+                Designers · Developers · Editors · Marketers
               </p>
               <p className="lead on-dark" style={{ maxWidth: 520, color: "rgba(255,255,255,0.72)", fontSize: "1.02rem", lineHeight: 1.7 }}>
-                Founder of CHRISCO Digital Academy under CHRISCO Youth Aflame. He built this platform so that every young person in Africa can learn real, practical digital skills — and turn them into real income.
+                CHRISCO Digital Academy is run by practitioners who still do the work they teach. Every course is built around a real project, so what you learn on Monday is something you can hand to a client by Friday.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
                 {["Graphic Design", "Web Development", "Video Editing", "Animation", "Social Media", "AI"].map((t) => (
@@ -513,32 +502,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= TESTIMONIALS — Voices of Change ================= */}
+      {/* ================= WHAT YOU BUILD ================= */}
       <section className="section" style={{ background: "var(--bone)", padding: "88px 0" }}>
         <div className="container" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
           <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 48px" }}>
-            <span className="eyebrow" style={{ color: "var(--oxblood)", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", fontSize: 12, justifyContent: "center", display: "inline-flex", alignItems: "center", gap: 8 }}>Together, We Transform Lives</span>
+            <span className="eyebrow" style={{ color: "var(--oxblood)", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", fontSize: 12, justifyContent: "center", display: "inline-flex", alignItems: "center", gap: 8 }}>Finish with work, not notes</span>
             <h2 className="title" style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "clamp(1.8rem, 3.6vw, 2.6rem)", color: "var(--ink-900)", marginTop: 12, lineHeight: 1.08 }}>
-              Voices of Change <span style={{ color: "var(--oxblood)" }}>From Our Community</span>
+              Every course ends in a <span style={{ color: "var(--oxblood)" }}>real project</span>
             </h2>
           </div>
           <div className="ed-grid" style={{ display: "grid", gap: 22, gridTemplateColumns: "repeat(3, 1fr)" }}>
             {[
-              { quote: "Thanks to CHRISCO Digital Academy, I gained confidence and digital skills that helped me get through tough times.", name: "Sarah A.", role: "Youth Participant", img: "/images/hero-tile.jpg" },
-              { quote: "Through their creative skills training, I learned graphic design and now earn from my work. This program changed my future.", name: "Brian O.", role: "Beneficiary", img: "/images/workspace.jpg" },
-              { quote: "CHRISCO supported my learning when I couldn't afford it. Today, I'm building my career and thriving.", name: "Jane M.", role: "Parent", img: "/images/bg-about.jpg" },
+              { title: "A portfolio piece", body: "Design a brand system, a print-ready garment, or a page of editorial layout you can show a client.", icon: "pen" },
+              { title: "A published video", body: "Script, edit and publish a short-form story for TikTok, Reels or YouTube, start to finish.", icon: "play" },
+              { title: "A working product", body: "Ship a live website or a published store, not a finished exercise sitting in a folder.", icon: "laptop" },
             ].map((t, i) => (
-              <div key={i} className="ed-quote" style={{ background: "#fff", border: "1px solid var(--rule)", borderRadius: 16, padding: "24px 22px", boxShadow: "0 1px 3px rgba(24,50,46,0.06)" }}>
-                <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--ink-700)", margin: "0 0 18px", fontStyle: "italic" }}>"{t.quote}"</p>
-                <div className="meta" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", border: "2px solid var(--rule)", flexShrink: 0 }}>
-                    <Image src={t.img} alt="" width={44} height={44} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </div>
-                  <div>
-                    <strong style={{ display: "block", fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 13.5, color: "var(--ink-900)" }}>{t.name}</strong>
-                    <span style={{ fontSize: 12, color: "var(--ink-500)" }}>{t.role}</span>
-                  </div>
-                </div>
+              <div key={i} className="ed-quote" style={{ background: "#fff", border: "1px solid var(--rule)", borderRadius: 16, padding: "26px 24px", boxShadow: "0 1px 3px rgba(24,50,46,0.06)" }}>
+                <span style={{ display: "inline-flex", width: 44, height: 44, borderRadius: 12, background: "var(--oxblood-tint)", color: "var(--oxblood)", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+                  <Icon name={t.icon} size={20} strokeWidth={1.9} />
+                </span>
+                <strong style={{ display: "block", fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 15, color: "var(--ink-900)", marginBottom: 8 }}>{t.title}</strong>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--ink-700)", margin: 0 }}>{t.body}</p>
               </div>
             ))}
           </div>

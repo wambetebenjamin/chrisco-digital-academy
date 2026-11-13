@@ -5,6 +5,7 @@ import Icon from "../components/Icon"
 import PhotoHero from "../components/PhotoHero"
 import PageBackdrop from "../components/PageBackdrop"
 import ContactForm from "./ContactForm"
+import { org } from "../data/org"
 
 export const metadata = {
   title: "Contact",
@@ -13,7 +14,7 @@ export const metadata = {
 }
 
 const infoItems = [
-  { icon: "mail", label: "Email", value: "shambetz@gmail.com" },
+  { icon: "mail", label: "Email", value: org.email },
   { icon: "phone", label: "Phone & WhatsApp", value: "+254 112 272 061" },
   { icon: "pin", label: "Location", value: "Jinja, Uganda" },
   { icon: "flame", label: "Organisation", value: "CHRISCO Youth Aflame" },
