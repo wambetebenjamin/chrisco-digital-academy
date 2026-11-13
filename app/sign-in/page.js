@@ -89,7 +89,7 @@ export default function SignIn() {
 
       {previewMode && (
         <div className="auth-preview-note">
-          <strong>Preview mode.</strong> Supabase keys are not set, so accounts are stored in this browser only.
+          <strong>Preview mode.</strong> The Google Sheet backend is not connected yet, so accounts are stored in this browser only.
           Sign up once, then sign in with the same details.
         </div>
       )}

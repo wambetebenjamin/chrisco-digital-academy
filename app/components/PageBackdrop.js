@@ -1,9 +1,9 @@
 import Image from "next/image"
 
 /*
- * PageBackdrop — KYN paper wash, very subtle
+ * PageBackdrop — paper wash, very subtle
  * Keeps CHRISCO assets (images) visible but muted so frosted sections stay legible.
- * Uses KYN palette: warm paper #FAF9F6 with faint green tint.
+ * Uses the editorial bone palette with a faint warm tint.
  */
 export default function PageBackdrop({
   image,

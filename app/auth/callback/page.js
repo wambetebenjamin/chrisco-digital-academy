@@ -8,9 +8,9 @@ import Icon from "../../components/Icon"
 /*
  * Landing route for OAuth providers (Google).
  *
- * Supabase redirects here with the session in the URL hash. The browser client
- * picks it up automatically; this screen simply waits for the session and then
- * forwards the learner to the dashboard.
+ * Kept for links already in the wild. With a Google Sheets backend there is no
+ * provider redirect to land on, so this page simply forwards a signed-in
+ * learner to the dashboard and invites everyone else to sign in.
  */
 export default function AuthCallback() {
   const { user, loading } = useAuth()
@@ -41,7 +41,7 @@ export default function AuthCallback() {
         </h1>
         <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.6)", lineHeight: 1.65, marginBottom: 22 }}>
           {slow && !user
-            ? "The provider did not return a session. Check that this site's URL is listed in Supabase redirect URLs, then try again."
+            ? "We could not find a session in this browser. Please sign in again."
             : "Finishing the handshake with Google. This takes a moment."}
         </p>
         {!loading && (

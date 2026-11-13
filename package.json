@@ -7,15 +7,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test tests/*.test.mjs && vitest run"
+    "test": "node --test tests/*.test.mjs && vitest run",
+    "films:texts": "python3 tools/promo/batch.py texts",
+    "films:align": "python3 tools/promo/batch.py align",
+    "films:render": "python3 tools/promo/batch.py render",
+    "films:package": "python3 tools/promo/batch.py package",
+    "films:status": "python3 tools/promo/batch.py status",
+    "films:verify": "python3 tools/promo/verify.py",
+    "films:publish": "python3 tools/promo/publish.py"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.97.1",
-    "@emailjs/browser": "^4.4.1",
     "@fontsource-variable/archivo": "^5.3.0",
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource/archivo-black": "^5.3.0",
-    "@supabase/supabase-js": "^2.106.1",
     "ai": "^6.0.185",
     "framer-motion": "^12.39.0",
     "next": "^16.2.6",

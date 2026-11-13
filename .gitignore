@@ -45,3 +45,16 @@ next-env.d.ts
 .venv-merch/
 scripts/__pycache__/
 pursue-tshirt-designs-print-ready/
+
+# rendered course films (published as GitHub release assets, not repo content)
+/film-render/
+!/v1/
+/v1/RELEASE-LINKS.md
+tools/promo/vo/
+
+# python cache
+tools/promo/__pycache__/
+__pycache__/
+
+# media staging for release publishing (large binaries, never in history)
+/media/

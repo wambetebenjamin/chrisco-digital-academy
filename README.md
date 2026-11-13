@@ -40,7 +40,7 @@ green stays a signal rather than a surface. Full rationale in
   recommendations and share links.
 - **Affiliates** - referral code and link builder, per-course links, referral tracking.
 - **Contact** - info cards, WhatsApp shortcut, EmailJS contact form.
-- **Dashboard** - stats, enrollments, account (Supabase auth, gated).
+- **Dashboard** - stats, enrolments, account (Sheet-backed sign-in, gated).
 - **Sign In / Sign Up** - split editorial auth screens.
 
 ## 📬 Contact
@@ -50,17 +50,36 @@ green stays a signal rather than a surface. Full rationale in
 
 ## 🔐 Accounts, handbooks and referrals
 
-Setup for restoring the database and enabling Google sign-in is documented in
-[docs/SETUP-DATABASE.md](./docs/SETUP-DATABASE.md).
+There is no database server. **The Google Sheet is the database**, reached
+through one Google Apps Script Web App. Full setup, the tab-by-tab schema and the
+`doGet`/`doPost` code are in
+[docs/GOOGLE-SHEETS-BACKEND.md](./docs/GOOGLE-SHEETS-BACKEND.md); the script
+itself is [docs/apps-script/Code.gs](./docs/apps-script/Code.gs).
 
-- Sign-in and sign-up run on Supabase when `NEXT_PUBLIC_SUPABASE_URL` and
-  `NEXT_PUBLIC_SUPABASE_ANON_KEY` are present.
-- Without those keys the app runs in **preview mode**: accounts, sessions and
-  enrolments are kept in `localStorage` so every screen remains testable.
+- Every read is `GET ?sheet=Name`, and every form submission is one `fetch()`
+  POST of `{ sheet, action, ...fields }` to `GOOGLE_SCRIPT_WEBAPP_URL`.
+- Sign-in, enrolments, progress and saved books are rows in the Sheet.
+- Until `NEXT_PUBLIC_GOOGLE_SCRIPT_WEBAPP_URL` is set the app runs in **preview
+  mode**: the session is kept in `localStorage` so every screen remains testable.
 - Course objectives and the full outline are public. The handbook PDF needs a
   signed-in account; signed-out visitors get a sign-in prompt instead.
 - Referral links look like `/?ref=YOURCODE`. The code is stored for 60 days,
   attached to sign-ups, and summarised on the Affiliates page.
+
+## 🎬 Course Films
+
+Every course has a ~90-second vertical promo film (1080 × 1920, narrated,
+captioned). They are built from the same course data as the site and published
+as GitHub Release assets rather than repository files:
+
+```
+https://github.com/wambetebenjamin/chrisco-digital-academy/releases/tag/course-films-v1
+```
+
+Download them all from **[/films](https://chrisco-digital-academy.vercel.app/films)**
+or straight from the release. Rebuild with `npm run films:texts`, `films:align`,
+`films:render`, `films:verify`, `films:publish` — full notes in
+[docs/COURSE-FILMS.md](./docs/COURSE-FILMS.md).
 
 ## 🧪 Tests
 
@@ -72,8 +91,8 @@ npx vitest run    # component tests only
 ## 🧱 Tech
 
 - Next.js 16 (App Router) + React 19 + Tailwind CSS v4
-- Supabase (auth + profiles + enrollments)
-- EmailJS (contact & enrollment forms)
+- Google Sheets (database) via a Google Apps Script Web App
+- Google Docs + Google Slides (curriculum, orientation deck)
 - Google Fonts - Archivo Black / Archivo / Inter
 
 ## 🚀 Getting Started
@@ -83,12 +102,14 @@ npm install
 npm run dev
 ```
 
-Set environment variables to enable auth (optional - the site renders publicly without them):
+Set one environment variable to connect the Sheet (optional — the site renders
+publicly without it, in preview mode):
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+NEXT_PUBLIC_GOOGLE_SCRIPT_WEBAPP_URL=https://script.google.com/macros/s/AKfy…/exec
 ```
+
+Deploy the frontend on **Render** and add the same variable there.
 
 ## 👨‍💻 About The Developer
 

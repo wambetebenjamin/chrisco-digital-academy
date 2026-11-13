@@ -1,4 +1,6 @@
-const BASE_URL = "https://chrisco-digital-academy.vercel.app"
+import { DEFAULT_SITE_ORIGIN } from "./lib/siteOrigin"
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_ORIGIN
 
 export default function robots() {
   return {

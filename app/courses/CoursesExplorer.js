@@ -1,6 +1,5 @@
 "use client"
 import { useState, useEffect } from "react"
-import emailjs from "@emailjs/browser"
 import Image from "next/image"
 import Link from "next/link"
 import Icon from "../components/Icon"
@@ -9,7 +8,7 @@ import { org } from "../data/org"
 import { CONNECTED_RESOURCES } from "../data/connectedResources"
 import { useAuth } from "../AuthProvider"
 import { readRef } from "../lib/referral"
-import { submitAcademyIntake } from "../lib/intakeClient"
+import { sendAcademyIntake } from "../lib/intakeClient"
 import RecaptchaCheck from "../components/RecaptchaCheck"
 import BookGateModal from "../components/BookGateModal"
 import ShareBookBar from "../components/ShareBookBar"
@@ -124,7 +123,7 @@ export default function CoursesExplorer() {
           phone: form.phone.trim(),
         })
       }
-      await submitAcademyIntake({
+      await sendAcademyIntake({
         action: "course_application",
         name: form.name.trim(),
         email: form.email.trim(),
@@ -509,7 +508,7 @@ export default function CoursesExplorer() {
               <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", marginBottom: 12, color: "var(--ink)", display: "flex", alignItems: "center", gap: 9 }}>
                 <Icon name="clipboard" size={18} style={{ color: "var(--green-deep)" }} /> Course Outline
               </h3>
-              <div style={{ background: "#F4F6F4", borderRadius: 16, padding: "6px 18px", marginBottom: 24 }}>
+              <div style={{ background: "var(--bone-2)", borderRadius: 16, padding: "6px 18px", marginBottom: 24 }}>
                 {selected.syllabus.map((item, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "12px 0", borderBottom: i < selected.syllabus.length - 1 ? "1px solid var(--line)" : "none" }}>
                     <span

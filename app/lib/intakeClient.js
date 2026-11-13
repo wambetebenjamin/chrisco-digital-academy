@@ -1,18 +1,10 @@
-import emailjs from "@emailjs/browser"
 import { ORG } from "../data/org"
 import { CONNECTED_RESOURCES } from "../data/connectedResources"
-import {
-  supabase,
-  isSupabaseConfigured,
-  SUPABASE_ANON_KEY,
-  SUPABASE_EDGE_INTAKE_URL,
-} from "../supabase"
+import { SHEETS, submitRow, fetchSheet, isBackendConfigured } from "./googleSheets"
 
-const SERVICE_ID = "service_m86zbad"
-const TEMPLATE_ID = "template_i5wg4c8"
-const PUBLIC_KEY = "eVsfqNv-Jtq46-4b2"
-
-const INBOX_STORAGE_KEY = "chrisco:inbox"
+// Local UI cache only. The Sheet is the source of truth; this just keeps
+// the last few confirmations visible when the page reloads offline.
+const INBOX_STORAGE_KEY = "chrisco:inbox-cache"
 const APPS_STORAGE_KEY = "chrisco:applications"
 
 const isTestEnv =
@@ -252,23 +244,9 @@ export async function submitAcademyIntake(payload = {}) {
     action,
   })
 
-  // Always cache locally for instant UI feedback
+  // Cache the receipt locally for instant UI feedback. This is a cache, not a
+  // store: the Sheet is the source of truth.
   saveToLocalInbox(fallbackReceipt)
-  saveToLocalApplications({
-    id: fallbackReceipt.reference_code,
-    type: action,
-    name: payload.name || "Learner",
-    email: payload.email || "",
-    phone: payload.phone || "",
-    course_title: payload.course_title || null,
-    track: payload.track || null,
-    message: payload.message || "",
-    status: "responded",
-    auto_reply_from: ORG.email,
-    auto_reply_subject: fallbackReceipt.subject,
-    auto_reply_body: fallbackReceipt.body,
-    created_at: fallbackReceipt.sent_at,
-  })
 
   if (isTestEnv) {
     return {
@@ -278,128 +256,78 @@ export async function submitAcademyIntake(payload = {}) {
     }
   }
 
-  // Trigger browser EmailJS in background (non-blocking)
-  if (typeof window !== "undefined") {
-    emailjs
-      .send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          from_name: payload.name || "Learner",
-          from_email: payload.email || ORG.email,
-          reply_to: ORG.email,
-          to_email: payload.email || ORG.email,
-          phone: payload.phone || "",
-          subject: fallbackReceipt.subject,
-          message: `${payload.message || action}\n\n--- Automated Response from ${ORG.email} ---\n${fallbackReceipt.body}`,
-        },
-        PUBLIC_KEY
-      )
-      .catch(() => {})
-  }
-
-  // 1. Primary: Call Supabase Edge Function `academy-intake`
-  try {
-    const res = await fetch(SUPABASE_EDGE_INTAKE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-      },
-      body: JSON.stringify({ ...payload, action }),
-    })
-    if (res.ok) {
-      const data = await res.json()
-      if (data?.ok && data?.auto_reply) {
-        saveToLocalInbox(data.auto_reply)
-        return data
-      }
-    }
-  } catch {
-    // Fall through to direct Supabase table insert
-  }
-
-  // 2. Fallback: Direct Supabase PostgREST insert
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const validUserId = isUuid(payload.user_id) ? payload.user_id : null
-      await supabase.from("contacts").insert({
-        user_id: validUserId,
-        name: payload.name || "Visitor",
-        email: payload.email || null,
-        phone: payload.phone || null,
-        type: action,
-        subject: fallbackReceipt.subject,
-        course_title: payload.course_title || null,
-        track: payload.track || null,
-        message: payload.message || "",
-        ref: payload.ref || null,
-        metadata: { ...(payload.metadata || {}), reference_code: fallbackReceipt.reference_code },
-        status: "responded",
-        auto_reply_from: ORG.email,
-        auto_reply_subject: fallbackReceipt.subject,
-        auto_reply_body: fallbackReceipt.body,
-        auto_reply_sent: true,
-      })
-
-      if (action === "course_application" && payload.course_title) {
-        if (validUserId) {
-          await supabase.from("enrollments").upsert(
-            {
-              user_id: validUserId,
-              course_title: payload.course_title,
-              course_id: payload.course_id ? Number(payload.course_id) : null,
-              category: payload.category || null,
-              level: payload.level || null,
-              applicant_name: payload.name || null,
-              applicant_email: payload.email || null,
-              applicant_phone: payload.phone || null,
-              status: "active",
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: "user_id,course_title" }
-          )
-        } else {
-          await supabase.from("enrollments").insert({
-            user_id: null,
-            course_title: payload.course_title,
-            course_id: payload.course_id ? Number(payload.course_id) : null,
-            category: payload.category || null,
-            level: payload.level || null,
-            applicant_name: payload.name || null,
-            applicant_email: payload.email || null,
-            applicant_phone: payload.phone || null,
-            status: "active",
-            updated_at: new Date().toISOString(),
-          })
-        }
-      }
-
-      if (payload.email) {
-        await supabase.from("email_notifications").insert({
-          user_id: validUserId,
-          sender_email: ORG.email,
-          sender_name: `${ORG.academy} (${ORG.programme})`,
-          recipient_email: payload.email,
-          recipient_name: payload.name || "Learner",
-          template_type: fallbackReceipt.template_type,
-          subject: fallbackReceipt.subject,
-          body_text: fallbackReceipt.body,
-          delivery_status: "sent",
-          reference_code: fallbackReceipt.reference_code,
-        })
-      }
-    } catch {
-      // Non-blocking
+  if (!isBackendConfigured) {
+    return {
+      ok: false,
+      error:
+        "The Google Sheets backend is not configured yet. Set " +
+        "NEXT_PUBLIC_GOOGLE_SCRIPT_WEBAPP_URL to your Apps Script Web App URL.",
+      reference_code: fallbackReceipt.reference_code,
+      auto_reply: fallbackReceipt,
     }
   }
 
-  return {
-    ok: true,
+  // One POST to the Apps Script Web App. It appends the row and returns the
+  // stored record; the schema of that row is documented in docs/APPS-SCRIPT.md.
+  const sheetFor = {
+    contact: SHEETS.contacts,
+    course_application: SHEETS.enrolments,
+    tutor_application: SHEETS.tutors,
+    newsletter_signup: SHEETS.newsletter,
+    merch_order: SHEETS.contacts,
+    book_download_registration: SHEETS.books,
+    signup_welcome: SHEETS.learners,
+    google_auth: SHEETS.learners,
+  }
+
+  const result = await submitRow(sheetFor[action] || SHEETS.contacts, {
+    action,
     reference_code: fallbackReceipt.reference_code,
-    auto_reply: fallbackReceipt,
+    name: payload.name || "",
+    email: payload.email || "",
+    phone: payload.phone || "",
+    course_title: payload.course_title || "",
+    course_id: payload.course_id || "",
+    category: payload.category || "",
+    level: payload.level || "",
+    track: payload.track || "",
+    message: payload.message || "",
+    ref: payload.ref || "",
+    user_id: payload.user_id || "",
+    created_at: fallbackReceipt.sent_at,
+    status: "responded",
+    auto_reply_subject: fallbackReceipt.subject,
+    auto_reply_from: ORG.email,
+  })
+
+  if (!result?.ok) {
+    return {
+      ok: false,
+      error: result?.error || "We could not reach the server. Please try again.",
+      reference_code: fallbackReceipt.reference_code,
+      auto_reply: fallbackReceipt,
+    }
   }
+
+  const stored = {
+    ...fallbackReceipt,
+    reference_code: result.reference_code || fallbackReceipt.reference_code,
+  }
+  saveToLocalInbox(stored)
+  return { ok: true, reference_code: stored.reference_code, auto_reply: stored }
+}
+
+
+/**
+ * Form wrapper: same call, but a rejected write becomes a thrown error so the
+ * caller's catch block shows a real failure instead of a false "sent" screen.
+ */
+export async function sendAcademyIntake(payload) {
+  const result = await submitAcademyIntake(payload)
+  if (!result?.ok) {
+    throw new Error(result?.error || "We could not save your submission. Please try again.")
+  }
+  return result
 }
 
 export async function authenticateWithGoogleBridge({ name, email, password, avatar_url, ref }) {
@@ -413,68 +341,34 @@ export async function authenticateWithGoogleBridge({ name, email, password, avat
     return { error: { message: "Please enter your password (at least 6 characters)." } }
   }
 
-  if (!isTestEnv && isSupabaseConfigured && supabase) {
-    try {
-      const signInAttempt = await supabase.auth.signInWithPassword({
-        email: cleanEmail,
-        password,
-      })
-      if (!signInAttempt.error && signInAttempt.data?.user) {
-        return {
-          data: signInAttempt.data,
-          error: null,
-        }
-      }
-
-      const signUpAttempt = await supabase.auth.signUp({
-        email: cleanEmail,
-        password,
-        options: {
-          data: {
-            name: cleanName,
-            full_name: cleanName,
-            auth_provider: "google",
-            ref: ref || null,
+  // Authentication is a row in the Learners sheet, not a separate auth server.
+  // The Apps Script hashes the password before storing it; see docs/APPS-SCRIPT.md.
+  if (!isTestEnv) {
+    const result = await submitRow(SHEETS.learners, {
+      action: "auth",
+      name: cleanName,
+      email: cleanEmail,
+      password,
+      avatar_url: avatar_url || "",
+      ref: ref || "",
+      created_at: new Date().toISOString(),
+    })
+    if (result?.ok && result.learner) {
+      return {
+        data: {
+          user: {
+            id: result.learner.id,
+            name: result.learner.name || cleanName,
+            email: cleanEmail,
+            provider: "google",
+            user_metadata: { name: cleanName, full_name: cleanName, auth_provider: "google" },
           },
         },
-      })
-      if (!signUpAttempt.error && signUpAttempt.data?.user) {
-        return {
-          data: signUpAttempt.data,
-          error: null,
-        }
+        error: null,
       }
-
-      const res = await fetch(SUPABASE_EDGE_INTAKE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          action: "google_auth",
-          name: cleanName,
-          email: cleanEmail,
-          avatar_url: avatar_url || null,
-          ref: ref || null,
-        }),
-      })
-      const payload = await res.json()
-      if (payload?.ok && payload?.hashed_token) {
-        const { data: otpData, error: otpErr } = await supabase.auth.verifyOtp({
-          token_hash: payload.hashed_token,
-          type: "magiclink",
-        })
-        if (!otpErr && otpData?.user) {
-          return {
-            data: otpData,
-            error: null,
-          }
-        }
-      }
-    } catch {
-      // Fall through to local Google session if offline
+    }
+    if (result?.error) {
+      return { data: null, error: { message: result.error } }
     }
   }
 
@@ -495,65 +389,59 @@ export async function authenticateWithGoogleBridge({ name, email, password, avat
 
 export async function fetchAcademyOverview({ user_id, email, affiliate_code } = {}) {
   const localInbox = readLocalInbox()
-  const localApps = readLocalApplications()
 
-  if (!isTestEnv) {
-    try {
-      const params = new URLSearchParams()
-      if (user_id) params.set("user_id", user_id)
-      if (email) params.set("email", email)
-      if (affiliate_code) params.set("affiliate_code", affiliate_code)
-
-      const url = `${SUPABASE_EDGE_INTAKE_URL}${params.toString() ? `?${params.toString()}` : ""}`
-      const res = await fetch(url, {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-      })
-      if (res.ok) {
-        const data = await res.json()
-        const serverNotifs = (data.notifications || []).map((n) => ({
-          id: n.id,
-          reference_code: n.reference_code || `REF-${String(n.id).slice(0, 6).toUpperCase()}`,
-          from: n.sender_email || ORG.email,
-          sender_name: n.sender_name || `${ORG.academy} (${ORG.programme})`,
-          to: n.recipient_email || email || "",
-          recipient_name: n.recipient_name || "",
-          subject: n.subject,
-          body: n.body_text,
-          template_type: n.template_type,
-          sent_at: n.created_at,
-        }))
-
-        const seenRefs = new Set(serverNotifs.map((n) => n.reference_code))
-        const mergedInbox = [
-          ...serverNotifs,
-          ...localInbox.filter((l) => !seenRefs.has(l.reference_code)),
-        ]
-
-        return {
-          ok: true,
-          stats: data.stats || { learners: 4, enrollments: 0, contacts: 0 },
-          resources: CONNECTED_RESOURCES,
-          notifications: mergedInbox,
-          applications: data.applications?.length ? data.applications : localApps,
-          affiliateStats: data.affiliateStats || null,
-        }
-      }
-    } catch {
-      // Fall back to local + static resources
+  if (isTestEnv || !isBackendConfigured) {
+    return {
+      ok: true,
+      stats: { learners: 0, enrolments: 0, contacts: localInbox.length },
+      resources: CONNECTED_RESOURCES,
+      notifications: localInbox,
+      applications: [],
+      affiliateStats: null,
+      offline: true,
     }
   }
 
+  // Each of these is one Apps Script GET returning an array of row objects.
+  const [learners, enrolments, contacts, affiliates] = await Promise.all([
+    fetchSheet(SHEETS.learners),
+    fetchSheet(SHEETS.enrolments, { filter: email ? { email } : {} }),
+    fetchSheet(SHEETS.contacts, { filter: email ? { email } : {} }),
+    fetchSheet(SHEETS.affiliates, {
+      filter: affiliate_code ? { code: affiliate_code } : {},
+    }),
+  ])
+
+  const notifications = contacts.map((row, i) => ({
+    id: row.id || `c${i}`,
+    reference_code: row.reference_code || "",
+    from: row.auto_reply_from || ORG.email,
+    sender_name: `${ORG.academy} (${ORG.programme})`,
+    to: row.email || "",
+    recipient_name: row.name || "",
+    subject: row.auto_reply_subject || "Message received",
+    body: row.message || "",
+    sent_at: row.created_at || "",
+  }))
+
+  const seen = new Set(notifications.map((n) => n.reference_code))
+  const mergedInbox = [
+    ...notifications,
+    ...localInbox.filter((l) => !seen.has(l.reference_code)),
+  ]
+
   return {
     ok: true,
-    stats: { learners: 4, enrollments: 0, contacts: localApps.length },
+    stats: {
+      learners: learners.length,
+      enrolments: enrolments.length,
+      contacts: contacts.length,
+    },
     resources: CONNECTED_RESOURCES,
-    notifications: localInbox,
-    applications: localApps,
-    affiliateStats: null,
+    notifications: mergedInbox,
+    applications: enrolments,
+    affiliateStats: affiliates[0] || null,
+    offline: false,
   }
 }
 
@@ -563,59 +451,29 @@ export async function updateCourseProgressInBackend({
   progress,
   completed_modules,
 }) {
-  if (!isTestEnv && user_id && course_title) {
-    try {
-      const res = await fetch(SUPABASE_EDGE_INTAKE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          action: "update_progress",
-          user_id,
-          course_title,
-          progress,
-          completed_modules,
-        }),
-      })
-      if (res.ok) {
-        const data = await res.json()
-        if (data?.ok) return data.enrollment
-      }
-    } catch {
-      // Fallback
-    }
-  }
-  return null
+  if (isTestEnv || !isBackendConfigured || !user_id || !course_title) return null
+  const res = await submitRow(SHEETS.progress, {
+    action: "update",
+    user_id,
+    course_title,
+    progress,
+    completed_modules: Array.isArray(completed_modules)
+      ? completed_modules.join(", ")
+      : completed_modules || "",
+    updated_at: new Date().toISOString(),
+  })
+  return res?.ok ? res.row || null : null
 }
 
 export async function registerAffiliateInBackend({ code, name, email, user_id }) {
-  if (!isTestEnv && code) {
-    try {
-      const res = await fetch(SUPABASE_EDGE_INTAKE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          action: "register_affiliate",
-          code,
-          name,
-          email,
-          user_id,
-        }),
-      })
-      if (res.ok) {
-        const data = await res.json()
-        if (data?.ok) return data.affiliate
-      }
-    } catch {
-      // Fallback
-    }
-  }
-  return null
+  if (isTestEnv || !isBackendConfigured || !code) return null
+  const res = await submitRow(SHEETS.affiliates, {
+    action: "register_affiliate",
+    code,
+    name,
+    email,
+    user_id,
+    created_at: new Date().toISOString(),
+  })
+  return res?.ok ? res.row || null : null
 }

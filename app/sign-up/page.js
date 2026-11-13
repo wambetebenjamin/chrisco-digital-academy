@@ -146,7 +146,7 @@ export default function SignUp() {
           <span className="eyebrow">Join the academy</span>
           {previewMode && (
             <div className="auth-preview-note">
-              <strong>Preview mode.</strong> Accounts are stored in this browser until Supabase keys are added.
+              <strong>Preview mode.</strong> Accounts are stored in this browser until the Google Sheet backend is connected.
             </div>
           )}
           {ref && (

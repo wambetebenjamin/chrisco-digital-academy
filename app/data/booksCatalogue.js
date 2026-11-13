@@ -112,11 +112,15 @@ export function maskEmail(email = "") {
   return `${visible}@${domain}`
 }
 
+const FALLBACK_ORIGIN =
+  (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_SITE_URL) ||
+  "https://chrisco-digital-academy.onrender.com"
+
 export function buildBookShareUrl(slug, origin = "") {
   const base =
     origin ||
     (typeof window !== "undefined" && window.location?.origin
       ? window.location.origin
-      : "https://chrisco-digital-academy.vercel.app")
+      : FALLBACK_ORIGIN)
   return `${base.replace(/\/$/, "")}/library/${encodeURIComponent(slug)}`
 }

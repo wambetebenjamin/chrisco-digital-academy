@@ -16,6 +16,7 @@ import {
   whatsappInquiry,
 } from "../data/merch"
 import { readMyCode, buildRefLink } from "../lib/referral"
+import { backend } from "../lib/googleSheets"
 import { org } from "../data/org"
 
 const CART_KEY = "chrisco:merch-order"
@@ -175,6 +176,25 @@ export default function Shop({ initialCode = "" }) {
     setActiveCode("")
     setSize("")
     setQty(1)
+  }
+
+  // Log the order to the Google Sheet before handing off to WhatsApp or email.
+  // Fire-and-forget: the handoff must never be blocked by the network.
+  function recordOrder() {
+    if (!cart.length) return
+    backend.contacts({
+      action: "merch_order",
+      name: "",
+      email: "",
+      phone: "",
+      reference_code: `ORD-${Date.now().toString(36).toUpperCase()}`,
+      message: cart
+        .map((line) => `${line.qty} x ${line.code} ${line.name} (${line.colour}) size ${line.size}`)
+        .join("; "),
+      track: readMyCode() || "",
+      created_at: new Date().toISOString(),
+      status: "new",
+    })
   }
 
   function addToOrder() {
@@ -763,6 +783,7 @@ export default function Shop({ initialCode = "" }) {
                   href={`${org.whatsapp}?text=${orderMessage(cart, readMyCode())}`}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => recordOrder()}
                 >
                   <Icon name="whatsapp" size={16} /> Send this order on WhatsApp
                 </a>
@@ -770,6 +791,7 @@ export default function Shop({ initialCode = "" }) {
                   className="btn btn-outline btn-block"
                   style={{ textDecoration: "none", marginTop: 10 }}
                   href={`mailto:${org.email}?subject=${encodeURIComponent("Merchandise order")}&body=${orderMessage(cart, readMyCode()).replace(/%0A/g, "%0D%0A")}`}
+                  onClick={() => recordOrder()}
                 >
                   <Icon name="mail" size={15} /> Order by email
                 </a>

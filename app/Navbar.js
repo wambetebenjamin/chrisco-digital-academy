@@ -30,13 +30,13 @@ export default function Navbar() {
   const isActive = (href) => pathname === href
 
   return (
-    <header className="kyn-header" style={{ position: "sticky", top: 0, zIndex: 200 }}>
-      {/* Topbar — KYN dark green */}
-      <div className="kyn-topbar topbar s2" style={{ background: "#18322E" }}>
-        <div className="kyn-topbar-inner">
+    <header className="ed-header" style={{ position: "sticky", top: 0, zIndex: 200 }}>
+      {/* Announcement bar */}
+      <div className="ed-topbar topbar s2" style={{ background: "var(--ink-900)" }}>
+        <div className="ed-topbar-inner">
           <ul className="contact-info" style={{ margin: 0, padding: "8px 0" }}>
             <li>
-              <i className="ti-email" style={{ color: "#F74F22" }} aria-hidden>
+              <i className="ti-email" style={{ color: "var(--oxblood)" }} aria-hidden>
                 <Icon name="mail" size={14} />
               </i>
               <a className="info-link" href="mailto:chriscoyouthaflame2025@gmail.com">
@@ -44,7 +44,7 @@ export default function Navbar() {
               </a>
             </li>
             <li>
-              <i className="fi flaticon-phone" style={{ color: "#F74F22" }} aria-hidden>
+              <i className="fi flaticon-phone" style={{ color: "var(--oxblood)" }} aria-hidden>
                 <Icon name="phone" size={14} />
               </i>
               <a className="info-link" href="tel:+254112272061">
@@ -52,7 +52,7 @@ export default function Navbar() {
               </a>
             </li>
             <li className="hide-mobile">
-              <Icon name="pin" size={14} style={{ color: "#F74F22" }} />
+              <Icon name="pin" size={14} style={{ color: "var(--oxblood)" }} />
               <span>Jinja, Uganda</span>
             </li>
           </ul>
@@ -92,17 +92,17 @@ export default function Navbar() {
       <div className="wpo-site-header">
         <nav className="navigation navbar navbar-expand-lg navbar-light" style={{ background: "#fff" }}>
           <div className="container-fluid">
-            <div className="row align-items-center kyn-header-row" style={{ width: "100%", margin: 0, minHeight: 78, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
+            <div className="row align-items-center ed-header-row" style={{ width: "100%", margin: 0, minHeight: 78, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
               {/* Logo */}
               <div className="col-lg-2 col-md-6 col-6" style={{ flex: "0 0 auto", width: "auto", padding: 0 }}>
                 <div className="navbar-header">
-                  <Link href="/" className="navbar-brand kyn-logo" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 12 }}>
-                    <span className="kyn-logo-mark" style={{ width: 44, height: 44, borderRadius: 12, background: "#18322E", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem" }}>
+                  <Link href="/" className="navbar-brand ed-logo" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 12 }}>
+                    <span className="ed-logo-mark" style={{ width: 44, height: 44, borderRadius: 12, background: "var(--ink-900)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem" }}>
                       C
                     </span>
                     <span>
-                      <span style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", color: "#061408", display: "block", lineHeight: 1.05 }}>CHRISCO</span>
-                      <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#F74F22", display: "block" }}>Digital Academy</span>
+                      <span style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", color: "var(--ink-900)", display: "block", lineHeight: 1.05 }}>CHRISCO</span>
+                      <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--oxblood)", display: "block" }}>Digital Academy</span>
                     </span>
                   </Link>
                 </div>
@@ -118,12 +118,12 @@ export default function Navbar() {
                         <li key={link.href} className={active ? "current-menu-item" : ""} style={{ position: "relative" }}>
                           <Link
                             href={link.href}
-                            className="kyn-nav-link"
+                            className="ed-nav-link"
                             style={{
                               fontFamily: "var(--font-head)",
                               fontWeight: active ? 800 : 600,
                               fontSize: 15,
-                              color: active ? "#F74F22" : "#1A2B26",
+                              color: active ? "var(--oxblood)" : "var(--ink-700)",
                               padding: "10px 11px",
                               textDecoration: "none",
                               whiteSpace: "nowrap",
@@ -136,20 +136,14 @@ export default function Navbar() {
                         </li>
                       )
                     })}
-                    {/* Free Training external like KYN */}
-                    <li>
-                      <a href="https://lms.kibrayouthnetwork.org/" target="_blank" rel="noopener noreferrer" className="kyn-nav-link" style={{ fontFamily: "var(--font-head)", fontWeight: 600, fontSize: 14, color: "#1A2B26", padding: "10px 11px", textDecoration: "none", whiteSpace: "nowrap" }}>
-                        Free Training
-                      </a>
-                    </li>
-                    {/* Donate / Join — KYN orange pill */}
-                    <li className="kyn-donate" style={{ marginLeft: 8 }}>
+                    {/* Primary call to action */}
+                    <li className="ed-cta-wrap" style={{ marginLeft: 8 }}>
                       {user ? (
-                        <Link href="/dashboard" className="btn-kyn-donate" style={{ background: "#F74F22", color: "#fff", borderRadius: 999, padding: "11px 18px", fontWeight: 800, fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
+                        <Link href="/dashboard" className="btn-ed-cta-wrap" style={{ background: "var(--oxblood)", color: "#fff", borderRadius: 999, padding: "11px 18px", fontWeight: 800, fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
                           Dashboard →
                         </Link>
                       ) : (
-                        <Link href="/sign-up" className="btn-kyn-donate" style={{ background: "#F74F22", color: "#fff", borderRadius: 999, padding: "11px 18px", fontWeight: 800, fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
+                        <Link href="/sign-up" className="btn-ed-cta-wrap" style={{ background: "var(--oxblood)", color: "#fff", borderRadius: 999, padding: "11px 18px", fontWeight: 800, fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
                           Join Free →
                         </Link>
                       )}
@@ -170,16 +164,16 @@ export default function Navbar() {
                         gap: 8,
                         padding: "7px 12px 7px 8px",
                         borderRadius: 999,
-                        border: "1px solid #E8EDE9",
-                        background: "#FAF9F6",
-                        color: "#061408",
+                        border: "1px solid var(--rule)",
+                        background: "var(--bone)",
+                        color: "var(--ink-900)",
                         textDecoration: "none",
                         fontFamily: "var(--font-head)",
                         fontSize: 12.5,
                         fontWeight: 700,
                       }}
                     >
-                      <span style={{ width: 26, height: 26, borderRadius: "50%", background: "#F74F22", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11 }}>
+                      <span style={{ width: 26, height: 26, borderRadius: "50%", background: "var(--oxblood)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11 }}>
                         {(profile?.name || user.email)?.[0]?.toUpperCase()}
                       </span>
                       <span>{profile?.name?.split(" ")[0] || "Student"}</span>
@@ -188,8 +182,8 @@ export default function Navbar() {
                       onClick={handleSignOut}
                       style={{
                         background: "transparent",
-                        border: "1px solid #E8EDE9",
-                        color: "#5A6A62",
+                        border: "1px solid var(--rule)",
+                        color: "var(--ink-500)",
                         padding: "8px 14px",
                         borderRadius: 999,
                         fontFamily: "var(--font-head)",
@@ -202,7 +196,7 @@ export default function Navbar() {
                     </button>
                   </>
                 ) : (
-                  <Link href="/sign-in" style={{ color: "#061408", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, textDecoration: "none", padding: "8px 10px" }}>
+                  <Link href="/sign-in" style={{ color: "var(--ink-900)", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, textDecoration: "none", padding: "8px 10px" }}>
                     Sign In
                   </Link>
                 )}
@@ -217,9 +211,9 @@ export default function Navbar() {
                     onClick={() => setMenuOpen(!menuOpen)}
                     aria-label="Toggle navigation"
                     style={{
-                      background: menuOpen ? "#F74F22" : "#FAF9F6",
-                      border: "1px solid #E8EDE9",
-                      color: menuOpen ? "#fff" : "#18322E",
+                      background: menuOpen ? "var(--oxblood)" : "var(--bone)",
+                      border: "1px solid var(--rule)",
+                      color: menuOpen ? "#fff" : "var(--ink-900)",
                       width: 44,
                       height: 44,
                       borderRadius: 12,
@@ -244,7 +238,7 @@ export default function Navbar() {
           className="hide-desktop"
           style={{
             background: "#fff",
-            borderTop: "1px solid #E8EDE9",
+            borderTop: "1px solid var(--rule)",
             padding: "18px 20px 24px",
             boxShadow: "0 12px 32px rgba(24,50,46,0.08)",
           }}
@@ -263,8 +257,8 @@ export default function Navbar() {
                     fontFamily: "var(--font-head)",
                     fontSize: 15,
                     fontWeight: active ? 800 : 600,
-                    color: active ? "#fff" : "#061408",
-                    background: active ? "#F74F22" : "transparent",
+                    color: active ? "#fff" : "var(--ink-900)",
+                    background: active ? "var(--oxblood)" : "transparent",
                     textDecoration: "none",
                   }}
                 >
@@ -272,33 +266,18 @@ export default function Navbar() {
                 </Link>
               )
             })}
-            <a
-              href="https://lms.kibrayouthnetwork.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                padding: "13px 14px",
-                borderRadius: 12,
-                fontFamily: "var(--font-head)",
-                fontSize: 15,
-                fontWeight: 600,
-                color: "#061408",
-                textDecoration: "none",
-              }}
-            >
-              Free Training ↗
-            </a>
+
           </div>
 
-          <div style={{ borderTop: "1px solid #E8EDE9", marginTop: 16, paddingTop: 16, display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ borderTop: "1px solid var(--rule)", marginTop: 16, paddingTop: 16, display: "flex", flexDirection: "column", gap: 10 }}>
             {user ? (
               <>
-                <div style={{ color: "#18322E", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13 }}>Signed in as {profile?.name || user.email}</div>
+                <div style={{ color: "var(--ink-900)", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13 }}>Signed in as {profile?.name || user.email}</div>
                 <button
                   onClick={handleSignOut}
                   style={{
                     width: "100%",
-                    background: "#18322E",
+                    background: "var(--ink-900)",
                     color: "#fff",
                     border: "none",
                     padding: "13px",
@@ -320,8 +299,8 @@ export default function Navbar() {
                     textAlign: "center",
                     padding: "13px",
                     borderRadius: 999,
-                    border: "1.5px solid #18322E",
-                    color: "#18322E",
+                    border: "1.5px solid var(--ink-900)",
+                    color: "var(--ink-900)",
                     fontFamily: "var(--font-head)",
                     fontWeight: 800,
                     textDecoration: "none",
@@ -336,7 +315,7 @@ export default function Navbar() {
                     textAlign: "center",
                     padding: "13px",
                     borderRadius: 999,
-                    background: "#F74F22",
+                    background: "var(--oxblood)",
                     color: "#fff",
                     fontFamily: "var(--font-head)",
                     fontWeight: 800,

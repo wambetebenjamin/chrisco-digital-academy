@@ -1,7 +1,7 @@
 "use client"
 import { createContext, useContext, useEffect, useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import { supabase, isSupabaseConfigured, SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY } from "./supabase"
+import { isBackendConfigured, SHEETS, submitRow, fetchSheet } from "./lib/googleSheets"
 import {
   previewSignUp,
   previewSignIn,
@@ -94,13 +94,10 @@ export function AuthProvider({ children }) {
   }, [user?.email])
 
   async function fetchProfile(userId, fallbackUser = null) {
-    if (!isSupabaseConfigured || !supabase) return
+    if (!isBackendConfigured) return
     try {
-      const { data } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", userId)
-        .maybeSingle()
+      const rows = await fetchSheet(SHEETS.learners, { filter: { id: userId } })
+      const data = rows[0] || null
       if (data) {
         setProfile(data)
       } else if (fallbackUser) {
@@ -133,7 +130,7 @@ export function AuthProvider({ children }) {
     captureRefFromLocation()
 
     const localSession = previewSession()
-    if (!isSupabaseConfigured) {
+    if (!isBackendConfigured) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUser(localSession ?? null)
       setProfile(localSession ? { name: localSession.name, email: localSession.email } : null)
@@ -148,36 +145,10 @@ export function AuthProvider({ children }) {
       if (localSession.email) syncAuthenticatedUserBookAccess(localSession)
     }
 
-    supabase.auth
-      .getSession()
-      .then(({ data: { session } }) => {
-        if (session?.user) {
-          setUser(session.user)
-          fetchProfile(session.user.id, session.user)
-          syncAuthenticatedUserBookAccess(session.user)
-        }
-        setLoading(false)
-      })
-      .catch(() => {
-        setLoading(false)
-      })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser(session.user)
-        fetchProfile(session.user.id, session.user)
-      } else {
-        const fallback = previewSession()
-        if (!fallback) {
-          setUser(null)
-          setProfile(null)
-        }
-      }
-    })
-
-    return () => subscription.unsubscribe()
+    // No auth server to poll: the session lives in this browser and the
+    // Learners sheet is the record of who exists.
+    setLoading(false)
+    return undefined
   }, [])
 
   useEffect(() => {
@@ -197,7 +168,7 @@ export function AuthProvider({ children }) {
 
   async function signUp(name, email, password) {
     const ref = readRef()
-    if (!isSupabaseConfigured) {
+    if (!isBackendConfigured) {
       const result = previewSignUp({ name, email, password, ref })
       if (result.error) throw new Error(result.error.message)
       setUser(result.data.user)
@@ -214,12 +185,18 @@ export function AuthProvider({ children }) {
       return { ...result.data, autoReply: intake?.auto_reply || null }
     }
 
-    const { data, error } = await supabase.auth.signUp({
+    // One POST to the Apps Script: it appends the learner row and answers
+    // with the stored record.
+    const res = await submitRow(SHEETS.learners, {
+      action: "signup",
+      name,
       email,
       password,
-      options: { data: { name, full_name: name, ref } },
+      ref: ref || "",
+      created_at: new Date().toISOString(),
     })
-    if (error) throw error
+    if (!res?.ok) throw new Error(res?.error || "Could not create your account.")
+    const data = { user: res.learner }
 
     // Also mirror in local preview store for resilience
     previewSignUp({ name, email, password, ref })
@@ -247,7 +224,7 @@ export function AuthProvider({ children }) {
   }
 
   async function signIn(email, password) {
-    if (!isSupabaseConfigured) {
+    if (!isBackendConfigured) {
       const result = previewSignIn({ email, password })
       if (result.error) throw new Error(result.error.message)
       setUser(result.data.user)
@@ -256,8 +233,13 @@ export function AuthProvider({ children }) {
       return result.data
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (!error && data?.user) {
+    const res = await submitRow(SHEETS.learners, {
+      action: "signin",
+      email,
+      password,
+    })
+    if (res?.ok && res.learner) {
+      const data = { user: res.learner }
       setUser(data.user)
       fetchProfile(data.user.id, data.user)
       await syncAuthenticatedUserBookAccess(data.user)
@@ -273,13 +255,13 @@ export function AuthProvider({ children }) {
       return localAttempt.data
     }
 
-    throw error || new Error(localAttempt.error?.message || "Invalid email or password.")
+    throw new Error(res?.error || localAttempt.error?.message || "Invalid email or password.")
   }
 
   async function signInWithGoogle(next = "/dashboard", googleAccount = null) {
     const ref = readRef()
 
-    // When GoogleAuthModal passes a chosen Google account, sign in via our Supabase Google Auth Bridge
+    // When GoogleAuthModal passes a chosen Google account, sign in via the Sheet-backed bridge
     if (googleAccount?.email) {
       const res = await authenticateWithGoogleBridge({
         name: googleAccount.name,
@@ -325,46 +307,17 @@ export function AuthProvider({ children }) {
       return { data: res.data }
     }
 
-    if (isSupabaseConfigured) {
-      try {
-        const settingsRes = await fetch(`${SUPABASE_PROJECT_URL}/auth/v1/settings`, {
-          headers: { apikey: SUPABASE_ANON_KEY },
-        })
-        if (settingsRes.ok) {
-          const settings = await settingsRes.json()
-          if (settings?.external?.google) {
-            const { error } = await supabase.auth.signInWithOAuth({
-              provider: "google",
-              options: {
-                redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
-                queryParams: { access_type: "offline", prompt: "consent" },
-              },
-            })
-            if (error) throw error
-            return { redirected: true }
-          }
-        }
-      } catch {
-        /* fall through to Google Account Modal */
-      }
-    }
-
+    // With a Sheets backend there is no hosted OAuth provider to redirect to:
+    // the GoogleAuthModal collects the account and posts it as a learner row.
     return { openModal: true }
   }
 
   async function logout() {
     previewSignOut()
     revokeBookRegistration()
-    if (isSupabaseConfigured && supabase) {
-      try {
-        await supabase.auth.signOut()
-      } catch {
-        /* ignore */
-      }
-    }
     setUser(null)
     setProfile(null)
-    router.push(isSupabaseConfigured ? "/sign-in" : "/")
+    router.push("/")
   }
 
   async function enrollCourse(courseTitle, courseMeta = {}) {
@@ -391,53 +344,22 @@ export function AuthProvider({ children }) {
       /* storage unavailable */
     }
 
-    if (!isSupabaseConfigured || !supabase) return
-    try {
-      const validUserId = isUuid(user.id) ? user.id : null
-      const applicantName =
-        profile?.name || user.user_metadata?.name || user.user_metadata?.full_name || user.name || null
-      if (validUserId) {
-        await supabase.from("profiles").upsert(
-          {
-            id: validUserId,
-            name: applicantName || (user.email ? user.email.split("@")[0] : "Student"),
-            email: user.email || null,
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "id" }
-        )
-        await supabase.from("enrollments").upsert(
-          {
-            user_id: validUserId,
-            course_title: courseTitle,
-            course_id: courseMeta.id || null,
-            category: courseMeta.category || null,
-            level: courseMeta.level || null,
-            applicant_name: applicantName,
-            applicant_email: user.email || null,
-            applicant_phone: courseMeta.phone || null,
-            status: "active",
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "user_id,course_title" }
-        )
-      } else {
-        await supabase.from("enrollments").insert({
-          user_id: null,
-          course_title: courseTitle,
-          course_id: courseMeta.id || null,
-          category: courseMeta.category || null,
-          level: courseMeta.level || null,
-          applicant_name: applicantName,
-          applicant_email: user.email || null,
-          applicant_phone: courseMeta.phone || null,
-          status: "active",
-          updated_at: new Date().toISOString(),
-        })
-      }
-    } catch {
-      /* local enrollment already saved */
-    }
+    if (!isBackendConfigured) return
+    const applicantName =
+      profile?.name || user.user_metadata?.name || user.user_metadata?.full_name || user.name || ""
+    await submitRow(SHEETS.enrolments, {
+      action: "enrol",
+      user_id: isUuid(user.id) ? user.id : "",
+      course_title: courseTitle,
+      course_id: courseMeta.id || "",
+      category: courseMeta.category || "",
+      level: courseMeta.level || "",
+      applicant_name: applicantName,
+      applicant_email: user.email || "",
+      applicant_phone: courseMeta.phone || "",
+      status: "active",
+      updated_at: new Date().toISOString(),
+    })
   }
 
   async function getEnrollments() {
@@ -451,7 +373,7 @@ export function AuthProvider({ children }) {
       localRows = []
     }
 
-    if (!isSupabaseConfigured || !supabase) {
+    if (!isBackendConfigured) {
       return localRows.map((r) => ({
         ...r,
         enrolled_at: r.enrolled_at || r.created_at || new Date().toISOString(),
@@ -461,55 +383,41 @@ export function AuthProvider({ children }) {
     }
 
     try {
-      const validUserId = isUuid(user.id) ? user.id : null
-      let query = supabase.from("enrollments").select("*").order("created_at", { ascending: false })
-      if (validUserId && user.email) {
-        query = query.or(`user_id.eq.${validUserId},applicant_email.ilike.${user.email}`)
-      } else if (validUserId) {
-        query = query.eq("user_id", validUserId)
-      } else if (user.email) {
-        query = query.ilike("applicant_email", user.email)
-      } else {
-        query = query.eq("user_id", user.id)
-      }
-
-      const { data } = await query
+      const remoteRows = await fetchSheet(SHEETS.enrolments, {
+        filter: user.email ? { email: user.email } : {},
+      })
       const seenRemote = new Set()
-      const remoteRows = []
-      for (const r of data || []) {
-        if (!r?.course_title || seenRemote.has(r.course_title)) continue
-        seenRemote.add(r.course_title)
-        remoteRows.push({
-          ...r,
-          enrolled_at: r.enrolled_at || r.created_at || new Date().toISOString(),
-          progress:
-            progressMap[r.course_title]?.progress !== undefined
-              ? progressMap[r.course_title].progress
-              : r.progress || 0,
+      const out = []
+      for (const r of remoteRows) {
+        const title = r.course_title
+        if (!title || seenRemote.has(title)) continue
+        seenRemote.add(title)
+        out.push({
+          user_id: r.user_id || user.id,
+          course_title: title,
+          course_id: r.course_id || null,
+          category: r.category || null,
+          level: r.level || null,
+          status: r.status || "active",
+          created_at: r.created_at || r.updated_at || null,
+          enrolled_at: r.created_at || r.updated_at || null,
+          progress: progressMap[title]?.progress ?? (Number(r.progress) || 0),
           completed_modules:
-            progressMap[r.course_title]?.completed_modules || r.completed_modules || [],
+            progressMap[title]?.completed_modules ?? String(r.completed_modules || "").split(",").filter(Boolean),
         })
       }
-
-      const seenTitles = new Set(remoteRows.map((r) => r.course_title))
-      return [
-        ...remoteRows,
-        ...localRows
-          .filter((l) => !seenTitles.has(l.course_title))
-          .map((l) => ({
-            ...l,
-            enrolled_at: l.enrolled_at || l.created_at || new Date().toISOString(),
-            progress: progressMap[l.course_title]?.progress ?? l.progress ?? 0,
-            completed_modules: progressMap[l.course_title]?.completed_modules ?? l.completed_modules ?? [],
-          })),
-      ]
+      for (const r of localRows) {
+        if (seenRemote.has(r.course_title)) continue
+        out.push({
+          ...r,
+          enrolled_at: r.enrolled_at || r.created_at || new Date().toISOString(),
+          progress: progressMap[r.course_title]?.progress ?? r.progress ?? 0,
+          completed_modules: progressMap[r.course_title]?.completed_modules ?? r.completed_modules ?? [],
+        })
+      }
+      return out
     } catch {
-      return localRows.map((r) => ({
-        ...r,
-        enrolled_at: r.enrolled_at || r.created_at || new Date().toISOString(),
-        progress: progressMap[r.course_title]?.progress ?? r.progress ?? 0,
-        completed_modules: progressMap[r.course_title]?.completed_modules ?? l.completed_modules ?? [],
-      }))
+      return localRows
     }
   }
 
@@ -549,8 +457,13 @@ export function AuthProvider({ children }) {
     map[emailKey] = nextList
     writeSavedBooksMap(map)
     setSavedBooks(nextList)
-    if (isSupabaseConfigured && supabase) {
-      supabase.auth.updateUser({ data: { saved_books: nextList } }).catch(() => {})
+    if (isBackendConfigured) {
+      submitRow(SHEETS.savedBooks, {
+        action: "save_books",
+        email: emailKey,
+        saved_books: nextList.join(", "),
+        updated_at: new Date().toISOString(),
+      }).catch(() => {})
     }
   }
 
@@ -628,7 +541,7 @@ export function AuthProvider({ children }) {
         user,
         profile,
         loading,
-        previewMode: !isSupabaseConfigured,
+        previewMode: !isBackendConfigured,
         lastAutoReply,
         setLastAutoReply,
         signUp,

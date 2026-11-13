@@ -4,7 +4,7 @@ import Link from "next/link"
 import Icon from "../components/Icon"
 import { org } from "../data/org"
 import { useAuth } from "../AuthProvider"
-import { submitAcademyIntake } from "../lib/intakeClient"
+import { sendAcademyIntake } from "../lib/intakeClient"
 import RecaptchaCheck from "../components/RecaptchaCheck"
 
 function isValidEmail(value) {
@@ -45,7 +45,7 @@ export default function ContactForm() {
     }
     setSending(true)
     try {
-      await submitAcademyIntake({
+      await sendAcademyIntake({
         action: "contact",
         name: form.name.trim(),
         email: form.email.trim(),

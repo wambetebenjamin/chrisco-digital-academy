@@ -21,7 +21,7 @@ export default function ShareBookBar({ book, compact = false }) {
     try {
       return new URL(shareUrl).host
     } catch {
-      return "chrisco-digital-academy.vercel.app"
+      return "chrisco-digital-academy.onrender.com"
     }
   })()
 
