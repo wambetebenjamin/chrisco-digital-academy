@@ -117,3 +117,40 @@ test("every form reaches the Sheet through the single submitRow helper", () => {
     assert.doesNotMatch(text, /\bfetch\(/, `${file} must not call fetch() directly`)
   }
 })
+
+test("the canonical site origin matches where the site is actually deployed", () => {
+  // A wrong default here silently poisons robots.txt, the sitemap and every
+  // share link — search engines get pointed at a domain that does not serve
+  // the site. The default must be the live host, or set via NEXT_PUBLIC_SITE_URL.
+  const originFile = read("app/lib/siteOrigin.js")
+  const match = originFile.match(/DEFAULT_SITE_ORIGIN\s*=\s*"([^"]+)"/)
+  assert.ok(match, "DEFAULT_SITE_ORIGIN must be declared")
+
+  const origin = match[1]
+  assert.match(origin, /^https:\/\//, "the default origin must use https")
+
+  const host = origin.replace(/^https:\/\//, "").split("/")[0]
+  assert.equal(
+    host,
+    "chrisco-digital-academy.vercel.app",
+    `DEFAULT_SITE_ORIGIN points at ${host}, but the site is served from chrisco-digital-academy.vercel.app`
+  )
+})
+
+test("no stray hosting domains are hardcoded in the app", () => {
+  const offenders = []
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })) {
+      const rel = path.join(dir, entry.name)
+      if (entry.isDirectory()) {
+        if (["node_modules", ".next", ".git"].includes(entry.name)) continue
+        walk(rel)
+      } else if (/\.(js|jsx|mjs)$/.test(entry.name)) {
+        const text = read(rel)
+        if (/onrender\.com|herokuapp\.com|netlify\.app/.test(text)) offenders.push(rel)
+      }
+    }
+  }
+  walk("app")
+  assert.deepEqual(offenders, [], `hosting domains that do not serve this site: ${offenders.join(", ")}`)
+})

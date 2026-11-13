@@ -114,7 +114,7 @@ export function maskEmail(email = "") {
 
 const FALLBACK_ORIGIN =
   (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_SITE_URL) ||
-  "https://chrisco-digital-academy.onrender.com"
+  "https://chrisco-digital-academy.vercel.app"
 
 export function buildBookShareUrl(slug, origin = "") {
   const base =
