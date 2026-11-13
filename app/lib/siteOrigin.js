@@ -13,14 +13,14 @@ function cleanOrigin(raw) {
  * Ensures WhatsApp, Telegram, Facebook, and X crawlers always receive
  * reachable absolute https:// URLs rather than http://localhost:3000.
  */
-export const DEFAULT_SITE_ORIGIN = "https://chrisco-digital-academy.onrender.com"
+export const DEFAULT_SITE_ORIGIN = "https://chrisco-digital-academy.vercel.app"
 
 export async function resolveServerOrigin() {
   const envFallback =
     cleanOrigin(process.env.NEXT_PUBLIC_SITE_URL) ||
-    // Render exposes the service's public URL at runtime.
-    cleanOrigin(process.env.RENDER_EXTERNAL_URL) ||
-    cleanOrigin(process.env.RENDER_EXTERNAL_HOSTNAME) ||
+    // Vercel exposes the deployment's system hostname at runtime.
+    cleanOrigin(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
+    cleanOrigin(process.env.VERCEL_URL) ||
     DEFAULT_SITE_ORIGIN
 
   try {

@@ -109,7 +109,7 @@ publicly without it, in preview mode):
 NEXT_PUBLIC_GOOGLE_SCRIPT_WEBAPP_URL=https://script.google.com/macros/s/AKfy…/exec
 ```
 
-Deploy the frontend on **Render** and add the same variable there.
+The frontend is deployed on **Vercel**. Add the same variable there and redeploy.
 
 ## 👨‍💻 About The Developer
 

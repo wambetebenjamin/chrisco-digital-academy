@@ -9,7 +9,7 @@ in front of it, and every page read and every form submission on the site goes
 through that single URL.
 
 ```
-Browser (Next.js on Render)
+Browser (Next.js on Vercel)
         │  fetch()  GET  ?sheet=Enrolments&email=...
         │  fetch()  POST { sheet, action, ...fields }
         ▼
@@ -94,7 +94,7 @@ row instead of adding a duplicate.
    - *Who has access*: **Anyone**
 5. Copy the `/exec` URL. It looks like
    `https://script.google.com/macros/s/AKfy…/exec`.
-6. On Render, add the environment variable and redeploy:
+6. In Vercel (Project → Settings → Environment Variables), add it and redeploy:
 
    ```
    NEXT_PUBLIC_GOOGLE_SCRIPT_WEBAPP_URL=https://script.google.com/macros/s/AKfy…/exec
@@ -188,5 +188,5 @@ curl -L -X POST "https://script.google.com/macros/s/AKfy…/exec" \
   -d '{"sheet":"Contacts","action":"contact","name":"Test","email":"test@example.com","message":"hello"}'
 ```
 
-Then submit the contact form on Render and confirm the row appears in `Contacts`
+Then submit the contact form on the live site and confirm the row appears in `Contacts`
 within a second or two, with a `MSG-…` reference code.
