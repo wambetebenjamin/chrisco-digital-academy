@@ -46,7 +46,7 @@ export default async function ShopPage({ searchParams }) {
   const initialCode = typeof params.item === "string" ? params.item.toUpperCase() : ""
 
   return (
-    <main className="has-backdrop" style={{ minHeight: "100vh", overflowX: "hidden" }}>
+    <main className="has-backdrop storefront" style={{ minHeight: "100vh", overflowX: "hidden" }}>
       <PageBackdrop image="/images/bg-courses.jpg" position="center 40%" />
       <Navbar />
 

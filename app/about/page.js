@@ -11,14 +11,14 @@ import PhotoBand from "../components/PhotoBand"
 export const metadata = {
   title: "About Us",
   description:
-    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, founded by Wambete Benjamin - bridging the digital divide with practical, affordable digital skills training across Africa.",
+    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, bridging the digital divide with practical, affordable digital skills training across Africa.",
 }
 
 const stats = [
-  { number: "500+", label: "Youth Trained" },
   { number: "19", label: "Courses Available" },
-  { number: "2", label: "Districts (Jinja & Buikwe)" },
-  { number: "100%", label: "Practical Skills" },
+  { number: "7", label: "Skill Areas" },
+  { number: "5–8", label: "Weeks Per Course" },
+  { number: "1:1", label: "Mentor Feedback" },
 ]
 
 const founderTags = [
@@ -102,9 +102,8 @@ export default function About() {
                 practical skills to turn them into income. CHRISCO Digital Academy fixes that.
               </p>
               <p className="lead" style={{ marginTop: 16 }}>
-                Founded by <strong style={{ color: "var(--ink)" }}>Wambete Benjamin</strong> - a Computer Science
-                graduate with hands-on expertise in graphic design, web development, video editing, animation,
-                social media and AI.
+                Built by working designers, developers and editors with hands-on expertise in graphic design,
+                web development, video editing, animation, social media and AI.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 28 }}>
                 {founderTags.map((t) => (
@@ -216,17 +215,17 @@ export default function About() {
         <div className="container">
           <div className="split" style={{ alignItems: "center" }}>
             <div>
-              <span className="eyebrow on-dark">Founder & lead instructor</span>
+              <span className="eyebrow on-dark">Our team</span>
               <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
-                Wambete <span className="accent-bright">Benjamin</span>
+                Designers, developers <span className="accent-bright">&amp; editors</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 22px" }}>
-                CS Graduate · Designer · Developer · AI Expert
+                Practitioners · Mentors · Instructors
               </p>
               <p className="lead on-dark" style={{ maxWidth: 540 }}>
-                Passionate about equipping African youth with digital skills that open real doors and transform
-                lives. Founded CHRISCO Digital Academy to make quality digital education accessible to every young
-                person in Africa.
+                We are a team of practitioners who still do the work we teach. CHRISCO Digital Academy exists to
+                make quality digital education accessible to every young person in Africa, taught through real
+                projects rather than slides.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
                 {["Graphic Design", "Web Development", "Video Editing", "Animations", "Social Media", "AI"].map((t) => (
@@ -242,7 +241,7 @@ export default function About() {
                 <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
                   <Image
                     src="/images/workspace.jpg"
-                    alt="Wambete Benjamin's creative workspace"
+                    alt="A creative workspace used for design, code and video"
                     fill
                     sizes="(min-width: 768px) 46vw, 92vw"
                     style={{ objectFit: "cover" }}
