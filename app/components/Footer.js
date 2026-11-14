@@ -177,10 +177,6 @@ export default function Footer() {
                 <span className="footer-contact-icon"><Icon name="phone" size={15} /></span>
                 <span>+254 112 272 061</span>
               </li>
-              <li>
-                <span className="footer-contact-icon"><Icon name="pin" size={15} /></span>
-                <span>Jinja, Uganda</span>
-              </li>
             </ul>
 
             <form onSubmit={handleSubscribe} style={{ marginTop: 24 }}>
@@ -225,7 +221,7 @@ export default function Footer() {
         <div className="footer-bottom">
           <span>© 2026 CHRISCO Digital Academy. All Rights Reserved.</span>
           <span className="footer-bottom-right">
-            <span>CHRISCO Youth Aflame · Uganda</span>
+            <span>CHRISCO Youth Aflame</span>
             <a href="#" className="footer-top-link">
               Back to top ↑
             </a>

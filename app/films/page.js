@@ -2,19 +2,18 @@ import { courses } from "../data/courses"
 import { buildSocialMetadata, resolveServerOrigin } from "../lib/siteOrigin"
 import "./films.css"
 
-// Films live in the repository under /v1. GitHub serves committed .mp4 files as
-// application/octet-stream with X-Content-Type-Options: nosniff, so every link
-// downloads instead of streaming — which is exactly what this page promises.
-const REPO = "wambetebenjamin/chrisco-digital-academy"
-const BRANCH = "arena/5440d692-chrisco-digital-academy"
-const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/v1`
+// Films are served from this deployment under /public/films, so no external
+// host, account name or branch is exposed and nothing can 404 behind a link.
+// Only films that have actually been rendered are listed; add the .mp4 and its
+// poster here and the entry appears.
+const RENDERED = new Set(["content-creation-mastery"])
 
 function filmHref(slug) {
-  return `${RAW}/${slug}.mp4`
+  return `/films/${slug}.mp4`
 }
 
 function posterHref(slug) {
-  return `${RAW}/posters/${slug}.jpg`
+  return `/films/posters/${slug}.jpg`
 }
 
 function slugify(title) {
@@ -27,33 +26,35 @@ export async function generateMetadata() {
     origin,
     title: "Course Films · CHRISCO Digital Academy",
     description:
-      "Nineteen vertical course films — 1080 × 1920, ninety seconds each, narrated and captioned. Download any of them directly.",
+      "Vertical course films, 1080 × 1920, narrated and captioned. Download any of them directly.",
     path: "/films",
   })
 }
 
 export default function FilmsPage() {
-  const films = courses.map((course) => {
-    const slug = slugify(course.title)
-    return {
-      ...course,
-      slug,
-      mp4: filmHref(slug),
-      poster: posterHref(slug),
-    }
-  })
+  const films = courses
+    .map((course) => {
+      const slug = slugify(course.title)
+      return {
+        ...course,
+        slug,
+        mp4: filmHref(slug),
+        poster: posterHref(slug),
+      }
+    })
+    .filter((film) => RENDERED.has(film.slug))
 
   return (
     <main className="films-page">
       <header className="films-hero">
         <p className="films-eyebrow">Download centre</p>
         <h1>
-          Nineteen <span>course films</span>
+          Course <span>films</span>
         </h1>
         <p className="films-lead">
           Vertical, narrated, captioned and ready to post. 1080 × 1920, about ninety
-          seconds each. Tap a title to download the MP4 directly — no account, no
-          player, no waiting.
+          seconds each. Tap a title to download the MP4 directly. More films are
+          added as each course is rendered.
         </p>
         <p className="films-meta">1080 × 1920 · 30 fps · H.264 + AAC · −14 LUFS</p>
       </header>
@@ -88,7 +89,7 @@ export default function FilmsPage() {
 
       <footer className="films-footer">
         <p>
-          Built for CHRISCO Youth Aflame · Digital Academy · Jinja &amp; Buikwe, Uganda
+          Built for CHRISCO Youth Aflame · Digital Academy
         </p>
       </footer>
     </main>

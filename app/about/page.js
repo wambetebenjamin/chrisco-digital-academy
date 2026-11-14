@@ -142,7 +142,7 @@ export default function About() {
                     gap: 7,
                   }}
                 >
-                  <Icon name="pin" size={13} strokeWidth={2.2} /> Made in Uganda
+                  <Icon name="globe" size={13} strokeWidth={2.2} /> Built for Africa
                 </span>
               </div>
             </div>
@@ -169,7 +169,7 @@ export default function About() {
               <h3 style={{ fontFamily: "var(--font-display)", color: "var(--green)", fontSize: "1.3rem", marginBottom: 16 }}>OUR MISSION</h3>
               <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "1.02rem" }}>
                 To bridge the digital divide by providing accessible, affordable and practical digital education to
-                youth across Uganda and beyond.
+                youth across Africa and beyond.
               </p>
             </div>
 
