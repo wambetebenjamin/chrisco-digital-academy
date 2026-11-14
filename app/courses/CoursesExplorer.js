@@ -399,8 +399,8 @@ export default function CoursesExplorer() {
                         <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.65, marginBottom: 18, flex: 1 }}>{course.desc}</p>
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
                           <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
-                          <span className="pill pill-soft pill-sm"><Icon name="star" size={13} strokeWidth={2.2} /> {course.rating}</span>
-                          <span className="pill pill-soft pill-sm"><Icon name="users" size={13} strokeWidth={2.2} /> {course.students}</span>
+                          <span className="pill pill-soft pill-sm"><Icon name="layers" size={13} strokeWidth={2.2} /> {course.level}</span>
+                          <span className="pill pill-soft pill-sm"><Icon name="trophy" size={13} strokeWidth={2.2} /> Certificate</span>
                         </div>
                         <div style={{ display: "flex", gap: 10 }}>
                           <button
@@ -481,8 +481,8 @@ export default function CoursesExplorer() {
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
                     <span className="modal-chip">{selected.level}</span>
                     <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="clock" size={12} strokeWidth={2.2} /> {selected.duration}</span>
-                    <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="star" size={12} strokeWidth={2.2} /> {selected.rating}</span>
-                    <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="users" size={12} strokeWidth={2.2} /> {selected.students}</span>
+                    <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="trophy" size={12} strokeWidth={2.2} /> Certificate</span>
+                    <span className="modal-chip" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="layers" size={12} strokeWidth={2.2} /> Real project</span>
                   </div>
                 </div>
               </div>

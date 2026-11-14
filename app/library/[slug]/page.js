@@ -10,7 +10,7 @@ export async function generateMetadata({ params }) {
   const resolved = await params
   const book = getBookBySlug(resolved?.slug)
   if (!book) {
-    return { title: "Book Not Found | CHRISCO Library" }
+    return { title: "Book Not Found" }
   }
 
   return buildSocialMetadata({

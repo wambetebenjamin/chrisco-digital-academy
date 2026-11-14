@@ -4,7 +4,7 @@ import { CONSENT_POLICY_VERSION } from "../data/booksCatalogue"
 import PrivacyControlsClient from "./PrivacyControlsClient"
 
 export const metadata = {
-  title: "Privacy & Data Protection Policy | CHRISCO Youth Aflame & Digital Academy",
+  title: "Privacy & Data Protection Policy",
   description:
     "How CHRISCO Youth Aflame and CHRISCO Digital Academy protect your personal data, minimize collection, safeguard email book registrations, and uphold your statutory privacy rights.",
 }
