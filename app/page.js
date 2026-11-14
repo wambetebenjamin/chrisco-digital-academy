@@ -7,11 +7,13 @@ import PhotoBand from "./components/PhotoBand"
 import PageBackdrop from "./components/PageBackdrop"
 import Icon from "./components/Icon"
 import { courses, categories, categoryCounts } from "./data/courses"
+import { merch, formatPricePair } from "./data/merch"
+import { christianBooks, learningBooks } from "./data/booksCatalogue"
 
 /*
  * Home page — restored to the PR #11 layout (a1fe8fca):
- *   hero with category sidebar + image tile, skills grid, featured courses,
- *   how it works, a dark team band, and the CTA photo band.
+ *   hero with category sidebar + image tile, skills grid, the full course
+ *   catalogue, merchandise, handbooks, how it works, a dark team band, CTA.
  * Content that was removed stays removed: no personal name, no founder role,
  * no "500+" claim. Stats are the verifiable ones.
  */
@@ -31,7 +33,13 @@ const stats = [
   { value: "Free", label: "To browse & apply" },
 ]
 
-const featured = [courses[4], courses[0], courses[10]] // Freelancing, YouTube Automation, SWE & LLM
+// Home shows a taste of each range; the full catalogue lives on /courses,
+// /shop and /library. One per category keeps the strip varied.
+const coursePreview = categories
+  .map((cat) => courses.find((c) => c.category === cat.name))
+  .filter(Boolean)
+const merchPreview = merch.filter((_, i) => i % 6 === 0).slice(0, 6)
+const bookPreview = learningBooks.filter((_, i) => i % 4 === 0).slice(0, 4)
 
 const steps = [
   { num: "01", icon: "search", title: "Browse & Choose", desc: "Pick from 19 practical courses across business, design, code, marketing, writing, video and AI." },
@@ -67,7 +75,7 @@ export default function Home() {
               marginBottom: 48,
             }}
           >
-            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy - Jinja, Uganda</span>
+            <span className="eyebrow on-dark fade-up">CHRISCO Digital Academy</span>
             <span style={{ fontFamily: "var(--font-head)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }} className="fade-up fade-up-1">
               Under CHRISCO Youth Aflame
             </span>
@@ -313,42 +321,60 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FEATURED COURSES ================= */}
+      {/* ================= ALL COURSES ================= */}
       <section className="section section-frost-alt">
         <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 48 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 40 }}>
             <div>
-              <span className="eyebrow">Course catalogue</span>
+              <span className="eyebrow">Course catalogue · {courses.length} courses</span>
               <h2 className="title" style={{ marginTop: 16 }}>
-                Featured courses that <span className="accent">actually pay</span>
+                Every course we <span className="accent">teach</span>
               </h2>
+              <p className="lead" style={{ marginTop: 12, maxWidth: 560 }}>
+                Business, marketing, coding, writing, design, video and career. Each one is hands-on and ends in a
+                real project you can show.
+              </p>
             </div>
             <Link href="/courses" className="btn btn-navy" style={{ textDecoration: "none" }}>
-              View all 19 courses →
+              Open the catalogue →
             </Link>
           </div>
 
+          {/* Category jump bar */}
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
+            {categories.map((cat) => (
+              <Link
+                key={cat.name}
+                href={`/courses?category=${encodeURIComponent(cat.name)}`}
+                className="pill pill-sm"
+                style={{ textDecoration: "none" }}
+              >
+                <Icon name={cat.icon} size={13} strokeWidth={2.2} /> {cat.name}
+                <span style={{ color: "var(--muted)", fontWeight: 700 }}>{counts[cat.name] || 0}</span>
+              </Link>
+            ))}
+          </div>
+
           <div className="grid-3">
-            {featured.map((course) => (
+            {courses.map((course) => (
               <Link
                 key={course.id}
-                href="/courses"
+                href={`/courses?course=${course.id}`}
                 className="card card-hover"
                 style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
               >
-                {/* Card header */}
-                <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "28px 26px", position: "relative" }}>
+                <div style={{ background: `linear-gradient(135deg, ${course.color[0]}, ${course.color[1]})`, padding: "24px 24px", position: "relative" }}>
                   <span
                     className="pill pill-sm"
-                    style={{ position: "absolute", top: 16, right: 16, background: "rgba(255,255,255,0.92)", border: "none", color: "var(--ink)" }}
+                    style={{ position: "absolute", top: 14, right: 14, background: "rgba(255,255,255,0.92)", border: "none", color: "var(--ink)" }}
                   >
                     {course.category}
                   </span>
                   <div
                     style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 18,
+                      width: 54,
+                      height: 54,
+                      borderRadius: 16,
                       background: "rgba(255,255,255,0.18)",
                       border: "1px solid rgba(255,255,255,0.3)",
                       color: "#fff",
@@ -357,25 +383,119 @@ export default function Home() {
                       justifyContent: "center",
                     }}
                   >
-                    <Icon name={course.icon} size={30} strokeWidth={1.7} />
+                    <Icon name={course.icon} size={27} strokeWidth={1.7} />
                   </div>
                 </div>
 
-                {/* Card body */}
-                <div style={{ padding: "24px 26px 26px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <h3 style={{ fontSize: "1.12rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
-                  <p style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.6, marginBottom: 18, flex: 1 }}>{course.desc}</p>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+                <div style={{ padding: "20px 24px 24px", display: "flex", flexDirection: "column", flex: 1 }}>
+                  <h3 style={{ fontSize: "1.05rem", fontWeight: 800, marginBottom: 8 }}>{course.title}</h3>
+                  <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6, marginBottom: 16, flex: 1 }}>{course.desc}</p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
                     <span className="pill pill-soft pill-sm"><Icon name="clock" size={13} strokeWidth={2.2} /> {course.duration}</span>
                     <span className="pill pill-soft pill-sm"><Icon name="layers" size={13} strokeWidth={2.2} /> {course.level || "Beginner"}</span>
-                    <span className="pill pill-soft pill-sm"><Icon name="trophy" size={13} strokeWidth={2.2} /> Certificate</span>
                   </div>
-                  <span className="link-arrow" style={{ fontSize: 13.5 }}>
+                  <span className="link-arrow" style={{ fontSize: 13 }}>
                     View course <span className="arr">→</span>
                   </span>
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= MERCHANDISE ================= */}
+      <section className="section section-frost">
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 40 }}>
+            <div>
+              <span className="eyebrow">Merchandise · {merch.length} pieces</span>
+              <h2 className="title" style={{ marginTop: 16 }}>
+                Wear the <span className="accent">word</span>
+              </h2>
+              <p className="lead" style={{ marginTop: 12, maxWidth: 560 }}>
+                PURSUE artwork, faith affirmations and scripture statements on tees, hoodies, polos, caps, totes,
+                mugs and journals.
+              </p>
+            </div>
+            <Link href="/shop" className="btn btn-navy" style={{ textDecoration: "none" }}>
+              Open the shop →
+            </Link>
+          </div>
+
+          <div style={{ display: "grid", gap: 20, gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+            {merchPreview.map((item) => (
+              <Link
+                key={item.code}
+                href="/shop"
+                className="card card-hover"
+                style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
+              >
+                <div style={{ position: "relative", aspectRatio: "1/1", background: "#fff" }}>
+                  <Image src={item.img} alt={item.name} fill sizes="(min-width: 900px) 220px, 45vw" style={{ objectFit: "cover" }} />
+                </div>
+                <div style={{ padding: "14px 16px 18px", display: "flex", flexDirection: "column", flex: 1 }}>
+                  <span style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--green-deep)" }}>
+                    {item.code}
+                  </span>
+                  <h3 style={{ fontSize: "0.95rem", fontWeight: 800, marginTop: 6, marginBottom: 6 }}>{item.name}</h3>
+                  <span style={{ fontSize: 12.5, color: "var(--muted)", marginTop: "auto" }}>
+                    {formatPricePair(item).primary}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= BOOKS & HANDBOOKS ================= */}
+      <section className="section section-frost-alt">
+        <div className="container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 40 }}>
+            <div>
+              <span className="eyebrow">Library · {christianBooks.length + learningBooks.length} books</span>
+              <h2 className="title" style={{ marginTop: 16 }}>
+                Read the <span className="accent">handbooks</span>
+              </h2>
+              <p className="lead" style={{ marginTop: 12, maxWidth: 560 }}>
+                Every course has a 28-page illustrated handbook. There is also a shelf of Christian and prophetic
+                study books from CHRISCO Youth Aflame.
+              </p>
+            </div>
+            <Link href="/library" className="btn btn-navy" style={{ textDecoration: "none" }}>
+              Open the library →
+            </Link>
+          </div>
+
+          <div style={{ display: "grid", gap: 20, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
+            {bookPreview.map((book) => (
+              <Link
+                key={book.slug}
+                href="/library"
+                className="card card-hover"
+                style={{ textDecoration: "none", overflow: "hidden", display: "flex", flexDirection: "column" }}
+              >
+                <div style={{ position: "relative", aspectRatio: "3/4", background: "#fff" }}>
+                  <Image src={book.coverImage} alt={book.title} fill sizes="(min-width: 900px) 200px, 45vw" style={{ objectFit: "cover" }} />
+                </div>
+                <div style={{ padding: "14px 16px 18px" }}>
+                  <span style={{ fontFamily: "var(--font-head)", fontSize: 10.5, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--green-deep)" }}>
+                    {book.category || "Handbook"}
+                  </span>
+                  <h3 style={{ fontSize: "0.92rem", fontWeight: 800, marginTop: 6 }}>{book.shortTitle || book.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 32 }}>
+            <Link href="/library" className="btn btn-green" style={{ textDecoration: "none" }}>
+              Browse all {learningBooks.length} handbooks →
+            </Link>
+            <Link href="/shop" className="btn btn-outline" style={{ textDecoration: "none" }}>
+              Shop merchandise
+            </Link>
           </div>
         </div>
       </section>
