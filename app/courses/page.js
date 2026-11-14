@@ -25,7 +25,7 @@ export async function generateMetadata({ searchParams }) {
   if (matchedCourse && matchedBook) {
     return buildSocialMetadata({
       origin,
-      title: `${matchedCourse.title} Course & 28-Page Handbook`,
+      title: `${matchedCourse.title} Course & Handbook`,
       description: `${matchedCourse.desc} Enroll free or sign in with Google/Email to download & save the 28-page illustrated handbook.`,
       path: `/courses?course=${matchedCourse.id}`,
       bannerPath: matchedBook.ogImage,
@@ -35,7 +35,7 @@ export async function generateMetadata({ searchParams }) {
 
   return buildSocialMetadata({
     origin,
-    title: "19 Practical Digital Skills Courses | CHRISCO Digital Academy",
+    title: "19 Practical Digital Skills Courses",
     description:
       "Browse 19 practical, income-focused digital courses in coding, AI literacy, marketing, writing, video, and leadership. Beginner-friendly, hands-on portfolio projects.",
     path: "/courses",
