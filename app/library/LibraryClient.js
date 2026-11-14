@@ -138,11 +138,11 @@ export default function LibraryClient() {
         <div className="container">
           <div
             style={{
-              background: "linear-gradient(135deg, #010C80 0%, #0A1854 68%, #162266 100%)",
+              background: "linear-gradient(135deg, #002333 0%, #013A4F 68%, #06506A 100%)",
               borderRadius: 28,
               padding: "40px 36px",
               color: "#fff",
-              boxShadow: "0 22px 54px rgba(1,12,128,0.18)",
+              boxShadow: "0 22px 54px rgba(0,35,51,0.22)",
               position: "relative",
               overflow: "hidden",
             }}
@@ -152,8 +152,8 @@ export default function LibraryClient() {
                 <span
                   className="pill pill-sm"
                   style={{
-                    background: "#FA3F26",
-                    color: "#fff",
+                    background: "var(--green)",
+                    color: "var(--on-accent)",
                     border: "none",
                     marginBottom: 10,
                   }}
@@ -227,7 +227,7 @@ export default function LibraryClient() {
                   </div>
 
                   <Link href={book.sharePath} style={{ textDecoration: "none", color: "inherit" }}>
-                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.5rem", color: "#010C80", lineHeight: 1.2 }}>
+                    <h3 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.5rem", color: "var(--navy)", lineHeight: 1.2 }}>
                       {book.title}
                     </h3>
                   </Link>
@@ -239,7 +239,7 @@ export default function LibraryClient() {
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 8, marginBottom: 20 }}>
                     {book.highlights.map((item) => (
                       <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "var(--ink)" }}>
-                        <Icon name="checkCircle" size={16} style={{ color: "#FA3F26", flexShrink: 0, marginTop: 2 }} />
+                        <Icon name="checkCircle" size={16} style={{ color: "var(--green-deep)", flexShrink: 0, marginTop: 2 }} />
                         <span>{item}</span>
                       </div>
                     ))}
@@ -251,8 +251,8 @@ export default function LibraryClient() {
                       onClick={() => handleDownloadClick(book)}
                       className="btn"
                       style={{
-                        background: "#FA3F26",
-                        color: "#fff",
+                        background: "var(--green)",
+                        color: "var(--on-accent)",
                         border: "none",
                         cursor: "pointer",
                       }}

@@ -1,9 +1,9 @@
 export const POSTER_PALETTE = [
-  { key: "red", main: "#7A2E2A", labelColor: "#7A2E2A", tint: "#F0E4E1", iconText: "#FFFFFF" },
-  { key: "blue", main: "#3A4A63", labelColor: "#3A4A63", tint: "#E7E9ED", iconText: "#FFFFFF" },
-  { key: "green", main: "#3F4A3C", labelColor: "#3F4A3C", tint: "#E6E8E2", iconText: "#FFFFFF" },
-  { key: "orange", main: "#8E4A2B", labelColor: "#8E4A2B", tint: "#F1E6DC", iconText: "#FFFFFF" },
-  { key: "yellow", main: "#C09A4E", labelColor: "#75541A", tint: "#F2EAD9", iconText: "#1E1B17" },
+  { key: "teal", main: "#002333", labelColor: "#013A4F", tint: "#E6EEF1", iconText: "#FFFFFF" },
+  { key: "deep", main: "#013A4F", labelColor: "#002333", tint: "#E3EDF1", iconText: "#FFFFFF" },
+  { key: "green", main: "#00B865", labelColor: "#00804A", tint: "#E9FFF4", iconText: "#002333" },
+  { key: "mid", main: "#06506A", labelColor: "#013A4F", tint: "#E4F1F5", iconText: "#FFFFFF" },
+  { key: "coral", main: "#FF6B4A", labelColor: "#B23A1E", tint: "#FFEFEA", iconText: "#002333" },
 ]
 
 export function posterColorAt(index = 0) {
@@ -11,13 +11,13 @@ export function posterColorAt(index = 0) {
 }
 
 export const categories = [
-  { name: "Business", icon: "briefcase", color: "#3A4A63" },
-  { name: "Marketing", icon: "chart", color: "#8E4A2B" },
-  { name: "Coding", icon: "code", color: "#7A2E2A" },
-  { name: "Writing", icon: "pen", color: "#3F4A3C" },
-  { name: "Design", icon: "palette", color: "#A8792F" },
-  { name: "Video", icon: "clapper", color: "#7A2E2A" },
-  { name: "Career", icon: "rocket", color: "#3F4A3C" },
+  { name: "Business", icon: "briefcase", color: "#013A4F" },
+  { name: "Marketing", icon: "chart", color: "#00B865" },
+  { name: "Coding", icon: "code", color: "#002333" },
+  { name: "Writing", icon: "pen", color: "#06506A" },
+  { name: "Design", icon: "palette", color: "#FF6B4A" },
+  { name: "Video", icon: "clapper", color: "#05566F" },
+  { name: "Career", icon: "rocket", color: "#00A25A" },
 ]
 
 // Dedicated real photography per category and per course.
@@ -42,7 +42,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.9",
     students: "50+",
-    color: ["#7A2E2A", "#8E4A2B"],
+    color: ["#00794A", "#00B865"],
     objectives: [
       "Set up a faceless channel in a profitable niche",
       "Script and produce videos with voiceover and stock footage",
@@ -73,7 +73,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.8",
     students: "70+",
-    color: ["#3A4A63", "#2A374C"],
+    color: ["#013A4F", "#002333"],
     objectives: [
       "Read and write Python syntax confidently",
       "Use conditions, loops and functions to solve problems",
@@ -104,7 +104,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.6",
     students: "40+",
-    color: ["#3F4A3C", "#333D31"],
+    color: ["#06506A", "#013A4F"],
     objectives: [
       "Choose a niche that sells without holding inventory",
       "Prepare print-ready artwork for products",
@@ -135,7 +135,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.9",
     students: "35+",
-    color: ["#8E4A2B", "#7A2E2A"],
+    color: ["#00B865", "#00794A"],
     objectives: [
       "Write in a client's voice across blogs, scripts and social",
       "Find ghostwriting clients and pitch them",
@@ -166,7 +166,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.8",
     students: "110+",
-    color: ["#A8792F", "#C09A4E"],
+    color: ["#FF6B4A", "#FF8A6E"],
     objectives: [
       "Package a service you can sell today",
       "Set up profiles on Fiverr and Upwork that get attention",
@@ -197,7 +197,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.8",
     students: "60+",
-    color: ["#3A4A63", "#1E1B17"],
+    color: ["#002333", "#00161F"],
     objectives: [
       "Plan a campaign from audience to measurable result",
       "Apply SEO, content and social advertising fundamentals",
@@ -228,7 +228,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.8",
     students: "65+",
-    color: ["#3F4A3C", "#3A4A63"],
+    color: ["#06506A", "#013A4F"],
     objectives: [
       "Use the psychology of persuasion to shape an offer",
       "Write headlines that stop a scroll",
@@ -259,7 +259,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.8",
     students: "55+",
-    color: ["#8E4A2B", "#7A2E2A"],
+    color: ["#00B865", "#00794A"],
     objectives: [
       "Build an email list ethically and keep it clean",
       "Write emails and sequences people actually open",
@@ -290,7 +290,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.7",
     students: "45+",
-    color: ["#3F4A3C", "#333D31"],
+    color: ["#06506A", "#013A4F"],
     objectives: [
       "Choose a niche and the right affiliate programs",
       "Build a platform and create content that converts",
@@ -321,7 +321,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "4.7",
     students: "150+",
-    color: ["#7A2E2A", "#8E4A2B"],
+    color: ["#00794A", "#00B865"],
     objectives: [
       "Build a platform-by-platform content strategy",
       "Create engaging posts and short video from a phone",
@@ -352,7 +352,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#3A4A63", "#2A374C"],
+    color: ["#013A4F", "#002333"],
     objectives: [
       "Apply software engineering fundamentals to real projects",
       "Understand how large language models work",
@@ -383,7 +383,7 @@ export const courses = [
     duration: "6 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#3A4A63", "#1E1B17"],
+    color: ["#002333", "#00161F"],
     objectives: [
       "Speak with clarity, authority and executive presence",
       "Use body language and vocal power deliberately",
@@ -414,7 +414,7 @@ export const courses = [
     duration: "6 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#8E4A2B", "#A8792F"],
+    color: ["#00B865", "#FF6B4A"],
     objectives: [
       "Prepare a negotiation and know your worth",
       "Use anchoring, framing and tactical empathy",
@@ -445,7 +445,7 @@ export const courses = [
     duration: "6 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#7A2E2A", "#8E4A2B"],
+    color: ["#00794A", "#00B865"],
     objectives: [
       "Structure stories that hook and hold attention",
       "Script with AI and generate visuals, voice and music",
@@ -476,7 +476,7 @@ export const courses = [
     duration: "6 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#7A2E2A", "#3A4A63"],
+    color: ["#00A25A", "#013A4F"],
     objectives: [
       "Define a clear personal brand and niche",
       "Write a bio, positioning and message people remember",
@@ -507,7 +507,7 @@ export const courses = [
     duration: "5 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#3A4A63", "#3F4A3C"],
+    color: ["#013A4F", "#06506A"],
     objectives: [
       "Explain what AI is and is not at work",
       "Write prompts that produce usable output",
@@ -538,7 +538,7 @@ export const courses = [
     duration: "6 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#3F4A3C", "#333D31"],
+    color: ["#06506A", "#013A4F"],
     objectives: [
       "Plan a content calendar that stays consistent",
       "Create photos, reels and carousels from a phone",
@@ -569,7 +569,7 @@ export const courses = [
     duration: "8 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#3A4A63", "#2A374C"],
+    color: ["#013A4F", "#002333"],
     objectives: [
       "Understand your customer and build an irresistible offer",
       "Choose the digital channels that fit the business",
@@ -600,7 +600,7 @@ export const courses = [
     duration: "5 Weeks",
     rating: "5.0",
     students: "New",
-    color: ["#8E4A2B", "#7A2E2A"],
+    color: ["#00B865", "#00794A"],
     objectives: [
       "Adopt a networking mindset that works for introverts",
       "Craft your introduction and your story",

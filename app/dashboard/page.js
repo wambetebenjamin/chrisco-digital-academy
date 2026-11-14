@@ -164,7 +164,7 @@ export default function Dashboard() {
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "14px 20px" }}>
-              <span style={{ width: 46, height: 46, borderRadius: "50%", background: "var(--cta-primary)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.1rem", flexShrink: 0 }}>
+              <span style={{ width: 46, height: 46, borderRadius: "50%", background: "var(--cta-primary)", color: "var(--on-accent)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "1.1rem", flexShrink: 0 }}>
                 {displayName[0]?.toUpperCase() || "U"}
               </span>
               <div>
@@ -535,7 +535,7 @@ export default function Dashboard() {
           {/* Dedicated Christian & Faith Shelf inside Dashboard */}
           <div
             style={{
-              background: "linear-gradient(135deg, #010C80 0%, #0A1854 70%, #162266 100%)",
+              background: "linear-gradient(135deg, #002333 0%, #013A4F 70%, #06506A 100%)",
               borderRadius: 22,
               padding: "26px 26px",
               color: "#fff",
@@ -547,7 +547,7 @@ export default function Dashboard() {
               <div>
                 <span
                   className="pill pill-sm"
-                  style={{ background: "#FA3F26", color: "#fff", border: "none", marginBottom: 8 }}
+                  style={{ background: "var(--green)", color: "var(--on-accent)", border: "none", marginBottom: 8 }}
                 >
                   CHRISCO Youth Aflame
                 </span>
@@ -598,7 +598,7 @@ export default function Dashboard() {
                     <span className="pill pill-soft pill-sm">{book.pages} Pages</span>
                     <span className="pill pill-soft pill-sm">{book.illustrations} Visual Diagrams</span>
                   </div>
-                  <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "#010C80", lineHeight: 1.25 }}>
+                  <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.25rem", color: "var(--navy)", lineHeight: 1.25 }}>
                     {book.title}
                   </h4>
                   <p style={{ color: "var(--body)", fontSize: 13.8, lineHeight: 1.65, margin: "8px 0 16px" }}>
@@ -611,7 +611,7 @@ export default function Dashboard() {
                       rel="noreferrer"
                       className="btn btn-sm"
                       style={{
-                        background: "#FA3F26",
+                        background: "var(--green)",
                         color: "#fff",
                         border: "none",
                         textDecoration: "none",

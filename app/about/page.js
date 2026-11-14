@@ -11,17 +11,17 @@ import PhotoBand from "../components/PhotoBand"
 export const metadata = {
   title: "About Us",
   description:
-    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame, bridging the digital divide with practical, affordable digital skills training across Africa.",
+    "CHRISCO Digital Academy is a youth-focused learning platform under CHRISCO Youth Aflame - bridging the digital divide with practical, affordable digital skills training across Africa.",
 }
 
 const stats = [
   { number: "19", label: "Courses Available" },
   { number: "7", label: "Skill Areas" },
   { number: "5–8", label: "Weeks Per Course" },
-  { number: "1:1", label: "Mentor Feedback" },
+  { number: "1:1", label: "Project Feedback" },
 ]
 
-const founderTags = [
+const instructorTags = [
   { icon: "cap", label: "CS Graduate" },
   { icon: "palette", label: "Designer" },
   { icon: "code", label: "Developer" },
@@ -32,7 +32,7 @@ const founderTags = [
 const values = [
   { icon: "globe", title: "Accessible", desc: "Affordable, beginner-friendly learning for every young person in Africa." },
   { icon: "wrench", title: "Practical", desc: "Every course ends with a real project you can show - and sell." },
-  { icon: "users", title: "Mentorship", desc: "Learn directly from a founder who works in these fields every day." },
+  { icon: "users", title: "Mentorship", desc: "Learn directly from working practitioners who use these skills every day." },
   { icon: "flame", title: "Community", desc: "Join a growing family of young creators, coders and entrepreneurs." },
 ]
 
@@ -102,11 +102,11 @@ export default function About() {
                 practical skills to turn them into income. CHRISCO Digital Academy fixes that.
               </p>
               <p className="lead" style={{ marginTop: 16 }}>
-                Built by working designers, developers and editors with hands-on expertise in graphic design,
-                web development, video editing, animation, social media and AI.
+                Our instructors are working practitioners with hands-on expertise in graphic design, web
+                development, video editing, animation, social media and AI - and they teach what they use.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 28 }}>
-                {founderTags.map((t) => (
+                {instructorTags.map((t) => (
                   <span key={t.label} className="pill pill-soft">
                     <Icon name={t.icon} size={14} strokeWidth={2.1} /> {t.label}
                   </span>
@@ -162,8 +162,8 @@ export default function About() {
 
           <div className="grid-2" style={{ alignItems: "stretch" }}>
             <div style={{ background: "var(--navy)", borderRadius: "var(--radius-xl)", padding: "48px 40px", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", background: "rgba(248,201,14,0.12)", top: -80, right: -80, filter: "blur(50px)" }} />
-              <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: 18, background: "rgba(248,201,14,0.14)", color: "var(--green)", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
+              <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", background: "rgba(0,255,132,0.12)", top: -80, right: -80, filter: "blur(50px)" }} />
+              <span style={{ display: "inline-flex", width: 62, height: 62, borderRadius: 18, background: "rgba(0,255,132,0.14)", color: "var(--green)", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
                 <Icon name="target" size={30} strokeWidth={1.7} />
               </span>
               <h3 style={{ fontFamily: "var(--font-display)", color: "var(--green)", fontSize: "1.3rem", marginBottom: 16 }}>OUR MISSION</h3>
@@ -210,22 +210,21 @@ export default function About() {
         </div>
       </section>
 
-      {/* FOUNDER */}
+      {/* TEAM */}
       <section className="section section-navy">
         <div className="container">
           <div className="split" style={{ alignItems: "center" }}>
             <div>
-              <span className="eyebrow on-dark">Our team</span>
+              <span className="eyebrow on-dark">Who teaches you</span>
               <h2 className="display" style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)", marginTop: 18 }}>
-                Designers, developers <span className="accent-bright">&amp; editors</span>
+                A <span className="accent-bright">working team</span>
               </h2>
               <p style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "14px 0 22px" }}>
-                Practitioners · Mentors · Instructors
+                CS Graduate · Designer · Developer · AI Expert
               </p>
               <p className="lead on-dark" style={{ maxWidth: 540 }}>
-                We are a team of practitioners who still do the work we teach. CHRISCO Digital Academy exists to
-                make quality digital education accessible to every young person in Africa, taught through real
-                projects rather than slides.
+                We are passionate about equipping African youth with digital skills that open real doors. CHRISCO
+                Digital Academy exists to make quality digital education accessible to every young person in Africa.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "28px 0 36px" }}>
                 {["Graphic Design", "Web Development", "Video Editing", "Animations", "Social Media", "AI"].map((t) => (
@@ -241,7 +240,7 @@ export default function About() {
                 <div style={{ position: "relative", aspectRatio: "4/3.2", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid rgba(255,255,255,0.12)" }}>
                   <Image
                     src="/images/workspace.jpg"
-                    alt="A creative workspace used for design, code and video"
+                    alt="The CHRISCO creative workspace - design, code and video"
                     fill
                     sizes="(min-width: 768px) 46vw, 92vw"
                     style={{ objectFit: "cover" }}
@@ -252,7 +251,7 @@ export default function About() {
                     position: "absolute",
                     left: 20,
                     bottom: 20,
-                    background: "rgba(11,29,81,0.9)",
+                    background: "rgba(0,35,51,0.9)",
                     backdropFilter: "blur(12px)",
                     border: "1px solid rgba(255,255,255,0.14)",
                     borderRadius: 16,

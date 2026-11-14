@@ -123,7 +123,7 @@ export default function BookGateModal({ book, intent = "download", onClose, onUn
           {/* Header */}
           <div
             style={{
-              background: book.shelf === "christian" ? "#010C80" : "var(--navy)",
+              background: "var(--navy)",
               padding: "24px 28px 20px",
               color: "#fff",
               display: "flex",
@@ -155,8 +155,8 @@ export default function BookGateModal({ book, intent = "download", onClose, onUn
               <span
                 className="pill pill-sm"
                 style={{
-                  background: book.shelf === "christian" ? "#FA3F26" : "var(--green)",
-                  color: book.shelf === "christian" ? "#fff" : "var(--navy)",
+                  background: "var(--green)",
+                  color: "var(--on-accent)",
                   border: "none",
                   marginBottom: 8,
                 }}

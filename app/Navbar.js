@@ -1,334 +1,301 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useAuth } from "./AuthProvider"
 import Icon from "./components/Icon"
 
+/*
+ * Navbar — restored to the PR #11 layout (a1fe8fca): a single 72px teal bar,
+ * accent-green logo tile, underline on the active link, pill auth actions.
+ * The link list is extended to cover the pages that exist today so no route
+ * is stranded, but the visual system is the restored one.
+ */
+const links = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Courses", href: "/courses" },
+  { label: "Library", href: "/library" },
+  { label: "Shop", href: "/shop" },
+  { label: "Films", href: "/films" },
+  { label: "Contact", href: "/contact" },
+]
+
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { user, profile, logout } = useAuth()
   const pathname = usePathname()
-  const router = useRouter()
-  const { user, profile, signOut } = useAuth()
 
-  async function handleSignOut() {
-    await signOut()
-    router.push("/")
-    setMenuOpen(false)
-  }
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
-  const links = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/courses", label: "Courses" },
-    { href: "/library", label: "Library" },
-    { href: "/shop", label: "Shop" },
-    { href: "/contact", label: "Contact" },
-    ...(user ? [{ href: "/dashboard", label: "Dashboard" }] : []),
-  ]
-
-  const isActive = (href) => pathname === href
+  const isActive = (href) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href)
 
   return (
-    <header className="ed-header" style={{ position: "sticky", top: 0, zIndex: 200 }}>
-      {/* Announcement bar */}
-      <div className="ed-topbar topbar s2" style={{ background: "var(--ink-900)" }}>
-        <div className="ed-topbar-inner">
-          <ul className="contact-info" style={{ margin: 0, padding: "8px 0" }}>
-            <li>
-              <i className="ti-email" style={{ color: "var(--oxblood)" }} aria-hidden>
-                <Icon name="mail" size={14} />
-              </i>
-              <a className="info-link" href="mailto:chriscoyouthaflame2025@gmail.com">
-                chriscoyouthaflame2025@gmail.com
-              </a>
-            </li>
-            <li>
-              <i className="fi flaticon-phone" style={{ color: "var(--oxblood)" }} aria-hidden>
-                <Icon name="phone" size={14} />
-              </i>
-              <a className="info-link" href="tel:+254112272061">
-                +254 112 272 061
-              </a>
-            </li>
-            <li className="hide-mobile">
-              <Icon name="pin" size={14} style={{ color: "var(--oxblood)" }} />
-              <span>Jinja, Uganda</span>
-            </li>
-          </ul>
-          <div className="contact-into">
-            <ul className="social-media" style={{ margin: 0 }}>
-              <li className="hide-mobile">
-                <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)" }}>
-                  Follow Us :
-                </span>
-              </li>
-              <li>
-                <a className="social-link" href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                  <Icon name="facebook" size={12} />
-                </a>
-              </li>
-              <li>
-                <a className="social-link" href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                  <Icon name="instagram" size={12} />
-                </a>
-              </li>
-              <li>
-                <a className="social-link" href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                  <Icon name="play" size={12} />
-                </a>
-              </li>
-              <li>
-                <a className="social-link" href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                  <Icon name="linked" size={12} />
-                </a>
-              </li>
-            </ul>
-          </div>
+    <nav
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 200,
+        background: scrolled ? "rgba(0,35,51,0.96)" : "var(--navy)",
+        backdropFilter: scrolled ? "blur(16px)" : "none",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        transition: "background 0.3s ease",
+      }}
+    >
+      <div
+        className="container"
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}
+      >
+        {/* Logo */}
+        <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12 }}>
+          <span
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 10,
+              background: "var(--green)",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "var(--font-display)",
+              fontSize: "1.05rem",
+              color: "var(--navy)",
+              transform: "rotate(-4deg)",
+            }}
+          >
+            C
+          </span>
+          <span style={{ lineHeight: 1 }}>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: "1rem", color: "#fff", letterSpacing: "0.01em", display: "block" }}>
+              CHRISCO
+            </span>
+            <span
+              style={{
+                fontFamily: "var(--font-head)",
+                fontSize: "0.62rem",
+                fontWeight: 700,
+                letterSpacing: "0.24em",
+                textTransform: "uppercase",
+                color: "var(--green)",
+              }}
+            >
+              Digital Academy
+            </span>
+          </span>
+        </Link>
+
+        {/* Desktop nav */}
+        <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 2 }}>
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              style={{
+                position: "relative",
+                color: isActive(l.href) ? "#fff" : "rgba(255,255,255,0.65)",
+                textDecoration: "none",
+                fontFamily: "var(--font-head)",
+                fontSize: 14,
+                fontWeight: 600,
+                padding: "10px 16px",
+                borderRadius: 999,
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+              onMouseLeave={(e) => {
+                if (!isActive(l.href)) e.currentTarget.style.color = "rgba(255,255,255,0.65)"
+              }}
+            >
+              {l.label}
+              {isActive(l.href) && (
+                <span
+                  style={{
+                    position: "absolute",
+                    left: 16,
+                    right: 16,
+                    bottom: 2,
+                    height: 2,
+                    borderRadius: 2,
+                    background: "var(--green)",
+                  }}
+                />
+              )}
+            </Link>
+          ))}
+
+          {user && (
+            <Link
+              href="/dashboard"
+              style={{
+                color: isActive("/dashboard") ? "#fff" : "rgba(255,255,255,0.65)",
+                textDecoration: "none",
+                fontFamily: "var(--font-head)",
+                fontSize: 14,
+                fontWeight: 600,
+                padding: "10px 16px",
+                borderRadius: 999,
+              }}
+            >
+              Dashboard
+            </Link>
+          )}
         </div>
-      </div>
 
-      {/* Main header — white, like wpo-site-header */}
-      <div className="wpo-site-header">
-        <nav className="navigation navbar navbar-expand-lg navbar-light" style={{ background: "#fff" }}>
-          <div className="container-fluid">
-            <div className="row align-items-center ed-header-row" style={{ width: "100%", margin: 0, minHeight: 78, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
-              {/* Logo */}
-              <div className="col-lg-2 col-md-6 col-6" style={{ flex: "0 0 auto", width: "auto", padding: 0 }}>
-                <div className="navbar-header">
-                  <Link href="/" className="navbar-brand ed-logo" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 12 }}>
-                    <span className="ed-logo-mark" style={{ width: 44, height: 44, borderRadius: 12, background: "var(--ink-900)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.05rem" }}>
-                      C
-                    </span>
-                    <span>
-                      <span style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: "1.02rem", color: "var(--ink-900)", display: "block", lineHeight: 1.05 }}>CHRISCO</span>
-                      <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--oxblood)", display: "block" }}>Digital Academy</span>
-                    </span>
-                  </Link>
-                </div>
+        {/* Auth actions */}
+        <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {user ? (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  borderRadius: 999,
+                  padding: "6px 14px 6px 8px",
+                }}
+              >
+                <span
+                  style={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: "50%",
+                    background: "var(--green)",
+                    color: "var(--navy)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "var(--font-display)",
+                    fontSize: 13,
+                  }}
+                >
+                  {(profile?.name || user?.email || "U")[0].toUpperCase()}
+                </span>
+                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: 13, fontWeight: 600, maxWidth: 110, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {profile?.name || user?.email?.split("@")[0]}
+                </span>
               </div>
+              <button
+                onClick={logout}
+                className="pill pill-dark pill-sm"
+                style={{ cursor: "pointer", fontFamily: "var(--font-head)" }}
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/sign-in" className="pill pill-dark pill-sm" style={{ textDecoration: "none" }}>
+                Log In
+              </Link>
+              <Link
+                href="/sign-up"
+                className="btn btn-green btn-sm"
+                style={{ textDecoration: "none" }}
+              >
+                Get Started
+              </Link>
+            </>
+          )}
+        </div>
 
-              {/* Desktop nav */}
-              <div className="col-lg-6 col-md-1 col-1 hide-mobile" style={{ flex: "1 1 auto", display: "flex", justifyContent: "center", padding: 0 }}>
-                <div id="navbar" className="collapse navbar-collapse navigation-holder" style={{ display: "flex" }}>
-                  <ul id="menu-1" className="nav navbar-nav mb-2 mb-lg-0" style={{ display: "flex", alignItems: "center", gap: 2, listStyle: "none", margin: 0, padding: 0, flexWrap: "nowrap" }}>
-                    {links.map((link) => {
-                      const active = isActive(link.href)
-                      return (
-                        <li key={link.href} className={active ? "current-menu-item" : ""} style={{ position: "relative" }}>
-                          <Link
-                            href={link.href}
-                            className="ed-nav-link"
-                            style={{
-                              fontFamily: "var(--font-head)",
-                              fontWeight: active ? 800 : 600,
-                              fontSize: 15,
-                              color: active ? "var(--oxblood)" : "var(--ink-700)",
-                              padding: "10px 11px",
-                              textDecoration: "none",
-                              whiteSpace: "nowrap",
-                              display: "inline-block",
-                              position: "relative",
-                            }}
-                          >
-                            {link.label}
-                          </Link>
-                        </li>
-                      )
-                    })}
-                    {/* Primary call to action */}
-                    <li className="ed-cta-wrap" style={{ marginLeft: 8 }}>
-                      {user ? (
-                        <Link href="/dashboard" className="btn-ed-cta-wrap" style={{ background: "var(--oxblood)", color: "#fff", borderRadius: 999, padding: "11px 18px", fontWeight: 800, fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
-                          Dashboard →
-                        </Link>
-                      ) : (
-                        <Link href="/sign-up" className="btn-ed-cta-wrap" style={{ background: "var(--oxblood)", color: "#fff", borderRadius: 999, padding: "11px 18px", fontWeight: 800, fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
-                          Join Free →
-                        </Link>
-                      )}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Mobile / desktop auth + hamburger */}
-              <div className="col-lg-4 col-md-3 col-3 d-lg-none dl-block hide-mobile" style={{ flex: "0 0 auto", width: "auto", display: "flex", alignItems: "center", gap: 10, justifyContent: "flex-end", padding: 0 }}>
-                {user ? (
-                  <>
-                    <Link
-                      href="/dashboard"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 8,
-                        padding: "7px 12px 7px 8px",
-                        borderRadius: 999,
-                        border: "1px solid var(--rule)",
-                        background: "var(--bone)",
-                        color: "var(--ink-900)",
-                        textDecoration: "none",
-                        fontFamily: "var(--font-head)",
-                        fontSize: 12.5,
-                        fontWeight: 700,
-                      }}
-                    >
-                      <span style={{ width: 26, height: 26, borderRadius: "50%", background: "var(--oxblood)", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11 }}>
-                        {(profile?.name || user.email)?.[0]?.toUpperCase()}
-                      </span>
-                      <span>{profile?.name?.split(" ")[0] || "Student"}</span>
-                    </Link>
-                    <button
-                      onClick={handleSignOut}
-                      style={{
-                        background: "transparent",
-                        border: "1px solid var(--rule)",
-                        color: "var(--ink-500)",
-                        padding: "8px 14px",
-                        borderRadius: 999,
-                        fontFamily: "var(--font-head)",
-                        fontSize: 12,
-                        fontWeight: 700,
-                        cursor: "pointer",
-                      }}
-                    >
-                      Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <Link href="/sign-in" style={{ color: "var(--ink-900)", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13, textDecoration: "none", padding: "8px 10px" }}>
-                    Sign In
-                  </Link>
-                )}
-              </div>
-
-              {/* Mobile hamburger */}
-              <div className="col-lg-3 col-md-3 col-3 d-lg-none dl-block hide-desktop" style={{ flex: "0 0 auto", width: "auto", display: "flex", alignItems: "center", justifyContent: "flex-end", padding: 0 }}>
-                <div className="mobail-menu">
-                  <button
-                    type="button"
-                    className="navbar-toggler open-btn"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    aria-label="Toggle navigation"
-                    style={{
-                      background: menuOpen ? "var(--oxblood)" : "var(--bone)",
-                      border: "1px solid var(--rule)",
-                      color: menuOpen ? "#fff" : "var(--ink-900)",
-                      width: 44,
-                      height: 44,
-                      borderRadius: 12,
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Icon name={menuOpen ? "x" : "menu"} size={20} strokeWidth={2.2} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </div>
-
-      {/* Mobile drawer */}
-      {menuOpen && (
-        <div
+        {/* Burger */}
+        <button
           className="hide-desktop"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
           style={{
-            background: "#fff",
-            borderTop: "1px solid var(--rule)",
-            padding: "18px 20px 24px",
-            boxShadow: "0 12px 32px rgba(24,50,46,0.08)",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.14)",
+            color: "#fff",
+            width: 42,
+            height: 42,
+            borderRadius: 12,
+            cursor: "pointer",
+            fontSize: 18,
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            {links.map((link) => {
-              const active = isActive(link.href)
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  style={{
-                    padding: "13px 14px",
-                    borderRadius: 12,
-                    fontFamily: "var(--font-head)",
-                    fontSize: 15,
-                    fontWeight: active ? 800 : 600,
-                    color: active ? "#fff" : "var(--ink-900)",
-                    background: active ? "var(--oxblood)" : "transparent",
-                    textDecoration: "none",
-                  }}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
+          <Icon name={open ? "x" : "menu"} size={20} strokeWidth={2.2} />
+        </button>
+      </div>
 
-          </div>
-
-          <div style={{ borderTop: "1px solid var(--rule)", marginTop: 16, paddingTop: 16, display: "flex", flexDirection: "column", gap: 10 }}>
-            {user ? (
-              <>
-                <div style={{ color: "var(--ink-900)", fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 13 }}>Signed in as {profile?.name || user.email}</div>
-                <button
-                  onClick={handleSignOut}
-                  style={{
-                    width: "100%",
-                    background: "var(--ink-900)",
-                    color: "#fff",
-                    border: "none",
-                    padding: "13px",
-                    borderRadius: 999,
-                    fontFamily: "var(--font-head)",
-                    fontWeight: 800,
-                    cursor: "pointer",
-                  }}
-                >
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                <Link
-                  href="/sign-in"
-                  onClick={() => setMenuOpen(false)}
-                  style={{
-                    textAlign: "center",
-                    padding: "13px",
-                    borderRadius: 999,
-                    border: "1.5px solid var(--ink-900)",
-                    color: "var(--ink-900)",
-                    fontFamily: "var(--font-head)",
-                    fontWeight: 800,
-                    textDecoration: "none",
-                  }}
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/sign-up"
-                  onClick={() => setMenuOpen(false)}
-                  style={{
-                    textAlign: "center",
-                    padding: "13px",
-                    borderRadius: 999,
-                    background: "var(--oxblood)",
-                    color: "#fff",
-                    fontFamily: "var(--font-head)",
-                    fontWeight: 800,
-                    textDecoration: "none",
-                  }}
-                >
-                  Join Free →
-                </Link>
-              </div>
-            )}
-          </div>
+      {/* Mobile menu */}
+      {open && (
+        <div
+          style={{
+            margin: "0 24px 16px",
+            padding: 20,
+            background: "var(--navy-2)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: 20,
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
+            animation: "fadeUp 0.3s ease",
+          }}
+        >
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              style={{
+                color: isActive(l.href) ? "var(--green)" : "rgba(255,255,255,0.75)",
+                textDecoration: "none",
+                fontFamily: "var(--font-head)",
+                fontSize: 15,
+                fontWeight: 600,
+                padding: "12px 16px",
+                borderRadius: 12,
+              }}
+            >
+              {l.label}
+            </Link>
+          ))}
+          {user && (
+            <Link
+              href="/dashboard"
+              onClick={() => setOpen(false)}
+              style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none", fontFamily: "var(--font-head)", fontSize: 15, fontWeight: 600, padding: "12px 16px", borderRadius: 12 }}
+            >
+              Dashboard
+            </Link>
+          )}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", margin: "12px 0 8px" }} />
+          {user ? (
+            <>
+              <div style={{ padding: "4px 16px", color: "rgba(255,255,255,0.5)", fontSize: 13 }}>{user?.email}</div>
+              <button
+                onClick={logout}
+                style={{ background: "rgba(229,72,77,0.15)", border: "1px solid rgba(229,72,77,0.3)", color: "#FFB3B6", fontFamily: "var(--font-head)", fontWeight: 600, fontSize: 14, padding: "12px 16px", borderRadius: 12, cursor: "pointer", textAlign: "left" }}
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+              <Link href="/sign-in" onClick={() => setOpen(false)} className="btn btn-outline-light btn-sm" style={{ textDecoration: "none", flex: 1 }}>
+                Log In
+              </Link>
+              <Link href="/sign-up" onClick={() => setOpen(false)} className="btn btn-green btn-sm" style={{ textDecoration: "none", flex: 1 }}>
+                Get Started
+              </Link>
+            </div>
+          )}
         </div>
       )}
-    </header>
+    </nav>
   )
 }
