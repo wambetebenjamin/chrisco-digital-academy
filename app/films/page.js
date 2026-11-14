@@ -24,7 +24,7 @@ export async function generateMetadata() {
   const origin = await resolveServerOrigin()
   return buildSocialMetadata({
     origin,
-    title: "Course Films · CHRISCO Digital Academy",
+    title: "Course Films",
     description:
       "Vertical course films, 1080 × 1920, narrated and captioned. Download any of them directly.",
     path: "/films",
